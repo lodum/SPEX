@@ -1,4 +1,4 @@
-SpEx
+SPEX
 ======
 
 Spatial temporal content explorer
