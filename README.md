@@ -1,4 +1,4 @@
-SpaTEx
+SpEx
 ======
 
-Spatial temporal explorer
+Spatial temporal content explorer
