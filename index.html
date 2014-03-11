@@ -6,6 +6,7 @@
 
 <button id="sparql" onclick="show()">show</button>
 <button id="sparqladd" onclick="add()">add</button>
+<button id="addspace" onclick="addSpace()">addspace</button>
 
 
 </body>
@@ -14,6 +15,7 @@
     <script src="lib/jquery-sparql-master/jquery.sparql.js"></script>
 	<script src="SPEXQuery.js"></script>
 	<script src="node.js"></script>
+	<script src="Window.js"></script>
 
 <script>
 
@@ -31,6 +33,11 @@ q.prefix("foaf","http://xmlns.com/0.1/foaf/")
 		 }
 		 function add(){		 
 		 q.where(new Node("URI1"), new Node("URI2"), new Node("URI3"));
+		 show();
+		 }
+		 
+		 function addSpace(){
+		 q.setSpatialConstraint("v1", new Window());
 		 show();
 		 }
 		 
