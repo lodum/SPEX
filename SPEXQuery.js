@@ -2,7 +2,7 @@
 
 function SPEXQuery(){ }
 
-SPEXQuery.prototype=new Query(); SPEXQuery
+SPEXQuery.prototype= new Query();
 SPEXQuery.prototype.spatialConstraints = "";
 SPEXQuery.prototype.temporalConstraints = "";
 SPEXQuery.prototype.thematicConstraints = "";
