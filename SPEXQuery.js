@@ -1,6 +1,6 @@
 
 function SPEXQuery(){ }
-SPEXQuery.prototype = new Query();
+SPEXQuery.prototype = $.sparql("http://www.example.com/sparql/");
 SPEXQuery.prototype.constructor = SPEXQuery;
 SPEXQuery.prototype.spatialConstraints = [];
 SPEXQuery.prototype.temporalConstraints = [];

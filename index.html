@@ -4,15 +4,37 @@
 
 <h1>Spatio-temporal content explorer (SPEX)</h1>
 
+<button id="sparql" onclick="show()">show</button>
+<button id="sparqladd" onclick="add()">add</button>
 
 
 </body>
-
-<script src="lib/jquery-sparql-master/jquery.sparql.js"></script>
-<script src="lib/jquery-sparql-master/urlEncode.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script src="lib/jquery-sparql-master/urlEncode.js"></script>
+    <script src="lib/jquery-sparql-master/jquery.sparql.js"></script>
+	<script src="SPEXQuery.js"></script>
+	<script src="node.js"></script>
 
 <script>
+
+var q = new SPEXQuery();
+q.prefix("foaf","http://xmlns.com/0.1/foaf/")
+   .select()
+   .where("?p", "a", "foaf:Person")
+         .where("foaf:name", "?name")
+         .where("foaf:homepage", "?page");
+		 q.config.endpoint = "http://www.example.com/sparql/";
+
+		 function show(){		 
+		 document.getElementById("sparql").innerHTML=q.getSPARQL();
+		 alert(q.config.endpoint);
+		 }
+		 function add(){		 
+		 q.where(new Node("URI1"), new Node("URI2"), new Node("URI3"));
+		 show();
+		 }
+		 
+		 
 </script>
 
 </html>
