@@ -7,7 +7,7 @@
 <button id="sparql" onclick="show()">show</button>
 <button id="sparqladd" onclick="add()">add</button>
 <button id="addspace" onclick="addSpace()">addspace</button>
-
+<button id="addTime" onclick="addTime()">addTime</button>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -16,6 +16,7 @@
 	<script src="SPEXQuery.js"></script>
 	<script src="node.js"></script>
 	<script src="Window.js"></script>
+	<script src="Time.js"></script>
 
 <script>
 
@@ -41,6 +42,14 @@ q.prefix("foaf","http://xmlns.com/0.1/foaf/")
 		 show();
 		 }
 		 
+
+		 function addTime(){
+			var t = new Time();
+			t.timeBeginning = "2010-01-19T16:00:00Z";
+			t.timeEnd = "2012-01-19T16:00:00Z";
+		 q.setTemporalConstraint("?v1", t);
+		 show();
+		 }
 		 
 </script>
 
