@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+  <style type="text/css">
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+	.info {
+		padding: 6px 8px;
+		font: 14px/16px Arial, Helvetica, sans-serif;
+		background: white;
+		background: rgba(255,255,255,0.8);
+		box-shadow: 0 0 15px rgba(0,0,0,0.2);
+		border-radius: 5px;
+	}
+	.info h4 {
+		margin: 0 0 5px;
+		color: #777;
+	}
+	.info h5 {
+		margin: 0 0 5px;
+	}
+  </style>
+
+
 <body>
 
 <h1>Spatio-temporal content explorer (SPEX)</h1>
 
-<button id="sparql" onclick="show()">show</button>
-<button id="sparqladd" onclick="add()">add</button>
-<button id="addspace" onclick="addSpace()">addspace</button>
-<button id="addTime" onclick="addTime()">addTime</button>
+<button id="sparql" onclick="show()">show</button><br>
+<button id="sparqladd" onclick="add()">add</button><br>
+<button id="addspace" onclick="addSpace()">addspace</button><br>
+<button id="addTime" onclick="addTime()">addTime</button><br>
+<textarea id="query" name="query" rows="30" cols="150"></textarea>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -29,8 +55,9 @@ q.prefix("foaf","http://xmlns.com/0.1/foaf/")
 		 q.config.endpoint = "http://www.example.com/sparql/";
 
 		 function show(){		 
-		 document.getElementById("sparql").innerHTML=q.getSPARQL();
-		 alert(q.config.endpoint);
+		 //document.getElementById("sparql").innerHTML=q.getSPARQL();
+		 document.getElementById("query").innerHTML=q.getSPARQL();
+		 //alert(q.config.endpoint);
 		 }
 		 function add(){		 
 		 q.where(new Node("URI1"), new Node("URI2"), new Node("URI3"));
@@ -38,8 +65,14 @@ q.prefix("foaf","http://xmlns.com/0.1/foaf/")
 		 }
 		 
 		 function addSpace(){
-		 q.setSpatialConstraint("v1", new Window());
-		 show();
+			 var bbox = new Window();
+			 
+			 bbox.upperRightLatitude = map.getBounds().getNorth();
+			 bbox.upperRightLongitude = map.getBounds().getEast();
+			 bbox.lowerLeftLatitude = map.getBounds().getSouth();
+			 bbox.lowerLeftLongitude = map.getBounds().getWest();
+			 q.setSpatialConstraint("v1", bbox);
+			 show();
 		 }
 		 
 
@@ -53,4 +86,43 @@ q.prefix("foaf","http://xmlns.com/0.1/foaf/")
 		 
 </script>
 
+
+
+
+----
+
+  <div id="map" style="width: 500px; height: 400px bottom: 0; right: 0; position: absolute;"></div>
+  <script>
+    var map = L.map('map').setView([0, 0], 3);
+    // add an OpenStreetMap tile layer
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		attribution: '&amp;copy; &lt;a href="http://osm.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'
+	}).addTo(map);
+    
+  var info = L.control();
+
+	info.onAdd = function (map) {
+	    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+	    this.update();
+	    return this._div;
+	};
+
+	// method that we will use to update the control based on feature properties passed
+	info.update = function () {
+		var bounds = map.getBounds();
+	    this._div.innerHTML = '<h4>BoundingBox</h4><hr><h5>NE:'
+	    	+bounds._northEast+'</h5><br/><h5>SW:'
+	    	+bounds._southWest+'</h5>';
+	};
+
+	info.addTo(map);
+
+	function updateBBox() {
+		info.update();
+	}
+
+	map.on('drag', updateBBox);
+	map.on('zoomend', updateBBox)
+
+  </script>
 </html>

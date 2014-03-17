@@ -2,10 +2,10 @@
 
 function Window(){ }
 
-Window.prototype.upperLeftLatitude = 0.0;
-Window.prototype.upperLeftLongitude = 0.0;
-Window.prototype.lowerRightLatitude = 0.0;
-Window.prototype.lowerRightLongitude = 0.0;
+Window.prototype.upperRightLatitude = 0.0;
+Window.prototype.upperRightLongitude = 0.0;
+Window.prototype.lowerLeftLatitude = 0.0;
+Window.prototype.lowerLeftLongitude = 0.0;
 Window.prototype.variable = "";
 
 

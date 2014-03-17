@@ -52,8 +52,8 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
 		this.where(this.spatialConstraints[i].v, "geo:lat", "?lat")
 		.where("geo:long", "?long");
 
-		this.filter("?lat  > " + this.spatialConstraints[i].w.upperLeftLatitude + " && ?lat < "  + this.spatialConstraints[i].w.lowerRightLatitude + 
-			             " && ?long > " + this.spatialConstraints[i].w.upperLeftLongitude +" && ?long < " + this.spatialConstraints[i].w.lowerRightLongitude);  		
+		this.filter("?lat  < " + this.spatialConstraints[i].w.upperRightLatitude + " && ?lat > "  + this.spatialConstraints[i].w.lowerLeftLatitude + 
+			             " && ?long < " + this.spatialConstraints[i].w.upperRightLongitude +" && ?long > " + this.spatialConstraints[i].w.lowerLeftLongitude);  		
 
  	}
 
