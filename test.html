@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>jQuery UI Slider - Default functionality</title>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" href="http://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css">
+
+		<link rel="stylesheet" id="themeCSS" href="lib/jQRangeSlider-master/css/classic.css"> 
+		<link rel="stylesheet" href="lib/jQRangeSlider-master/demo/style.css">
+		
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+		<script src="lib/jQRangeSlider-master/lib/jquery.mousewheel.min.js"></script>
+		
+		<!-- Debug -->
+		<script src="lib/jQRangeSlider-master/jQRangeSliderMouseTouch.js"></script>
+		<script src="lib/jQRangeSlider-master/jQRangeSliderDraggable.js"></script>
+		<script src="lib/jQRangeSlider-master/jQRangeSliderHandle.js"></script>
+		<script src="lib/jQRangeSlider-master/jQRangeSliderBar.js"></script>
+		<script src="lib/jQRangeSlider-master/jQRangeSliderLabel.js"></script>
+		<script src="lib/jQRangeSlider-master/jQRangeSlider.js"></script>
+
+		<script src="lib/jQRangeSlider-master/jQDateRangeSliderHandle.js"></script>
+		<script src="lib/jQRangeSlider-master/jQDateRangeSlider.js"></script>
+		
+		<script src="lib/jQRangeSlider-master/jQEditRangeSliderLabel.js"></script>
+		<script src="lib/jQRangeSlider-master/jQEditRangeSlider.js"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+
+
+		
+		<style type="text/css">
+		body { margin:0; padding:0; }
+		#map { position:absolute; top:0; bottom:0; width:100%; }
+		.info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba(255,255,255,0.8);
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+		}
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777;
+		}
+		.info h5 {
+			margin: 0 0 5px;
+		}
+		</style>
+<script>
+
+$(function() {
+
+	$( "#slider" ).dateRangeSlider({
+		bounds: {min: new Date(2000,0,1).valueOf(), max: new Date(2011,0,1).valueOf()},
+		defaultValues: {min: new Date(2006,11,11).valueOf(), max: new Date(2009,1,11).valueOf()}
+	});
+
+	$( "input[type=submit], a, button" )
+	.button()
+	.click(function( event ) {
+		stuff = $( "#slider" ).dateRangeSlider( "values" );
+		alert (stuff.min + " - " + stuff.max); });
+
+});
+
+
+		</script>
+	</head>
+
+	<body>
+
+
+		<button>A button element</button>
+		<div id="slider"></div>
+	</body>
+</html>
