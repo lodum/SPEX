@@ -84,6 +84,14 @@
 
 <script src="lib/jquery-sparql-master/urlEncode.js"></script>
 <script src="lib/jquery-sparql-master/jquery.sparql.js"></script>
+// Jassa set up
+<script src="resources/libs/jquery/1.9.1/jquery.js"></script>
+<script src="resources/libs/underscore/1.4.4/underscore.js"></script>
+<script src="resources/libs/underscore.string/2.3.0/underscore.string.js"></script>
+<script src="resources/libs/prototype/1.7.1/prototype.js"></script>
+<script src="resources/libs/jassa/0.5.0/jassa.js"></script>
+
+
 <script src="SPEXQuery.js"></script>
 <script src="node.js"></script>
 <script src="Window.js"></script>
@@ -92,7 +100,18 @@
 
 
 <script>
+ _.mixin(_.str.exports());
+var rdf = Jassa.rdf;
+var sparql = Jassa.sparql;
+var service = Jassa.service;
 
+
+
+            // The Jassa object is now readily available
+            // We hope that the name Jassa is sufficiently exotic to never cause a name clash
+            // But who knows. I wished JavaScript had native namespace support...
+        console.log("The Jassa object: ", Jassa);
+		
 var q = new SPEXQuery();
 q.prefix("foaf","http://xmlns.com/0.1/foaf/")
    .select()
@@ -100,6 +119,8 @@ q.prefix("foaf","http://xmlns.com/0.1/foaf/")
          .where("foaf:name", "?name")
          .where("foaf:homepage", "?page");
 		 q.config.endpoint = "http://www.example.com/sparql/";
+var ex = new QueryExecutor();
+var res = ex.executeQuery(q,"http://dbpedia.org/sparql");
 
 		 function show(){		 
 		 //document.getElementById("sparql").innerHTML=q.getSPARQL();
@@ -135,6 +156,8 @@ q.prefix("foaf","http://xmlns.com/0.1/foaf/")
 		 q.setTemporalConstraint("?v1", t);
 		 show();
 		 }
+		 
+		 function 
 		 
 </script>
 
