@@ -93,6 +93,8 @@
 
 <script src="SPEXQuery.js"></script>
 <script src="QueryExecutor.js"></script>
+<script src="ResultsPane.js"></script>
+<script src="LabelGenerator.js"></script>
 <script src="node.js"></script>
 <script src="Window.js"></script>
 <script src="Time.js"></script>
@@ -115,17 +117,19 @@
 var q = new SPEXQuery();
 q.prefix("foaf","http://xmlns.com/0.1/foaf/")
    .select()
-   .where("?p", "a", "foaf:Person")
-         .where("foaf:name", "?name")
-         .where("foaf:homepage", "?page");
+   .where("?p", "a", "?q");
+         //.where("foaf:name", "?name")
+         //.where("foaf:homepage", "?page");
 		 q.config.endpoint = "http://www.example.com/sparql/";
-//var ex = new QueryExecutor();
+var lg = new LabelGenerator();
+var rp = new ResultsPane();
+var ex = new QueryExecutor(lg,rp);
 
 
-		function showresults() {
+		function showresults() {	
 		var res = ex.executeQuery(q,"http://dbpedia.org/sparql");
-		while(res.hasNext()) {
-            var binding = res.nextBinding();
+		for(var i = 0; i < res.length; i++) {
+			var binding = res[i];
 			document.getElementById("result").innerHTML= "Got binding: " + binding;
         }
 		}
@@ -227,8 +231,8 @@ q.prefix("foaf","http://xmlns.com/0.1/foaf/")
 <button id="addspace" onclick="addSpace()">addspace</button><br>
 <button id="addTime" onclick="addTime()">addTime</button><br>
 <button id="showresults" onclick="showresults()">show results</button><br>
-<textarea id="query" name="query" rows="2" cols="120"></textarea>
-<textarea id="result" name="result" rows="30" cols="120"></textarea>
+<textarea id="query" name="query" rows="30" cols="120"></textarea>
+<textarea id="result" name="result" rows="3" cols="120"></textarea>
 
 <br/>Time Filter Pane<br/>
 
