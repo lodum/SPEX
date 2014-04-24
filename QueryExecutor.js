@@ -12,7 +12,7 @@ QueryExecutor.prototype.constructor = QueryExecutor;
 
 QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 document.getElementById("result").innerHTML = "Waiting for results...";
-this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, true);
+this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, true);
 }
 
 
@@ -27,7 +27,7 @@ var fjsonObj = jsonObj;
 this.rp.display(fjsonObj);
 }
 
-QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, isDebug) {
+QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
       var querypart = "query=" + escape(queryStr);
     
       // Get our HTTP request object.
@@ -45,6 +45,8 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback,
      xmlhttp.open('POST', endpoint, true); // GET can have caching probs, so POST
      xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
      xmlhttp.setRequestHeader("Accept", "application/sparql-results+json");
+	 xmlhttp.timeout = timeout;
+	 xmlhttp.ontimeout = function () { alert("Timeout: the endpoint is not responding!"); }
     
      // Set up callback to get the response asynchronously.
      xmlhttp.onreadystatechange = function() {
