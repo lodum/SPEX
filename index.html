@@ -33,6 +33,7 @@
 
 
 
+<!-- Libraries and resources -->
 
 <!-- Slider Begin -->
 
@@ -81,16 +82,12 @@
 <!-- Slider End -->
 
 
-
+<!--This is the sparql query class we inherit-->
 <script src="lib/jquery-sparql-master/urlEncode.js"></script>
 <script src="lib/jquery-sparql-master/jquery.sparql.js"></script>
-<!-- Jassa set up
-<script src="lib/underscore.js"></script>
-<script src="lib/underscore.string.js"></script>
-<script src="lib/prototype.js"></script>
-<script src="lib/jassa.js"></script>-->
 
 
+<!--These are our own classes-->
 <script src="SPEXQuery.js"></script>
 <script src="QueryExecutor.js"></script>
 <script src="ResultsPane.js"></script>
@@ -102,48 +99,28 @@
 
 
 <script>
-// _.mixin(_.str.exports());
-//var rdf = Jassa.rdf;
-//var sparql = Jassa.sparql;
-//var service = Jassa.service;
 
+//	This is test code which sets up some objects and shows query results	
 
-
-            // The Jassa object is now readily available
-            // We hope that the name Jassa is sufficiently exotic to never cause a name clash
-            // But who knows. I wished JavaScript had native namespace support...
-       // console.log("The Jassa object: ", Jassa);
-		
+//$(document).ready(function () {
 var q = new SPEXQuery();
-q.prefix("foaf","http://xmlns.com/0.1/foaf/")
-   .select()
-   .where("?p", "a", "?q");
+q.select()
+   .where("?a", "rdf:type", "foaf:Person" );
          //.where("foaf:name", "?name")
-         //.where("foaf:homepage", "?page");
-		 q.config.endpoint = "http://www.example.com/sparql/";
+         //.where("foaf:homepage", "?page");		 
 var lg = new LabelGenerator();
 var rp = new ResultsPane();
 var ex = new QueryExecutor(lg,rp);
 
 
 		function showresults() {	
-		var res = ex.executeQuery(q,"http://dbpedia.org/sparql");
-		for(var i = 0; i < res.length; i++) {
-			var binding = res[i];
-			document.getElementById("result").innerHTML= "Got binding: " + binding;
-        }
+		ex.executeQuery(q,document.getElementById("endpoint").innerHTML);		
 		}
 
-		 function show(){		 
-		 //document.getElementById("sparql").innerHTML=q.getSPARQL();
-		 document.getElementById("query").innerHTML=q.getSPARQL();
-		 //alert(q.config.endpoint);
+		 function showquery(){		 
+		  document.getElementById("query").innerHTML=q.getSPARQL();		 
 		 }
-		 function add(){		 
-		 q.where(new Node("URI1"), new Node("URI2"), new Node("URI3"));
-		 show();
-		 }
-		 
+		 		 
 		 function addSpace(){
 			 var bbox = new Window();
 			 
@@ -168,20 +145,28 @@ var ex = new QueryExecutor(lg,rp);
 		 q.setTemporalConstraint("?v1", t);
 		 show();
 		 }
-		 
+//}		 
 				 
 </script>
+</head>
+<body>
+
+<h1>Spatio-temporal content explorer (SPEX)</h1>
+<br/>Time Filter Pane:<br/>
+<div id="map" style="width: 400px; height: 200px ; right: 0; position: absolute;"></div><br>
+<div id="slider" style="width: 800px; right: 1;position: absolute;"></div>  <br>
+<div >
+Endpoint:<br/>
+<textarea id="endpoint" name="endpoint" rows="1" cols="50" > http://data.uni-muenster.de/sparql </textarea><br/> 
+Query:<br/>
+<button id="sparql" onclick="showquery()">show query</button><button id="addspace" onclick="addSpace()">addspace</button><button id="addTime" onclick="addTime()">addTime</button><button id="showresults" onclick="showresults()">show results</button><br>
+</div>
+<textarea id="query" name="query" rows="10" cols="100"></textarea><br/>
+Results:<br/>
+ <div id="result">Results will be displayed here</div>
 
 
-
-
-
-
-
-
-
-  <div id="map" style="width: 400px; height: 200px ; right: 0; position: absolute;"></div>
-  <script>
+<script>
     var map = L.map('map').setView([0, 0], 3);
     // add an OpenStreetMap tile layer
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -212,31 +197,7 @@ var ex = new QueryExecutor(lg,rp);
 
 	map.on('drag', updateBBox);
 	map.on('zoomend', updateBBox)
-
-
-
-
   </script>
-
-
-
-
-</head>
-<body>
-
-<h1>Spatio-temporal content explorer (SPEX)</h1>
-
-<button id="sparql" onclick="show()">show</button><br>
-<button id="sparqladd" onclick="add()">add</button><br>
-<button id="addspace" onclick="addSpace()">addspace</button><br>
-<button id="addTime" onclick="addTime()">addTime</button><br>
-<button id="showresults" onclick="showresults()">show results</button><br>
-<textarea id="query" name="query" rows="30" cols="120"></textarea>
-<div id="result">Fetching results...</div>
-
-<br/>Time Filter Pane<br/>
-
-<div id="slider"></div>
 </body>
 
 </html>

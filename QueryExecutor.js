@@ -1,25 +1,30 @@
+
+/**
+Executes a SPEX query via http post and calls a callback function which turns results into a JSON object (sparql-results+json) and displays it in the registered resultspane.
+**/
 function QueryExecutor(labelgen, resultspane){ 
 this.labelGen = labelgen;
-this.resultsPane = resultspane;
+this.rp = resultspane;
 } 
 QueryExecutor.prototype.constructor = QueryExecutor;
-QueryExecutor.prototype.resultsLimit = 50;
-QueryExecutor.prototype.timeout = 5000;
+
 
 
 QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
-spexquery.limit = this.resultsLimit;
+document.getElementById("result").innerHTML = "Waiting for results...";
 this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, true);
+}
+
+
+QueryExecutor.prototype.filterResults = function(resultset){
+return resultset;
 }
 
 QueryExecutor.prototype.callback = function(str){
 var jsonObj = eval('(' + str + ')');
-var fjsonObj = this.filterResults(jsonObj);
-this.resultspane.display(fjsonObj);
-}
-
-QueryExecutor.prototype.filterResults = function(resultset){
-return resultset;
+//var fjsonObj = this.filterResults(jsonObj);
+var fjsonObj = jsonObj;
+this.rp.display(fjsonObj);
 }
 
 QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, isDebug) {
@@ -46,7 +51,7 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback,
        if(xmlhttp.readyState == 4) {
          if(xmlhttp.status == 200) {
            // Do something with the results
-           if(isDebug) alert(xmlhttp.responseText);
+           if(isDebug) alert(xmlhttp.responseText);//alert in debug mode
            callback(xmlhttp.responseText);
          } else {
            // Some kind of error occurred.
