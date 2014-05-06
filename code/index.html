@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset=utf-8 />
+	<title>SPEX - Spatio-temporal content explorer</title>
+
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+
+	<link rel="stylesheet" href="css/map.css">
+	<link rel="stylesheet" href="css/spex.css">
+
+	<!-- Libraries and resources -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="http://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css">
+
+	<link rel="stylesheet" id="themeCSS" href="lib/jQRangeSlider-master/css/classic.css"> 
+	<link rel="stylesheet" href="lib/jQRangeSlider-master/demo/style.css">
+	
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+	
+	
+	<!-- Slider Begin -->
+	<script src="lib/jQRangeSlider-master/lib/jquery.mousewheel.min.js"></script>
+
+	<script src="lib/jQRangeSlider-master/jQRangeSliderMouseTouch.js"></script>
+	<script src="lib/jQRangeSlider-master/jQRangeSliderDraggable.js"></script>
+	<script src="lib/jQRangeSlider-master/jQRangeSliderHandle.js"></script>
+	<script src="lib/jQRangeSlider-master/jQRangeSliderBar.js"></script>
+	<script src="lib/jQRangeSlider-master/jQRangeSliderLabel.js"></script>
+	<script src="lib/jQRangeSlider-master/jQRangeSlider.js"></script>
+
+	<script src="lib/jQRangeSlider-master/jQDateRangeSliderHandle.js"></script>
+	<script src="lib/jQRangeSlider-master/jQDateRangeSlider.js"></script>
+	
+	<script src="lib/jQRangeSlider-master/jQEditRangeSliderLabel.js"></script>
+	<script src="lib/jQRangeSlider-master/jQEditRangeSlider.js"></script>
+	<!-- Slider End -->
+
+	<!--This is the sparql query class we inherit-->
+	<script src="lib/jquery-sparql-master/urlEncode.js"></script>
+	<script src="lib/jquery-sparql-master/jquery.sparql.js"></script>
+
+
+	<!--These are our own classes-->
+	<script src="js/SPEXQuery.js"></script>
+	<script src="js/QueryExecutor.js"></script>
+	<script src="js/ResultsPane.js"></script>
+	<script src="js/LabelGenerator.js"></script>
+	<script src="js/node.js"></script>
+	<script src="js/Window.js"></script>
+	<script src="js/Time.js"></script>
+
+	<script src="js/map.js"></script>
+	<script src="js/slider.js"></script>
+	<script src="js/testing.js"></script>
+	<script src="js/spex.js"></script>
+
+</head>
+
+<body>
+	<div id="navBar">
+		<h3>SPEX - Spatio-temporal content explorer</h3>
+	</div>
+
+	<div id="page_container">
+		<div id="page">
+			<div id="page_left_container">
+				<div id="page_left">
+					<h3>Suggester</h3>
+				</div>
+			</div>
+
+			<div id="page_middle_container">
+				<div id="page_middle">
+					<h3>Query</h3>
+				</div>
+			</div>
+
+			<div id="page_right_container">
+				<div id="page_right">
+					<h3>Constraint</h3>
+					<div id="map"></div><br>
+					<div id="slider" style="width: 100%; padding-top: 20px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer">
+		
+		<div style="float: left">
+			Endpoint:<br/>
+			<textarea id="endpoint" name="endpoint" rows="1" cols="50" > http://data.uni-muenster.de/sparql </textarea><br/> 
+			Query:<br/>
+			<button id="showquery">show query</button>
+			<button id="addspace">addspace</button>
+			<button id="addTime">addTime</button>
+			<button id="showresults">show results</button><br>
+		</div>
+
+		<div style="float: left">
+			<textarea id="query" name="query" rows="10" cols="80"></textarea><br/>
+		</div>
+
+		<div id="result" style="float: left">
+			Results will be displayed here
+		</div>
+
+	</div>
+</body>
+
+</html>
