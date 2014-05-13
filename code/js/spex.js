@@ -14,9 +14,10 @@ var spex = new function(){
 		
 		testing.init();
 
-		this.q.select("?a", "?b")
+		this.q.select()
 			.where("?a", "rdf:type", "foaf:Person" )
-			.where("?b", "foaf:name", "?name");
+			.where("?b", "foaf:name", "?name")
+			.SPEXvariable("?a").SPEXvariable("?b");
 			//.where("foaf:homepage", "?page");
 
 	};

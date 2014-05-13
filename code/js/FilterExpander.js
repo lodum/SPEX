@@ -17,22 +17,31 @@ FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "
 
 
 FilterExpander.prototype.expandFilterLiterals = function(spexquery){
-	var opt = spexquery.optional();
-	for (var i = 0; i < spexquery.variables.length; i++) {
-        var v = spexquery.variables[i]; 
-		for (var j = 0; j < this.filterDataProperties.length;j++) {
+	
+	//console.log("variables:"+spexquery.SPEXvariables + " length:"+spexquery.SPEXvariables.length);
+	for (var i = 0; i < spexquery.SPEXvariables.length; i++) {
+        var v = spexquery.SPEXvariables[i]; 
+		//console.log("how many property chains: "+this.filterDataProperties.length);
+		for (var j = 0; j < this.filterDataProperties.length; j++) {
 			var p = this.filterDataProperties[j];
-			//spexquery.prefix(p.prefix, p.uri);					
-				for (var l = 0;l < p.prop.length; l++) {		
-					if (l = 0) { opt.where(v, p.prop[l], v+j+l); }
-					else { 
-						var ll = l - 1;
-						opt.where(v+j+ll, p.prop[l], v+j+l); 
+			//console.log("properties:"+p.prop + " length:"+p.prop.length);
+			//spexquery.prefix(p.prefix, p.uri);	
+			var opt = spexquery.optional();			
+				for (var x = 0; x < p.prop.length; x++) {	
+					//console.log("property: "+x);				
+					if (x == 0) { 
+					opt.where(v, p.prop[x], v+j+x); 
 					}
-				}	
+					else { //console.log("property: "+x);
+						var ll = x - 1;
+						opt.where(v+j+ll, p.prop[x], v+j+x); 
+					}
+				}
+			opt.end();
 		}        
     }
-	console.log("variables:"+spexquery.variables + " length:"+spexquery.variables.length);	
+	
+		
 	//return spexquery;
 }
 

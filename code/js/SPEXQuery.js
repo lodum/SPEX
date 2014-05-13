@@ -3,6 +3,7 @@ function SPEXQuery(){
 this.limit(50); 
 this.timeout = 5000;
 this.fe = new FilterExpander();
+this.SPEXvariables = [];
 }
 
 
@@ -46,6 +47,12 @@ SPEXQuery.prototype.prefix("tipr", "http://www.ontologydesignpatterns.org/cp/owl
 
 
 SPEXQuery.prototype.thematicConstraints = [];
+
+//This is the array which holds those variables requested by the user
+SPEXQuery.prototype.SPEXvariable = function(variable) {
+    this.SPEXvariables.push(variable);
+    return this;
+  };
 
 SPEXQuery.prototype.getSPARQL = function (){ 	
 	this.expandSpaceFilter();
