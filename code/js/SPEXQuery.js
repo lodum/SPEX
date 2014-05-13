@@ -2,6 +2,7 @@
 function SPEXQuery(){ 
 this.limit(50); 
 this.timeout = 5000;
+this.fe = new FilterExpander();
 }
 
 
@@ -9,8 +10,11 @@ SPEXQuery.prototype = $.sparql("http://www.example.com/sparql/");
 SPEXQuery.prototype.constructor = SPEXQuery;
 SPEXQuery.prototype.spatialConstraints = [];
 SPEXQuery.prototype.temporalConstraints = [];
+
+
 //a standard list of prefixes
-SPEXQuery.prototype.prefix("geo", "http://www.w3.org/2003/01/geo/wgs84_pos#");
+SPEXQuery.prototype.prefix("geo", "http://www.opengis.net/ont/geosparql#");
+SPEXQuery.prototype.prefix("wgs84", "http://www.w3.org/2003/01/geo/wgs84_pos#");
 SPEXQuery.prototype.prefix("time", "http://www.w3.org/2006/time#");
 SPEXQuery.prototype.prefix("xsd", "http://www.w3.org/2001/XMLSchema#");
 SPEXQuery.prototype.prefix("dct", "http://purl.org/dc/terms/");
@@ -37,15 +41,16 @@ SPEXQuery.prototype.prefix("resume", "http://rdfs.org/resume-rdf/#");
 SPEXQuery.prototype.prefix("tis", "http://www.ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl#");
 SPEXQuery.prototype.prefix("ti", "http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#");
 SPEXQuery.prototype.prefix("lode", "http://linkedevents.org/ontology/");
-SPEXQuery.prototype.prefix("wgs84", "http://www.w3.org/2003/01/geo/wgs84_pos#");
+
 SPEXQuery.prototype.prefix("tipr", "http://www.ontologydesignpatterns.org/cp/owl/timeindexedpersonrole.owl#");
 
 
 SPEXQuery.prototype.thematicConstraints = [];
 
-SPEXQuery.prototype.getSPARQL= function (){ 
+SPEXQuery.prototype.getSPARQL = function (){ 	
 	this.expandSpaceFilter();
-	this.expandTimeFilter();
+	this.expandTimeFilter();	
+	this.fe.expandFilterLiterals(this);
 	return this.serialiseQuery();
 }
 
@@ -81,8 +86,8 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
  	
  	for (i=0;i<this.spatialConstraints.length;i++)  {
 		
-		this.where(this.spatialConstraints[i].v, "geo:lat", "?lat")
-		.where("geo:long", "?long");
+		this.where(this.spatialConstraints[i].v, "wgs84:lat", "?lat")
+		.where("wgs84:long", "?long");
 
 		this.filter("?lat  < " + this.spatialConstraints[i].w.upperRightLatitude + " && ?lat > "  + this.spatialConstraints[i].w.lowerLeftLatitude + 
 			             " && ?long < " + this.spatialConstraints[i].w.upperRightLongitude +" && ?long > " + this.spatialConstraints[i].w.lowerLeftLongitude);  		
