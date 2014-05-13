@@ -33,7 +33,7 @@ FilterExpander.prototype.expandFilterLiterals = function(spexquery){
 				}	
 		}        
     }
-	console.log("variables:"+spexquery.variables + " length:"spexquery.variables.length);
+	console.log("variables:"+spexquery.variables + " length:"+spexquery.variables.length);
 	spexquery.optional(opt);
 	//return spexquery;
 }
