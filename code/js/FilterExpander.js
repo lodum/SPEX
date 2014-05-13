@@ -17,8 +17,7 @@ FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "
 
 
 FilterExpander.prototype.expandFilterLiterals = function(spexquery){
-	var opt = new Query(spexquery.config.endpoint, spexquery.config);
-	opt.select();
+	var opt = spexquery.optional();
 	for (var i = 0; i < spexquery.variables.length; i++) {
         var v = spexquery.variables[i]; 
 		for (var j = 0; j < this.filterDataProperties.length;j++) {
@@ -33,8 +32,7 @@ FilterExpander.prototype.expandFilterLiterals = function(spexquery){
 				}	
 		}        
     }
-	console.log("variables:"+spexquery.variables + " length:"+spexquery.variables.length);
-	spexquery.optional(opt);
+	console.log("variables:"+spexquery.variables + " length:"+spexquery.variables.length);	
 	//return spexquery;
 }
 
