@@ -10,7 +10,7 @@ LiteralExpander.prototype.expandLabels = function(query) {
 	if(query.variables.length !== 0) {
 		return labelExpander(query);
 	} else {	
-		var queryAsString = query.serialiseQuery();
+		var queryAsString = query.getSPARQL();//query.serialiseQuery();
 		var pattern = /(?:\?|\$)[^ |^.|^)]*/g;  												//ADD [^}] ?
 		var variableList = queryAsString.match(pattern);
 		reduce(variableList);
