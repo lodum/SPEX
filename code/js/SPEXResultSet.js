@@ -5,13 +5,19 @@ function SPEXResultSet(json) {
 
 
 //SPEXResultSet.prototype = new ResultSet();
-SPEXResultSet.prototype.constructor = SPEXResultSet;
+//SPEXResultSet.prototype.constructor = SPEXResultSet;
+
+/* Function to return JSON as returned from endpoint. */
 SPEXResultSet.prototype.getAllResults = function() {
 	return this.allResults;
 };
+
+/*Function to add new row into result's bindings table. */
 SPEXResultSet.prototype.addNewResult = function(resultObject) { //is this what it's meant to do?
 	this.allResults.results.bindings.push(resultObject);
 }; 
+
+/* Function to extract instance-label pairs from JSON result and store them as array of objects, for use in displaying results. */
 SPEXResultSet.prototype.storeLabeledResults = function() {
 	var solutions = this.allResults.results.bindings;
 	for(var i = 0; i < solutions.length; i++) {
