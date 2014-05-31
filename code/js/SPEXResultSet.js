@@ -12,7 +12,7 @@ SPEXResultSet.prototype.getAllResults = function() {
 	return this.allResults;
 };
 
-/*Function to add new row into result's bindings table. */
+/*Function to add new solution into result set. */
 SPEXResultSet.prototype.addNewResult = function(resultObject) { //is this what it's meant to do?
 	this.allResults.results.bindings.push(resultObject);
 }; 
