@@ -24,7 +24,7 @@ LiteralExpander.prototype.expandLabels = function(query) {
 			var variableList = query.variables;
 		}
 
-		//Construct string to use as predicate of triples asking for labels.
+		//Construct string to use as predicate of triples that ask for labels.
 		var labelPredicate = "";
 		for(var i = 0; i < this.listOfLabelProperties.length; i++) {
 			if(i === this.listOfLabelProperties.length - 1) {
