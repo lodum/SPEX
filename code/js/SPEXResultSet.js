@@ -1,7 +1,15 @@
 function SPEXResultSet(json) {
 	this.allResults = json;
 	this.labeledResults = [];
-	this.userSelectedVariables = [];
+	this.userSelectedVariables = (function(){
+		var variables = [];
+		for(i = 0; i < this.allResults.head.vars.length; i++) {
+			if(allResults.head.vars[i].substring(variables[i].length - 7, variables[i].length) !== "__label") {
+				variables.push(allResults.head.vars[i]);
+			}
+		}
+		return variables;
+	})();
 }
 
 
@@ -17,6 +25,8 @@ SPEXResultSet.prototype.getAllResults = function() {
 SPEXResultSet.prototype.getResultsForDisplay = function() {
 	return this.labeledResults;
 };
+
+SPEXResultSet.prototype.
 
 /*Function to add new solution into result set. */
 SPEXResultSet.prototype.addNewResult = function(resultObject) { //is this what it's meant to do?
