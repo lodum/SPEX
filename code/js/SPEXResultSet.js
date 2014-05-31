@@ -26,7 +26,6 @@ SPEXResultSet.prototype.getResultsForDisplay = function() {
 	return this.labeledResults;
 };
 
-SPEXResultSet.prototype.
 
 /*Function to add new solution into result set. */
 SPEXResultSet.prototype.addNewResult = function(resultObject) { //is this what it's meant to do?
