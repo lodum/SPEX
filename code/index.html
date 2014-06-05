@@ -8,8 +8,9 @@
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 
-	<link rel="stylesheet" href="css/map.css">
 	<link rel="stylesheet" href="css/spex.css">
+	<link rel="stylesheet" href="css/map.css">
+	<link rel="stylesheet" href="css/queryPane.css">
 
 	<!-- Libraries and resources -->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
@@ -21,6 +22,7 @@
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 	
+	<script src="lib/d3/d3.min.js"></script>
 	
 	<!-- Slider Begin -->
 	<script src="lib/jQRangeSlider-master/lib/jquery.mousewheel.min.js"></script>
@@ -54,6 +56,8 @@
 	<script src="js/Window.js"></script>
 	<script src="js/Time.js"></script>
 
+	<script src="js/queryPane.js"></script>
+
 	<script src="js/map.js"></script>
 	<script src="js/slider.js"></script>
 	<script src="js/testing.js"></script>
@@ -62,55 +66,63 @@
 </head>
 
 <body>
-	<div id="navBar">
-		<h3>SPEX - Spatio-temporal content explorer</h3>
-	</div>
 
-	<div id="page_container">
-		<div id="page">
-			<div id="page_left_container">
-				<div id="page_left">
-					<h3>Suggester</h3>
-				</div>
-			</div>
+	<div id="navBar_container">
+		<div id="navBar">
 
-			<div id="page_middle_container">
-				<div id="page_middle">
-					<h3>Query</h3>
-				</div>
-			</div>
+			<div id="nav_title">
+				SPEX - Spatio-temporal content explorer
+			</div>	
 
-			<div id="page_right_container">
-				<div id="page_right">
-					<h3>Constraint</h3>
-					<div id="map"></div><br>
-					<div id="slider" style="width: 100%; padding-top: 20px;"></div>
-				</div>
+			<div id="nav_endpoint">
+				Endpoint:
+				<input type="text" id="endpoint" name="endpoint" value=" http://data.uni-muenster.de/sparql"></input> 
 			</div>
 		</div>
 	</div>
 
-	<div id="footer">
+	<div id="page_container">
+		<div id="page">
+			
+			<div id="queryPane">
+				
+			</div>
+
+			<div id="contextMenu">
+					<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div>
+
+					Menu:
+					<br>
+					p: <input type="text" id="queryP"></input>
+					<br>
+					c: <input type="text" id="queryC"></input>
+					<br>
+					<input type="button" id="queryAdd" onclick="queryPane.add()" value="Add">
+			</div>
+
+		</div>
+	</div>
+
+	<div id="right_panel_container">
 		
-		<div style="float: left">
-			Endpoint:<br/>
-			<textarea id="endpoint" name="endpoint" rows="1" cols="50" > http://data.uni-muenster.de/sparql </textarea><br/> 
+		<div id="right_panel">
+			<div id="map"></div><br>
+			<div id="slider" style="width: 100%; padding-top: 20px;"></div>
+
+			<br>
+
 			Query:<br/>
 			<button id="showquery">show query</button>
 			<button id="addspace">addspace</button>
 			<button id="addTime">addTime</button>
 			<button id="showresults">show results</button><br>
-		</div>
 
-		<div style="float: left">
-			<textarea id="query" name="query" rows="10" cols="80"></textarea><br/>
-		</div>
+			<textarea id="query" name="query" rows="10" cols="50"></textarea>
 
-		<div id="result" style="float: left">
-			Results will be displayed here
 		</div>
 
 	</div>
+
 </body>
 
 </html>

@@ -1,0 +1,36 @@
+svg {
+	position: absolute;
+	margin: 0;
+}
+
+g, line {
+}
+
+textarea {
+	margin: 0;
+}
+
+#queryPane {
+	position: inherit;
+	height: 100%;
+	width: 100%;
+}
+
+path.link {
+	fill: none;
+	stroke: #000;
+	stroke-width: 1px;
+	cursor: default;
+}
+
+#contextMenu {
+  position: absolute;
+  display: none;
+  background: #fff;
+  border-radius: 5px;
+  border: solid 1px gray;
+  padding: 10px;
+  text-align: left;
+  font-size: smaller;
+  z-index: 9990;
+}
