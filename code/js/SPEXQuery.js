@@ -329,8 +329,10 @@ SPEXQuery.prototype.prefix("rdag3" , "http://rdvocab.info/ElementsGr3/");
 SPEXQuery.prototype.prefix("rdarel" , "http://rdvocab.info/RDARelationshipsWEMI#");
 SPEXQuery.prototype.prefix("rdarel2" , "http://metadataregistry.org/uri/schema/RDARelationshipsGR2#");
 SPEXQuery.prototype.prefix("rdarole" , "http://rdvocab.info/roles#");
+*/
 SPEXQuery.prototype.prefix("rdf" , "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 SPEXQuery.prototype.prefix("rdfs" , "http://www.w3.org/2000/01/rdf-schema#");
+/*
 SPEXQuery.prototype.prefix("rdfg" , "http://www.w3.org/2004/03/trix/rdfg-1/");
 SPEXQuery.prototype.prefix("rec" , "http://purl.org/ontology/rec/core#");
 SPEXQuery.prototype.prefix("reegle" , "http://reegle.info/schema#");
