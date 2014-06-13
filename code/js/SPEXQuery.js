@@ -14,6 +14,7 @@ SPEXQuery.prototype.temporalConstraints = [];
 
 
 //a standard list of prefixes
+/*
 SPEXQuery.prototype.prefix("acco" , "http://purl.org/acco/ns#");
 SPEXQuery.prototype.prefix("acl" , "http://www.w3.org/ns/auth/acl#");
 SPEXQuery.prototype.prefix("acm" , "http://www.rkbexplorer.com/ontologies/acm#");
@@ -129,7 +130,9 @@ SPEXQuery.prototype.prefix("ext" , "http://def.seegrid.csiro.au/isotc211/iso1911
 SPEXQuery.prototype.prefix("fabio" , "http://purl.org/spar/fabio/");
 SPEXQuery.prototype.prefix("fea" , "http://vocab.data.gov/def/fea#");
 SPEXQuery.prototype.prefix("fn" , "http://www.w3.org/2005/xpath-functions#");
+*/
 SPEXQuery.prototype.prefix("foaf" , "http://xmlns.com/foaf/0.1/");
+/*
 SPEXQuery.prototype.prefix("food" , "http://data.lirmm.fr/ontologies/food#");
 SPEXQuery.prototype.prefix("fowl" , "http://www.w3.org/TR/2003/PR-owl-guide-20031215/food#");
 SPEXQuery.prototype.prefix("frad" , "http://iflastandards.info/ns/fr/frad/");
@@ -143,7 +146,9 @@ SPEXQuery.prototype.prefix("gastro" , "http://www.ebsemantics.net/doc/gastro#");
 SPEXQuery.prototype.prefix("gc" , "http://www.oegov.org/core/owl/gc#");
 SPEXQuery.prototype.prefix("gd" , "http://vocab.data.gov/gd#");
 SPEXQuery.prototype.prefix("gen" , "http://purl.org/gen/0.1#");
+*/
 SPEXQuery.prototype.prefix("geo" , "http://www.opengis.net/ont/geosparql#");
+/*
 SPEXQuery.prototype.prefix("geod" , "http://vocab.lenka.no/geo-deling#");
 SPEXQuery.prototype.prefix("geof" , "http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#");
 SPEXQuery.prototype.prefix("geop" , "http://aims.fao.org/aos/geopolitical.owl#");
@@ -395,7 +400,9 @@ SPEXQuery.prototype.prefix("test" , "http://www.w3.org/2006/03/test-description#
 SPEXQuery.prototype.prefix("theatre" , "http://purl.org/theatre#");
 SPEXQuery.prototype.prefix("thors" , "http://resource.geosciml.org/ontology/timescale/thors#");
 SPEXQuery.prototype.prefix("ti" , "http://www.ontologydesignpatterns.org/cp/owl/timeinterval.owl#");
+*/
 SPEXQuery.prototype.prefix("time" , "http://www.w3.org/2006/time#");
+/*
 SPEXQuery.prototype.prefix("tio" , "http://purl.org/tio/ns#");
 SPEXQuery.prototype.prefix("tipr" , "http://www.ontologydesignpatterns.org/cp/owl/timeindexedpersonrole.owl#");
 SPEXQuery.prototype.prefix("tis" , "http://www.ontologydesignpatterns.org/cp/owl/timeindexedsituation.owl#");
@@ -437,7 +444,9 @@ SPEXQuery.prototype.prefix("wai" , "http://purl.org/wai#");
 SPEXQuery.prototype.prefix("wdrs" , "http://www.w3.org/2007/05/powder-s#");
 SPEXQuery.prototype.prefix("wf-invoc" , "http://purl.org/net/wf-invocation#");
 SPEXQuery.prototype.prefix("wfm" , "http://purl.org/net/wf-motifs#");
+*/
 SPEXQuery.prototype.prefix("wgs84" , "http://www.w3.org/2003/01/geo/wgs84_pos#");
+/*
 SPEXQuery.prototype.prefix("whisky" , "http://vocab.org/whisky/terms#");
 SPEXQuery.prototype.prefix("whois" , "http://www.kanzaki.com/ns/whois#");
 SPEXQuery.prototype.prefix("wi" , "http://purl.org/ontology/wi/core#");
@@ -450,7 +459,7 @@ SPEXQuery.prototype.prefix("xhv" , "http://www.w3.org/1999/xhtml/vocab#");
 SPEXQuery.prototype.prefix("xkos" , "http://purl.org/linked-data/xkos#");
 SPEXQuery.prototype.prefix("xsd" , "http://www.w3.org/2001/XMLSchema#");
 SPEXQuery.prototype.prefix("zbwext" , "http://zbw.eu/namespaces/zbw-extensions#");
-
+*/
 
 SPEXQuery.prototype.thematicConstraints = [];
 
