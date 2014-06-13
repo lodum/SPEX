@@ -1,19 +1,8 @@
 /* Constructor function for LabelGenerator objects */
-function LabelGenerator() {
-	//this.listOfLabelProperties = [];														//WHAT EXACTLY IS THIS?
-}
-/*
-LabelGenerator.prototype.getListOfProperties = function() {
-	return this.listOfLabelProperties;
-};
-*/
+function LabelGenerator() {}
 
-/*
-This function takes a SPARQL JSON result set of a SELECT query which has been worked on by
-the LabelExpander, then checks for missing labels, and fills them, for ex. by parsing the uri. 
-*/
+/* This function takes a SPARQL JSON result set, checks for missing labels, and fills them in. */
 LabelGenerator.prototype.label = function(resultSet) {
-	resultSet.head.originalVars;
 	
 	/* Define reference points. */
 	var variables = resultSet.getAllResults().head.vars;
@@ -22,8 +11,8 @@ LabelGenerator.prototype.label = function(resultSet) {
 	/* Find result set variables ending with "__label". */
 	for(var i = 0; i < variables.length; i++){
 		if(variables[i].substring(variables[i].length - 7, variables[i].length) === "__label"){
-			/* Check if the label variable is bound for each solution; 
-			if not, create binding (new memeber in the solution).
+			/* Check if the __label variable is bound for each solution; 
+			if not, create binding (i.e. add new memeber in the solution).
 			A variable does not appear in the solutions array's element if it is not bound in that particular query solution. */
 			for(var j = 0; j < data.length; j++){				
 				if(!data[j][variables[i]]){
