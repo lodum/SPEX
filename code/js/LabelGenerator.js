@@ -8,12 +8,12 @@ LabelGenerator.prototype.label = function(resultSet) {
 	var variables = resultSet.getAllResults().head.vars;
 	var data = resultSet.getAllResults().results.bindings;
 	
-	/* Find result set variables ending with "__label". */
 	for(var i = 0; i < variables.length; i++){
+		/*Check if the variable is a __label variable. */
 		if(variables[i].substring(variables[i].length - 7, variables[i].length) === "__label"){
-			/* Check if the __label variable is bound for each solution; 
-			if not, create binding (i.e. add new memeber in the solution).
-			A variable does not appear in the solutions array's element if it is not bound in that particular query solution. */
+			/*For each solution, check if the __label variable is bound that solution; 
+			if not, create a binding (i.e. add a member corresponding to the __label variable to the solution object).
+			(A variable does not appear in a solution object if it is not bound in that particular query solution.) */
 			for(var j = 0; j < data.length; j++){				
 				if(!data[j][variables[i]]){
 					data[j][variables[i]] = {"type": "literal", "value": createLabel(data[j][variables[i].substring(0, variables[i].length - 7)])};
