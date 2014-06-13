@@ -11,6 +11,11 @@ QueryExecutor.prototype.constructor = QueryExecutor;
 
 
 QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
+//Test whether endpoint is non empty:
+		if (endpoint == '' || endpoint == null) {
+		alert('Endpoint is empty!');
+		return;
+		}
 document.getElementById("result").innerHTML = "Waiting for results...";
 this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, true);
 }
@@ -29,25 +34,51 @@ this.rp.display(fjsonObj);
 
 QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
       var querypart = "query=" + escape(queryStr);
-    
-      // Get our HTTP request object.
-      var xmlhttp = null;
-      if(window.XMLHttpRequest) {
-        xmlhttp = new XMLHttpRequest();
-     } else if(window.ActiveXObject) {
+      //console.log('Endpoint: '+ endpoint);
+      
+	  // Function for creating xmlhttp  object depending on browser.
+		function createCORSRequest(method, url) {
+			var xmlhttp = new XMLHttpRequest();
+		  if ("withCredentials" in xmlhttp) {
+			// xmlhttp for Chrome/Firefox/Opera/Safari.
+			xmlhttp.open(method, url, true);
+		  } else if (typeof XDomainRequest != "undefined") {
+			// XDomainRequest for IE.
+			xmlhttp = new XDomainRequest();
+			xmlhttp.open(method, url);
+		  } else {
+			// CORS not supported.
+			xmlhttp = null;
+		  }
+		  return xmlhttp;
+		}
+	
+	 // Get our HTTP request object.	 
+      var xmlhttp = createCORSRequest('POST', endpoint); 
+	  if (!xmlhttp) {
+		alert('CORS not supported');
+		return;
+	  }
+    //  if(window.XMLHttpRequest) {
+    //    xmlhttp = new XMLHttpRequest();
+    // } else if(window.ActiveXObject) {
        // Code for older versions of IE, like IE6 and before.
-       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-     } else {
-       alert('Perhaps your browser does not support XMLHttpRequests?');
-     }
+    //   xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    // } else {
+     //  alert('Perhaps your browser does not support XMLHttpRequests?');
+     //}
     
+	
      // Set up a POST with JSON result format.
-     xmlhttp.open('POST', endpoint, true); // GET can have caching probs, so POST
+     //xmlhttp.open('POST', endpoint, true); // GET can have caching probs, so POST
      xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
      xmlhttp.setRequestHeader("Accept", "application/sparql-results+json");	 
 	 xmlhttp.timeout = timeout;
 	 xmlhttp.ontimeout = function () { alert("Timeout: the endpoint is not responding!"); }
-    
+	 	 xmlhttp.onerror = function() {
+		alert('Woops, there was an error making the request.');
+	  };
+
      // Set up callback to get the response asynchronously.
      xmlhttp.onreadystatechange = function() {
        if(xmlhttp.readyState == 4) {

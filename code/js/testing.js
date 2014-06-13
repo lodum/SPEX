@@ -10,7 +10,9 @@ var testing = new function(){
 	};
 
 	this.showresults = function() {	
-		spex.ex.executeQuery(spex.q,document.getElementById("endpoint").innerHTML);			
+		alert('The endpoint :' + document.getElementById("endpoint").innerHTML);
+		//spex.ex.executeQuery(spex.q,document.getElementById("endpoint").innerHTML);
+		spex.ex.executeQuery(spex.q,"http://data.uni-muenster.de/sparql");		
 	};
 
 	this.showquery = function() {		 
