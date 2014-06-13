@@ -38,12 +38,12 @@ SPEXResultSet.prototype.getResultsForDisplay = function() {
 SPEXResultSet.prototype.addNewResult = function(resultObject) { //is this what it's meant to do?
 	this.allResults.results.bindings.push(resultObject);
 	//If a new solution has been added, we have to reformat the labeledResults attribute.
-	this.prepareResultsForDisplay();
+	this.prepareForDisplay();
 }; 
 
 /* Function to extract instance-label pairs from JSON result that has been worked on by LabelGenerator,
    and store the pairs as array of objects, for use in displaying results. */
-SPEXResultSet.prototype.prepareResultsForDisplay = function() {
+SPEXResultSet.prototype.prepareForDisplay = function() {
 	var solutions = this.allResults.results.bindings;
 	for(var i = 0; i < solutions.length; i++) {
 		for(variableName in solutions[i]) {
