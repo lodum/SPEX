@@ -44,7 +44,7 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback,
      // Set up a POST with JSON result format.
      xmlhttp.open('POST', endpoint, true); // GET can have caching probs, so POST
      xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-     xmlhttp.setRequestHeader("Accept", "application/sparql-results+json");
+     xmlhttp.setRequestHeader("Accept", "application/sparql-results+json");	 
 	 xmlhttp.timeout = timeout;
 	 xmlhttp.ontimeout = function () { alert("Timeout: the endpoint is not responding!"); }
     
@@ -57,8 +57,8 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback,
            callback(xmlhttp.responseText);
          } else {
            // Some kind of error occurred.
-           alert("Sparql query error: " + xmlhttp.status + " "
-               + xmlhttp.responseText);
+           alert("Sparql query error: http status " + xmlhttp.status + " "
+               + xmlhttp.statusText);
          }
        }
      };
