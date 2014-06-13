@@ -2,7 +2,7 @@ function SPEXResultSet(json) {
 	this.allResults = json;
 	this.labeledResults = [];
 	
-	/*Since only variables originally selected by the user got a "__label" ending by LiteralExpander,
+	/*Since only variables originally selected by the user got a "__label" ending by LiteralExpander and LabelGenerator,
 	we can identify and retrieve them by cutting off the ending. */
 	this.userSelectedVariables = (function(){
 		var allVariables = this.allResults.head.vars;
