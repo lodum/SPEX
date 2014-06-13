@@ -2,13 +2,16 @@ function SPEXResultSet(json) {
 	this.allResults = json;
 	this.labeledResults = [];
 	this.userSelectedVariables = (function(){
-		var variables = [];
-		for(i = 0; i < this.allResults.head.vars.length; i++) {
-			if(allResults.head.vars[i].substring(variables[i].length - 7, variables[i].length) !== "__label") {
-				variables.push(allResults.head.vars[i]);
+		var variables = this.allResults.head.vars;
+		var userSelection = [];
+		for(i = 0; i < variables.length; i++) {
+			if(variables[i].substring(variables[i].length - 7, variables[i].length) === "__label") {
+				var parent = variables[i].substring(0, variables[i].length - 7);
+				var parentIndex = variables.indexOf(parent);
+				userSelection.push(variables[parentIndex]);
 			}
 		}
-		return variables;
+		return userSelection;
 	})();
 }
 
