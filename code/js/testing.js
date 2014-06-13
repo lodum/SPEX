@@ -10,7 +10,7 @@ var testing = new function(){
 	};
 
 	this.showresults = function() {	
-		spex.ex.executeQuery(spex.q,document.getElementById("endpoint").innerHTML);		
+		spex.ex.executeQuery(spex.q,document.getElementById("endpoint").innerHTML);			
 	};
 
 	this.showquery = function() {		 
