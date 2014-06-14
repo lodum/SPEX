@@ -11,7 +11,7 @@ LiteralExpander.prototype.addLabelProperty = function(property) {
 LiteralExpander.prototype.expandLabels = function(spexquery) {  
 		//Check if there are original __label variables!!
 
-		/*NOT WORKING:
+		
 		
 		//Construct string to use as predicate of triples that ask for labels.
 		var labelPredicate = "";
@@ -30,8 +30,9 @@ LiteralExpander.prototype.expandLabels = function(spexquery) {
 			spexquery.optional().where(spexquery.SPEXvariables[k], labelPredicate, spexquery.SPEXvariables[k] + "__label");
 		}
 
-		*/
+		
 
+		/*
 		for (var k = 0; k < spexquery.SPEXvariables.length; k++){
 			//Syntax of the predicate: see "http://www.w3.org/TR/sparql11-query/#propertypath-examples".
 			//Multiple results for label should be handled!!
@@ -39,7 +40,7 @@ LiteralExpander.prototype.expandLabels = function(spexquery) {
 				spexquery.optional().where(spexquery.SPEXvariables[k], this.listOfLabelProperties[j], spexquery.SPEXvariables[k] + "__label" + j);
 			}
 		}
-
+		*/
 		
 		return spexquery;
 
