@@ -90,10 +90,14 @@ SPEXQuery.prototype.prefix("dady" , "http://vocab.deri.ie/dady#");
 SPEXQuery.prototype.prefix("daia" , "http://purl.org/ontology/daia#");
 SPEXQuery.prototype.prefix("dcam" , "http://purl.org/dc/dcam/");
 SPEXQuery.prototype.prefix("dcat" , "http://www.w3.org/ns/dcat#");
+*/
 SPEXQuery.prototype.prefix("dc" , "http://purl.org/dc/elements/1.1/");
+/*
 SPEXQuery.prototype.prefix("dcite" , "http://purl.org/spar/datacite#");
 SPEXQuery.prototype.prefix("dcndl" , "http://ndl.go.jp/dcndl/terms/");
+*/
 SPEXQuery.prototype.prefix("dct" , "http://purl.org/dc/terms/");
+/*
 SPEXQuery.prototype.prefix("dctype" , "http://purl.org/dc/dcmitype/");
 SPEXQuery.prototype.prefix("deo" , "http://purl.org/spar/deo#");
 SPEXQuery.prototype.prefix("dicom" , "http://purl.org/healthcarevocab/v1#");
