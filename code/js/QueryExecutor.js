@@ -32,7 +32,7 @@ QueryExecutor.prototype.callback = function(str){
   //var results = this.labelGen.label(new SPEXResultSet(jsonObj));
   var results = lg.label(new SPEXResultSet(jsonObj));
   var rp = new ResultsPane();
-  cosole.log("rp " + rp);
+  console.log("rp " + rp);
   rp.display(results);
 }
 
