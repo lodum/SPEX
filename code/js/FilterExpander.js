@@ -24,10 +24,10 @@ FilterExpander.prototype.expandFilterLiterals = function(spexquery){
 			var opt = spexquery.optional();			
 			for (var x = 0; x < p.prop.length; x++) {				
 				if (x == 0) { 
-					opt.where(v, p.prop[x], v+"-"+j+"-"+x); 
+					opt.where(v, p.prop[x], v+j+x); 
 				} else { 
 					var ll = x - 1;
-					opt.where(v+"-"+j+"-"+ll, p.prop[x], v+"-"j+"-"+x); //property chain
+					opt.where(v+j+ll, p.prop[x], v+j+x); //property chain
 				}
 			}
 			opt.end();
