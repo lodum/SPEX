@@ -1,20 +1,20 @@
 function SPEXResultSet(json) {
 	this.allResults = json;
-	this.displayResults = this.prepareresultstodisplay(json);
+	//this.displayResults = this.prepareresultstodisplay(json);
 }
 
 //Generates a second json object for display containing only user selected variables of the query (spex.q.SPEXvariables)
-SPEXResultSet.prototype.prepareresultstodisplay = function(json) {
-var displayjson = JSON.parse(JSON.stringify(json));
-	$.each(displayjson.head.vars, function(index2, value2) { 
-		if( 
-		spex.q.SPEXvariables.indexOf('?'+value2)==-1 && value2!=undefined 
-		){ 						
-					delete displayjson.head.vars[index2];
-		}else{};						
-	});			
-return  displayjson;
-}
+//SPEXResultSet.prototype.prepareresultstodisplay = function(json) {
+//var displayjson = JSON.parse(JSON.stringify(json));
+//	$.each(displayjson.head.vars, function(index2, value2) { 
+//		if( 
+//		spex.q.SPEXvariables.indexOf('?'+value2)==-1 && value2!=undefined 
+//		){ 						
+//					delete displayjson.head.vars[index2];
+//		}else{};						
+//	});			
+//return  displayjson;
+//}
 
 
 //SPEXResultSet.prototype.constructor = SPEXResultSet;
