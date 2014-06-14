@@ -29,7 +29,9 @@ QueryExecutor.prototype.callback = function(str){
 var jsonObj = eval('(' + str + ')');
 //var fjsonObj = this.filterResults(jsonObj);
 var fjsonObj = jsonObj;
-this.rp.display(fjsonObj);
+var rp = new ResultsPane();
+//alert(this.rp == null);
+rp.display(fjsonObj);
 }
 
 QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
@@ -59,14 +61,6 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback,
 		alert('CORS not supported');
 		return;
 	  }
-    //  if(window.XMLHttpRequest) {
-    //    xmlhttp = new XMLHttpRequest();
-    // } else if(window.ActiveXObject) {
-       // Code for older versions of IE, like IE6 and before.
-    //   xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    // } else {
-     //  alert('Perhaps your browser does not support XMLHttpRequests?');
-     //}
     
 	
      // Set up a POST with JSON result format.
