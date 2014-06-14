@@ -36,7 +36,8 @@ ResultsPane.prototype.display = function(spexresultset){
 		htmlString += "</tbody></table>";
 		
 		/* Display the table. */
-		document.getElementById("result").innerHTML = htmlString;
+		//document.getElementById("result").innerHTML = htmlString;
+		$("result").append(htmlString);
 		
 		
 	}	
