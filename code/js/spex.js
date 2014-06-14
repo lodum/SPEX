@@ -18,8 +18,8 @@ var spex = new function(){
 
 		this.q.select()
 			.where("?a", "rdf:type", "dbp-ont:building" )
-			.where("?b", "foaf:name", "?name")
-			.SPEXvariable("?a").SPEXvariable("?b");
+			.where("foaf:name", "?name")
+			.SPEXvariable("?a");
 			//.where("foaf:homepage", "?page");
 
 	};
