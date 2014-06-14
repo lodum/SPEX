@@ -8,7 +8,8 @@ var spex = new function(){
 
 	// Initialization
 	this.init = function() {
-		
+		console.log("lg = " + this.lg);
+		console.log("rp = " + this.rp);
 		queryPane.init();
 
 		map.init();
