@@ -3,6 +3,7 @@ function SPEXQuery(){
 this.limit(50); 
 this.timeout = 5000;
 this.fe = new FilterExpander();
+this.le = new LiteralExpander();
 this.SPEXvariables = [];
 }
 
@@ -479,6 +480,7 @@ SPEXQuery.prototype.getSPARQL = function (){
 	this.expandSpaceFilter();
 	this.expandTimeFilter();	
 	this.fe.expandFilterLiterals(this);
+	this.le.expandLabels(this);
 	return this.serialiseQuery();
 }
 
