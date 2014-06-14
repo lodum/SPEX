@@ -26,8 +26,7 @@ return resultset;
 }
 
 QueryExecutor.prototype.callback = function(str){
-  //var jsonObj = eval('(' + str + ')');
-  var jsonObj = JSON.parse(str);
+  var jsonObj = eval('(' + str + ')');
   //Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
   var results = this.labelGen.label(new SPEXResultSet(jsonObj));
   var rp = new ResultsPane();
