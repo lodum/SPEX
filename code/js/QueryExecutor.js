@@ -30,6 +30,7 @@ QueryExecutor.prototype.callback = function(str){
   //Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
   var results = this.labelGen.label(new SPEXResultSet(jsonObj));
   var rp = new ResultsPane();
+  cosole.log("rp " + rp);
   rp.display(results);
 }
 
