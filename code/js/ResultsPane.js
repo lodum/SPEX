@@ -13,7 +13,9 @@ ResultsPane.prototype.display = function(json){
 		//write table head
 		htmlString+="<thead><tr>";
 			$.each(json.head.vars, function(index2, value2) { 
+				if (value2 != undefined) {
 				htmlString+="<th>?"+value2+"</th>";
+				}
 			 });
 		htmlString+="</tr></thead><tbody>";
 		//write table body

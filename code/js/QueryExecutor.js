@@ -28,11 +28,12 @@ return resultset;
 QueryExecutor.prototype.callback = function(str){
 var jsonObj = eval('(' + str + ')');
 //var fjsonObj = this.filterResults(jsonObj);
-var fjsonObj = jsonObj;
-//this.rp.display(fjsonObj); Does not work because for some reason rp is null!
+var resultset = new SPEXResultSet(jsonObj);
+//this.rp.display(fjsonObj.displayResults); Does not work because for some reason rp is null!
 //alert(this.rp == null);
 var rp = new ResultsPane();
-rp.display(fjsonObj);
+//alert(JSON.stringify(resultset.displayResults));
+rp.display(resultset.displayResults);
 }
 
 QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
