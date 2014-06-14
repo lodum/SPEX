@@ -17,9 +17,9 @@ var spex = new function(){
 		testing.init();
 
 		this.q.select()
-			.where("?a", "rdf:type", "foaf:Person" )
-			.where("?b", "foaf:name", "?name")
-			.SPEXvariable("?a").SPEXvariable("?b");
+			.where("?a", "rdf:type", "dbp-ont:building" )
+			.where("foaf:name", "?name")
+			.SPEXvariable("?a");
 			//.where("foaf:homepage", "?page");
 
 	};

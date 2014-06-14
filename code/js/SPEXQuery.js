@@ -132,6 +132,10 @@ SPEXQuery.prototype.prefix("fea" , "http://vocab.data.gov/def/fea#");
 SPEXQuery.prototype.prefix("fn" , "http://www.w3.org/2005/xpath-functions#");
 */
 SPEXQuery.prototype.prefix("foaf" , "http://xmlns.com/foaf/0.1/");
+SPEXQuery.prototype.prefix("dbp-ont" , "http://dbpedia.org/ontology/");
+SPEXQuery.prototype.prefix("dbp" , "http://dbpedia.org/resource/");
+SPEXQuery.prototype.prefix("dbp-prop" , "http://dbpedia.org/property/");      
+      
 /*
 SPEXQuery.prototype.prefix("food" , "http://data.lirmm.fr/ontologies/food#");
 SPEXQuery.prototype.prefix("fowl" , "http://www.w3.org/TR/2003/PR-owl-guide-20031215/food#");
