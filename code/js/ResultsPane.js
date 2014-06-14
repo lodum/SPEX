@@ -15,7 +15,7 @@ ResultsPane.prototype.display = function(spexresultset){
 		var htmlString = "<table class=\"table table-hover table-striped table-condensed\">";
 		//Write table head.
 		htmlString += "<thead><tr>";
-		$.each(spexresultset.getUserSelectedVariables(), function(varIndex, varable) { 
+		$.each(spexresultset.getUserSelectedVariables(), function(varIndex, variable) { 
 			htmlString += "<th>?" + variable + "</th>";
 		});
 		htmlString+="</tr></thead><tbody>";
