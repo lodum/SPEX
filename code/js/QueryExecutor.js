@@ -26,14 +26,13 @@ return resultset;
 }
 
 QueryExecutor.prototype.callback = function(str){
-var jsonObj = eval('(' + str + ')');
-//var fjsonObj = this.filterResults(jsonObj);
-var resultset = new SPEXResultSet(jsonObj);
-//this.rp.display(fjsonObj.displayResults); Does not work because for some reason rp is null!
-//alert(this.rp == null);
-var rp = new ResultsPane();
-//alert(JSON.stringify(resultset.displayResults));
-rp.display(resultset.displayResults);
+  var jsonObj = eval('(' + str + ')');
+  //Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
+  var lg = new LabelGenerator();
+  //var results = this.labelGen.label(new SPEXResultSet(jsonObj));
+  var results = lg.label(new SPEXResultSet(jsonObj));
+  var rp = new ResultsPane();
+  rp.display(results);
 }
 
 QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {

@@ -1,40 +1,45 @@
 function ResultsPane(){}
 ResultsPane.prototype.constructor = ResultsPane;
 
-ResultsPane.prototype.display = function(json){
-		//a function that replaces URIs with Html links
+ResultsPane.prototype.display = function(spexresultset){
+		/*
+		//A function that replaces URIs with HTML links.
 		var replaceURLWithHTMLLinks = function(text){
-	    var exp = /(\b(https?|ftp|file):\/\/\b(data.uni-muenster.de)[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-	    return text.replace(exp,"<a href='$1' target=\"_blank\">$1</a>"); 
+	    	var exp = /(\b(https?|ftp|file):\/\/\b(data.uni-muenster.de)[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+	    	return text.replace(exp, "<a href='$1' target=\"_blank\">$1</a>"); 
 		}
+		*/
 	
-		//Converts JSON object into table and displays it
-		var htmlString="<table class=\"table table-hover table-striped table-condensed\">";
-		//write table head
-		htmlString+="<thead><tr>";
-			$.each(json.head.vars, function(index2, value2) { 
-				if (value2 != undefined) {
-				htmlString+="<th>?"+value2+"</th>";
-				}
-			 });
-		htmlString+="</tr></thead><tbody>";
-		//write table body
-		$.each(json.results.bindings, function(index1, value1) { 
-			htmlString+="<tr>";
-			$.each(json.head.vars, function(index2, value2) { 
-				if(value1[value2]!=undefined){
-					htmlString+="<td>"+ replaceURLWithHTMLLinks(value1[value2].value)+"</td>";
-				}else{
-					htmlString+="<td></td>";
-				}
-				//console.log(value1[value2].value)
-			 });
-			htmlString+="</tr>";
+
+		/*Write the result set as a table.  Table header lists the user-selected variables; 
+		  each row lists labels for instances in that particular solution.*/
+		var htmlString = "<table class=\"table table-hover table-striped table-condensed\">";
+		//Write table head.
+		htmlString += "<thead><tr>";
+		$.each(spexresultset.getUserSelectedVariables(), function(varIndex, variable) { 
+			htmlString += "<th>?" + variable + "</th>";
 		});
 
-		htmlString+="</tbody></table>";
+		htmlString+="</tr></thead><tbody>";
+		//Write table body.
+		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
+			htmlString+="<tr>";
+			$.each(spexresultset.getUserSelectedVariables(), function(variableIndex, variableName) { 
+				if(!solution[variableName + "__label"]) {
+					htmlString += "<td></td>";
+				} else {
+					htmlString += "<td>"+ solution[variableName + "__label"].value + "</td>";
+				}
+				//console.log(value1[value2].value)
+			});
+			htmlString += "</tr>";
+		});
+		//Finish writing table.
+		htmlString += "</tbody></table>";
 		
+		/* Display the table. */
 		document.getElementById("result").innerHTML = htmlString;
+		
 		
 		
 	}	

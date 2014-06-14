@@ -8,7 +8,7 @@ var spex = new function(){
 
 	// Initialization
 	this.init = function() {
-		
+
 		queryPane.init();
 
 		map.init();
