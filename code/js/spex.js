@@ -10,6 +10,7 @@ var spex = new function(){
 	this.init = function() {
 		console.log("lg = " + this.lg);
 		console.log("rp = " + this.rp);
+		console.log("blah = " + this.blah);
 		queryPane.init();
 
 		map.init();
