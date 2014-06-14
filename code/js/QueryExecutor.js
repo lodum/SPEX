@@ -29,8 +29,9 @@ QueryExecutor.prototype.callback = function(str){
 var jsonObj = eval('(' + str + ')');
 //var fjsonObj = this.filterResults(jsonObj);
 var fjsonObj = jsonObj;
-var rp = new ResultsPane();
+//this.rp.display(fjsonObj); Does not work because for some reason rp is null!
 //alert(this.rp == null);
+var rp = new ResultsPane();
 rp.display(fjsonObj);
 }
 
