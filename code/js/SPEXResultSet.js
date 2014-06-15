@@ -47,3 +47,31 @@ SPEXResultSet.prototype.getUserSelectedVariables = function() {
 		}
 		return userSelection;
 };
+
+
+/*This function relates spatio-temporal variables created by FilterExpander to their 'parent' variables.
+The result is an object whose keys are the parents (= user-selected variables from the original query). 
+The value for each key is an array of spatio-temporal variables 
+related through property chains to the key variable.*/
+SPEXResultSet.prototype.relateSpaceTime = function() {
+	var userVars = this.getUserSelectedVariables();
+	//debug(JSON.stringify(userVars));
+	var allVars = this.allResults.head.vars
+	var spaceTimeMatches = {};
+	for(var i = 0; i < userVars.length; i++) {
+		var pattern = "^" + userVars[i] + "-[0-9]+-[0-9]+$";
+		var re = new RegExp(pattern);
+		for(var j = 0; j < allVars.length; j++) {
+			if(re.test(allVars[j])) {
+				 if(!spaceTimeMatches[userVars[i]]){
+				 	spaceTimeMatches[userVars[i]] = [allVars[j]];
+				 	debug(JSON.stringify(spaceTimeMatches[userVars[i]]));
+				 } else {
+				 	spaceTimeMatches[userVars[i]].push(allVars[j]);
+				 	debug(JSON.stringify(spaceTimeMatches[userVars[i]]));
+				 }
+			}
+		}
+	}
+	return spaceTimeMatches;
+};
