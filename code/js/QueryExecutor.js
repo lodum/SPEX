@@ -16,7 +16,7 @@ QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 		alert('Endpoint is empty!');
 		return;
 		}
-document.getElementById("result").innerHTML = "Waiting for results...";
+//document.getElementById("result").innerHTML = "Waiting for results...";
 this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, true);
 }
 
