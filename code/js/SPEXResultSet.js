@@ -55,17 +55,22 @@ The value for each key is an array of spatio-temporal variables
 related through property chains to the key variable.*/
 SPEXResultSet.prototype.relateSpaceTime = function() {
 	var userVars = this.getUserSelectedVariables();
+	//debug(JSON.stringify(userVars));
 	var allVars = this.allResults.head.vars
 	var spaceTimeMatches = {};
 	for(var i = 0; i < userVars.length; i++) {
-		var pattern = "^" + userVars[i] + "-[0-9]+-[0-9]+$";
+		var userVariable = userVars[i];
+		var pattern = "^" + userVariable + "-[0-9]+-[0-9]+$";
 		var re = new RegExp(pattern);
 		for(var j = 0; j < allVars.length; j++) {
-			if(re.test(allVars[j])) {
-				 if(!spaceTimeMatches[userVars[i]]){
-				 	spaceTimeMatches[userVars[i]] = [allVars[j]];
+			var aVar = allVars[j];
+			if(re.test(aVar)) {
+				 if(!spaceTimeMatches[userVariable]){
+				 	spaceTimeMatches[userVariable] = [aVar];
+				 	debug(JSON.stringify(spaceTimeMatches[userVariable]));
 				 } else {
-				 	spaceTimeMatches[userVars[i]].push(allVars[j]);
+				 	spaceTimeMatches[userVariable].push(aVar);
+				 	debug(JSON.stringify(spaceTimeMatches[userVariable]));
 				 }
 			}
 		}
