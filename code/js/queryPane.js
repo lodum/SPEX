@@ -202,6 +202,9 @@ var queryPane = new function(){
     }
 
     this.dragmove = function(d, i) {
+
+    	d3.event.sourceEvent.stopPropagation();
+
         d.px = d3.event.x;
         d.py = d3.event.y;
         d.x = d3.event.x;
@@ -211,6 +214,9 @@ var queryPane = new function(){
     }
 
     this.dragend = function(d, i) {
+
+    	d3.event.sourceEvent.stopPropagation();
+    	
         //d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
         queryPane.tick();
        queryPane.force.resume();
