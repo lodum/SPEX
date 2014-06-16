@@ -341,6 +341,7 @@ SPEXQuery.prototype.prefix("rdarole" , "http://rdvocab.info/roles#");
 */
 SPEXQuery.prototype.prefix("rdf" , "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 SPEXQuery.prototype.prefix("rdfs" , "http://www.w3.org/2000/01/rdf-schema#");
+SPEXQuery.prototype.prefix("bibo" , "http://purl.org/ontology/bibo/");
 /*
 SPEXQuery.prototype.prefix("rdfg" , "http://www.w3.org/2004/03/trix/rdfg-1/");
 SPEXQuery.prototype.prefix("rec" , "http://purl.org/ontology/rec/core#");
