@@ -102,14 +102,15 @@
 					<br>
 					<input type="button" id="queryAdd" onclick="queryPane.add()" value="Add">
 			</div>
-			
-			
 
 		</div>
 		
 	</div>
-	
-	
+
+	<div id="result_container">
+		<div id="result" style="width : 100%">
+		</div>
+	</div>
 
 	<div id="right_panel_container">
 		
@@ -117,20 +118,18 @@
 			<div id="map"></div><br>
 			<div id="slider" style="width: 100%; padding-top: 20px;"></div>
 
-			<br>
-
-			Query:<br/>
-			<button id="showquery">show query</button>
-			<button id="addspace">addspace</button>
-			<button id="addTime">addTime</button>
-			<button id="showresults">show results</button><br>
-
-			<textarea id="query" name="query" rows="10" cols="50"></textarea>	
-			<!-- Where should the results be displayed?-->
-			<div id="result" style="width : 100%"></div>
-
 		</div>
 
+	</div>
+
+	<div id="debug_query">
+				Query:<br/>
+				<button id="showquery">show query</button>
+				<button id="addspace">addspace</button>
+				<button id="addTime">addTime</button>
+				<button id="showresults">show results</button><br>
+
+				<textarea id="query" name="query" rows="8" cols="50"></textarea>
 	</div>
 
 </body>

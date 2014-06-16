@@ -41,7 +41,6 @@ body, html {
 }
 
 #page_container {
-	float: left;
 	position: absolute;
   bottom: 0;
   left: 0;
@@ -55,17 +54,48 @@ body, html {
   width: 100%;
 }
 
+#result_container {
+  float: left;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 400px;
+  height: 180px;
+
+  background-color: white;
+  border-top: 1px solid #ddd;
+}
+
+#result {
+  position: inherit;
+  height: 100%;
+  width: 100%;
+}
+
 #right_panel_container {
   position: absolute;
   width: 400px;
   height: 100%;
   
-  top:50px;
-  bottom: 0;
+  top: 50px;
+  bottom: 180px;
   margin: 0;
   right: 0;
-  z-index: 9998;
+  z-index: 9996;
   
-  border-top: 1px solid #777;
+  border-left: 1px solid #ddd;
+}
+
+#debug_query {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  width: 400px;
+  height: 180px;
+
+  z-index: 9998;
+  border-top: 1px solid #ddd;
+  background-color: white;
 }
 
