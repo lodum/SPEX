@@ -20,7 +20,7 @@ var queryPane = new function(){
 
     this.visNode = null;
 
-	this.nodes = [{id: 0, name: '?', x: 0, y: 0}];
+	this.nodes = [{id: 0, name: '', x: 0, y: 0, variable: true}];
 
 	this.links = [];
 
@@ -42,7 +42,19 @@ var queryPane = new function(){
 		//.attr("viewBox", "0 0 " + this.width + " " + this.height )
       	.attr("preserveAspectRatio", "xMidYMid")
       	.attr("pointer-events", "all");
-	 
+	 	
+      	// define arrow markers for graph links
+		this.vis.append('svg:defs').append('svg:marker')
+		    .attr('id', 'arrow')
+		    .attr('viewBox', '0 -5 10 10')
+		    .attr('refX', 6)
+		    .attr('markerWidth', 3)
+		    .attr('markerHeight', 3)
+		    .attr('orient', 'auto')
+		  .append('svg:path')
+		    .attr('d', 'M0,-5L10,0L0,5')
+		    .attr('fill', '#000');
+
 	 	this.menu = d3.select("#contextMenu");
 
 		// Create the graph
@@ -144,9 +156,11 @@ var queryPane = new function(){
     }
 
     this.add = function(){
-    	queryPane.nodes.push({id: queryPane.nodes.length, name: document.getElementById('queryC').value }); //'?'});//
+    	queryPane.nodes.push({id: queryPane.nodes.length, name: document.getElementById('queryC').value,
+    		variable: document.getElementById('queryVar').checked }); //'?'});//
     	queryPane.links.push({id: queryPane.links.length, name: document.getElementById('queryP').value, //'a',//
-    		source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});
+    		source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1], 
+    		arrow: true });
 
 	    this.update();
 
@@ -164,16 +178,14 @@ var queryPane = new function(){
 
 		// update existing links
 		this.path.classed('selected', false)
-		  .style('marker-start', function(d) { return d.left ? 'url(#start-arrow)' : ''; })
-		  .style('marker-end', function(d) { return d.right ? 'url(#end-arrow)' : ''; });
+		  .style('marker', function(d) { return d.arrow ? 'url(#arrow)' : ''; });
 
 
 		// add new links
 		gPath = this.path.enter().append('svg:path')
 		  .attr('class', 'link')
 		  .classed('selected', function(d) { return false; })
-		  .style('marker-start', function(d) { return d.left ? 'url(#start-arrow)' : ''; })
-		  .style('marker-end', function(d) { return d.right ? 'url(#end-arrow)' : ''; });
+		  .style('marker', function(d) { return d.arrow ? 'url(#arrow)' : ''; });
 
 		gPath.on("click", function(d) {
         	queryPane.menu.datum(queryPane.selected = d).call(queryPane.contextMenu);
@@ -214,6 +226,7 @@ var queryPane = new function(){
 	  	g.on("click", function(d) {
 	  		if (d3.event.defaultPrevented) return;
         	queryPane.menu.datum(queryPane.selected = d).call(queryPane.contextMenu);
+
         	g.classed("selected", function(d) { return d === queryPane.selected; });
     	});
     	
@@ -225,6 +238,12 @@ var queryPane = new function(){
         // }));
 
         g.call(this.node_drag);
+
+        g.append('svg:text')
+	      .attr('x', -4)
+	      .attr('y', 5)
+	      .attr('class', 'id')
+	      .text(function(d) { return (d.variable) ? '?': ''; });
 
 		g.append('svg:text')
 	      .attr('x', 15)
