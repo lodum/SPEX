@@ -89,12 +89,13 @@ SPEXResultSet.prototype.getWKT = function() {
 			var sol = solutions[i];
 			if(sol[userVar]) {
 				if(sol[userVar + "_0_0"] && sol[userVar + "_1_0"]) {
-					var key = sol[userVar + "__label"].value;
-					var value = "POINT(" + sol[userVar + "_1_0"].value + " " + sol[userVar + "_0_0"].value + ")";
+					//var key = sol[userVar + "__label"].value;
+					//var value = "POINT(" + sol[userVar + "_1_0"].value + " " + sol[userVar + "_0_0"].value + ")";
 					//labelWKTpairs.push({ sol[userVar + "__label"].value : "POINT(" + sol[userVar + "-1-0"].value + " " + sol[userVar + "-0-0"].value + ")" });
-					var pair = {};
-					pair[key] = value;
-					labelWKTpairs.push(pair);
+					//var pair = {};
+					//pair[key] = value;
+					//labelWKTpairs.push(pair);
+					labelWKTpairs.push([sol[userVar + "__label"].value, "POINT(" + sol[userVar + "-1-0"].value + " " + sol[userVar + "-0-0"].value + ")" ]);
 				}
 			}
  		//});
