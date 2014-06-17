@@ -3,14 +3,8 @@ ResultsPane.prototype.constructor = ResultsPane;
 
 ResultsPane.prototype.display = function(spexresultset){
 		
-		/*
+
 		//A function that replaces URIs with HTML links.
-		var replaceURLWithHTMLLinks = function(text){
-	    	var exp = /(\b(https?|ftp|file):\/\/\b(data.uni-muenster.de)[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-	    	return text.replace(exp, "<a href='$1' target=\"_blank\">$1</a>"); 
-		}
-		*/
-		
 		var buildHTML = function(solution, variableName){
 	    	var text = solution[variableName].value; //instance URL
 	    	var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
