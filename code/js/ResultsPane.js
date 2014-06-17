@@ -22,7 +22,7 @@ ResultsPane.prototype.display = function(spexresultset){
 		var htmlString = "<table class=\"table table-hover table-striped table-condensed\">";
 		//Write table head.
 		htmlString += "<thead><tr>";
-		var = userSelectedVars = spexresultset.getUserSelectedVariables();
+		var userSelectedVars = spexresultset.getUserSelectedVariables();
 		$.each(userSelectedVars, function(varIndex, variable) { 
 			htmlString += "<th>?" + variable + "</th>";
 		});
