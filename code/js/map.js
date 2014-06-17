@@ -5,12 +5,12 @@ var map = new function(){
 	// Initialization
 	this.init = function() {
 
-		this.LMap = L.map('map').setView([0, 0], 3);
+		this.LMap = L.map('map').setView([52, 7.6], 3);
 	    // add an OpenStreetMap tile layer
 		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-			attribution: '&amp;copy; &lt;a href="http://osm.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'
+			attribution: ' Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(this.LMap);
-	    
+
 		var info = L.control();
 
 		info.onAdd = function (map) {
