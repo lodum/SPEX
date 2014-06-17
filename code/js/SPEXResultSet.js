@@ -88,7 +88,7 @@ SPEXResultSet.prototype.getWKT = function() {
 			if(sol[userVar]) {
 				if(sol[userVar + "-2-1"]) {//_2_1 refers to property "geo:asWKT"
 					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + "-2-1"].value]);
-				} else if(sol[userVar + "-0-0"] && sol[userVar + "-1-0"]) {//if geo:WKT is not there, construct WKT point literal
+				} else if(sol[userVar + "-0-0"] && sol[userVar + "-1-0"]) {//if geo:asWKT is not there, construct WKT point literal
 					labelWKTpairs.push(	
 						[sol[userVar + "__label"].value, 
 						"POINT(" + sol[userVar + "-1-0"].value + " " + sol[userVar + "-0-0"].value + ")"] 
