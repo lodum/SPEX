@@ -29,6 +29,11 @@ QueryExecutor.prototype.callback = function(str){
   //var lg = new LabelGenerator();
   var results = spex.lg.label(new SPEXResultSet(jsonObj));
   //var results = lg.label(new SPEXResultSet(jsonObj));
+  
+  //Display result geometries on the map.
+  var spacePane = new SpaceFilterPane();
+  spacePane.displayGeometry(results);
+  
   //var rp = spex.rp;
   spex.rp.display(results);
 }
