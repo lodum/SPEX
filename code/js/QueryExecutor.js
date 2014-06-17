@@ -2,9 +2,7 @@
 /**
 Executes a SPEX query via http post and calls a callback function which turns results into a JSON object (sparql-results+json) and displays it in the registered resultspane.
 **/
-function QueryExecutor(labelgen, resultspane){ 
-this.labelGen = labelgen;
-this.rp = resultspane;
+function QueryExecutor(){ 
 } 
 QueryExecutor.prototype.constructor = QueryExecutor;
 
@@ -28,11 +26,11 @@ return resultset;
 QueryExecutor.prototype.callback = function(str){
   var jsonObj = eval('(' + str + ')');
   //Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
-  var lg = new LabelGenerator();
-  //var results = this.labelGen.label(new SPEXResultSet(jsonObj));
-  var results = lg.label(new SPEXResultSet(jsonObj));
-  var rp = new ResultsPane();
-  rp.display(results);
+  //var lg = new LabelGenerator();
+  var results = spex.lg.label(new SPEXResultSet(jsonObj));
+  //var results = lg.label(new SPEXResultSet(jsonObj));
+  //var rp = spex.rp;
+  spex.rp.display(results);
 }
 
 QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
