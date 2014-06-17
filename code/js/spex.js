@@ -18,11 +18,12 @@ var spex = new function(){
 
 		this.q.select().distinct()	
 			.where("?a", "rdf:type", "dbp-ont:building" )	
-			.where("?c", "<http://vocab.lodum.de/helper/building>", "?a" )
+			//.where("?c", "<http://vocab.lodum.de/helper/building>", "?a" )
 			//.where("?b", "rdf:type", "foaf:Organisation" )
 			//?a a dbp-ont:building . ?c <http://vocab.lodum.de/helper/building> ?a. 
 			//.where("?a", "rdf:type", "bibo:map" )	
-			.SPEXvariable("?a").SPEXvariable("?c");
+			.SPEXvariable("?a");
+			//.SPEXvariable("?c");
 			//.where("foaf:homepage", "?page");
 
 	};
