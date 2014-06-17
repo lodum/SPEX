@@ -1,14 +1,19 @@
 
 
 function SpaceFilterPane() {
-//	this.currentSpatialWindow;
+
 } 	
 
 SpaceFilterPane.prototype.displayGeometry = function(resultset){
 
-	for (i=0;i < resultset.getWKT().length;i++){
-		omnivore.wkt.parse(resultset.getWKT()[i][1]).bindLabel(resultset.getWKT()[i][0]).addTo(map.LMap);
-	}
+	var result = resultset.getWKT();
 
+	for (i=0;i < result.length;i++){
+		
+		//omnivore.wkt.parse('POLYGON((35 10, 45 45, 15 40, 10 20, 35 10),(20 30, 35 35, 30 20, 20 30))').bindLabel('Europe-Middle East	 Donut').addTo(map.LMap);
+	
+		omnivore.wkt.parse(result[i][1]).bindLabel(result[i][0]).addTo(map.LMap);
+
+	}
 
 }
