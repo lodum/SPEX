@@ -1,6 +1,6 @@
 svg {
 	position: absolute;
-	margin: 0;
+	margin: 0;X
 }
 
 g, line {
@@ -21,6 +21,14 @@ path.link {
 	stroke: #000;
 	stroke-width: 1px;
 	cursor: default;
+}
+
+circle {
+	stroke-width: 1px;
+}
+
+.selected circle {
+	stroke-width: 2.5px;
 }
 
 #contextMenu {
