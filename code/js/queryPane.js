@@ -144,8 +144,8 @@ var queryPane = new function(){
     }
 
     this.add = function(){
-    	queryPane.nodes.push({id: queryPane.nodes.length, name: '?'});// d3.select("#queryC").value });
-    	queryPane.links.push({id: queryPane.links.length, name: 'a',//d3.select("#queryP").html(this.value), 
+    	queryPane.nodes.push({id: queryPane.nodes.length, name: document.getElementById('queryC').value }); //'?'});//
+    	queryPane.links.push({id: queryPane.links.length, name: document.getElementById('queryP').value, //'a',//
     		source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});
 
 	    this.update();
