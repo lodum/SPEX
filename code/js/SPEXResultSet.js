@@ -95,7 +95,7 @@ SPEXResultSet.prototype.getWKT = function() {
 					//var pair = {};
 					//pair[key] = value;
 					//labelWKTpairs.push(pair);
-					labelWKTpairs.push([sol[userVar + "__label"].value, "POINT(" + sol[userVar + "-1-0"].value + " " + sol[userVar + "-0-0"].value + ")" ]);
+					labelWKTpairs.push([sol[userVar + "__label"].value, "POINT(" + sol[userVar + "_1_0"].value + " " + sol[userVar + "_0_0"].value + ")" ]);
 				}
 			}
  		//});
