@@ -16,10 +16,13 @@ var spex = new function(){
 		
 		testing.init();
 
-		this.q.select()
-			.where("?a", "rdf:type", "dbp-ont:building" )		
+		this.q.select().distinct()	
+			.where("?a", "rdf:type", "dbp-ont:building" )	
+			.where("?c", "<http://vocab.lodum.de/helper/building>", "?a" )
+			//.where("?b", "rdf:type", "foaf:Organisation" )
+			//?a a dbp-ont:building . ?c <http://vocab.lodum.de/helper/building> ?a. 
 			//.where("?a", "rdf:type", "bibo:map" )	
-			.SPEXvariable("?a");
+			.SPEXvariable("?a").SPEXvariable("?c");
 			//.where("foaf:homepage", "?page");
 
 	};
