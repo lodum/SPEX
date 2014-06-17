@@ -10,7 +10,7 @@ var map = new function(){
 //		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: ' Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(this.LMap);
 		this.LMap = L.mapbox.map('map', 'examples.map-i86nkdio').setView([52, 5], 3);
 
-		omnivore.wkt.parse('POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10),(20 30, 35 35, 30 20, 20 30))').bindLabel('Europe-Middle East Donut').addTo(this.LMap);		
+		//omnivore.wkt.parse('POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10),(20 30, 35 35, 30 20, 20 30))').bindLabel('Europe-Middle East Donut').addTo(this.LMap);		
 		
 		// var info = L.control();
 
