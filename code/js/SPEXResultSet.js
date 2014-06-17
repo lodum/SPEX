@@ -78,6 +78,7 @@ SPEXResultSet.prototype.relateSpaceTime = function() {
 	return spaceTimeMatches;
 };
 
+/*This function prepares results for display on the map by relating each result with its geometry (if available).*/
 SPEXResultSet.prototype.getWKT = function() {
 	var relatedVars = this.relateSpaceTime();
 	var solutions = this.allResults.results.bindings;
