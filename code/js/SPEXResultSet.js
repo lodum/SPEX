@@ -67,10 +67,10 @@ SPEXResultSet.prototype.relateSpaceTime = function() {
 			if(re.test(aVar)) {
 				 if(!spaceTimeMatches[userVariable]){
 				 	spaceTimeMatches[userVariable] = [aVar];
-				 	debug(JSON.stringify(spaceTimeMatches[userVariable]));
+				 	//debug(JSON.stringify(spaceTimeMatches[userVariable]));
 				 } else {
 				 	spaceTimeMatches[userVariable].push(aVar);
-				 	debug(JSON.stringify(spaceTimeMatches[userVariable]));
+				 	//debug(JSON.stringify(spaceTimeMatches[userVariable]));
 				 }
 			}
 		}
