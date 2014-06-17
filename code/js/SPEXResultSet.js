@@ -87,12 +87,12 @@ SPEXResultSet.prototype.getWKT = function() {
 		for(var i = 0; i < solutions.length; i++) {
 			var sol = solutions[i];
 			if(sol[userVar]) {
-				if(sol[userVar + "-2-1"]) {//_2_1 refers to property "geo:asWKT"
-					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + "-2-1"].value]);
-				} else if(sol[userVar + "-0-0"] && sol[userVar + "-1-0"]) {//if geo:asWKT is not there, construct WKT point literal
+				if(sol[userVar + "_2_1"]) {//_2_1 refers to property "geo:asWKT"
+					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + "_2_1"].value]);
+				} else if(sol[userVar + "_0_0"] && sol[userVar + "_1_0"]) {//if geo:asWKT is not there, construct WKT point literal
 					labelWKTpairs.push(	
 						[sol[userVar + "__label"].value, 
-						"POINT(" + sol[userVar + "-1-0"].value + " " + sol[userVar + "-0-0"].value + ")"] 
+						"POINT(" + sol[userVar + "_1_0"].value + " " + sol[userVar + "_0_0"].value + ")"] 
 					);
 				}
 			}
