@@ -216,10 +216,10 @@ var queryPane = new function(){
 		var circ = g.append('svg:circle')
 	    .attr('r', 10)
 	    .style('fill', function(d) { 
-	    	return d3.rgb("#99e").brighter().toString(); 
+	    	return d3.rgb("#cae6ed"); 
 	    })
 	    .style('stroke', function(d) { 
-	    	return d3.rgb("#99e").darker().toString(); 
+	    	return d3.rgb("#006E89"); 
 	    });
 
 
