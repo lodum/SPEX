@@ -1,7 +1,7 @@
 
 function SPEXQuery(){ 
 this.limit(50); 
-this.timeout = 5000;
+this.timeout = 50000;
 this.fe = new FilterExpander();
 this.le = new LiteralExpander();
 this.SPEXvariables = [];
@@ -97,6 +97,8 @@ SPEXQuery.prototype.prefix("dcite" , "http://purl.org/spar/datacite#");
 SPEXQuery.prototype.prefix("dcndl" , "http://ndl.go.jp/dcndl/terms/");
 */
 SPEXQuery.prototype.prefix("dct" , "http://purl.org/dc/terms/");
+SPEXQuery.prototype.prefix("bibo", "http://purl.org/ontology/bibo/"); 
+SPEXQuery.prototype.prefix("maps", "http://www.geographicknowledge.de/vocab/maps#"); 
 /*
 SPEXQuery.prototype.prefix("dctype" , "http://purl.org/dc/dcmitype/");
 SPEXQuery.prototype.prefix("deo" , "http://purl.org/spar/deo#");
