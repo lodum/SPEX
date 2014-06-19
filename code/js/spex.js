@@ -17,8 +17,8 @@ var spex = new function(){
 		testing.init();
 
 		this.q.select()
-			//.where("?a", "rdf:type", "dbp-ont:building" )	
-			.where("?a", "rdf:type", "maps:Map" )
+			.where("?a", "rdf:type", "dbp-ont:building" )	
+			//.where("?a", "rdf:type", "maps:Map" )
 			//.where("?c", "<http://vocab.lodum.de/helper/building>", "?a" )
 			//.where("?b", "rdf:type", "foaf:Organisation" )
 			//?a a dbp-ont:building . ?c <http://vocab.lodum.de/helper/building> ?a. 
