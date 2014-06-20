@@ -97,7 +97,7 @@ SPEXQuery.prototype.prefix("dcite" , "http://purl.org/spar/datacite#");
 SPEXQuery.prototype.prefix("dcndl" , "http://ndl.go.jp/dcndl/terms/");
 */
 SPEXQuery.prototype.prefix("dct" , "http://purl.org/dc/terms/");
-SPEXQuery.prototype.prefix("bibo", "http://purl.org/ontology/bibo/"); 
+
 SPEXQuery.prototype.prefix("maps", "http://www.geographicknowledge.de/vocab/maps#"); 
 /*
 SPEXQuery.prototype.prefix("dctype" , "http://purl.org/dc/dcmitype/");
