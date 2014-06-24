@@ -159,16 +159,18 @@ SPEXResultSet.prototype.detectSpatiallyEnabledVars = function() {
 	for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
 			var sol = solutions[i];
+			var found = false;
 			if(sol[userVar]) {
 				for(var k = 0; k < spatialIndexes.length; k++) {
 					var index = spatialIndexes[k];
 					if(sol[userVar + index]) {
 						spatiallyEnabledVars.push(userVar);
+						found = true;
 						break;
 					}
 				}
 			}
-			if(k !== spatialIndexes.length) {
+			if(found) {
 				break;
 			}
 		}
@@ -200,16 +202,18 @@ SPEXResultSet.prototype.detectTemporallyEnabledVars = function() {
 	for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
 			var sol = solutions[i];
+			var found = false;
 			if(sol[userVar]) {
 				for(var k = 0; k < temporalIndexes.length; k++) {
 					var index = temporalIndexes[k];
 					if(sol[userVar + index]) {
 						temporallyEnabledVars.push(userVar);
+						found = true;
 						break;
 					}
 				}
 			}
-			if(k !== temporalIndexes.length) {
+			if(found) {
 				break;
 			}
 		}
@@ -217,4 +221,5 @@ SPEXResultSet.prototype.detectTemporallyEnabledVars = function() {
 	
 	return temporallyEnabledVars;
 };
+
 
