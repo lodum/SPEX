@@ -83,6 +83,22 @@ SPEXResultSet.prototype.getWKT = function() {
 	var relatedVars = this.relateSpaceTime();
 	var solutions = this.allResults.results.bindings;
 	var labelWKTpairs = [];
+	
+/*
+	//Find the indices of "geo:asWKT", "wgs84:lat" and "wgs84:long" in FilterExpander.prototype.filterDataProperties array:
+	var WKTindex, latIndex, longIndex;
+	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
+		var property = FilterExpander.prototype.filterDataProperties[j];
+		if(property.prop[property.prop.length - 1] === "geo:asWKT") {
+			WKTindex = "_" + j + "_" + (property.prop.length - 1);
+		} else if(property.prop[property.prop.length - 1] === "wgs84:lat") {
+			latIndex = "_" + j + "_" + (property.prop.length - 1);
+		} else if(property.prop[property.prop.length - 1] === "wgs84:long") {
+			longIndex = "_" + j + "_" + (property.prop.length - 1);
+		}
+	}
+*/
+	
 	for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
 			var sol = solutions[i];
@@ -98,5 +114,24 @@ SPEXResultSet.prototype.getWKT = function() {
 			}
 		}
 	}
+	
+/*
+	for(userVar in relatedVars) {
+		for(var i = 0; i < solutions.length; i++) {
+			var sol = solutions[i];
+			if(sol[userVar]) {
+				if(sol[userVar + WKTindex]) {//_2_1 refers to property "geo:asWKT"
+					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + WKTindex].value]);
+				} else if(sol[userVar + latIndex] && sol[userVar + longIndex]) {//if geo:asWKT is not there, construct WKT point literal
+					labelWKTpairs.push(	
+						[sol[userVar + "__label"].value, 
+						"POINT(" + sol[userVar + longIndex].value + " " + sol[userVar + latIndex].value + ")"] 
+					);
+				}
+			}
+		}
+	}
+*/
+	
 	return labelWKTpairs;
 };
