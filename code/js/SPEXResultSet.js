@@ -135,3 +135,86 @@ SPEXResultSet.prototype.getWKT = function() {
 	
 	return labelWKTpairs;
 };
+
+/* Function to detect which of the user-selected variables are spatial.  
+The function iterates through all the solutions in the SPARQL JSON result and 
+if a user-selected variable has at least one spatial literal associated with it
+in at least one of the solutions, 
+the variable is added to a list of spatially enabled variables.
+*/
+SPEXResultSet.prototype.detectSpatiallyEnabledVars = function() {
+	var relatedVars = this.relateSpaceTime();
+	var solutions = this.allResults.results.bindings;
+	var spatiallyEnabledVars = [];
+	
+	//Find spatial properties in FilterExpander.prototype.filterDataProperties:
+	var spatialIndexes = [];
+	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
+		var property = FilterExpander.prototype.filterDataProperties[j];
+		if(property.prefix === "wgs84" || property.prefix === "geo") {
+			spatialIndexes.push("_" + j + "_" + (property.prop.length - 1));
+		} 
+	}
+
+	for(userVar in relatedVars) {
+		for(var i = 0; i < solutions.length; i++) {
+			var sol = solutions[i];
+			if(sol[userVar]) {
+				for(var k = 0; k < spatialIndexes.length; k++) {
+					var index = spatialIndexes[k];
+					if(sol[userVar + index]) {
+						spatiallyEnabledVars.push(userVar);
+						break;
+					}
+				}
+			}
+			if(k !== spatialIndexes.length) {
+				break;
+			}
+		}
+	}
+	
+	return spatiallyEnabledVars;
+};
+
+/* Function to detect which of the user-selected variables are temporal.  
+The function iterates through all the solutions in the SPARQL JSON result and 
+if a user-selected variable has at least one temporal literal associated with it, 
+the variable is added to a list of temporally enabled variables.
+*/
+SPEXResultSet.prototype.detectTemporallyEnabledVars = function() {
+	var relatedVars = this.relateSpaceTime();
+	var solutions = this.allResults.results.bindings;
+	var temporallyEnabledVars = [];
+	
+	//Find temporal properties in FilterExpander.prototype.filterDataProperties:
+	var temporalIndexes = [];
+	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
+		var property = FilterExpander.prototype.filterDataProperties[j];
+		if(property.prefix == "time") {
+			temporalIndexes.push("_" + j + "_" + (property.prop.length - 1));
+		} 
+	}
+	debug(temporalIndexes);
+
+	for(userVar in relatedVars) {
+		for(var i = 0; i < solutions.length; i++) {
+			var sol = solutions[i];
+			if(sol[userVar]) {
+				for(var k = 0; k < temporalIndexes.length; k++) {
+					var index = temporalIndexes[k];
+					if(sol[userVar + index]) {
+						temporallyEnabledVars.push(userVar);
+						break;
+					}
+				}
+			}
+			if(k !== temporalIndexes.length) {
+				break;
+			}
+		}
+	}
+	
+	return temporallyEnabledVars;
+};
+
