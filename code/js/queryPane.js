@@ -332,14 +332,11 @@ var queryPane = new function(){
 			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1], 
 			arrow: true});
 
-
-		spex.q.patterns= [];
-		
-		spex.q.where('selected', document.getElementById('queryP').value, document.getElementById('queryC').value );
-
 		this.update();
 
 		this.force.start();
+
+		queryPane.parseQuery();
 	};
 
 	// 
@@ -354,6 +351,8 @@ var queryPane = new function(){
 			queryPane.selected.name = document.getElementById('queryS').value;
 			queryPane.selected.variable = document.getElementById('queryVar').checked;
 			queryPane.selected.constraint = document.getElementById('querySpat').checked;
+
+			queryPane.parseQuery();
 
 			this.update();
 		};
@@ -398,6 +397,34 @@ var queryPane = new function(){
 				console.log(this.links[i].name);
 				//console.log(this.links[i].target.name);
 				this.logSubelements(this.links[i].target);
+			};
+		};
+	};
+
+
+
+	this.parseQuery = function() {
+		spex.q.patterns= [];
+		
+		this.rParseQuery(this.nodes[0]);	
+	};
+
+	this.rParseQuery = function(node) {
+		subject = node.variable ? '?' + node.name : node.name;
+		predicate = "";
+		object = "";
+
+		for (var i = 0; i < this.links.length; i++) {
+			if (this.links[i].source == node) {
+
+				predicate = this.links[i].name;
+				object = this.links[i].target.variable ? '?' + this.links[i].target.name : this.links[i].target.name;
+
+				spex.q.where(subject, predicate, object);
+
+				//console.log(this.links[i].name);
+				//console.log(this.links[i].target.name);
+				this.rParseQuery(this.links[i].target);
 			};
 		};
 	};
