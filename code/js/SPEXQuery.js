@@ -5,6 +5,23 @@ this.timeout = 50000;
 this.fe = new FilterExpander();
 this.le = new LiteralExpander();
 this.SPEXvariables = [];
+
+// redeclare patterns
+	this.queryType = "SELECT";
+    //this.prefixes = [];
+    this.defaultGraphs = [];
+    this.namedGraphs = [];
+    this.variables = [];
+    this.patterns = [];
+    this.filters = [];
+    this.combiner = "";
+    this.orders = [];
+    this.limitCount = -1;
+    this.offsetCount = 0;
+    this._prevSubj = null;
+    this._prevProp = null;
+    this._storedQuery = "";
+
 }
 
 
