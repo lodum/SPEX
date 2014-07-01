@@ -1,0 +1,43 @@
+<!doctype html>
+<html><head><title>Testsite</title>
+<!-- jquery libraries -->
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+<!--Our javacript files  -->
+<script src="lib/jquery-sparql-master/jquery.sparql.js"></script>
+<script src="js/QueryExecutor.js"></script>
+<script src="js/SPEXQuery.js"></script>
+<script src="js/getPropertiesOfClass.js"></script>
+<script src="js/FilterExpander.js"></script>
+<script src="js/LiteralExpander.js"></script>
+<script>
+$( document ).ready(function() {
+	$("#SendQuery").click(sendRequest);
+	$("#DisplayResults").click(writeResult);
+});
+var newArray=[];
+var sendRequest=function(){
+getPropertiesOfClass(document.getElementById("sparql-class").value,document.getElementById("sparql-endpoint").value,newArray);
+console.log("Request sent!");
+};
+
+var writeResult=function(){
+var myString="";
+	for(var i=0;i < newArray.length ; i++){
+	myString=myString+newArray[i]+'\n';
+	}
+	document.getElementById("result").innerHTML = myString;
+}
+</script>
+</head>
+<body>
+<h2>Find Properties of instances of a class!!</h2>
+<div id="main_div">
+	Enter class: <textarea id="sparql-class" name="sparql-class" rows="1" cols="50">foaf:Organization</textarea><br/>
+	Enter endpoint: <textarea id="sparql-endpoint" name="sparql-endpoint" rows="1" cols="50">http://data.uni-muenster.de/sparql</textarea></br>
+	<button id="SendQuery">Send Query!</button>
+	<button id="DisplayResults">Display Results!</button><br/>
+	<textarea id="result" name="result" rows="20" cols="50">Results will appear here...</textarea>
+	<textarea id="query" name="query" rows="20" cols="50">Query will appear here...</textarea><br/>
+</div>
+</body></html>
