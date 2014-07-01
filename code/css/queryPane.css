@@ -20,6 +20,10 @@ textarea {
 	width: 100%;
 }
 
+.selected path {
+	stroke-width: 10px;
+}
+
 path.link {
 	fill: none;
 	stroke: #000;
@@ -27,12 +31,15 @@ path.link {
 	cursor: default;
 }
 
+
+
+
 circle {
 	stroke-width: 2px;
 }
 
 .selected circle {
-	stroke-width: 2px;
+	stroke-width: 3px;
 }
 
 #contextMenu {

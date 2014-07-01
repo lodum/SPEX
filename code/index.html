@@ -110,9 +110,15 @@
 					<br>
 					c: <input type="text" id="queryC" value="Person"></input>
 					<br>
+					<input type="button" id="queryAdd" onclick="queryPane.add()" value="Add">
+					<br><br>
+					s: <input type="text" id="queryS" value="Person"></input>
+					<br>
 					<input type="checkbox" id="queryVar">Variable
 					<br>
-					<input type="button" id="queryAdd" onclick="queryPane.add()" value="Add">
+					<input type="checkbox" id="querySpat">Constraint enabled
+					<br>
+					<input type="button" id="queryAdd" onclick="queryPane.updateSelected()" value="Update">
 			</div>
 
 		</div>
