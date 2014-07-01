@@ -38,7 +38,7 @@
     this.defaultGraphs = [];
     this.namedGraphs = [];
     this.variables = [];
-    this.patterns = new Array();
+    this.patterns = [];
     this.filters = [];
     this.combiner = "";
     this.orders = [];
@@ -280,10 +280,10 @@
   
   Query.prototype.from = function(graph, isNamed) {
     if(isNamed) {
-      this.namedGraphs=this.namedGraphs.concat(graph);
+      this.namedGraphs.push(graph);
     }
     else {
-      this.defaultGraphs=this.defaultGraphs.concat(graph);
+      this.defaultGraphs.push(graph);
     }
     return this;
   };
@@ -302,18 +302,18 @@
       // We have a full triple
       this._prevSubj = subj;
       this._prevProp = prop;
-      this.patterns=this.patterns.concat({ "_sort" : "triple", "s" : subj, "p" : prop, "o" : obj });
+      this.patterns.push({ "_sort" : "triple", "s" : subj, "p" : prop, "o" : obj });
       return this;
     }
   };
   
   Query.prototype.filter = function(filter) {
-    this.filters=this.filters.concat(filter);
+    this.filters.push(filter);
     return this;
   };
   
   Query.prototype.orderby = function(order) {
-    this.orders=this.orders.concat(order);
+    this.orders.push(order);
     return this;
   };
   
@@ -329,25 +329,25 @@
   
   Query.prototype.optional = function() {
     var opt = new Query(this.config.endpoint, this.config, this);
-    this.patterns=this.patterns.concat({ "_sort" : "optional", "subquery" : opt });
+    this.patterns.push({ "_sort" : "optional", "subquery" : opt });
     return opt;
   };
   
   Query.prototype.graph = function(name) {
     var grph = new Query(this.config.endpoint, this.config, this);
-    this.patterns=this.patterns.concat({ "_sort" : "graph", "graphName" : name, "subquery" : grph });
+    this.patterns.push({ "_sort" : "graph", "graphName" : name, "subquery" : grph });
     return grph;
   };
 
   Query.prototype.service = function(endpoint) {
     var srvc = new Query(this.config.endpoint, this.config, this);
-    this.patterns=this.patterns.concat({ "_sort" : "service", "serviceEndpoint" : endpoint, "subquery" : srvc });
+    this.patterns.push({ "_sort" : "service", "serviceEndpoint" : endpoint, "subquery" : srvc });
     return srvc;
   };
   
   Query.prototype.block = function() {
     var blk = new Query(this.config.endpoint, this.config, this);
-    this.patterns=this.patterns.concat({ "_sort" : "block", "subquery" : blk });
+    this.patterns.push({ "_sort" : "block", "subquery" : blk });
     return blk;
   };
   
