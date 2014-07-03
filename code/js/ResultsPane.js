@@ -29,7 +29,8 @@ ResultsPane.prototype.display = function(spexresultset){
 					htmlString += "<td></td>";
 				} else {
 					//htmlString += "<td>"+ solution[variableName + "__label"].value + "</td>";
-					htmlString += "<td>"+ buildHTML(solution, variableName) + "</td>";
+					//htmlString += "<td>"+ buildHTML(solution, variableName) + "</td>";
+					htmlString += "<td> <a href="+buildHTML(solution, variableName)+">"+ buildHTML(solution, variableName) + "</a></td>";
 				}
 				//console.log(value1[value2].value)
 			});
