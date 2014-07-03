@@ -22,10 +22,10 @@ SpaceFilterPane.prototype.displayGeometry = function(resultset){
 		} else {
 
 			var geometryonly = result[i][1].substring(result[i][1].indexOf('>')+1, result[i][1].length); 
-			//console.log(result[i][0] + " @@@ " + geometryonly);
+			//console.log(result[i][0].trim() + " @@@ " + geometryonly.trim());
 
-			omnivore.wkt.parse(geometryonly.trim()).bindLabel(result[i][0]).addTo(map.LMap);
-			markers.push(omnivore.wkt.parse(geometryonly));
+			omnivore.wkt.parse(geometryonly.trim()).bindLabel(result[i][0].trim()).addTo(map.LMap);
+			markers.push(omnivore.wkt.parse(geometryonly.trim()));
 
 			
 		}
