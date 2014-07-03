@@ -29,8 +29,9 @@ var queryPane = new function(){
 	this.pathText = null;
 
 	// Data
-	this.nodes = [{id: 0, name: '', x: 0, y: 0, variable: true, constraint: false}];
-	this.links = [];
+	this.nodes = [{id: 0, name: 'a', x: 0, y: 0, variable: true, constraint: false},
+				{id: 0, name: 'maps:Map', x: 100, y: 0, variable: false, constraint: false}];
+	this.links = [{id: 0, name: 'a', source: this.nodes[0], target: this.nodes[1], arrow: true}];
 
 	// Selected node
 	this.selected = null;
@@ -327,7 +328,7 @@ var queryPane = new function(){
 	// 
 	this.add = function(){
 		queryPane.nodes.push({id: queryPane.nodes.length, name: document.getElementById('queryC').value,
-			variable: document.getElementById('queryVar').checked, constraint: document.getElementById('querySpat').checked }); //'?'});//
+			variable: false, constraint: document.getElementById('querySpat').checked }); //'?'});//
 		queryPane.links.push({id: queryPane.links.length, name: document.getElementById('queryP').value, //'a',//
 			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1], 
 			arrow: true});
