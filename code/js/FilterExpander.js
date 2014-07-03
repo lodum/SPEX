@@ -24,10 +24,15 @@ FilterExpander.prototype.expandFilterLiterals = function(spexquery){
 			var opt = spexquery.optional();			
 			for (var x = 0; x < p.prop.length; x++) {				
 				if (x == 0) { 
-					opt.where(v, p.prop[x], v+"_"+j+"_"+x); 
-				} else { 
+					//if (p.prop.length == 2) {
+					//add chain with a variable for the first property in the chain (in order to capture cases such as that geo:hasGeometry is not used but some unknown other property)
+					//opt.where(v, "?prop", v+"_"+j+"_"+x); 
+					//}else{
+					opt.where(v, p.prop[x], v+"_"+j+"_"+x);
+					 
+				} else { 					
 					var ll = x - 1;
-					opt.where(v+"_"+j+"_"+ll, p.prop[x], v+"_"+j+"_"+x); //property chain
+					opt.where(v+"_"+j+"_"+ll, p.prop[x], v+"_"+j+"_"+x); //property chain									
 				}
 			}
 			opt.end();
