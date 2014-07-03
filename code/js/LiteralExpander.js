@@ -1,6 +1,6 @@
 /* Constructor function for LiteralExpander objects. */
 function LiteralExpander() {
-	this.listOfLabelProperties = ["rdfs:label", "dct:title", "dc:title", "foaf:name"];	
+	this.listOfLabelProperties = ["rdfs:label", "dct:title", "dc:title", "foaf:name", "maps:title"];	
 }
 
 LiteralExpander.prototype.addLabelProperty = function(property) {
