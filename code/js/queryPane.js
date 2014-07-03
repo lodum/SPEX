@@ -411,6 +411,7 @@ var queryPane = new function(){
 
 	this.rParseQuery = function(node) {
 		subject = node.variable ? '?' + node.name : node.name;
+		if (node.variable) {spex.q.SPEXvariable(subject);}
 		predicate = "";
 		object = "";
 
@@ -421,7 +422,7 @@ var queryPane = new function(){
 				object = this.links[i].target.variable ? '?' + this.links[i].target.name : this.links[i].target.name;
 
 				spex.q.where(subject, predicate, object);
-
+				if (this.links[i].target.variable) {spex.q.SPEXvariable(object);}
 				//console.log(this.links[i].name);
 				//console.log(this.links[i].target.name);
 				this.rParseQuery(this.links[i].target);
