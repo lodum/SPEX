@@ -411,15 +411,14 @@ var queryPane = new function(){
 	};
 
 	this.rParseQuery = function(node) {
-		subject = node.variable ? '?' + node.name : node.name;
-		//this registers user selected variables in query
-		if (node.variable) {spex.q.SPEXvariable(subject);}
-		predicate = "";
-		object = "";
 
 		for (var i = 0; i < this.links.length; i++) {
 			if (this.links[i].source == node) {
 
+				subject = node.variable ? '?' + node.name : node.name;
+				//this registers user selected variables in query
+				if (node.variable) {spex.q.SPEXvariable(subject);}
+				
 				predicate = this.links[i].name;
 				object = this.links[i].target.variable ? '?' + this.links[i].target.name : this.links[i].target.name;
 
