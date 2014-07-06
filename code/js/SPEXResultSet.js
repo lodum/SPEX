@@ -100,17 +100,18 @@ SPEXResultSet.prototype.getWKT = function() {
 */
 	
 	
-	//labelWKTpairs has three columns: [label, WKT, originalvar]. If originalvar has only lat&long, then "__noWKT" is stored here.
+	//labelWKTpairs now has four columns: [label, WKT, literal_with_WKT,variablename]
+	//If original variable has only lat&long, then literal_with_WKT and variablename are left empty
 	for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
 			var sol = solutions[i];
 			if(sol[userVar]) {
 				if(sol[userVar + "_2_1"]) {//_2_1 refers to property "geo:asWKT"
-					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + "_2_1"].value,sol[userVar]]);
+					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + "_2_1"].value,sol[userVar],userVar]);
 				} else if(sol[userVar + "_0_0"] && sol[userVar + "_1_0"]) {//if geo:asWKT is not there, construct WKT point literal
 					labelWKTpairs.push(	
 						[sol[userVar + "__label"].value, 
-						"POINT(" + sol[userVar + "_1_0"].value + " " + sol[userVar + "_0_0"].value + ")","__noWKT"] 
+						"POINT(" + sol[userVar + "_1_0"].value + " " + sol[userVar + "_0_0"].value + ")"] 
 					);
 				}
 			}
