@@ -37,7 +37,25 @@ FilterResults.prototype.filterWKT=function(spexresultset){
   
   function boundingBox(WKTstring){
     var wktWindow= new Window();
-    //still to be done
+    var str="";
+    var strArray=[];
+    var latArray=[];
+    var longArray=[];
+    var a,b,c,d;
+    //cut off beginning of string upto the last '(' 
+    for(var i=0;i<WKTstring.length;i++){
+      if(WKTstring[i]=='('&&WKTstring[i+1]!='('){
+        str=WKTstring.substring(i+1);
+        break;
+      }
+    }
+    strArray=str.split(",");
+    for(var i=0;i<strArray.length;i++){
+      var s=strArray[i];
+      for(var j=0;j<s.length;j++){
+        if(s[j]=='('||s[j]==')') //half done
+      }
+    }
     return wktWindow;
   }
   
