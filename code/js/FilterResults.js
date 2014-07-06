@@ -7,20 +7,21 @@ FilterResults.prototype.filterWKT=function(spexresultset){
   var sc=spexresultset.spatialConstraints.slice();
   var sols=spexresultset.allResults.results.bindings;
   for(var i=0; i<allWKT.length; i++){
-    var wktvar=allWKT[i][2];
+    var wktsol=allWKT[i][2];
     if(sc.length==0){
       i=allWKT.length;
-      wktvar="__noWKT";
+      wktsol="__noWKT";
     } 
-    if(wktvar!="__noWKT"){
+    if(wktsol!="__noWKT"){
       for(var j=0; j<sc.length; j++){
-        if(wktvar==sc[j].v){
+        if(wktsol==sc[j].v){
           sc.splice(j,1);
           j=sc.length;
           if(!boundingBox(allWKT[i][1]).inside(sc[j].w)){
             for(var k=0;k<sols.length; k++){
               //remove wktvar from sols
-              if(wktvar)
+              //variable name needed, change spexresultset
+              if(wktsol==sols[k].)
             }
           }
         }
