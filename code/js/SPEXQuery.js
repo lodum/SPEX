@@ -508,8 +508,8 @@ SPEXQuery.prototype.getSPARQL = function (){
 	return this.serialiseQuery();
 }
 
-SPEXQuery.prototype.setSpatialConstraint = function(va, window){
-	this.spatialConstraints.push({ "v" : va, "w" : window });
+SPEXQuery.prototype.setSpatialConstraint = function(va, myWindow){
+	this.spatialConstraints.push({ "v" : va, "w" : myWindow });
 
 }
 SPEXQuery.prototype.setTemporalConstraint = function(va, time){
