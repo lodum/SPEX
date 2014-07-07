@@ -146,33 +146,31 @@ the variable is added to a list of spatially enabled variables.
 SPEXResultSet.prototype.detectSpatiallyEnabledVars = function() {
 	var relatedVars = this.relateSpaceTime();
 	var solutions = this.allResults.results.bindings;
-	var spatiallyEnabledVars = [];
+	var spatiallyEnabledVars = {};
 	
 	//Find spatial properties in FilterExpander.prototype.filterDataProperties:
-	var spatialIndexes = [];
+	var spatialSubscripts = [];//subscripts!
 	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
 		var property = FilterExpander.prototype.filterDataProperties[j];
 		if(property.prefix === "wgs84" || property.prefix === "geo") {
-			spatialIndexes.push("_" + j + "_" + (property.prop.length - 1));
+			spatialSubscripts.push("_" + j + "_" + (property.prop.length - 1));
 		} 
 	}
 
 	for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
 			var sol = solutions[i];
-			var found = false;
 			if(sol[userVar]) {
-				for(var k = 0; k < spatialIndexes.length; k++) {
-					var index = spatialIndexes[k];
-					if(sol[userVar + index]) {
-						spatiallyEnabledVars.push(userVar);
-						found = true;
-						break;
+				for(var k = 0; k < spatialSubscripts.length; k++) {
+					var subscript = spatialSubscripts[k];
+					if(sol[userVar + subscript]) {
+						if(!spatiallyEnabledVars[userVar]) {
+							spatiallyEnabledVars[userVar] = [userVar + subscript];
+						} else if(spatiallyEnabledVars[userVar].indexOf(userVar + subscript) === -1){
+							spatiallyEnabledVars[userVar].push(userVar + subscript);
+						}
 					}
 				}
-			}
-			if(found) {
-				break;
 			}
 		}
 	}
@@ -188,39 +186,35 @@ the variable is added to a list of temporally enabled variables.
 SPEXResultSet.prototype.detectTemporallyEnabledVars = function() {
 	var relatedVars = this.relateSpaceTime();
 	var solutions = this.allResults.results.bindings;
-	var temporallyEnabledVars = [];
+	var temporallyEnabledVars = {};
 	
 	//Find temporal properties in FilterExpander.prototype.filterDataProperties:
-	var temporalIndexes = [];
+	var temporalSubscripts = [];
 	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
 		var property = FilterExpander.prototype.filterDataProperties[j];
 		if(property.prefix == "time") {
-			temporalIndexes.push("_" + j + "_" + (property.prop.length - 1));
+			temporalSubscripts.push("_" + j + "_" + (property.prop.length - 1));
 		} 
 	}
-	debug(temporalIndexes);
 
 	for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
 			var sol = solutions[i];
-			var found = false;
 			if(sol[userVar]) {
-				for(var k = 0; k < temporalIndexes.length; k++) {
-					var index = temporalIndexes[k];
-					if(sol[userVar + index]) {
-						temporallyEnabledVars.push(userVar);
-						found = true;
-						break;
+				for(var k = 0; k < temporalSubscripts.length; k++) {
+					var subscript = temporalSubscripts[k];
+					if(sol[userVar + subscript]) {
+						if(!temporallyEnabledVars[userVar]) {
+							temporallyEnabledVars[userVar] = [userVar + subscript];
+						} else if(temporallyEnabledVars[userVar].indexOf(userVar + subscript) === -1){
+							temporallyEnabledVars[userVar].push(userVar + subscript);
+						}
 					}
 				}
-			}
-			if(found) {
-				break;
 			}
 		}
 	}
 	
 	return temporallyEnabledVars;
 };
-
 
