@@ -547,7 +547,7 @@ SPEXQuery.prototype.detectWKTvars = function() {
 		}
 	}
 	*/
-	
+	console.log("spatial vars: " + spex.ex.spatiallyEnabledVars);
 	if(spex.ex.spatiallyEnabledVars) {
 		for(variable in spex.ex.spatiallyEnabledVars) {
 			if((spex.ex.spatiallyEnabledVars[variable].indexOf(variable + latIndex) === -1 ||
