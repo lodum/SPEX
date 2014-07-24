@@ -535,17 +535,53 @@ SPEXQuery.prototype.expandTimeFilter = function(){
 	
 }
 
+SPEXQuery.prototype.detectWKTvars = function() {
+	
+	var WKTvars = [];
+	/* Find the index of "geo:asWKT". */
+	var latIndex, longIndex, WKTindex = null;
+	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
+		var property = FilterExpander.prototype.filterDataProperties[j];
+		if(property.prop[property.prop.length - 1] === "geo:asWKT") {
+			WKTindex = "_" + j + "_" + (property.prop.length - 1);
+		} else if(property.prop[property.prop.length - 1] === "wgs84:lat") {
+			latIndex = "_" + j + "_" + (property.prop.length - 1);
+		} else if(property.prop[property.prop.length - 1] === "wgs84:long") {
+			longIndex = "_" + j + "_" + (property.prop.length - 1);
+		}
+	}
+
+	/* For a variable to qualify as a WKT variable it should be conected to a WKT literal and
+	not be connected to both wgs84:lat and wgs84:long literals. */
+	if(this.spatiallyEnabledVars) {
+		for(variable in this.spatiallyEnabledVars) {
+			if((this.spatiallyEnabledVars[variable].indexOf(variable + latIndex) === -1 ||
+			   this.spatiallyEnabledVars[variable].indexOf(variable + longIndex) === -1) && 
+			   this.spatiallyEnabledVars[variable].indexOf(variable + WKTIndex) !== -1) {
+					WKTvars.push(variable);
+			}
+		}
+	}
+
+	return WKTvars;
+};
+
 SPEXQuery.prototype.expandSpaceFilter = function(){
-
+ 	var WKTvars = this.detectWKTvars();
  	
- 	for (i=0;i<this.spatialConstraints.length;i++)  {
-		
-		this.where(this.spatialConstraints[i].v, "wgs84:lat", "?lat")
-		.where("wgs84:long", "?long");
+ 	for (i = 0 ; i < this.spatialConstraints.length; i++)  {
+		if(WKTvars.indexOf(this.spatialConstraints[i].v) === -1) { 
+			this.where(this.spatialConstraints[i].v, "wgs84:lat", this.spatialConstraints[i].v + "__lat")
+			.where("wgs84:long", this.spatialConstraints[i].v + "__long");
 
-		this.filter("?lat  < " + this.spatialConstraints[i].w.upperRightLatitude + " && ?lat > "  + this.spatialConstraints[i].w.lowerLeftLatitude + 
-			             " && ?long < " + this.spatialConstraints[i].w.upperRightLongitude +" && ?long > " + this.spatialConstraints[i].w.lowerLeftLongitude);  		
-
+			this.filter("?lat  < " + this.spatialConstraints[i].w.upperRightLatitude + 
+				        " && ?lat > "  + this.spatialConstraints[i].w.lowerLeftLatitude + 
+			            " && ?long < " + this.spatialConstraints[i].w.upperRightLongitude + 
+			            " && ?long > " + this.spatialConstraints[i].w.lowerLeftLongitude);  		
+		} else {//if it is a WKT variable
+			this.where(this.spatialConstraints[i].v, "geo:hasGeometry", this.spatialConstraints[i].v + "__geom")
+			.where(this.spatialConstraints[i].v + "__geom", "geo:asWKT", this.spatialConstraints[i].v + "__wkt");
+		}
  	}
 
 }
