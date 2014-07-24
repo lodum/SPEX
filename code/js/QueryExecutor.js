@@ -27,7 +27,7 @@ QueryExecutor.prototype.callback = function(str){
   var results = spex.lg.label(new SPEXResultSet(jsonObj));
   
   //Detect spatially and temporally enabled variables and pass them on to the query pane.
-  console.log("detected spatial vars: " + results.detectSpatiallyEnabledVars());
+  console.log("detected spatial vars: " + JSON.stringify(results.detectSpatiallyEnabledVars()));
   this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
   this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
   queryPane.setSpatialVars(this.spatiallyEnabledVars);
