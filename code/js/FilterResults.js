@@ -19,7 +19,8 @@ FilterResults.prototype.filterWKT=function(spexresultset){
         if(result[wktVars[i]]){//if wktVar is there in the result
           var wktString=result[wktVars[i]].value;
            //remove if bounding-box is not inside constraint window
-          if(!boundingBox(wktString).inside(sc[wktVars[i].substring(0,wktVars[i].length - 5)])){
+          //if(!boundingBox(wktString).inside(sc[wktVars[i].substring(0,wktVars[i].length - 5)])){
+          if(!boundingBox(wktString).inside(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)])){
             sols.splice(j,1);
             j--;
           }
