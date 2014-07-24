@@ -21,10 +21,6 @@ this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.t
 }
 
 
-QueryExecutor.prototype.filterResults = function(spexresultset){
-FilterResults.filterWKT(spexresultset);
-}
-
 QueryExecutor.prototype.callback = function(str){
   var jsonObj = eval('(' + str + ')');
   //Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
@@ -36,8 +32,9 @@ QueryExecutor.prototype.callback = function(str){
   queryPane.setSpatialVars(this.spatiallyEnabledVars);
   queryPane.setTemporalVars(this.temporallyEnabledVars);
   
-
-  //this.filterResults(results);
+  //Filter WKT results (if any are there) 
+  FilterResults.prototype.filterWKT(results);
+  
   //Display result geometries on the map.
   var spacePane = new SpaceFilterPane();
   spacePane.displayGeometry(results);
