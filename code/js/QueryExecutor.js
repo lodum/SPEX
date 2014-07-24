@@ -29,8 +29,9 @@ QueryExecutor.prototype.callback = function(str){
   //Detect spatially and temporally enabled variables and pass them on to the query pane.
   console.log("detected spatial vars: " + JSON.stringify(results.detectSpatiallyEnabledVars()));
   this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
+  spex.ex.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
   console.log("query executor's spatial vars: " + JSON.stringify(this.spatiallyEnabledVars));
-  console.log("query executor's spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
+  console.log("spex.ex's spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
   this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
   queryPane.setSpatialVars(this.spatiallyEnabledVars);
   queryPane.setTemporalVars(this.temporallyEnabledVars);
