@@ -7,6 +7,7 @@
 var queryPane = new function(){
 
 	// Variables
+	this.varCount = 0;
 
 	// Height and Width of the queryPane
 	this.width = '500',
@@ -29,8 +30,8 @@ var queryPane = new function(){
 	this.pathText = null;
 
 	// Data
-	this.nodes = [{id: 0, name: 'a', x: 0, y: 0, variable: true, constraint: false},
-				{id: 0, name: 'maps:Map', x: 100, y: 0, variable: false, constraint: false}];
+	this.nodes = [{id: 0, name: 'a', varname: 'var'+ (this.varCount++), x: 0, y: 0, variable: true, constraint: false},
+				{id: 0, name: 'maps:Map', varname: '', x: 100, y: 0, variable: false, constraint: false}];
 	this.links = [{id: 0, name: 'a', source: this.nodes[0], target: this.nodes[1], arrow: true}];
 
 	// Selected node
@@ -42,7 +43,7 @@ var queryPane = new function(){
 	// Node drag beahavior
 	this.node_drag = null;
 
-
+	
 
 	// Initialization
 	this.init = function() {
@@ -435,6 +436,23 @@ var queryPane = new function(){
 	};
 
 	this.setSpatialVars = function(vars) {
+
+		for (variable in vars) {
+		
+			for (var i = 0; i < this.nodes.length; i++) {
+				if (this.nodes[i].name == variable) {
+					this.nodes[i].constraint = true;
+				}
+				else {
+					this.nodes[i].constraint = false;
+				};
+			};
+		};
+
+		this.update();
+	};
+
+	this.setTemporalVars = function(vars) {
 
 		for (variable in vars) {
 		
