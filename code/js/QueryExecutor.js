@@ -35,7 +35,7 @@ QueryExecutor.prototype.callback = function(str){
   this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
   queryPane.setSpatialVars(this.spatiallyEnabledVars);
   queryPane.setTemporalVars(this.temporallyEnabledVars);
-  console.log(this.spatiallyEnabledVars);
+  
 
   //this.filterResults(results);
   //Display result geometries on the map.
