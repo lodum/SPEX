@@ -547,7 +547,7 @@ SPEXQuery.prototype.detectWKTvars = function() {
 		}
 	}
 	*/
-	console.log("spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
+	console.log("spatially enabled vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
 	if(spex.ex.spatiallyEnabledVars) {
 		for(variable in spex.ex.spatiallyEnabledVars) {
 			if((spex.ex.spatiallyEnabledVars[variable].indexOf(variable + latIndex) === -1 ||
@@ -557,7 +557,7 @@ SPEXQuery.prototype.detectWKTvars = function() {
 			}
 		}
 	}
-	console.log(JSON.stringify(WKTvars));
+	console.log("WKT vars: " + JSON.stringify(WKTvars));
 	return WKTvars;
 };
 
