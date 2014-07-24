@@ -31,8 +31,10 @@ QueryExecutor.prototype.callback = function(str){
   var results = spex.lg.label(new SPEXResultSet(jsonObj));
   
   //Detect spatially and temporally enabled variables and pass them on to the query pane.
-  queryPane.setSpatialVars(results.detectSpatiallyEnabledVars());
-  queryPane.setTemporalVars(results.detectTemporallyEnabledVars());
+  this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
+  this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
+  queryPane.setSpatialVars(this.spatiallyEnabledVars);
+  queryPane.setTemporalVars(this.temporallyEnabledVars);
 
   //this.filterResults(results);
   //Display result geometries on the map.
