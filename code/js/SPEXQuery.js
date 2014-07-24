@@ -570,10 +570,10 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
 			this.where(variable, "wgs84:lat", variable + "__lat")
 			.where("wgs84:long", variable + "__long");
 
-			this.filter("?lat  < " + this.spatialConstraints[variable].upperRightLatitude + 
-				        " && ?lat > "  + this.spatialConstraints[variable].lowerLeftLatitude + 
-			            " && ?long < " + this.spatialConstraints[variable].upperRightLongitude + 
-			            " && ?long > " + this.spatialConstraints[variable].lowerLeftLongitude);  		
+			this.filter(variable + "__lat  < " + this.spatialConstraints[variable].upperRightLatitude + 
+				        " && " + variable + "__lat > "  + this.spatialConstraints[variable].lowerLeftLatitude + 
+			            " && " + variable + "__long < " + this.spatialConstraints[variable].upperRightLongitude + 
+			            " && " + variable + "__long > " + this.spatialConstraints[variable].lowerLeftLongitude);  		
 		} else {//if it is a WKT variable
 			this.where(variable, "geo:hasGeometry", variable + "__geom")
 			.where(variable + "__geom", "geo:asWKT", variable + "__wkt");
