@@ -4,29 +4,25 @@ FilterResults.prototype.filterWKT=function(spexresultset){
   
   //Remove all the wkt-results from resultset which don't fulfill the spatial constraints.
   
-  /*
-  This part of code is longer because the wkt-results (.getWKT()) are parsed first,
-  and only then the spatial constraints.
-  This is (possibly) more efficient, becuase getWKT is parsed only once, and mostly  the
-  spatialConstraints-array is shorter.
-  */
   
-  var allWKT=spexresultset.getWKT();
-  var sc=spexresultset.spatialConstraints;
+  var sc=spex.q.spatialConstraints;
+  var headVars=spexresultset.allResults.head.vars;
   var sols=spexresultset.allResults.results.bindings;
-  var k=0; //k determines index shift in sols, as solutions are removed.
-  for(var i=0; i<allWKT.length; i++){
-    if(sc.length==0) break;//if there are no spatial constraints, no effort has to be wasted.
-    var wktArray=allWKT[i];
-    if(wktArray.length==4){//choose a wkt-result
-      var wktVar=wktArray[2]; //choose the wkt-variable of this wkt-result
-      for(var j=0; j<sc.length; j++){ //check if wkt-variable has spatial constraints
-        if(wktVar==sc[j].v){
-          if(!boundingBox(wktArray[1]).inside(sc[j].w)){//check if wkt-result fulfills spatial constraint
-             sols.splice(wktArray[3]+k,1);//If not, remove result from spexresultset, use index-shift
-             k++; // shift index
+  var wktVars=[];
+  for(var i=0;i<headVars.length;i++){//Store all the (spatially constrained) wkt-Variables in wktVars
+    if(headVars[i].substring(v.length - 5, v.length) === "__wkt") wktVars.push(headVars[i]));
+  }
+  if(wktVars.length>0){//Do only if wktVars is not empty
+    for(var j=0; j<sols.length; j++){ // Go through the results
+      result=sols[j]; // Pick a result
+      for(var i=0; i<wktVars.length; i++){ // Go through the wktVars
+        if(result[wktVars[i]]){//if wktVar is there in the result
+          var wktString=result[wktVars[i]].value;
+           //remove if bounding-box is not inside constraint window
+          if(!boundingBox(wktString).inside(sc[wktVars[i].substring(0,wktVars[i].length - 5)])){
+            sols.splice(j,1);
+            j--;
           }
-          break; // Every var has only one spatial constraint, so exit last for-loop here.
         }
       }
     }
