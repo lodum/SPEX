@@ -553,11 +553,23 @@ SPEXQuery.prototype.detectWKTvars = function() {
 
 	/* For a variable to qualify as a WKT variable it should be conected to a WKT literal and
 	not be connected to both wgs84:lat and wgs84:long literals. */
+	/*
 	if(this.spatiallyEnabledVars) {
 		for(variable in this.spatiallyEnabledVars) {
 			if((this.spatiallyEnabledVars[variable].indexOf(variable + latIndex) === -1 ||
 			   this.spatiallyEnabledVars[variable].indexOf(variable + longIndex) === -1) && 
 			   this.spatiallyEnabledVars[variable].indexOf(variable + WKTIndex) !== -1) {
+					WKTvars.push(variable);
+			}
+		}
+	}
+	*/
+	
+	if(spex.ex.spatiallyEnabledVars) {
+		for(variable in spex.ex.spatiallyEnabledVars) {
+			if((spex.ex.spatiallyEnabledVars[variable].indexOf(variable + latIndex) === -1 ||
+			   spex.ex.spatiallyEnabledVars[variable].indexOf(variable + longIndex) === -1) && 
+			   spex.ex.spatiallyEnabledVars[variable].indexOf(variable + WKTIndex) !== -1) {
 					WKTvars.push(variable);
 			}
 		}
