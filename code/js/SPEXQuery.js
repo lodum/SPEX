@@ -557,7 +557,7 @@ SPEXQuery.prototype.detectWKTvars = function() {
 			}
 		}
 	}
-
+	console.log(JSON.stringify(WKTvars));
 	return WKTvars;
 };
 
