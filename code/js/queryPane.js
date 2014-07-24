@@ -1,6 +1,6 @@
 /*
 	QueryPane class
-
+	
 	Author: Peter Zimmerhof
 */
 
@@ -337,7 +337,7 @@ var queryPane = new function(){
 
 		this.force.start();
 
-		queryPane.parseQuery();
+		queryPane.updateQuery();
 	};
 
 	// 
@@ -353,7 +353,7 @@ var queryPane = new function(){
 			queryPane.selected.variable = document.getElementById('queryVar').checked;
 			queryPane.selected.constraint = document.getElementById('querySpat').checked;
 
-			queryPane.parseQuery();
+			queryPane.updateQuery();
 
 			this.update();
 		};
@@ -402,11 +402,13 @@ var queryPane = new function(){
 		};
 	};
 
+	this.updateQuery = function() {
+		spex.q = new SPEXQuery();
 
+		this.rParseQuery(this.nodes[0]);
+	};
 
 	this.parseQuery = function() {
-		spex.q.patterns= [];
-		
 		this.rParseQuery(this.nodes[0]);	
 	};
 
@@ -430,6 +432,23 @@ var queryPane = new function(){
 				this.rParseQuery(this.links[i].target);
 			};
 		};
+	};
+
+	this.setSpatialVars = function(vars) {
+
+		for (variable in vars) {
+		
+			for (var i = 0; i < this.nodes.length; i++) {
+				if (this.nodes[i].name == variable) {
+					this.nodes[i].constraint = true;
+				}
+				else {
+					this.nodes[i].constraint = false;
+				};
+			};
+		};
+
+		this.update();
 	};
 
 };
