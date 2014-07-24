@@ -3,6 +3,8 @@
 Executes a SPEX query via http post and calls a callback function which turns results into a JSON object (sparql-results+json) and displays it in the registered resultspane.
 **/
 function QueryExecutor(){ 
+	this.spatiallyEnabledVars = null;
+	this.temporallyEnabledVars = null;
 } 
 QueryExecutor.prototype.constructor = QueryExecutor;
 
@@ -26,15 +28,13 @@ FilterResults.filterWKT(spexresultset);
 QueryExecutor.prototype.callback = function(str){
   var jsonObj = eval('(' + str + ')');
   //Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
-  //var lg = new LabelGenerator();
   var results = spex.lg.label(new SPEXResultSet(jsonObj));
-  //var results = lg.label(new SPEXResultSet(jsonObj));
   
+  //Detect spatially and temporally enabled variables and pass them on to the query pane.
+  queryPane.setSpatialVars(results.detectSpatiallyEnabledVars());
+  queryPane.setTemporalVars(results.detectTemporallyEnabledVars());
 
-  // 
   //this.filterResults(results);
-
-  
   //Display result geometries on the map.
   var spacePane = new SpaceFilterPane();
   spacePane.displayGeometry(results);
