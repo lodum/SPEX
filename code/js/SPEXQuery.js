@@ -7,7 +7,7 @@ this.le = new LiteralExpander();
 this.SPEXvariables = [];
 
 // redeclare patterns
-	this.queryType = "SELECT";
+    this.queryType = "SELECT";
     //this.prefixes = [];
     this.defaultGraphs = [];
     this.namedGraphs = [];
@@ -547,12 +547,12 @@ SPEXQuery.prototype.detectWKTvars = function() {
 		}
 	}
 	*/
-	console.log("spatial vars: " + spex.ex.spatiallyEnabledVars);
+	console.log("spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
 	if(spex.ex.spatiallyEnabledVars) {
 		for(variable in spex.ex.spatiallyEnabledVars) {
 			if((spex.ex.spatiallyEnabledVars[variable].indexOf(variable + latIndex) === -1 ||
 			   spex.ex.spatiallyEnabledVars[variable].indexOf(variable + longIndex) === -1) && 
-			   spex.ex.spatiallyEnabledVars[variable].indexOf(variable + WKTIndex) !== -1) {
+			   spex.ex.spatiallyEnabledVars[variable].indexOf(variable + WKTindex) !== -1) {
 					WKTvars.push(variable);
 			}
 		}
