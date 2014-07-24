@@ -19,6 +19,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
       for(var i=0; i<wktVars.length; i++){ // Go through the wktVars
         if(result[wktVars[i]]){//if wktVar is there in the result
           var wktString=result[wktVars[i]].value;
+          console.log("wktString solution No." + i + ": " + wktString);
            //remove if bounding-box is not inside constraint window
           //if(!boundingBox(wktString).inside(sc[wktVars[i].substring(0,wktVars[i].length - 5)])){
           if(!boundingBox(wktString).inside(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)])){
