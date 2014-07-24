@@ -30,6 +30,7 @@ QueryExecutor.prototype.callback = function(str){
   console.log("detected spatial vars: " + JSON.stringify(results.detectSpatiallyEnabledVars()));
   this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
   console.log("query executor's spatial vars: " + JSON.stringify(this.spatiallyEnabledVars));
+  console.log("query executor's spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
   this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
   queryPane.setSpatialVars(this.spatiallyEnabledVars);
   queryPane.setTemporalVars(this.temporallyEnabledVars);
