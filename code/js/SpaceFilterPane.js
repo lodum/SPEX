@@ -8,6 +8,7 @@ SpaceFilterPane.prototype.displayGeometry = function(resultset){
 
 	var result = resultset.getWKT();
 	console.log("result of getWKT: " + JSON.stringify(result));
+	if(result) {
 	var markers = [];
 	
 	
@@ -35,5 +36,5 @@ SpaceFilterPane.prototype.displayGeometry = function(resultset){
 
 	var group = new L.featureGroup(markers);
 	map.LMap.fitBounds(group.getBounds());
-
+	}
 }
