@@ -7,7 +7,7 @@ function SpaceFilterPane() {
 SpaceFilterPane.prototype.displayGeometry = function(resultset){
 
 	var result = resultset.getWKT();
-	console.log(JSON.stringify(result));
+	console.log("result of getWKT: " + JSON.stringify(result));
 	var markers = [];
 	
 	
