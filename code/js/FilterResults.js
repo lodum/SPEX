@@ -10,7 +10,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
   var sols=spexresultset.allResults.results.bindings;
   var wktVars=[];
   for(var i=0;i<headVars.length;i++){//Store all the (spatially constrained) wkt-Variables in wktVars
-    if(headVars[i].substring(v.length - 5, v.length) === "__wkt") wktVars.push(headVars[i]));
+    if(headVars[i].substring(v.length - 5, v.length) === "__wkt") wktVars.push(headVars[i]);
   }
   if(wktVars.length>0){//Do only if wktVars is not empty
     for(var j=0; j<sols.length; j++){ // Go through the results
