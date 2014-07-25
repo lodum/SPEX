@@ -21,7 +21,7 @@ QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, spexquery.timeout, false);
 }
 
-
+/*
 QueryExecutor.prototype.callback = function(str){
   	var jsonObj = eval('(' + str + ')');
   	//Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
@@ -46,6 +46,7 @@ QueryExecutor.prototype.callback = function(str){
   
   	spex.rp.display(results);
 }
+*/
 
 //QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
 QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, isDebug) {
@@ -92,8 +93,7 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
          		if(xmlhttp.status == 200) {
            			// Do something with the results
            			if(isDebug) alert(xmlhttp.responseText);//alert in debug mode
-           			//callback(xmlhttp.responseText);
-           			this.callback(xmlhttp.responseText);
+           			callback(xmlhttp.responseText);
          		} else {
            			// Some kind of error occurred.
            			alert("Sparql query error: http status " + xmlhttp.status + " "
@@ -105,7 +105,7 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
      	// Send the query to the endpoint.
      	xmlhttp.send(querypart);
     
-     	/*
+     	
      	function callback(str) {
   		var jsonObj = eval('(' + str + ')');
   		//Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
@@ -130,7 +130,7 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
 
   		spex.rp.display(results);
      	}
-     	*/
+     	
      
      	// Done; now just wait for the callback to be called.
 };
