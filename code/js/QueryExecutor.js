@@ -21,33 +21,32 @@ QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, spexquery.timeout, false);
 }
 
-/*
+
 QueryExecutor.prototype.callback = function(str){
-  var jsonObj = eval('(' + str + ')');
-  //Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
-  var results = spex.lg.label(new SPEXResultSet(jsonObj));
+  	var jsonObj = eval('(' + str + ')');
+  	//Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
+  	var results = spex.lg.label(new SPEXResultSet(jsonObj));
   
-  //Detect spatially and temporally enabled variables and pass them on to the query pane.
-  console.log("detected spatial vars: " + JSON.stringify(results.detectSpatiallyEnabledVars()));
-  this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
-  spex.ex.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
-  console.log("query executor's spatial vars: " + JSON.stringify(this.spatiallyEnabledVars));
-  console.log("spex.ex's spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
-  this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
-  queryPane.setSpatialVars(this.spatiallyEnabledVars);
-  queryPane.setTemporalVars(this.temporallyEnabledVars);
+  	//Detect spatially and temporally enabled variables and pass them on to the query pane.
+  	console.log("detected spatial vars: " + JSON.stringify(results.detectSpatiallyEnabledVars()));
+  	this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
+  	//spex.ex.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
+  	console.log("this's spatial vars: " + JSON.stringify(this.spatiallyEnabledVars));
+  	//console.log("spex.ex's spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
+  	this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
+  	queryPane.setSpatialVars(this.spatiallyEnabledVars);
+  	queryPane.setTemporalVars(this.temporallyEnabledVars);
   
-  //Filter WKT results (if any are there) 
-  FilterResults.prototype.filterWKT(results);
+  	//Filter WKT results (if any are there) 
+  	FilterResults.prototype.filterWKT(results);
   
-  //Display result geometries on the map.
-  var spacePane = new SpaceFilterPane();
-  spacePane.displayGeometry(results);
+  	//Display result geometries on the map.
+  	var spacePane = new SpaceFilterPane();
+  	spacePane.displayGeometry(results);
   
-  //var rp = spex.rp;
-  spex.rp.display(results);
+  	spex.rp.display(results);
 }
-*/
+
 //QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
 QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, isDebug) {
       	var querypart = "query=" + escape(queryStr);
@@ -93,7 +92,8 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
          		if(xmlhttp.status == 200) {
            			// Do something with the results
            			if(isDebug) alert(xmlhttp.responseText);//alert in debug mode
-           			callback(xmlhttp.responseText);
+           			//callback(xmlhttp.responseText);
+           			this.callback(xmlhttp.responseText);
          		} else {
            			// Some kind of error occurred.
            			alert("Sparql query error: http status " + xmlhttp.status + " "
@@ -105,7 +105,7 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
      	// Send the query to the endpoint.
      	xmlhttp.send(querypart);
     
-     
+     	/*
      	function callback(str) {
   		var jsonObj = eval('(' + str + ')');
   		//Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
@@ -113,12 +113,10 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
   
   		//Detect spatially and temporally enabled variables and pass them on to the query pane.
   		console.log("detected spatial vars: " + JSON.stringify(results.detectSpatiallyEnabledVars()));
-  		this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
+  		//this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
   		spex.ex.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
-  		console.log("query executor's spatial vars: " + JSON.stringify(this.spatiallyEnabledVars));
+  		//console.log("this's spatial vars: " + JSON.stringify(this.spatiallyEnabledVars));
   		console.log("spex.ex's spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
-  		console.log(JSON.stringify(this));
-  		console.log(JSON.stringify(spex.ex));
   		this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
   		queryPane.setSpatialVars(this.spatiallyEnabledVars);
   		queryPane.setTemporalVars(this.temporallyEnabledVars);
@@ -132,6 +130,7 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
 
   		spex.rp.display(results);
      	}
+     	*/
      
      	// Done; now just wait for the callback to be called.
 };
