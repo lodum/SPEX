@@ -117,6 +117,8 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
   		spex.ex.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
   		console.log("query executor's spatial vars: " + JSON.stringify(this.spatiallyEnabledVars));
   		console.log("spex.ex's spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
+  		console.log(JSON.stringify(this));
+  		console.log(JSON.stringify(spex.ex));
   		this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
   		queryPane.setSpatialVars(this.spatiallyEnabledVars);
   		queryPane.setTemporalVars(this.temporallyEnabledVars);
