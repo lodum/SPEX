@@ -11,16 +11,17 @@ QueryExecutor.prototype.constructor = QueryExecutor;
 
 
 QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
-//Test whether endpoint is non empty:
-		if (endpoint == '' || endpoint == null) {
+	//Test whether endpoint is non empty:
+	if (endpoint == '' || endpoint == null) {
 		alert('Endpoint is empty!');
 		return;
-		}
-document.getElementById("result").innerHTML = "Waiting for results...";
-this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, false);
+	}
+	document.getElementById("result").innerHTML = "Waiting for results...";
+	//this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, false);
+	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, spexquery.timeout, false);
 }
 
-
+/*
 QueryExecutor.prototype.callback = function(str){
   var jsonObj = eval('(' + str + ')');
   //Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
@@ -46,65 +47,91 @@ QueryExecutor.prototype.callback = function(str){
   //var rp = spex.rp;
   spex.rp.display(results);
 }
-
-QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
-      var querypart = "query=" + escape(queryStr);
-      //console.log('Endpoint: '+ endpoint);
+*/
+//QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
+QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, isDebug) {
+      	var querypart = "query=" + escape(queryStr);
+      	//console.log('Endpoint: '+ endpoint);
       
-	  // Function for creating xmlhttp  object depending on browser.
-		function createCORSRequest(method, url) {
-			var xmlhttp = new XMLHttpRequest();
-		  if ("withCredentials" in xmlhttp) {
+	// Function for creating xmlhttp  object depending on browser.
+	function createCORSRequest(method, url) {
+		var xmlhttp = new XMLHttpRequest();
+		if ("withCredentials" in xmlhttp) {
 			// xmlhttp for Chrome/Firefox/Opera/Safari.
 			xmlhttp.open(method, url, true);
-		  } else if (typeof XDomainRequest != "undefined") {
+		} else if (typeof XDomainRequest != "undefined") {
 			// XDomainRequest for IE.
 			xmlhttp = new XDomainRequest();
 			xmlhttp.open(method, url);
-		  } else {
+		} else {
 			// CORS not supported.
 			xmlhttp = null;
-		  }
-		  return xmlhttp;
 		}
+		return xmlhttp;
+	}
 	
-	 // Get our HTTP request object.	 
-      var xmlhttp = createCORSRequest('POST', endpoint); 
-	  if (!xmlhttp) {
+	// Get our HTTP request object.	 
+      	var xmlhttp = createCORSRequest('POST', endpoint); 
+	if (!xmlhttp) {
 		alert('CORS not supported');
 		return;
-	  }
-    
+	}
 	
-     // Set up a POST with JSON result format.
-     //xmlhttp.open('POST', endpoint, true); // GET can have caching probs, so POST
-     xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-     xmlhttp.setRequestHeader("Accept", "application/sparql-results+json");	 
-	 xmlhttp.timeout = timeout;
-	 xmlhttp.ontimeout = function () { alert("Timeout: the endpoint is not responding!"); }
-	 	 xmlhttp.onerror = function() {
+     	// Set up a POST with JSON result format.
+     	//xmlhttp.open('POST', endpoint, true); // GET can have caching probs, so POST
+     	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+     	xmlhttp.setRequestHeader("Accept", "application/sparql-results+json");	 
+	xmlhttp.timeout = timeout;
+	xmlhttp.ontimeout = function () { alert("Timeout: the endpoint is not responding!"); }
+	xmlhttp.onerror = function() {
 		alert('Woops, there was an error making the request.');
-	  };
+	};
 
-     // Set up callback to get the response asynchronously.
-     xmlhttp.onreadystatechange = function() {
-       if(xmlhttp.readyState == 4) {
-         if(xmlhttp.status == 200) {
-           // Do something with the results
-           if(isDebug) alert(xmlhttp.responseText);//alert in debug mode
-           callback(xmlhttp.responseText);
-         } else {
-           // Some kind of error occurred.
-           alert("Sparql query error: http status " + xmlhttp.status + " "
-               + xmlhttp.statusText);
-         }
-       }
-     };
-     // Send the query to the endpoint.
-     xmlhttp.send(querypart);
+     	// Set up callback to get the response asynchronously.
+     	xmlhttp.onreadystatechange = function() {
+       		if(xmlhttp.readyState == 4) {
+         		if(xmlhttp.status == 200) {
+           			// Do something with the results
+           			if(isDebug) alert(xmlhttp.responseText);//alert in debug mode
+           			callback(xmlhttp.responseText);
+         		} else {
+           			// Some kind of error occurred.
+           			alert("Sparql query error: http status " + xmlhttp.status + " "
+        		        + xmlhttp.statusText);
+         		}
+       		}
+     	};
+     
+     	// Send the query to the endpoint.
+     	xmlhttp.send(querypart);
     
-     // Done; now just wait for the callback to be called.
-    };
+     
+     	function callback(str) {
+  		var jsonObj = eval('(' + str + ')');
+  		//Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
+  		var results = spex.lg.label(new SPEXResultSet(jsonObj));
+  
+  		//Detect spatially and temporally enabled variables and pass them on to the query pane.
+  		console.log("detected spatial vars: " + JSON.stringify(results.detectSpatiallyEnabledVars()));
+  		this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
+  		//spex.ex.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
+  		console.log("query executor's spatial vars: " + JSON.stringify(this.spatiallyEnabledVars));
+  		this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
+  		queryPane.setSpatialVars(this.spatiallyEnabledVars);
+  		queryPane.setTemporalVars(this.temporallyEnabledVars);
+  
+  		//Filter WKT results (if any are there) 
+  		FilterResults.prototype.filterWKT(results);
+  
+  		//Display result geometries on the map.
+  		var spacePane = new SpaceFilterPane();
+  		spacePane.displayGeometry(results);
+
+  		spex.rp.display(results);
+     	}
+     
+     	// Done; now just wait for the callback to be called.
+};
 
 
 
