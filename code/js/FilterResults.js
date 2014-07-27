@@ -38,7 +38,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     var longArray=[];
     var a,b,c,d;
     var wktWindow=new Window();
-    cutStringFrontUptoChar(str,'('); //cut off beginning of string upto the last '(' 
+    str=cutStringFrontUptoChar(str,'('); //cut off beginning of string upto the last '(' 
     //remove all the '(' and ')' characters
     for(var i=0;i<str.length;i++){
       if(str[i]=='('||str[i]==')'){
@@ -50,7 +50,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     //cut off spaces at beginning and end of elements of strArray, and split up lat & long into the arrays.
     for(var i=0;i<strArray.length;i++){
       var s=strArray[i];
-      removeSpacesAtEnds(s);
+      s=removeSpacesAtEnds(s);
       s=s.split(" "); // type of s changes from string to array
       if(s.length!=2) console.log("Error in strArray["+i+"]");
       latArray.push(parseInt(s[0]));
@@ -74,6 +74,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
         break;
       }
     }
+    return string;
   }
   
   function cutStringBackUptoChar(string,ch){
@@ -83,11 +84,12 @@ FilterResults.prototype.filterWKT=function(spexresultset){
         break;
       }
     }
+    return string;
   }
   
   function removeSpacesAtEnds(string){
-    if(string[0]==' ') cutStringFrontUptoChar(string,' ');
-    if(string[string.length - 1]==' ') cutStringBackUptoChar(string,' ');
+    string=cutStringFrontUptoChar(cutStringBackUptoChar(string,' '),' ');
+    return string;
   }
   
 };
