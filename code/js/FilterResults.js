@@ -55,6 +55,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     for(var i=0;i<strArray.length;i++){
       var s=strArray[i];
       s=removeSpacesAtEnds(s);
+      console.log("spaces front and end removed: " + JSON.stringify(s));
       s=s.split(" "); // type of s changes from string to array
       console.log("lat and long split: " + JSON.stringify(s));
       if(s.length!=2) console.log("Error in strArray["+i+"]");
