@@ -40,7 +40,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     var a,b,c,d;
     var wktWindow=new Window();
     str=cutStringFrontUptoChar(str,'('); //cut off beginning of string upto the last '(' 
-    console.log("FilterResults.prototype.filterWKT(): WKT string cut up to the last (: " + str);
+    console.log("FilterResults.prototype.filterWKT(): WKT string cut up to the last '(': " + str);
     //remove all the '(' and ')' characters
     for(var i=0;i<str.length;i++){
       if(str[i]=='('||str[i]==')'){
@@ -48,7 +48,9 @@ FilterResults.prototype.filterWKT=function(spexresultset){
         i--;
       }
     }
+    console.log("FilterResults.prototype.filterWKT(): WKT string with all '('s and ')'s removed: " + str);
     strArray=str.split(","); // fill strArray
+    console.log("FilterResults.prototype.filterWKT(): WKT string split at ',': " + str);
     //cut off spaces at beginning and end of elements of strArray, and split up lat & long into the arrays.
     for(var i=0;i<strArray.length;i++){
       var s=strArray[i];
