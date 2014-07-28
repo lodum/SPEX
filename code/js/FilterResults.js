@@ -22,6 +22,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
           console.log("FilterResults.prototype.filterWKT(): wktString for solution No." + j + ": " + wktString);
            //remove if bounding-box is not inside constraint window
           //if(!boundingBox(wktString).inside(sc[wktVars[i].substring(0,wktVars[i].length - 5)])){
+          console.log("FilterResults.prototype.filterWKT(): corresponding constraint window: " + JSON.stringify(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)]));
           if(!boundingBox(wktString).inside(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)])){
             sols.splice(j,1);
             j--;
@@ -39,6 +40,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     var a,b,c,d;
     var wktWindow=new Window();
     str=cutStringFrontUptoChar(str,'('); //cut off beginning of string upto the last '(' 
+    console.log("FilterResults.prototype.filterWKT(): WKT string cut up to the last (: " + str);
     //remove all the '(' and ')' characters
     for(var i=0;i<str.length;i++){
       if(str[i]=='('||str[i]==')'){
