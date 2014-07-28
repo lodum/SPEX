@@ -547,7 +547,7 @@ SPEXQuery.prototype.detectWKTvars = function() {
 		}
 	}
 	*/
-	console.log("spatially enabled vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
+	console.log("SPEXQuery.prototype.detectWKTvars(): spatally enabled vars from previous query: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
 	if(spex.ex.spatiallyEnabledVars) {
 		for(variable in spex.ex.spatiallyEnabledVars) {
 			if((spex.ex.spatiallyEnabledVars[variable].indexOf(variable + latIndex) === -1 ||
@@ -557,7 +557,7 @@ SPEXQuery.prototype.detectWKTvars = function() {
 			}
 		}
 	}
-	console.log("WKT vars: " + JSON.stringify(WKTvars));
+	console.log("SPEXQuery.prototype.detectWKTvars(): detected WKT vars: " + JSON.stringify(WKTvars));
 	return WKTvars;
 };
 
@@ -566,7 +566,7 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
 
  	for (variable in this.spatialConstraints)  {
 		//if the variable is not a WKT variable
-		console.log("spatvar: " + variable.substr(1));
+		console.log("SPEXQuery.prototype.expandSpaceFilter(): spatial variable w/o "?": " + variable.substr(1));
 		if(WKTvars.indexOf(variable.substr(1)) === -1) { 
 			this.where(variable, "wgs84:lat", variable + "__lat")
 			.where("wgs84:long", variable + "__long");
