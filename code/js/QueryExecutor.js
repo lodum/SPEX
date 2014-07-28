@@ -112,14 +112,13 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
   		var results = spex.lg.label(new SPEXResultSet(jsonObj));
   
   		//Detect spatially and temporally enabled variables and pass them on to the query pane.
-  		console.log("detected spatial vars: " + JSON.stringify(results.detectSpatiallyEnabledVars()));
-  		//this.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
   		spex.ex.spatiallyEnabledVars = results.detectSpatiallyEnabledVars();
-  		//console.log("this's spatial vars: " + JSON.stringify(this.spatiallyEnabledVars));
-  		console.log("spex.ex's spatial vars: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
-  		this.temporallyEnabledVars = results.detectTemporallyEnabledVars();
-  		queryPane.setSpatialVars(this.spatiallyEnabledVars);
-  		queryPane.setTemporalVars(this.temporallyEnabledVars);
+  		console.log("callback(): detected spatial vars stored in spex.ex: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
+  		spex.ex.temporallyEnabledVars = results.detectTemporallyEnabledVars();
+  		console.log("callback(): detected temporal vars stored in spex.ex: " + JSON.stringify(spex.ex.temporallyEnabledVars));
+  		//Forward the detected spatially and temporally enabled variables to query pane:
+  		queryPane.setSpatialVars(spex.ex.spatiallyEnabledVars);
+  		queryPane.setTemporalVars(spex.ex.temporallyEnabledVars);
   
   		//Filter WKT results (if any are there) 
   		FilterResults.prototype.filterWKT(results);
