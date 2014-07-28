@@ -50,7 +50,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     }
     console.log("FilterResults.prototype.filterWKT(): WKT string with all '('s and ')'s removed: " + str);
     strArray=str.split(","); // fill strArray
-    console.log("FilterResults.prototype.filterWKT(): WKT string split at ',': " + str);
+    console.log("FilterResults.prototype.filterWKT(): WKT string split at ',': " + JSON.stringify(strArray));
     //cut off spaces at beginning and end of elements of strArray, and split up lat & long into the arrays.
     for(var i=0;i<strArray.length;i++){
       var s=strArray[i];
