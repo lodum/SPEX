@@ -94,7 +94,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     */
     if(string[0] === ch) {
       string = string.substring(1, string.length);
-      cutStringFrontUptoChar(string, ch);
+      removeSpacesFront(string, ch);
     } else {
       console.log("space at front removed: " + string);
       return string;
@@ -113,7 +113,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     */
     if(string[string.length - 1] === ch) {
       string = string.substring(0, string.length - 1);
-      cutStringBackUptoChar(string, ch);
+      removeSpacesBack(string, ch);
     } else {
       console.log("space at back removed: " + string);
       return string;
