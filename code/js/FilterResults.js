@@ -72,6 +72,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
   }
   
   function cutStringFrontUptoChar(string,ch){
+    /*
     for(var i=0;i<string.length;i++){
       if(string[i]==ch&&string[i+1]!=ch){
         string=string.substring(i+1);
@@ -79,6 +80,13 @@ FilterResults.prototype.filterWKT=function(spexresultset){
       }
     }
     return string;
+    */
+    if(string[0] === ch) {
+      string = string.substring(1, string.length);
+      cutStringFrontUptoChar(string, ch);
+    } else {
+      return string;
+    }
   }
   
   function cutStringBackUptoChar(string,ch){
@@ -91,9 +99,9 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     }
     return string;
     */
-    if(string[string.length - 1] === ' ') {
+    if(string[string.length - 1] === ch) {
       string = string.substring(0, string.length - 1);
-      cutStringBackUptoChar(string);
+      cutStringBackUptoChar(string, ch);
     } else {
       return string;
     }
