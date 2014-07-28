@@ -566,7 +566,7 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
 
  	for (variable in this.spatialConstraints)  {
 		//if the variable is not a WKT variable
-		console.log("SPEXQuery.prototype.expandSpaceFilter(): spatial variable w/o "?": " + variable.substr(1));
+		console.log("SPEXQuery.prototype.expandSpaceFilter(): spatial variable w/o '?': " + variable.substr(1));
 		if(WKTvars.indexOf(variable.substr(1)) === -1) { 
 			this.where(variable, "wgs84:lat", variable + "__lat")
 			.where("wgs84:long", variable + "__long");
