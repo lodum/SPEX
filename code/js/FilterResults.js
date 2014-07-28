@@ -124,7 +124,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
   
   function removeSpacesAtEnds(string){
     string=removeSpacesFront(removeSpacesBack(string,' '), ' ');
-    console.log("spaces back and front removed: (before returning) " + string);
+    //console.log("spaces back and front removed: (before returning) " + string);
     return string;
   }
   
