@@ -97,7 +97,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     */
     if(string[0] === ch) {
       string = string.substring(1, string.length);
-      removeSpacesFront(string, ch);
+      return removeSpacesFront(string, ch);
     } else {
       console.log("space at front removed: " + string);
       return string;
@@ -116,7 +116,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     */
     if(string[string.length - 1] === ch) {
       string = string.substring(0, string.length - 1);
-      removeSpacesBack(string, ch);
+      return removeSpacesBack(string, ch);
     } else {
       console.log("space at back removed: " + string);
       return string;
@@ -124,7 +124,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
   }
   
   function removeSpacesAtEnds(string){
-    string=removeSpacesFront(removeSpacesBack(string,' '));
+    string=removeSpacesFront(removeSpacesBack(string,' '), ' ');
     console.log("spaces back and front removed: (before returning) " + string);
     return string;
   }
