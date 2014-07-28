@@ -71,7 +71,18 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     return wktWindow;
   }
   
+  
   function cutStringFrontUptoChar(string,ch){
+    for(var i=0;i<string.length;i++){
+      if(string[i]==ch&&string[i+1]!=ch){
+        string=string.substring(i+1);
+        break;
+      }
+    }
+    return string;
+  }
+  
+  function removeSpacesFront(string,ch){
     /*
     for(var i=0;i<string.length;i++){
       if(string[i]==ch&&string[i+1]!=ch){
@@ -90,7 +101,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     }
   }
   
-  function cutStringBackUptoChar(string,ch){
+  function removeSpacesBack(string,ch){
     /*
     for(var i=string.length - 1; i>=0 ;i--){
       if(string[i]==ch&&string[i-1]!=ch){
@@ -110,7 +121,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
   }
   
   function removeSpacesAtEnds(string){
-    string=cutStringFrontUptoChar(cutStringBackUptoChar(string,' '),' ');
+    string=removeSpacesFront(removeSpacesBack(string,' '),' ');
     return string;
   }
   
