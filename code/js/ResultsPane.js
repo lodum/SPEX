@@ -9,8 +9,8 @@ ResultsPane.prototype.display = function(spexresultset){
 	    		var text = solution[variableName].value; //instance URL
 	    		console.log("solution[variable] value: " + text);
 	    		console.log("solution[variable__label] value: " + solution[variableName + "__label"].value);
-	    		//var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-	    		var exp = /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*)/ig;
+	    		var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+	    		//var exp = /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*)/ig;
 	    		var html = text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>");
 	    		console.log("html from solution[variable] value: " + html);
 	    		return html; 
@@ -36,8 +36,8 @@ ResultsPane.prototype.display = function(spexresultset){
 					//htmlString += "<td>"+ solution[variableName + "__label"].value + "</td>";
 					//htmlString += "<td>"+ buildHTML(solution, variableName) + "</td>";
 					//console.log("URI: " + encodeURI(buildHTML(solution, variableName)));
-					//htmlString += "<td> <a href="+ buildHTML(solution, variableName) +">"+ solution[variableName + "__label"].value + "</a></td>";
-					htmlString += "<td> " + buildHTML(solution, variableName) + "</td>";
+					htmlString += "<td> <a href="+ buildHTML(solution, variableName) +">"+ solution[variableName + "__label"].value + "</a></td>";
+					//htmlString += "<td> " + buildHTML(solution, variableName) + "</td>";
 				} 
 				//console.log(value1[value2].value)
 			});
