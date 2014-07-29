@@ -8,7 +8,8 @@ ResultsPane.prototype.display = function(spexresultset){
 		var buildHTML = function(solution, variableName){
 	    		var text = solution[variableName].value; //instance URL
 	    		console.log("solution[variable] value: " + text);
-	    		var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+	    		//var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+	    		var exp = /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*)/ig;
 	    		var html = text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>");
 	    		console.log("html from solution[variable] value: " + html);
 	    		return html; 
