@@ -6,9 +6,10 @@ ResultsPane.prototype.display = function(spexresultset){
 
 		//A function that replaces URIs with HTML links.
 		var buildHTML = function(solution, variableName){
-	    	var text = solution[variableName].value; //instance URL
-	    	var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-	    	return text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>"); 
+	    		var text = solution[variableName].value; //instance URL
+	    		console.log("solution[variable] value: " + text);
+	    		var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+	    		return text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>"); 
 		}
 	
 		/*Write the result set as a table.  Table header lists the user-selected variables; 
@@ -31,8 +32,8 @@ ResultsPane.prototype.display = function(spexresultset){
 					//htmlString += "<td>"+ solution[variableName + "__label"].value + "</td>";
 					//htmlString += "<td>"+ buildHTML(solution, variableName) + "</td>";
 					//console.log("URI: " + encodeURI(buildHTML(solution, variableName)));
-					htmlString += "<td> "+buildHTML(solution, variableName)+"</td>";
-				}
+					htmlString += "<td> " + buildHTML(solution, variableName) + "</td>";
+				} 
 				//console.log(value1[value2].value)
 			});
 			htmlString += "</tr>";
