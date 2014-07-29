@@ -9,7 +9,9 @@ ResultsPane.prototype.display = function(spexresultset){
 	    		var text = solution[variableName].value; //instance URL
 	    		console.log("solution[variable] value: " + text);
 	    		var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-	    		return text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>"); 
+	    		var html = text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>");
+	    		console.log("html from solution[variable] value: " + html);
+	    		return html; 
 		}
 	
 		/*Write the result set as a table.  Table header lists the user-selected variables; 
