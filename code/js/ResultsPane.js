@@ -7,13 +7,13 @@ ResultsPane.prototype.display = function(spexresultset){
 		//A function that replaces URIs with HTML links.
 		var buildHTML = function(solution, variableName){
 	    		var text = solution[variableName].value; //instance URL
-	    		//console.log("solution[variable] value: " + text);
+	    		console.log("solution[variable] value: " + text);
 	    		//console.log("solution[variable__label] value: " + solution[variableName + "__label"].value);
 	    		//var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 	    		//var html = text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>");
 	    		var exp = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
 	    		var html = text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>");
-	    		//console.log("html from solution[variable] value: " + html);
+	    		console.log("html from solution[variable] value: " + html);
 	    		
 	    		//var html = "<a href='" + text + "' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>";
 	    		
