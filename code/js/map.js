@@ -1,15 +1,18 @@
 var map = new function(){
 
 	this.LMap = undefined;
-
+	this.markerGroup = undefined;
+	
 	// Initialization
 	this.init = function() {
 
+		
 		//this.LMap = L.map('map').setView([52, 7.6], 3);
 	    // add an OpenStreetMap tile layer
 //		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: ' Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(this.LMap);
 		this.LMap = L.mapbox.map('map', 'examples.map-i86nkdio').setView([52, 5], 3);
-
+		this.markerGroup = new L.featureGroup();
+		this.markerGroup.addTo(map.LMap);
 		//omnivore.wkt.parse('POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10),(20 30, 35 35, 30 20, 20 30))').bindLabel('Europe-Middle East Donut').addTo(this.LMap);		
 		
 		// var info = L.control();

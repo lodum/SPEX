@@ -103,26 +103,6 @@
 				
 			</div>
 
-			<div id="contextMenu">
-					<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div>
-
-					Menu:
-					<br>
-					p: <input type="text" id="queryP" value="a"></input>
-					<br>
-					c: <input type="text" id="queryC" value="Person"></input>
-					<br>
-					<input type="button" id="queryAdd" onclick="queryPane.add()" value="Add">
-					<br><br>
-					s: <input type="text" id="queryS" value="Person"></input>
-					<br>
-					<input type="checkbox" id="queryVar">Variable
-					<br>
-					<input type="checkbox" id="querySpat">Constraint enabled
-					<br>
-					<input type="button" id="queryAdd" onclick="queryPane.updateSelected()" value="Update">
-			</div>
-
 		</div>
 		
 	</div>
@@ -135,9 +115,15 @@
 	<div id="right_panel_container">
 		
 		<div id="right_panel">
-			<div id="map"></div><br>
-			<div id="slider" style="width: 100%; padding-top: 20px;"></div>
+			<div id="map"></div>
 
+			<input type="button" id="setConstraint" onclick="queryPane.setConstraint()" value="Set Constraint">
+			<input type="button" id="removeConstraint" onclick="queryPane.removeConstraint()" value=" Remove Constraint">
+
+			<br>
+
+			<div id="slider" style="width: 100%; padding-top: 30px;"></div>
+			
 		</div>
 
 	</div>
@@ -150,6 +136,10 @@
 				<button id="showresults">show results</button><br>
 
 				<textarea id="query" name="query" rows="8" cols="50"></textarea>
+	</div>
+
+	<div id="contextMenu">
+
 	</div>
 
 </body>

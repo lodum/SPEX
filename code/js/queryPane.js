@@ -30,9 +30,8 @@ var queryPane = new function(){
 	this.pathText = null;
 
 	// Data
-	this.nodes = [{id: 0, name: 'a', varname: 'var'+ (this.varCount++), x: 0, y: 0, variable: true, constraint: false},
-				{id: 0, name: 'maps:Map', varname: '', x: 100, y: 0, variable: false, constraint: false}];
-	this.links = [{id: 0, name: 'a', source: this.nodes[0], target: this.nodes[1], arrow: true}];
+	this.nodes = [{id: 0, label: '', className: '', variable: true, x: 100, y: 0, constraint: false}];
+	this.links = [];
 
 	// Selected node
 	this.selected = null;
@@ -103,7 +102,7 @@ var queryPane = new function(){
 		this.resize();
 
 		this.update();
-
+		this.updateQuery();
 	};
 
 
@@ -148,14 +147,14 @@ var queryPane = new function(){
 
 		// update existing links
 		this.path.classed('selected', false)
-		.style('marker', function(d) { return d.arrow ? 'url(#arrow)' : ''; });
+		.style('marker', 'url(#arrow)');
 
 
 		// add new links
 		gPath = this.path.enter().append('svg:path')
 		.attr('class', 'link')
 		.classed('selected', function(d) { return false; })
-		.style('marker', function(d) { return d.arrow ? 'url(#arrow)' : ''; });
+		.style('marker', 'url(#arrow)');
 
 		gPath.on("click", function(d) {
 			queryPane.menu.datum(queryPane.selected = d).call(queryPane.showContextMenu);
@@ -173,7 +172,7 @@ var queryPane = new function(){
 		.attr('class', 'link')
 		.attr('x', 20)
 		.attr('y', 20)
-		.text(function(d){return d.name;});
+		.text(function(d){return d.label;});
 
 		// remove old links
 		this.path.exit().remove();
@@ -214,10 +213,6 @@ var queryPane = new function(){
 			if (d3.event.defaultPrevented) return;
 			queryPane.menu.datum(queryPane.selected = d).call(queryPane.showContextMenu);
 
-			document.getElementById('queryS').value = queryPane.selected.name;
-			document.getElementById('queryVar').checked = queryPane.selected.variable;
-			document.getElementById('querySpat').checked = queryPane.selected.constraint;
-
 			queryPane.node.classed("selected", function(d) { 
 				return d == queryPane.selected; 
 			});
@@ -235,7 +230,7 @@ var queryPane = new function(){
 		.attr('x', 15)
 		.attr('y', 5)
 		.attr('class', 'id')
-		.text(function(d) { return d.name; });
+		.text(function(d) { return d.label; });
 
 		this.node.classed("selected", function(d) { 
 			return d == queryPane.selected; 
@@ -243,7 +238,7 @@ var queryPane = new function(){
 
 		this.node.select("text.id")
       	.text(function(d) { 
-      		return d.name; 
+      		return d.label; 
       	});
 
       	this.node.select("text.var")
@@ -276,11 +271,62 @@ var queryPane = new function(){
 
 	// Show context menu
 	this.showContextMenu = function(menu) {
+		d3.select("#contextMenu")
+		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
+				<b>Menu:</b> \
+				<div> \
+					I am looking for <input type="text" id="queryS" value="Person"></input><br> \
+					<input type="checkbox" id="queryVar">Variable<br> \
+					<input type="button" id="queryAdd" onclick="queryPane.updateSelected()" value="Update"><br> \
+					<br> \
+					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddOut();">Add outgoing Link</a><br> \
+					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();">Add incoming Link</a> \
+				</div>');
+
+		document.getElementById('queryS').value = queryPane.selected.label;
+		document.getElementById('queryVar').checked = queryPane.selected.variable;
+		
 		queryPane.menu.each(function(d) {
 			d3.select(this).style("display", "block")
 			.style("left", d.px + 10 + "px")
-			.style("top", d.py + 15 + "px");
+			.style("top", d.py + 50 + 15 + "px");
 		});
+	};
+
+	// 
+	this.showContextMenuAddOut = function() {
+		d3.select("#contextMenu")
+		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
+				<b>Menu:</b> \
+				<div> \
+					<div class="linkAdd"> \
+						<input type="text" id="queryS" value="" readonly></input> \
+						<input type="text" id="queryP" value=""></input> \
+						<input type="text" id="queryO" value=""></input> \
+					</div> \
+					<input type="button" id="queryAdd" onclick="queryPane.addOut()" value="Add"> \
+					<br><br> \
+				</div>');
+
+		document.getElementById('queryS').value = queryPane.selected.label;
+	};
+
+	//
+	this.showContextMenuAddIn = function() {
+		d3.select("#contextMenu")
+		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
+				<b>Menu:</b> \
+				<div> \
+					<div class="linkAdd"> \
+						<input type="text" id="queryS" value=""></input> \
+						<input type="text" id="queryP" value=""></input> \
+						<input type="text" id="queryO" value="" readonly></input> \
+					</div> \
+					<input type="button" id="queryAdd" onclick="queryPane.addIn()" value="Add"> \
+					<br><br> \
+				</div>');
+
+		document.getElementById('queryO').value = queryPane.selected.label;
 	};
 
 	// Hide context menu
@@ -298,7 +344,7 @@ var queryPane = new function(){
 
 		queryPane.hideContextMenu();
 
-		queryPane.force.stop(); // stops the force auto positioning before you start dragging
+		queryPane.force.stop();
 	};
 
 	// Node drag move
@@ -311,7 +357,7 @@ var queryPane = new function(){
 		d.x = d3.event.x;
 		d.y = d3.event.y; 
 
-		queryPane.tick(); // this is the key to make it work together with updating both px,py,x,y on d !
+		queryPane.tick();
 	};
 
 	// Node drag end
@@ -319,20 +365,34 @@ var queryPane = new function(){
 
 		d3.event.sourceEvent.stopPropagation();
 
-		//d.fixed = true; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
 		queryPane.tick();
 		queryPane.force.resume();
+
+		queryPane.hideContextMenu();
 	};
 
 
 
 	// 
-	this.add = function(){
-		queryPane.nodes.push({id: queryPane.nodes.length, name: document.getElementById('queryC').value,
-			variable: false, constraint: document.getElementById('querySpat').checked }); //'?'});//
-		queryPane.links.push({id: queryPane.links.length, name: document.getElementById('queryP').value, //'a',//
-			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1], 
-			arrow: true});
+	this.addOut = function(){
+		queryPane.nodes.push({id: queryPane.nodes.length, label: document.getElementById('queryO').value,
+			variable: false, constraint: false }); //'?'});//
+		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
+			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});
+
+		this.update();
+
+		this.force.start();
+
+		queryPane.updateQuery();
+	};
+
+	// 
+	this.addIn = function(){
+		queryPane.nodes.push({id: queryPane.nodes.length, label: document.getElementById('queryS').value,
+			variable: false, constraint: false }); //'?'});//
+		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
+			source: this.nodes[queryPane.nodes.length - 1], target: this.nodes.indexOf(queryPane.selected)});
 
 		this.update();
 
@@ -350,9 +410,8 @@ var queryPane = new function(){
 	this.updateSelected = function() {
 
 		if (this.isNode(queryPane.selected)) {
-			queryPane.selected.name = document.getElementById('queryS').value;
+			queryPane.selected.label = document.getElementById('queryS').value;
 			queryPane.selected.variable = document.getElementById('queryVar').checked;
-			queryPane.selected.constraint = document.getElementById('querySpat').checked;
 
 			queryPane.updateQuery();
 
@@ -392,47 +451,67 @@ var queryPane = new function(){
 	// 
 	this.logSubelements = function(node) {
 
-		console.log(node.name);
+		console.log(node.label);
 
 		for (var i = 0; i < this.links.length; i++) {
 			if (this.links[i].source == node) {
-				console.log(this.links[i].name);
-				//console.log(this.links[i].target.name);
+				console.log(this.links[i].label);
+				//console.log(this.links[i].target.label);
 				this.logSubelements(this.links[i].target);
 			};
 		};
 	};
 
 	this.updateQuery = function() {
+
+		queryPane.hideContextMenu();
+
 		spex.q = new SPEXQuery();
 
-		this.rParseQuery(this.nodes[0]);
+		this.parseQuery();
+
+		document.getElementById("query").innerHTML = spex.q.getSPARQL();
+		spex.ex.executeQuery(spex.q,document.getElementById("endpoint").value); 
 	};
 
 	this.parseQuery = function() {
-		this.rParseQuery(this.nodes[0]);	
-	};
 
-	this.rParseQuery = function(node) {
+		for (var i = 0; i < this.nodes.length; i++) {
 
-		for (var i = 0; i < this.links.length; i++) {
-			if (this.links[i].source == node) {
+			var node = this.nodes[i];
 
-				subject = node.variable ? '?' + node.name : node.name;
-				//this registers user selected variables in query
-				if (node.variable) {spex.q.SPEXvariable(subject);}
-				
-				predicate = this.links[i].name;
-				object = this.links[i].target.variable ? '?' + this.links[i].target.name : this.links[i].target.name;
+			if (node.variable && node.label != '') {
+				spex.q.where(this.getNodeVarName(node), 'a', node.label);
+				spex.q.SPEXvariable(this.getNodeVarName(node));
+			};
 
-				spex.q.where(subject, predicate, object);
-				//this registers user selected variables in query
-				if (this.links[i].target.variable) {spex.q.SPEXvariable(object);}
-				//console.log(this.links[i].name);
-				//console.log(this.links[i].target.name);
-				this.rParseQuery(this.links[i].target);
+			for (var j = 0; j < this.links.length; j++) {
+
+				var link = this.links[j];
+
+				if (link.source == node) {
+					subject = node.variable ? this.getNodeVarName(node) : node.label;
+					//this registers user selected variables in query
+					if (this.node.variable) {spex.q.SPEXvariable(subject);}
+
+					predicate = link.label;
+					object = link.target.variable ? this.getNodeVarName(link.target) : link.target.label;
+
+					spex.q.where(subject, predicate, object);
+
+					//this registers user selected variables in query
+					if (link.target.variable) {spex.q.SPEXvariable(object);}
+
+					//console.log(this.links[i].label);
+					//console.log(this.links[i].target.label);
+				};
 			};
 		};
+
+	};
+
+	this.getNodeVarName = function(node) {
+		return '?var' + node.id;
 	};
 
 	this.setSpatialVars = function(vars) {
@@ -440,7 +519,7 @@ var queryPane = new function(){
 		for (variable in vars) {
 		
 			for (var i = 0; i < this.nodes.length; i++) {
-				if (this.nodes[i].name == variable) {
+				if (this.getNodeVarName(this.nodes[i]) == '?' + variable) {
 					this.nodes[i].constraint = true;
 				}
 				else {
@@ -457,7 +536,7 @@ var queryPane = new function(){
 		for (variable in vars) {
 		
 			for (var i = 0; i < this.nodes.length; i++) {
-				if (this.nodes[i].name == variable) {
+				if (this.getNodeVarName(this.nodes[i]) == '?' + variable) {
 					this.nodes[i].constraint = true;
 				}
 				else {
@@ -467,6 +546,23 @@ var queryPane = new function(){
 		};
 
 		this.update();
+	};
+
+	this.setConstraint = function() {
+
+		var win = new Window();
+		win.setCorners(
+			map.LMap.getBounds()._northEast.lng,
+			map.LMap.getBounds()._northEast.lat,
+			map.LMap.getBounds()._southWest.lng,
+			map.LMap.getBounds()._southWest.lat
+			);
+
+		spex.q.setSpatialConstraint(
+			queryPane.getNodeVarName(queryPane.selected)
+			, win);
+
+		queryPane.updateQuery();
 	};
 
 };

@@ -81,6 +81,8 @@ body, html {
   position: inherit;
   height: 100%;
   width: 100%;
+
+  overflow: scroll;
 }
 
 #right_panel_container {
