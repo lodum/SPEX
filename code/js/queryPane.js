@@ -552,15 +552,24 @@ var queryPane = new function(){
 
 		var win = new Window();
 		win.setCorners(
-			map.LMap.getBounds()._northEast.lng,
 			map.LMap.getBounds()._northEast.lat,
-			map.LMap.getBounds()._southWest.lng,
-			map.LMap.getBounds()._southWest.lat
+			map.LMap.getBounds()._northEast.lng,
+			map.LMap.getBounds()._southWest.lat,
+			map.LMap.getBounds()._southWest.lng
 			);
 
 		spex.q.setSpatialConstraint(
 			queryPane.getNodeVarName(queryPane.selected)
 			, win);
+
+		queryPane.updateQuery();
+	};
+
+	this.removeConstraint = function() {
+
+		spex.q.setSpatialConstraint(
+			queryPane.getNodeVarName(queryPane.selected)
+			, null);
 
 		queryPane.updateQuery();
 	};

@@ -565,16 +565,21 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
  	var WKTvars = this.detectWKTvars();
 
  	for (variable in this.spatialConstraints)  {
+
 		//if the variable is not a WKT variable
 		console.log("SPEXQuery.prototype.expandSpaceFilter(): spatial variable w/o '?': " + variable.substr(1));
 		if(WKTvars.indexOf(variable.substr(1)) === -1) { 
 			this.where(variable, "wgs84:lat", variable + "__lat")
 			.where("wgs84:long", variable + "__long");
 
-			this.filter(variable + "__lat  < " + this.spatialConstraints[variable].upperRightLatitude + 
+			this.filter("(" + variable + "__lat  < " + this.spatialConstraints[variable].upperRightLatitude + 
 				        " && " + variable + "__lat > "  + this.spatialConstraints[variable].lowerLeftLatitude + 
 			            " && " + variable + "__long < " + this.spatialConstraints[variable].upperRightLongitude + 
-			            " && " + variable + "__long > " + this.spatialConstraints[variable].lowerLeftLongitude);  		
+			            " && " + variable + "__long > " + this.spatialConstraints[variable].lowerLeftLongitude +
+                        ") || (" + variable + "__lat  < '" + this.spatialConstraints[variable].upperRightLatitude + 
+                        "' && " + variable + "__lat > '"  + this.spatialConstraints[variable].lowerLeftLatitude + 
+                        "' && " + variable + "__long < '" + this.spatialConstraints[variable].upperRightLongitude + 
+                        "' && " + variable + "__long > '" + this.spatialConstraints[variable].lowerLeftLongitude + "')");  		
 		} else {//if it is a WKT variable
 			this.where(variable, "geo:hasGeometry", variable + "__geom")
 			.where(variable + "__geom", "geo:asWKT", variable + "__wkt");
