@@ -60,8 +60,8 @@ FilterResults.prototype.filterWKT=function(spexresultset){
       s=s.split(" "); // type of s changes from string to array
       console.log("lat and long split: " + JSON.stringify(s));
       if(s.length!=2) console.log("Error in strArray["+i+"]");
-      latArray.push(parseInt(s[0]));
-      longArray.push(parseInt(s[1]));
+      longArray.push(parseInt(s[0]));
+      latArray.push(parseInt(s[1]));
     }
     if(strArray.length!=latArray.length) console.log("Error in latArray!");
     if(strArray.length!=longArray.length) console.log("Error in longArray!");
