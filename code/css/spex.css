@@ -94,7 +94,7 @@ body, html {
   bottom: 180px;
   margin: 0;
   right: 0;
-  z-index: 9996;
+  z-index: 9990;
   
   border-left: 1px solid #ddd;
 }
@@ -107,7 +107,7 @@ body, html {
   width: 400px;
   height: 180px;
 
-  z-index: 9998;
+  z-index: 9992;
   border-top: 1px solid #ddd;
   background-color: white;
 }
