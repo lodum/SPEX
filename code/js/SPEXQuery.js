@@ -495,7 +495,7 @@ SPEXQuery.prototype.prefix("zbwext" , "http://zbw.eu/namespaces/zbw-extensions#"
 
 SPEXQuery.prototype.thematicConstraints = [];
 
-//This is the array which holds those variables requested by the user
+//This is the array which holds those variables requested by the user plus their labels as displayed in the query pane
 SPEXQuery.prototype.SPEXvariable = function(variable, label) {
     this.SPEXvariables.push(variable);
 	this.variablelabels.push(label);

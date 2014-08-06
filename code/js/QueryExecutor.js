@@ -18,7 +18,7 @@ QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 	}
 	document.getElementById("result").innerHTML = "Waiting for results...";
 	//this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, false);
-	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, spexquery.timeout, false);
+	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, spexquery.timeout, false);	
 }
 
 /*

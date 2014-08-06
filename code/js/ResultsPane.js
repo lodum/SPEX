@@ -27,7 +27,9 @@ ResultsPane.prototype.display = function(spexresultset){
 		htmlString += "<thead><tr>";
 		var userSelectedVars = spexresultset.getUserSelectedVariables();
 		$.each(userSelectedVars, function(varIndex, variable) { 
-			htmlString += "<th>?" + variable + "</th>";
+			//Get the original label of the variable in display
+			var varlabel = spex.q.variablelabels[spex.q.SPEXvariables.indexOf(variable)];
+			htmlString += "<th>?" + varlabel + "</th>";
 		});
 		htmlString+="</tr></thead><tbody>";
 		//Write table body.
