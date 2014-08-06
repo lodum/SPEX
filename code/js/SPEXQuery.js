@@ -5,6 +5,7 @@ this.timeout = 50000;
 this.fe = new FilterExpander();
 this.le = new LiteralExpander();
 this.SPEXvariables = [];
+this.variablelabels = [];
 
 // redeclare patterns
     this.queryType = "SELECT";
@@ -495,10 +496,12 @@ SPEXQuery.prototype.prefix("zbwext" , "http://zbw.eu/namespaces/zbw-extensions#"
 SPEXQuery.prototype.thematicConstraints = [];
 
 //This is the array which holds those variables requested by the user
-SPEXQuery.prototype.SPEXvariable = function(variable) {
+SPEXQuery.prototype.SPEXvariable = function(variable, label) {
     this.SPEXvariables.push(variable);
+	this.variablelabels.push(label);
     return this;
   };
+
 
 SPEXQuery.prototype.getSPARQL = function (){ 	
 	this.expandSpaceFilter();

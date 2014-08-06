@@ -482,7 +482,8 @@ var queryPane = new function(){
 
 			if (node.variable && node.label != '') {
 				spex.q.where(this.getNodeVarName(node), 'a', node.label);
-				spex.q.SPEXvariable(this.getNodeVarName(node));
+				spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
+				//set label for displaying the variable
 			};
 
 			for (var j = 0; j < this.links.length; j++) {
@@ -492,7 +493,7 @@ var queryPane = new function(){
 				if (link.source == node) {
 					subject = node.variable ? this.getNodeVarName(node) : node.label;
 					//this registers user selected variables in query
-					if (this.node.variable) {spex.q.SPEXvariable(subject);}
+					if (this.node.variable) {spex.q.SPEXvariable(subject,node.label);}
 
 					predicate = link.label;
 					object = link.target.variable ? this.getNodeVarName(link.target) : link.target.label;
@@ -500,7 +501,7 @@ var queryPane = new function(){
 					spex.q.where(subject, predicate, object);
 
 					//this registers user selected variables in query
-					if (link.target.variable) {spex.q.SPEXvariable(object);}
+					if (link.target.variable) {spex.q.SPEXvariable(object,link.target.label);}
 
 					//console.log(this.links[i].label);
 					//console.log(this.links[i].target.label);
