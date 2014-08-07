@@ -26,9 +26,11 @@ ResultsPane.prototype.display = function(spexresultset){
 		//Write table head.
 		htmlString += "<thead><tr>";
 		var userSelectedVars = spexresultset.getUserSelectedVariables();
+		console.log("SPEXVARIABLES: "+spex.q.SPEXvariables);
 		$.each(userSelectedVars, function(varIndex, variable) { 
 			//Get the original label of the variable in display
-			var varlabel = spex.q.variablelabels[spex.q.SPEXvariables.indexOf(variable)];
+			var varlabel = spex.q.variablelabels[spex.q.SPEXvariables.indexOf("?"+variable)];
+			console.log("user variable:" + variable + " : " +varlabel);
 			htmlString += "<th>?" + varlabel + "</th>";
 		});
 		htmlString+="</tr></thead><tbody>";
