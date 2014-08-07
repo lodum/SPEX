@@ -31,5 +31,5 @@ myExecutor.callback=function(str){
 myExecutor.executeQuery(myQuery,endpoint);
 
 //this line is only so that "tesGetPropertiesOfClass.html" displays the query. should be removed if used in another context
-document.getElementById("query").innerHTML = myQuery.serialiseQuery();
+//document.getElementById("query").innerHTML = myQuery.serialiseQuery();
 }

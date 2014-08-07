@@ -8,7 +8,8 @@ var spex = new function(){
 	this.ex = new QueryExecutor();
 	// Initialization
 	this.init = function() {
-
+	
+		$("#showquery").click(this.showquery);
 		queryPane.init();
 
 		map.init();
@@ -30,6 +31,10 @@ var spex = new function(){
 			//.SPEXvariable("?c");
 			
 
+	};
+	
+	this.showquery = function() {		 
+		  document.getElementById("query").innerHTML = spex.q.getSPARQL();		 
 	};
 
 };

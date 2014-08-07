@@ -470,7 +470,7 @@ var queryPane = new function(){
 
 		this.parseQuery();
 
-		document.getElementById("query").innerHTML = spex.q.getSPARQL();
+		//document.getElementById("query").innerHTML = spex.q.getSPARQL();
 		spex.ex.executeQuery(spex.q,document.getElementById("endpoint").value); 
 	};
 

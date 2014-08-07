@@ -3,10 +3,10 @@ var testing = new function(){
 	// Initialization
 	this.init = function() {
 
-		$("#showquery").click(this.showquery);
-		$("#addspace").click(this.addSpace);
-		$("#addTime").click(this.addTime);
-		$("#showresults").click(this.showresults);
+		//$("#showquery").click(this.showquery);
+		//$("#addspace").click(this.addSpace);
+		//$("#addTime").click(this.addTime);
+		//$("#showresults").click(this.showresults);
 	};
 
 	this.showresults = function() {	
