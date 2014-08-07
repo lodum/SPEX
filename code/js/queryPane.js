@@ -376,7 +376,7 @@ var queryPane = new function(){
 	// 
 	this.addOut = function(){
 		queryPane.nodes.push({id: queryPane.nodes.length, label: document.getElementById('queryO').value,
-			variable: false, constraint: false }); //'?'});//
+			variable: true, constraint: false }); //'?'});// variable should be true by default
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
 			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});
 

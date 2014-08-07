@@ -1,9 +1,24 @@
-function ResultsPane(){}
+function ResultsPane(){
+this.currentresults = new SPEXResultSet(" ");
+}
 ResultsPane.prototype.constructor = ResultsPane;
+
+ResultsPane.prototype.getcurrentresults = function(){
+var res = this.currentresults.getAllResults();
+return escape(JSON.stringify(res));
+}
+
+
 
 ResultsPane.prototype.display = function(spexresultset){
 		
-
+		this.currentresults = spexresultset;
+		
+		var a = document.getElementById("getresults");
+		a.download = "export.txt";
+		a.href = "data:text/plain," + this.getcurrentresults();
+		a.innerHTML = "download results as JSON";
+		
 		//A function that replaces URIs with HTML links.
 		var buildHTML = function(solution, variableName){
 	    		var text = solution[variableName].value; //instance URL

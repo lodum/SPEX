@@ -4,7 +4,7 @@ var spex = new function(){
 
 	this.lg = new LabelGenerator();
 	this.rp = new ResultsPane();
-	//this.ex = new QueryExecutor(this.lg,this.rp);
+	
 	this.ex = new QueryExecutor();
 	// Initialization
 	this.init = function() {
