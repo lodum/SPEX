@@ -13,7 +13,7 @@ QueryExecutor.prototype.constructor = QueryExecutor;
 QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 	//Test whether endpoint is non empty:
 	if (endpoint == '' || endpoint == null) {
-		alert('Endpoint is empty!');
+		alert('Enter an endpoint URI!');
 		return;
 	}
 	document.getElementById("result").innerHTML = "Waiting for results...";
