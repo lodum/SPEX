@@ -8,6 +8,7 @@ this.timeline;
 		//	defaultValues: {min: new Date(2006,11,11).valueOf(), max: new Date(2009,1,11).valueOf()}
 		//});			
 		
+		//source : http://almende.github.io/chap-links-library/timeline.html
         // Create and populate a data table.
         var data = [
 				{
@@ -49,7 +50,7 @@ this.timeline;
 	  
  this.displaytime = function (results){
 		var data;
- 
+ //to do;
 		var options = {
           "width":  "100%",
           "height": "auto",
