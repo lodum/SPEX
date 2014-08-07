@@ -390,7 +390,7 @@ var queryPane = new function(){
 	// 
 	this.addIn = function(){
 		queryPane.nodes.push({id: queryPane.nodes.length, label: document.getElementById('queryS').value,
-			variable: false, constraint: false }); //'?'});//
+			variable: true, constraint: false }); //'?'});//
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
 			source: this.nodes[queryPane.nodes.length - 1], target: this.nodes.indexOf(queryPane.selected)});
 
