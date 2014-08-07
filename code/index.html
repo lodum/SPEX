@@ -41,7 +41,13 @@
 	
 	<script src="lib/jQRangeSlider-master/jQEditRangeSliderLabel.js"></script>
 	<script src="lib/jQRangeSlider-master/jQEditRangeSlider.js"></script>
+	
+	
 	<!-- Slider End -->
+	<!--timeline-->
+	
+	<script type="text/javascript" src="lib/timeline/timeline.js"></script>
+	<link rel="stylesheet" type="text/css" href="lib/timeline/timeline.css">
 
 	<!--This is the sparql query class we inherit-->
 	<script src="lib/jquery-sparql-master/urlEncode.js"></script>
@@ -110,7 +116,7 @@
 	</div>
 
 	<div id="result_container">
-		Results:<!--<input type="button" id="getresults" align="right" onclick="spex.rp.getcurrentresults()" value="get results as file (Json)"></br>	--> <a id="getresults"></a>
+		Results: <a id="getresults"></a>
 		<div id="result" style="width : 100%">
 		</div>
 		
@@ -126,7 +132,7 @@
 			<input type="button" id="removeConstraint" onclick="queryPane.removeConstraint()" value=" Remove Constraint">
 
 			<br/> Time:<br/> 
-			<div id="slider" style="width: 100%; padding-top: 60px;"></div>
+			<div id="slider" style="width: 100%;height: 150px;font-size: 5pt"></div>
 			
 		</div>
 

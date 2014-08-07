@@ -14,6 +14,7 @@ var spex = new function(){
 
 		map.init();
 		slider.init();
+		//slider.drawVisualization();
 		
 		testing.init();
 

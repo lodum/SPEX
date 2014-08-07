@@ -123,10 +123,11 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
   		//Filter WKT results (if any are there) 
   		FilterResults.prototype.filterWKT(results);
   
-  		//Display result geometries on the map.
+  		//Display result geometries on the map and on the time slider.
   		var spacePane = new SpaceFilterPane();
   		spacePane.displayGeometry(results);
-
+		slider.displaytime(results);
+		//Display results in resultspane as table
   		spex.rp.display(results);
      	}
      	

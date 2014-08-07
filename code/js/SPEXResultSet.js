@@ -137,6 +137,29 @@ SPEXResultSet.prototype.getWKT = function() {
 	return labelWKTpairs;
 };
 
+/*This generates a json table which contains time points, ranges and labels as needed by the timeline object*/
+SPEXResultSet.prototype.getTimes= function() {
+var solutions = this.allResults.results.bindings;
+var labeltimepairs = [];
+var relatedVars = this.relateSpaceTime();
+
+for(userVar in relatedVars) {
+		for(var i = 0; i < solutions.length; i++) {
+			var sol = solutions[i];
+			if(sol[userVar]) {
+				if(sol[userVar + "_4_1"] && sol[userVar + "_5_1"]) {//_4_1 and /_5_1  refer to beginning and end in owl time
+					new Date(1980, 7, 15)
+					labeltimepairs.push(
+							{"start" : sol[userVar + "_4_1"].value, "end" : sol[userVar + "_5_1"].value, 'content': sol[userVar + "__label"].value}
+					);
+				}
+			}
+		}
+}
+
+	return labeltimepairs ;
+}
+
 /* Function to detect which of the user-selected variables are spatial.  
 The function iterates through all the solutions in the SPARQL JSON result and 
 if a user-selected variable has at least one spatial literal associated with it
