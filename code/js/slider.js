@@ -11,22 +11,22 @@ this.timeline;
 		//source : http://almende.github.io/chap-links-library/timeline.html
         // Create and populate a data table (example).
         var data = [
-				{
-				'start': new Date(1980, 7, 15),
-				'end': new Date(2001, 8, 2),  // end is optional
-				'content': 'Trajectory A'
+				//{
+				//'start': new Date(1980, 7, 15),
+				//'end': new Date(2001, 8, 2),  // end is optional
+				//'content': 'Trajectory A'
 				// Optional: a field 'group'
 				  // Optional: a field 'className'
 				  // Optional: a field 'editable'		
-				},
-				{
-				'start': new Date(1990, 7, 15),
-				'end': new Date(2001, 8, 2),  // end is optional
-				'content': 'Trajectory B'
+				//},
+				//{
+				//'start': new Date(1990, 7, 15),
+				//'end': new Date(2001, 8, 2),  // end is optional
+				//'content': 'Trajectory B'
 				// Optional: a field 'group'
 				  // Optional: a field 'className'
 				  // Optional: a field 'editable'		
-				}
+				//}
 		];
        
 
@@ -46,7 +46,25 @@ this.timeline;
 		
 		  // Draw our timeline with the created data and options
 		this.timeline.draw(data, options);
-      };
+		
+		
+		//event listeners
+		function onselect() {
+		var sel = this.timeline.getSelection();
+			if (sel.length) {
+				if (sel[0].row != undefined) {
+				  var row = sel[0].row;
+				  if (getItem(row)!= undefined){
+					var i = getItem(row);
+					//i.content
+				  }
+				  document.title = "event " + row + " selected";
+				}
+			}
+		}
+
+		links.events.addListener(this.timeline, 'select', onselect);
+	};
 	  
  this.displaytime = function (data){
 //Data needs to come in the format specified above 
