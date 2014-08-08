@@ -147,11 +147,21 @@ for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
 			var sol = solutions[i];
 			if(sol[userVar]) {
-				if(sol[userVar + "_4_1"] && sol[userVar + "_5_1"]) {//_4_1 and /_5_1  refer to beginning and end in owl time
-					new Date(1980, 7, 15)
+				if(sol[userVar + "_4_2"] && sol[userVar + "_5_2"]) {//_4_2 and /_5_2  refer to beginning and end in owl time (intervals)
+					//new Date(1980, 7, 15)
 					labeltimepairs.push(
-							{"start" : sol[userVar + "_4_1"].value, "end" : sol[userVar + "_5_1"].value, 'content': sol[userVar + "__label"].value}
+						{"start" : new Date(sol[userVar + "_4_2"].value), "end" : new Date(sol[userVar + "_5_2"].value), 'content': sol[userVar + "__label"].value}
+							
 					);
+					console.log("OWL Time intervals detected:" + new Date(sol[userVar + "_4_2"].value));
+				}
+				else if(sol[userVar + "_6_1"]){ //_6_1 refers to xsd:gYears 
+					labeltimepairs.push(
+						{"start" : new Date(sol[userVar + "_6_1"].value, 0, 1), "end" : new Date(sol[userVar + "_6_1"].value, 11, 31), 'content': sol[userVar + "__label"].value}
+						//{"start" : new Date(sol[userVar + "_6_1"].value, 0, 1), 'content': sol[userVar + "__label"].value}
+						
+					);
+					console.log("xsd:gYears detected:" + new Date(sol[userVar + "_6_1"].value));
 				}
 			}
 		}

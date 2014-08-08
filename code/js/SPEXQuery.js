@@ -478,6 +478,7 @@ SPEXQuery.prototype.prefix("wf-invoc" , "http://purl.org/net/wf-invocation#");
 SPEXQuery.prototype.prefix("wfm" , "http://purl.org/net/wf-motifs#");
 */
 SPEXQuery.prototype.prefix("wgs84" , "http://www.w3.org/2003/01/geo/wgs84_pos#");
+SPEXQuery.prototype.prefix("xsd" , "http://www.w3.org/2001/XMLSchema#");
 /*
 SPEXQuery.prototype.prefix("whisky" , "http://vocab.org/whisky/terms#");
 SPEXQuery.prototype.prefix("whois" , "http://www.kanzaki.com/ns/whois#");
@@ -489,7 +490,7 @@ SPEXQuery.prototype.prefix("wo" , "http://purl.org/ontology/wo/core#");
 SPEXQuery.prototype.prefix("wot" , "http://xmlns.com/wot/0.1#");
 SPEXQuery.prototype.prefix("xhv" , "http://www.w3.org/1999/xhtml/vocab#");
 SPEXQuery.prototype.prefix("xkos" , "http://purl.org/linked-data/xkos#");
-SPEXQuery.prototype.prefix("xsd" , "http://www.w3.org/2001/XMLSchema#");
+
 SPEXQuery.prototype.prefix("zbwext" , "http://zbw.eu/namespaces/zbw-extensions#");
 */
 

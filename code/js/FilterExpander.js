@@ -11,11 +11,11 @@ FilterExpander.prototype.filterDataProperties.push({"prefix" : "wgs84", "uri" : 
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry", "geo:asWKT"]});
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry",  "geo:asGML"]});
 //Dealing with time
-FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "time:hasBeginning", "time:inXSDDateTime"]}); 
-FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "time:hasEnd",  "time:inXSDDateTime"]}); 
+FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink","time:hasBeginning", "time:inXSDDateTime"]}); 
+FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink", "time:hasEnd",  "time:inXSDDateTime"]}); 
+FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink", "xsd:gYear"]}); 
 
-
-
+//This method takes a query and adds for all user selected variables some optional statements which automatically load filter literals by one of the chains of properties defined above
 FilterExpander.prototype.expandFilterLiterals = function(spexquery){
 	for (var i = 0; i < spexquery.SPEXvariables.length; i++) {
         var v = spexquery.SPEXvariables[i]; 

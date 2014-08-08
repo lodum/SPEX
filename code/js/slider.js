@@ -9,7 +9,7 @@ this.timeline;
 		//});			
 		
 		//source : http://almende.github.io/chap-links-library/timeline.html
-        // Create and populate a data table.
+        // Create and populate a data table (example).
         var data = [
 				{
 				'start': new Date(1980, 7, 15),
@@ -48,9 +48,9 @@ this.timeline;
 		this.timeline.draw(data, options);
       };
 	  
- this.displaytime = function (results){
-		var data;
- //to do;
+ this.displaytime = function (data){
+//Data needs to come in the format specified above 
+
 		var options = {
           "width":  "100%",
           "height": "auto",

@@ -126,7 +126,7 @@ QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, timeout, 
   		//Display result geometries on the map and on the time slider.
   		var spacePane = new SpaceFilterPane();
   		spacePane.displayGeometry(results);
-		slider.displaytime(results);
+		slider.displaytime(results.getTimes());		
 		//Display results in resultspane as table
   		spex.rp.display(results);
      	}
