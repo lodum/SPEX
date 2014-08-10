@@ -4,48 +4,48 @@
 	Author: Peter Zimmerhof
 */
 
-var queryPane = new function(){
+var queryPane = {
 
 	// Variables
-	this.varCount = 0;
+	varCount : 0,
 
 	// Height and Width of the queryPane
-	this.width = '500',
-	this.height = '700';
+	width : '500',
+	height : '700',
 
 	// Main visual
-	this.vis = null;
+	vis : null,
 
 	// D3.js force
-	this.force = null;
+	force : null,
 
 	// Visual classes
-	this.visNode = null;
-	this.visPath = null;
-	this.visPathText = null;
+	visNode : null,
+	visPath : null,
+	visPathText : null,
 
 	// Visual elements
-	this.node = null;
-	this.path = null;
-	this.pathText = null;
+	node : null,
+	path : null,
+	pathText : null,
 
 	// Data
-	this.nodes = [{id: 0, label: '', className: '', variable: true, x: 100, y: 0, constraint: false}];
-	this.links = [];
+	nodes : [{id: 0, label: '', className: '', variable: true, x: 100, y: 0, constraint: false}],
+	links : [],
 
 	// Selected node
-	this.selected = null;
+	selected : null,
 
 	// Context menu
-	this.menu = null;
+	menu : null,
 
 	// Node drag beahavior
-	this.node_drag = null;
+	node_drag : null,
 
 	
 
 	// Initialization
-	this.init = function() {
+	init : function() {
 
 		d3.select(window)
     		.on("resize", queryPane.resize);
@@ -103,12 +103,12 @@ var queryPane = new function(){
 
 		this.update();
 		this.updateQuery();
-	};
+	},
 
 
 
 	// Graph animation function
-	this.tick = function()
+	tick : function()
 	{
 		queryPane.path.attr('d', function(d) {
 			var deltaX = d.target.x - d.source.x,
@@ -131,12 +131,12 @@ var queryPane = new function(){
 
 		queryPane.node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-	};
+	},
 
 
 
 	// Graph update function
-	this.update = function() {
+	update : function() {
 
 		this.path = this.visPath.selectAll(".link").data(this.links);
 
@@ -265,12 +265,12 @@ var queryPane = new function(){
 		});
 
 		this.node.exit().remove();
-	};
+	},
 
 
 
 	// Show context menu
-	this.showContextMenu = function(menu) {
+	showContextMenu : function(menu) {
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<b>Menu:</b> \
@@ -291,10 +291,10 @@ var queryPane = new function(){
 			.style("left", d.px + 10 + "px")
 			.style("top", d.py + 50 + 15 + "px");
 		});
-	};
+	},
 
 	// 
-	this.showContextMenuAddOut = function() {
+	showContextMenuAddOut : function() {
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<b>Menu:</b> \
@@ -309,10 +309,10 @@ var queryPane = new function(){
 				</div>');
 
 		document.getElementById('queryS').value = queryPane.selected.label;
-	};
+	},
 
 	//
-	this.showContextMenuAddIn = function() {
+	showContextMenuAddIn : function() {
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<b>Menu:</b> \
@@ -327,28 +327,28 @@ var queryPane = new function(){
 				</div>');
 
 		document.getElementById('queryO').value = queryPane.selected.label;
-	};
+	},
 
 	// Hide context menu
-	this.hideContextMenu = function(){
+	hideContextMenu : function(){
 		queryPane.menu.each(function(d) {
 			d3.select(this).style("display", "none");
 		});
-	};
+	},
 
 
 
 	// Node drag start
-	this.dragStart = function(d, i) {
+	dragStart : function(d, i) {
 		d3.event.sourceEvent.stopPropagation();
 
 		queryPane.hideContextMenu();
 
 		queryPane.force.stop();
-	};
+	},
 
 	// Node drag move
-	this.dragMove = function(d, i) {
+	dragMove : function(d, i) {
 
 		d3.event.sourceEvent.stopPropagation();
 
@@ -358,10 +358,10 @@ var queryPane = new function(){
 		d.y = d3.event.y; 
 
 		queryPane.tick();
-	};
+	},
 
 	// Node drag end
-	this.dragEnd = function(d, i) {
+	dragEnd : function(d, i) {
 
 		d3.event.sourceEvent.stopPropagation();
 
@@ -369,12 +369,12 @@ var queryPane = new function(){
 		queryPane.force.resume();
 
 		queryPane.hideContextMenu();
-	};
+	},
 
 
 
 	// 
-	this.addOut = function(){
+	addOut : function(){
 		queryPane.nodes.push({id: queryPane.nodes.length, label: document.getElementById('queryO').value,
 			variable: true, constraint: false }); //'?'});// variable should be true by default
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
@@ -385,10 +385,10 @@ var queryPane = new function(){
 		this.force.start();
 
 		queryPane.updateQuery();
-	};
+	},
 
 	// 
-	this.addIn = function(){
+	addIn : function(){
 		queryPane.nodes.push({id: queryPane.nodes.length, label: document.getElementById('queryS').value,
 			variable: true, constraint: false }); //'?'});//
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
@@ -399,15 +399,15 @@ var queryPane = new function(){
 		this.force.start();
 
 		queryPane.updateQuery();
-	};
+	},
 
 	// 
-	this.addToSelected = function(pLabel, pClass, cLabel, cClass) {
+	addToSelected : function(pLabel, pClass, cLabel, cClass) {
 
-	};
+	},
 
 	// 
-	this.updateSelected = function() {
+	updateSelected : function() {
 
 		if (this.isNode(queryPane.selected)) {
 			queryPane.selected.label = document.getElementById('queryS').value;
@@ -417,15 +417,15 @@ var queryPane = new function(){
 
 			this.update();
 		};
-	};
+	},
 
 	// 
-	this.removeSelected = function() {
+	removeSelected : function() {
 
-	};
+	},
 
 
-	this.resize = function() {
+	resize : function() {
 	  width = window.innerWidth -400;
 	  height = window.innerHeight - 200;
 	  queryPane.vis
@@ -435,21 +435,21 @@ var queryPane = new function(){
 	  queryPane.force.size([width, height]);
 
 	  queryPane.force.start();
-	};
+	},
 
 
 	// 
-	this.isNode = function(node) {
+	isNode : function(node) {
 		return (this.nodes.indexOf(node) >= 0);
-	};
+	},
 
 	// 
-	this.isLink = function(link) {
+	isLink : function(link) {
 		return (this.links.indexOf(link) >= 0);
-	};
+	},
 
 	// 
-	this.logSubelements = function(node) {
+	logSubelements : function(node) {
 
 		console.log(node.label);
 
@@ -460,9 +460,9 @@ var queryPane = new function(){
 				this.logSubelements(this.links[i].target);
 			};
 		};
-	};
+	},
 
-	this.updateQuery = function() {
+	updateQuery : function() {
 
 		queryPane.hideContextMenu();
 
@@ -472,18 +472,21 @@ var queryPane = new function(){
 
 		//document.getElementById("query").innerHTML = spex.q.getSPARQL();
 		spex.ex.executeQuery(spex.q,document.getElementById("endpoint").value); 
-	};
+	},
 
-	this.parseQuery = function() {
+	parseQuery : function() {
 
 		for (var i = 0; i < this.nodes.length; i++) {
 
 			var node = this.nodes[i];
 
-			if (node.variable && node.label != '') {
-				spex.q.where(this.getNodeVarName(node), 'a', node.label);
-				spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
+			if (node.variable) {
+				if (node.label != '') {
+					spex.q.where(this.getNodeVarName(node), 'a', node.label);
+				};
+
 				//set variables and their labels for displaying the variable
+				spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
 			};
 
 			for (var j = 0; j < this.links.length; j++) {
@@ -493,7 +496,7 @@ var queryPane = new function(){
 				if (link.source == node) {
 					subject = node.variable ? this.getNodeVarName(node) : node.label;
 					//this registers user selected variables in query 
-					if (this.node.variable) {spex.q.SPEXvariable(subject,node.label);}
+					//if (this.node.variable) {spex.q.SPEXvariable(subject,node.label);}
 
 					predicate = link.label;
 					object = link.target.variable ? this.getNodeVarName(link.target) : link.target.label;
@@ -501,7 +504,7 @@ var queryPane = new function(){
 					spex.q.where(subject, predicate, object);
 
 					//this registers user selected variables in query
-					if (link.target.variable) {spex.q.SPEXvariable(object,link.target.label);}
+					//if (link.target.variable) {spex.q.SPEXvariable(object,link.target.label);}
 
 					//console.log(this.links[i].label);
 					//console.log(this.links[i].target.label);
@@ -509,30 +512,13 @@ var queryPane = new function(){
 			};
 		};
 
-	};
+	},
 
-	this.getNodeVarName = function(node) {
+	getNodeVarName : function(node) {
 		return '?var' + node.id;
-	};
+	},
 
-	this.setSpatialVars = function(vars) {
-
-		for (variable in vars) {
-		
-			for (var i = 0; i < this.nodes.length; i++) {
-				if (this.getNodeVarName(this.nodes[i]) == '?' + variable) {
-					this.nodes[i].constraint = true;
-				}
-				else {
-					this.nodes[i].constraint = false;
-				};
-			};
-		};
-
-		this.update();
-	};
-
-	this.setTemporalVars = function(vars) {
+	setSpatialVars : function(vars) {
 
 		for (variable in vars) {
 		
@@ -547,9 +533,26 @@ var queryPane = new function(){
 		};
 
 		this.update();
-	};
+	},
 
-	this.setConstraint = function() {
+	setTemporalVars : function(vars) {
+
+		for (variable in vars) {
+		
+			for (var i = 0; i < this.nodes.length; i++) {
+				if (this.getNodeVarName(this.nodes[i]) == '?' + variable) {
+					this.nodes[i].constraint = true;
+				}
+				else {
+					this.nodes[i].constraint = false;
+				};
+			};
+		};
+
+		this.update();
+	},
+
+	setConstraint : function() {
 
 		var win = new Window();
 		win.setCorners(
@@ -564,15 +567,15 @@ var queryPane = new function(){
 			, win);
 
 		queryPane.updateQuery();
-	};
+	},
 
-	this.removeConstraint = function() {
+	removeConstraint : function() {
 
 		spex.q.setSpatialConstraint(
 			queryPane.getNodeVarName(queryPane.selected)
 			, null);
 
 		queryPane.updateQuery();
-	};
+	}
 
 };
