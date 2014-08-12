@@ -1848,17 +1848,25 @@ var endpoint = "http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sp
      }
 
 
-    this.createAutocompleteC=function(HashStringID){
+	this.init=function(){
+		sugEx.executeQuery(queryClasses, endpoint); 
+		sugEx.executeQuery(queryPredicates, endpoint);
+	}
+
+
+
+
+    this.createDropdownC=function(HashStringID){
 	  endpoint=document.getElementById("endpoint").value;
-      sugEx.executeQuery(queryClasses, endpoint);  
 	  $( HashStringID ).autocomplete({source: classesArray});
-	};
+    	
+    };
 	
-	this.createAutocompleteP=function(HashStringID){
+    this.createDropdownP=function(HashStringID){
 	  endpoint=document.getElementById("endpoint").value;
-      sugEx.executeQuery(queryPredicates, endpoint);
 	  $( HashStringID ).autocomplete({source: predicateArray});
-	};
+    	
+    };
 
 	console.timeEnd('This is the execution timer');
-	}
+}
