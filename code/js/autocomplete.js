@@ -28,7 +28,7 @@ possibility of a cliquable link (to the description of the vocabulary) for the a
 
 		
 */
-function suggester(){
+function Suggester(){
 
 
      console.time('This is the execution timer'); 
@@ -1811,6 +1811,27 @@ var endpoint = "http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sp
  
 			  }
 			}
+			u =0;
+			//go also through the list of SPEX prefixes (to do: unify both lists)
+			for(var i = 0; i < queryClasses.prefixes.length; i++) {
+				var pfx = queryClasses.prefixes[i];
+					//queryString.push( "PREFIX " + pfx.prefix + ": <" + pfx.uri + ">");
+					if (currentClass.indexOf(pfx.uri) != -1)
+					  {
+						//console.log ("CURRENT PREDICATE: "+currentpredicate); 
+						//console.log ("CURRENT DOMAIN: "+prefixes[j].url);  
+
+						// check if the corresponding prefix is not excluded from the list of prefixes to show
+						if (excludedPrefixes.indexOf(pfx.prefix) == -1)
+						{
+							// only replace the url of the predicate with the corresponding prefix if the prefix is not in the list of excluded prefixes
+							classesArray[u] = currentClass.replace(pfx.uri, pfx.prefix+":");
+							u++;					
+							break; 
+						}
+		 
+					  }
+			}
  
 		}		
 		
@@ -1839,6 +1860,27 @@ var endpoint = "http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sp
 				}
  
 			  }
+			}
+			v =0;
+			//go also through the list of SPEX prefixes (to do: unify both lists)
+			for(var i = 0; i < queryClasses.prefixes.length; i++) {
+				var pfx = queryClasses.prefixes[i];
+					//queryString.push( "PREFIX " + pfx.prefix + ": <" + pfx.uri + ">");
+					if (currentPredicate.indexOf(pfx.uri) != -1)
+					  {
+						//console.log ("CURRENT PREDICATE: "+currentpredicate); 
+						//console.log ("CURRENT DOMAIN: "+prefixes[j].url);  
+
+						// check if the corresponding prefix is not excluded from the list of prefixes to show
+						if (excludedPrefixes.indexOf(pfx.prefix) == -1)
+						{
+							// only replace the url of the predicate with the corresponding prefix if the prefix is not in the list of excluded prefixes
+							testPredicateArray[v] = currentPredicate.replace(pfx.uri, pfx.prefix+":");
+							v++;					
+							break; 
+						}
+		 
+					  }
 			}
 		}
         

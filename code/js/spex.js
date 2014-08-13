@@ -6,6 +6,7 @@ var spex = new function(){
 	this.rp = new ResultsPane();
 	
 	this.ex = new QueryExecutor();
+	this.sug = new Suggester();
 	// Initialization
 	this.init = function() {
 	
@@ -16,7 +17,10 @@ var spex = new function(){
 		slider.init();
 		//slider.drawVisualization();
 		
-		testing.init();
+		//testing.init();
+		//this.sug.createDropdownC();
+		//this.sug.createDropdownP();
+		//this.sug.init();
 
 		this.q.select()
 			//.where("?a", "rdf:type", "dbp-ont:building" )	

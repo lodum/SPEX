@@ -1,20 +1,3 @@
-<!doctype html>
-<html lang="en">
-  <head> 
-	<meta charset=utf-8 />
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-	<link rel="stylesheet" href="/resources/demos/style.css">
-    <title> SPARQL JavaScript </title>
-    <script>
-
-/*
-
-Creator: Auriol
-
-*/
-
 /*
  ---
 // distinct classes in the endpoint (very generic)
@@ -45,22 +28,19 @@ possibility of a cliquable link (to the description of the vocabulary) for the a
 
 		
 */
+function Suggester(){
+
 
      console.time('This is the execution timer'); 
 
-
-    var predicateArray = new Array();
-    var classesArray = new Array();
-    var instancesArray = new Array();
-	
-	var testPredicateArray = new Array();
-	var testClassesArray = new Array();
 	
 	// list of prefixes from the Linked Open Data Vocabularies ( http://lov.okfn.org/dataset/lov/ )
 	// prefixes added manually: rdf, rdfs, and owl
 	// slight changes done: addition of '#' at the end of the url for the 'tis' prefix
-	var prefixes = 
-[
+
+	
+	var prefixes=
+	[
     {
         "name": "acco",
         "url": "http://purl.org/acco/ns#"
@@ -1721,83 +1701,90 @@ possibility of a cliquable link (to the description of the vocabulary) for the a
         "name": "zbwext",
         "url": "http://zbw.eu/namespaces/zbw-extensions/"
     }
-]
+	];
+
+
+//Define Arrays
 	
+    var predicateArray = new Array();
+    var classesArray = new Array();
+    var instancesArray = new Array();
+	/*
+	var testPredicateArray = new Array();
+	var testClassesArray = new Array();
 
-    function sparqlQueryJson(queryStr, endpoint, callback, isDebug) {
-      var querypart = "query=" + escape(queryStr);
-    
-      // Get our HTTP request object.
-      var xmlhttp = null;
-      if(window.XMLHttpRequest) {
-        xmlhttp = new XMLHttpRequest();
-     } else if(window.ActiveXObject) {
-       // Code for older versions of IE, like IE6 and before.
-       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-     } else {
-       alert('Perhaps your browser does not support XMLHttpRequests?');
-     }
-    
-     // Set up a POST with JSON result format.
-     xmlhttp.open('POST', endpoint, true); // GET can have caching probs, so POST
-     xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-     xmlhttp.setRequestHeader("Accept", "application/sparql-results+json");
-    
-     // Set up callback to get the response asynchronously.
-     xmlhttp.onreadystatechange = function() {
-       if(xmlhttp.readyState == 4) {
-         if(xmlhttp.status == 200) {
-           // Do something with the results
-           if(isDebug) alert(xmlhttp.responseText);
-           callback(xmlhttp.responseText);
-         } else {
-           // Some kind of error occurred.
-           alert("Sparql query error: " + xmlhttp.status + " "
-               + xmlhttp.responseText);
-         }
-       }
-     };
-     // Send the query to the endpoint.
-     xmlhttp.send(querypart);
-    
-     // Done; now just wait for the callback to be called.
-    };
 
-	
+//Define endpoint
 
-      var endpoint = "http://data.uni-muenster.de/historicmaps/sparql";//"http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sparql";
+
+var endpoint = "http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sparql";
+
+//Define queries
       
       var queryPredicates = "SELECT DISTINCT ?predicateLabel WHERE {?subject ?predicate ?object . ?predicate <http://www.w3.org/2000/01/rdf-schema#label> ?predicateLabel} LIMIT 10" ;
       var queryClasses = "SELECT DISTINCT ?classLabel WHERE {?subject a ?class . ?class <http://www.w3.org/2000/01/rdf-schema#label> ?classLabel} LIMIT 20" ;
       var queryInstances = "SELECT DISTINCT ?instanceLabel WHERE {?subject a ?class . ?subject <http://www.w3.org/2000/01/rdf-schema#label> ?instanceLabel}";
+
+*/
 	  
-	  var testEndpoint = "http://data.uni-muenster.de/historicmaps/sparql";//"http://data.uni-muenster.de/sparql"; 
-	  var testQueryPredicates = "select distinct ?predicate where { ?subject ?predicate ?object. }"; 
-	  var testQueryClasses = "select distinct ?aClass where { ?a a ?aClass. }"; 
-	  
+//Define endpoint
+
+	  var endpoint = ""; 
+
+//Define queries
+
+	  //var testQueryPredicates = "select distinct ?predicate where { ?subject ?predicate ?object. }"; 
+		var queryPredicates= new SPEXQuery();
+		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").orderby("?predicate");
+
+	  //var testQueryClasses = "select distinct ?aClass where { ?a a ?aClass. }"; 
+	  	var queryClasses = new SPEXQuery();
+		queryClasses.select(["?aClass","?aClass__label"]).distinct().where("?a" , "rdf:type" , "?aClass").orderby("?aClass"); 
+
+
+//Blacklist
 	  // excluded prefixes are entered in the table in alphabetical order
 	  // vocabularies referring to spatial and temporal constraints are excluded since spatial and temporal constraints will be provided through the map and the time slider
 	  var excludedPrefixes = [ "geo", "geod", "gsp", "owl","rdf","rdfs", "skos", "ti", "time", "tis", "xsd"];
+ 	 
 
-      // Define a callback function to receive the SPARQL JSON result.
-      function myCallback(str) {
+
+	var sugEx=new QueryExecutor();
+
+	sugEx.executeQuery = function(spexquery, endpoint) {
+		//Test whether endpoint is non empty:
+		if (endpoint == '' || endpoint == null) {
+			alert('Enter an endpoint URI!');
+			return;
+		}
+		// using ".serialiseQuery()" instead of "getSPARQL()"
+		this.sparqlQueryJson(spexquery.le.expandLabels(spexquery).serialiseQuery(), endpoint, spexquery.timeout, false);	
+	}
+
+	// Define a callback function to receive the SPARQL JSON result.
+     sugEx.callback = function(str) {
         // Convert result to JSON
         var jsonObj = eval('(' + str + ')');
+		jsonObj=new LabelGenerator().label(new SPEXResultSet(jsonObj)).allResults;
+		
 		console.log ("JSON OBJECT: "+jsonObj);
       
 		var u =0;
 		var v =0;
 	  
         for(var i = 0; i<  jsonObj.results.bindings.length; i++) {
-
-		if (typeof jsonObj.results.bindings[i].predicateLabel !== 'undefined') {
+		
+		// TODO: Bring in the labels somehow
+		
+		/*
+		if (typeof jsonObj.results.bindings[i].predicate__label !== 'undefined') {
 			predicateArray[i] =jsonObj.results.bindings[i].predicateLabel.value;
 		}
           
-		if (typeof jsonObj.results.bindings[i].classLabel !== 'undefined') {
+		if (typeof jsonObj.results.bindings[i].aClass__label !== 'undefined') {
 			classesArray[i] =jsonObj.results.bindings[i].classLabel.value;
 		}
-		
+		*/
 		if (typeof jsonObj.results.bindings[i].aClass !== 'undefined') 
 		{
 			// get the current class
@@ -1817,12 +1804,33 @@ possibility of a cliquable link (to the description of the vocabulary) for the a
 				if (excludedPrefixes.indexOf(prefixes[j].name) == -1)
 				{
 					// only replace the url of the predicate with the corresponding prefix if the prefix is not in the list of excluded prefixes
-					testClassesArray[u] = currentClass.replace(prefixes[j].url, prefixes[j].name+":");
+					classesArray[u] = currentClass.replace(prefixes[j].url, prefixes[j].name+":");
 					u++;					
 					break; 
 				}
  
 			  }
+			}
+			u =0;
+			//go also through the list of SPEX prefixes (to do: unify both lists)
+			for(var i = 0; i < queryClasses.prefixes.length; i++) {
+				var pfx = queryClasses.prefixes[i];
+					//queryString.push( "PREFIX " + pfx.prefix + ": <" + pfx.uri + ">");
+					if (currentClass.indexOf(pfx.uri) != -1)
+					  {
+						//console.log ("CURRENT PREDICATE: "+currentpredicate); 
+						//console.log ("CURRENT DOMAIN: "+prefixes[j].url);  
+
+						// check if the corresponding prefix is not excluded from the list of prefixes to show
+						if (excludedPrefixes.indexOf(pfx.prefix) == -1)
+						{
+							// only replace the url of the predicate with the corresponding prefix if the prefix is not in the list of excluded prefixes
+							classesArray[u] = currentClass.replace(pfx.uri, pfx.prefix+":");
+							u++;					
+							break; 
+						}
+		 
+					  }
 			}
  
 		}		
@@ -1846,53 +1854,63 @@ possibility of a cliquable link (to the description of the vocabulary) for the a
 				if (excludedPrefixes.indexOf(prefixes[j].name) == -1)
 				{
 					// only replace the url of the predicate with the corresponding prefix if the prefix is not in the list of excluded prefixes
-					testPredicateArray[v] = currentPredicate.replace(prefixes[j].url, prefixes[j].name+":");
+					predicateArray[v] = currentPredicate.replace(prefixes[j].url, prefixes[j].name+":");
 					v++;					
 					break; 
 				}
  
 			  }
 			}
-			
+			v =0;
+			//go also through the list of SPEX prefixes (to do: unify both lists)
+			for(var i = 0; i < queryClasses.prefixes.length; i++) {
+				var pfx = queryClasses.prefixes[i];
+					//queryString.push( "PREFIX " + pfx.prefix + ": <" + pfx.uri + ">");
+					if (currentPredicate.indexOf(pfx.uri) != -1)
+					  {
+						//console.log ("CURRENT PREDICATE: "+currentpredicate); 
+						//console.log ("CURRENT DOMAIN: "+prefixes[j].url);  
+
+						// check if the corresponding prefix is not excluded from the list of prefixes to show
+						if (excludedPrefixes.indexOf(pfx.prefix) == -1)
+						{
+							// only replace the url of the predicate with the corresponding prefix if the prefix is not in the list of excluded prefixes
+							testPredicateArray[v] = currentPredicate.replace(pfx.uri, pfx.prefix+":");
+							v++;					
+							break; 
+						}
+		 
+					  }
+			}
 		}
         
 	   }  
-	   	console.log("The number of classes is:  "+testClassesArray.length); 	   
-	    console.log("The number of predicates is:  "+testPredicateArray.length); 	   
+	   	console.log("The number of classes is:  "+classesArray.length); 	   
+	    console.log("The number of predicates is:  "+predicateArray.length); 	   
      }
-      	 
-      sparqlQueryJson(queryPredicates, endpoint, myCallback, false);
-      sparqlQueryJson(queryClasses, endpoint, myCallback, false);      
-	  
-	  // execution of the queries
-	  sparqlQueryJson(testQueryPredicates, testEndpoint, myCallback, false);
-	  sparqlQueryJson(testQueryClasses, testEndpoint, myCallback, false);
 
-	  
-     $(function() {
 
-	//$( "#predicates" ).autocomplete({source: predicateArray});
-	$( "#predicates" ).autocomplete({source: testPredicateArray});
-	$( "#classes" ).autocomplete({source: testClassesArray});
-	$( "#instances" ).autocomplete({source: instancesArray});
-	});
+	this.init=function(){
+		sugEx.executeQuery(queryClasses, endpoint); 
+		sugEx.executeQuery(queryPredicates, endpoint);
+	}
+
+
+
+
+    this.createDropdownC=function(HashStringID){
+	  endpoint=document.getElementById("endpoint").value;
+	  $( HashStringID ).autocomplete({source: classesArray});
+    	
+    };
+	
+    this.createDropdownP=function(HashStringID){
+	  endpoint=document.getElementById("endpoint").value;
+	  $( HashStringID ).autocomplete({source: predicateArray});
+    	
+    };
 
 	console.timeEnd('This is the execution timer');
+}
 
-    </script>
-	
-  </head>
-
-  <body>
-
-
-  <div class="ui-widget">
-	<label for="classes">Endpoint: </label><input id="endpoint"><br />
-     <label for="classes">Classes: </label><input id="classes">
-     <label for="predicates">Predicates: </label><input id="predicates">
-     <label for="instances">Instances: </label><input id="instances">
-  </div>
-
-
-  </body>
-</html>
+Suggester.prototype.constructor = Suggester;
