@@ -30,7 +30,7 @@ var queryPane = {
 	pathText : null,
 
 	// Data
-	nodes : [{id: 0, label: '', className: '', variable: true, x: 100, y: 0, constraint: false}],
+	nodes : [{id: 0, label: '', className: '', variable: true, x: 100, y: 0, spConstraint: false, teConstraint: false}],
 	links : [],
 
 	// Selected node
@@ -191,7 +191,7 @@ var queryPane = {
 		.style('fill', function(d) { 
 			rgb = "#cae6ed";
 
-			if (d.constraint)
+			if (d.spConstraint || d.teConstraint)
 				rgb = "#eff2d8";
 
 			return d3.rgb(rgb);
@@ -199,7 +199,7 @@ var queryPane = {
 		.style('stroke', function(d) { 
 			rgb = "#006E89";
 
-			if (d.constraint)
+			if (d.spConstraint || d.teConstraint)
 				rgb = "#b1c800";
 
 			return d3.rgb(rgb); 
@@ -250,7 +250,7 @@ var queryPane = {
       	.style('fill', function(d) { 
 			rgb = "#cae6ed";
 
-			if (d.constraint)
+			if (d.spConstraint || d.teConstraint)
 				rgb = "#eff2d8";
 
 			return d3.rgb(rgb);
@@ -258,7 +258,7 @@ var queryPane = {
 		.style('stroke', function(d) { 
 			rgb = "#006E89";
 
-			if (d.constraint)
+			if (d.spConstraint || d.teConstraint)
 				rgb = "#b1c800";
 
 			return d3.rgb(rgb); 
@@ -271,21 +271,36 @@ var queryPane = {
 
 	// Show context menu
 	showContextMenu : function(menu) {
+		
+		var constraintLinks = ''
+
+		if (queryPane.selected.spConstraint) {
+			constraintLinks =
+				'<br><br>' + 
+				'<a href="javascript:void(0)" onclick="queryPane.setSpConstraint();">Set Constraint</a><br>' +
+				'<a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Constraint</a>';
+		};
+
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
-				<b>Menu:</b> \
-				<div> \
+				<div id="contextMenuContent"> \
+					<br> \
 					I am looking for <input type="text" id="queryS" value="Person"></input><br> \
-					<input type="checkbox" id="queryVar">Variable<br> \
+					<form> \
+						<input type="radio" id="queryVar" name="classThing" >&nbsp;Class \
+						<input type="radio" id="queryNonVar" name="classThing" >&nbsp;Thing \
+					</form> \
 					<input type="button" id="queryAdd" onclick="queryPane.updateSelected()" value="Update"><br> \
 					<br> \
 					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddOut();">Add outgoing Link</a><br> \
-					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();">Add incoming Link</a> \
-				</div>');
+					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();">Add incoming Link</a>'
+					+ constraintLinks +
+				'</div>');
 
 		document.getElementById('queryS').value = queryPane.selected.label;
 		document.getElementById('queryVar').checked = queryPane.selected.variable;
-		
+		document.getElementById('queryNonVar').checked = !(queryPane.selected.variable);
+
 		queryPane.menu.each(function(d) {
 			d3.select(this).style("display", "block")
 			.style("left", d.px + 10 + "px")
@@ -297,15 +312,22 @@ var queryPane = {
 	showContextMenuAddOut : function() {
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
-				<b>Menu:</b> \
-				<div> \
+				<div id="contextMenuContent"> \
+					<br> \
 					<div class="linkAdd"> \
+						Things that are \
 						<input type="text" id="queryS" value="" readonly></input> \
+						connected via \
 						<input type="text" id="queryP" value=""></input> \
+						to \
 						<input type="text" id="queryO" value=""></input> \
+						<form> \
+							<input type="radio" id="queryVar" name="classThing" checked>&nbsp;Class \
+							<input type="radio" id="queryNonVar" name="classThing" >&nbsp;Thing \
+						</form> \
 					</div> \
 					<input type="button" id="queryAdd" onclick="queryPane.addOut()" value="Add"> \
-					<br><br> \
+					<br> \
 				</div>');
 
 		document.getElementById('queryS').value = queryPane.selected.label;
@@ -315,15 +337,22 @@ var queryPane = {
 	showContextMenuAddIn : function() {
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
-				<b>Menu:</b> \
-				<div> \
+				<div id="contextMenuContent"> \
+					<br> \
 					<div class="linkAdd"> \
-						<input type="text" id="queryS" value=""></input> \
-						<input type="text" id="queryP" value=""></input> \
-						<input type="text" id="queryO" value="" readonly></input> \
+						Things that are \
+						<input type="text" id="queryS" value=""></input> <br>\
+						connected via \
+						<input type="text" id="queryP" value=""></input> <br>\
+						to \
+						<input type="text" id="queryO" value="" readonly></input> <br>\
+						<form> \
+							<input type="radio" id="queryVar" name="classThing" checked>&nbsp;Class \
+							<input type="radio" id="queryNonVar" name="classThing" >&nbsp;Thing \
+						</form> \
 					</div> \
 					<input type="button" id="queryAdd" onclick="queryPane.addIn()" value="Add"> \
-					<br><br> \
+					<br> \
 				</div>');
 
 		document.getElementById('queryO').value = queryPane.selected.label;
@@ -376,7 +405,7 @@ var queryPane = {
 	// 
 	addOut : function(){
 		queryPane.nodes.push({id: queryPane.nodes.length, label: document.getElementById('queryO').value,
-			variable: true, constraint: false }); //'?'});// variable should be true by default
+			variable: document.getElementById('queryVar').checked, spConstraint: false, teConstraint: false }); //'?'});// variable should be true by default
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
 			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});
 
@@ -390,7 +419,7 @@ var queryPane = {
 	// 
 	addIn : function(){
 		queryPane.nodes.push({id: queryPane.nodes.length, label: document.getElementById('queryS').value,
-			variable: true, constraint: false }); //'?'});//
+			variable: document.getElementById('queryVar').checked, spConstraint: false, teConstraint: false }); //'?'});//
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
 			source: this.nodes[queryPane.nodes.length - 1], target: this.nodes.indexOf(queryPane.selected)});
 
@@ -524,10 +553,10 @@ var queryPane = {
 		
 			for (var i = 0; i < this.nodes.length; i++) {
 				if (this.getNodeVarName(this.nodes[i]) == '?' + variable) {
-					this.nodes[i].constraint = true;
+					this.nodes[i].spConstraint = true;
 				}
 				else {
-					this.nodes[i].constraint = false;
+					this.nodes[i].spConstraint = false;
 				};
 			};
 		};
@@ -541,10 +570,10 @@ var queryPane = {
 		
 			for (var i = 0; i < this.nodes.length; i++) {
 				if (this.getNodeVarName(this.nodes[i]) == '?' + variable) {
-					this.nodes[i].constraint = true;
+					this.nodes[i].teConstraint = true;
 				}
 				else {
-					this.nodes[i].constraint = false;
+					this.nodes[i].teConstraint = false;
 				};
 			};
 		};
@@ -552,7 +581,7 @@ var queryPane = {
 		this.update();
 	},
 
-	setConstraint : function() {
+	setSpConstraint : function() {
 
 		var win = new Window();
 		win.setCorners(
@@ -569,7 +598,7 @@ var queryPane = {
 		queryPane.updateQuery();
 	},
 
-	removeConstraint : function() {
+	removeSpConstraint : function() {
 
 		spex.q.setSpatialConstraint(
 			queryPane.getNodeVarName(queryPane.selected)
