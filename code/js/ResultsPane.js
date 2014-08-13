@@ -1,12 +1,12 @@
 function ResultsPane(){
 this.currentresults = new SPEXResultSet(" ");
-}
+};
 ResultsPane.prototype.constructor = ResultsPane;
 
 ResultsPane.prototype.getcurrentresults = function(){
 var res = this.currentresults.getAllResults();
 return escape(JSON.stringify(res));
-}
+};
 
 
 
@@ -60,7 +60,9 @@ ResultsPane.prototype.display = function(spexresultset){
 					//htmlString += "<td>"+ buildHTML(solution, variableName) + "</td>";
 					//console.log("URI: " + encodeURI(buildHTML(solution, variableName)));
 					//htmlString += "<td> <a href="+ buildHTML(solution, variableName) +">"+ solution[variableName + "__label"].value + "</a></td>";
-					htmlString += "<td> " + buildHTML(solution, variableName) + "</td>";
+					
+					htmlString += "<td >" + buildHTML(solution, variableName) + "</td>";
+					//$("#"+solutionIndex).hover(A, B);
 				} 
 				//console.log(value1[value2].value)
 			});
@@ -71,7 +73,27 @@ ResultsPane.prototype.display = function(spexresultset){
 		
 		/* Display table. */
 		document.getElementById("result").innerHTML = htmlString;
-}	
+		
+		//Generate event handlers and set onmouseover event firing for each table cell of the table (works only for an existing table, therefore a new iteration is necessary)
+		$('#result').each(function(){
+			$(this).find('td').each(function(){
+				//you can use $(this) to get current cell in the table
+				if ($(this).find('a')) {
+					var ev = new ResultItemEventHandler($(this).find('a').attr('href'),$(this), "t", "s");
+					$(this).hover(
+					  function () {
+						ev.highlight();								
+					  }, 
+					  function () {
+						ev.dehighlight();					  
+					  }
+					);
+				}
+			})
+		});
+		
+		
+}	;
 	
 		
         
