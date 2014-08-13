@@ -306,6 +306,8 @@ var queryPane = {
 			.style("left", d.px + 10 + "px")
 			.style("top", d.py + 50 + 15 + "px");
 		});
+
+		document.getElementById("queryS").focus();	
 	},
 
 	// 
@@ -316,7 +318,7 @@ var queryPane = {
 					<br> \
 					<div class="linkAdd"> \
 						Things that are \
-						<input type="text" id="queryS" value="" readonly></input> \
+						<input type="text" id="queryS" value="" disabled></input> \
 						connected via \
 						<input type="text" id="queryP" value=""></input> \
 						to \
@@ -331,6 +333,8 @@ var queryPane = {
 				</div>');
 
 		document.getElementById('queryS').value = queryPane.selected.label;
+
+		document.getElementById("queryP").focus();
 	},
 
 	//
@@ -341,11 +345,11 @@ var queryPane = {
 					<br> \
 					<div class="linkAdd"> \
 						Things that are \
-						<input type="text" id="queryS" value=""></input> <br>\
+						<input type="text" id="queryS" value=""></input> \
 						connected via \
-						<input type="text" id="queryP" value=""></input> <br>\
+						<input type="text" id="queryP" value=""></input> \
 						to \
-						<input type="text" id="queryO" value="" readonly></input> <br>\
+						<input type="text" id="queryO" value="" disabled></input> \
 						<form> \
 							<input type="radio" id="queryVar" name="classThing" checked>&nbsp;Class \
 							<input type="radio" id="queryNonVar" name="classThing" >&nbsp;Thing \
@@ -356,6 +360,8 @@ var queryPane = {
 				</div>');
 
 		document.getElementById('queryO').value = queryPane.selected.label;
+
+		document.getElementById("queryS").focus();	
 	},
 
 	// Hide context menu
