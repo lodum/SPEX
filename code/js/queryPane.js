@@ -272,13 +272,21 @@ var queryPane = {
 	// Show context menu
 	showContextMenu : function(menu) {
 		
-		var constraintLinks = ''
+		var constraintSpLinks = ''
+		var constraintTeLinks = ''
 
 		if (queryPane.selected.spConstraint) {
-			constraintLinks =
+			constraintSpLinks =
 				'<br><br>' + 
-				'<a href="javascript:void(0)" onclick="queryPane.setSpConstraint();">Set Constraint</a><br>' +
-				'<a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Constraint</a>';
+				'<a href="javascript:void(0)" onclick="queryPane.setSpConstraint();">Set Spatial Constraint</a><br>' +
+				'<a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Spatial Constraint</a>';
+		};
+
+		if (queryPane.selected.teConstraint) {
+			constraintTeLinks =
+				'<br><br>' + 
+				'<a href="javascript:void(0)" onclick="queryPane.setTeConstraint();">Set Temporal Constraint</a><br>' +
+				'<a href="javascript:void(0)" onclick="queryPane.removeTeConstraint();">Remove Temporal Constraint</a>';
 		};
 
 		d3.select("#contextMenu")
@@ -294,7 +302,7 @@ var queryPane = {
 					<br> \
 					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddOut();">Add outgoing Link</a><br> \
 					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();">Add incoming Link</a>'
-					+ constraintLinks +
+					+ constraintSpLinks + constraintTeLinks +
 				'</div>');
 
 		document.getElementById('queryS').value = queryPane.selected.label;
@@ -611,6 +619,27 @@ var queryPane = {
 			, null);
 
 		queryPane.updateQuery();
-	}
+	},
 
+	setTeConstraint : function() {
+
+		var temp = new Time();
+		temp.timeBeginning = slider.timeline.getVisibleChartRange().start.xsdDateTime();
+		temp.timeEnd = slider.timeline.getVisibleChartRange().end.xsdDateTime();
+
+		spex.q.setTemporalConstraint(
+			queryPane.getNodeVarName(queryPane.selected)
+			, temp);
+
+		queryPane.updateQuery();
+	},
+
+	removeTeConstraint : function() {
+
+		spex.q.setSpatialConstraint(
+			queryPane.getNodeVarName(queryPane.selected)
+			, null);
+
+		queryPane.updateQuery();
+	}
 };
