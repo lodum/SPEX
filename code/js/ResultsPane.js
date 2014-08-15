@@ -35,8 +35,54 @@ ResultsPane.prototype.display = function(spexresultset){
 	    		return html; 
 		}
 	
+		
 		/*Write the result set as a table.  Table header lists the user-selected variables; 
 		  each row lists labels for instances in that particular solution.*/
+				/*Write the result set as a table.  Table header lists the user-selected variables; 
+		  each row lists labels for instances in that particular solution.*/
+		var resultsTable = document.createElement('table');
+		resultsTable.className = "table table-hover table-striped table-condensed";
+		
+		//create table head and append it to the results table
+		var tableHead = document.createElement('thead');
+		var headRow = document.createElement('tr');
+		var userSelectedVars = spexresultset.getUserSelectedVariables();
+		$.each(userSelectedVars, function(varIndex, variable) { 
+			var headCell = document.createElement('th');
+			headCell.innerHTML = "?" + variable;
+			headRow.appendChild(headCell);
+		});
+		tableHead.appendChild(headRow);
+		resultsTable.appendChild(tableHead);
+
+		//body
+		var tableBody = document.createElement('tbody');
+		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
+			var bodyRow = document.createElement('tr');
+			$.each(userSelectedVars, function(variableIndex, variableName) { 
+				if(!solution[variableName + "__label"]) {
+					var bodyCell = document.createElement('td');
+					bodyCell.innerHTML = "";
+					bodyRow.appendChild(bodyCell);
+				} else {
+					var bodyCell = document.createElement('td');
+					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
+					if(solution[variableName + '__sliderItemNumber']) {
+						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
+					}
+					//same for map item
+					bodyCell.innerHTML = buildHTML(solution, variableName);
+					bodyCell.onmouseover = function() { ev.highlight(); };
+					bodyRow.appendChild(bodyCell);
+				}
+			});
+			tableBody.appendChild(bodyRow);
+		});
+		resultsTable.appendChild(tableBody); 
+		
+		document.getElementById('result').appendChild(resultsTable);
+		
+/*
 		var htmlString = "<table class=\"table table-hover table-striped table-condensed\">";
 		//Write table head.
 		htmlString += "<thead><tr>";
@@ -70,9 +116,9 @@ ResultsPane.prototype.display = function(spexresultset){
 		});
 		//Finish writing table.
 		htmlString += "</tbody></table>";
-		
+*/	
 		/* Display table. */
-		document.getElementById("result").innerHTML = htmlString;
+/*		document.getElementById("result").innerHTML = htmlString;
 		
 		//Generate event handlers and set onmouseover event firing for each table cell of the table (works only for an existing table, therefore a new iteration is necessary)
 		$('#result').each(function(){
@@ -91,9 +137,9 @@ ResultsPane.prototype.display = function(spexresultset){
 				}
 			})
 		});
+*/
 		
-		
-}	;
+};
 	
 		
         
