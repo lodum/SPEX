@@ -636,7 +636,7 @@ var queryPane = {
 
 	removeTeConstraint : function() {
 
-		spex.q.setSpatialConstraint(
+		spex.q.setTemporalConstraint(
 			queryPane.getNodeVarName(queryPane.selected)
 			, null);
 

@@ -48,7 +48,7 @@ var spex = new function(){
 	};
 	
 	this.showquery = function() {		 
-		  document.getElementById("query").innerHTML = spex.q.getSPARQL();		 
+		  document.getElementById("query").innerHTML = spex.q.serialiseQuery();		 
 	};
 
 };
