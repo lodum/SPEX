@@ -13,14 +13,14 @@ var spex = new function(){
 		$("#showquery").click(this.showquery);
 		queryPane.init();
 
+		this.sug.init();
+
 		map.init();
 		slider.init();
 		//slider.drawVisualization();
 		
 		//testing.init();
-		//this.sug.createDropdownC();
-		//this.sug.createDropdownP();
-		//this.sug.init();
+		
 
 		this.q.select()
 			//.where("?a", "rdf:type", "dbp-ont:building" )	
@@ -35,20 +35,11 @@ var spex = new function(){
 			//;
 			//.SPEXvariable("?c");
 			
-		Date.prototype.xsdDateTime = function() {
-   var yyyy = this.getFullYear().toString();
-   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
-   var dd  = this.getDate().toString();
-   var hh = this.getHours().toString();
-   var min = this.getMinutes().toString();
-   var sec = this.getSeconds().toString();
 
-   return yyyy + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]) + 'T' + (hh[1]?hh:"0"+hh[0]) + ':' + (min[1]?min:"0"+min[0]) + ':' + (sec[1]?sec:"0"+sec[0]); // padding
-  };
 	};
 	
 	this.showquery = function() {		 
-		  document.getElementById("query").innerHTML = spex.q.serialiseQuery();		 
+		  document.getElementById("query").innerHTML = spex.q.getSPARQL();		 
 	};
 
 };
