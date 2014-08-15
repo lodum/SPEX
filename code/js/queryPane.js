@@ -272,21 +272,13 @@ var queryPane = {
 	// Show context menu
 	showContextMenu : function(menu) {
 		
-		var constraintSpLinks = ''
-		var constraintTeLinks = ''
+		var constraintLinks = ''
 
 		if (queryPane.selected.spConstraint) {
-			constraintSpLinks =
+			constraintLinks =
 				'<br><br>' + 
-				'<a href="javascript:void(0)" onclick="queryPane.setSpConstraint();">Set Spatial Constraint</a><br>' +
-				'<a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Spatial Constraint</a>';
-		};
-
-		if (queryPane.selected.teConstraint) {
-			constraintTeLinks =
-				'<br><br>' + 
-				'<a href="javascript:void(0)" onclick="queryPane.setTeConstraint();">Set Temporal Constraint</a><br>' +
-				'<a href="javascript:void(0)" onclick="queryPane.removeTeConstraint();">Remove Temporal Constraint</a>';
+				'<a href="javascript:void(0)" onclick="queryPane.setSpConstraint();">Set Constraint</a><br>' +
+				'<a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Constraint</a>';
 		};
 
 		d3.select("#contextMenu")
@@ -302,9 +294,11 @@ var queryPane = {
 					<br> \
 					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddOut();">Add outgoing Link</a><br> \
 					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();">Add incoming Link</a>'
-					+ constraintSpLinks + constraintTeLinks +
+					+ constraintLinks +
 				'</div>');
 
+		spex.sug.createDropdownC('queryS');
+		
 		document.getElementById('queryS').value = queryPane.selected.label;
 		document.getElementById('queryVar').checked = queryPane.selected.variable;
 		document.getElementById('queryNonVar').checked = !(queryPane.selected.variable);
@@ -340,6 +334,9 @@ var queryPane = {
 					<br> \
 				</div>');
 
+		spex.sug.createDropdownP('queryP');
+		spex.sug.createDropdownC('queryO');
+		
 		document.getElementById('queryS').value = queryPane.selected.label;
 
 		document.getElementById("queryP").focus();
@@ -367,6 +364,9 @@ var queryPane = {
 					<br> \
 				</div>');
 
+		spex.sug.createDropdownC('queryS');
+		spex.sug.createDropdownP('queryP');
+		
 		document.getElementById('queryO').value = queryPane.selected.label;
 
 		document.getElementById("queryS").focus();	
@@ -619,27 +619,6 @@ var queryPane = {
 			, null);
 
 		queryPane.updateQuery();
-	},
-
-	setTeConstraint : function() {
-
-		var temp = new Time();
-		temp.timeBeginning = slider.timeline.getVisibleChartRange().start.xsdDateTime();
-		temp.timeEnd = slider.timeline.getVisibleChartRange().end.xsdDateTime();
-
-		spex.q.setTemporalConstraint(
-			queryPane.getNodeVarName(queryPane.selected)
-			, temp);
-
-		queryPane.updateQuery();
-	},
-
-	removeTeConstraint : function() {
-
-		spex.q.setTemporalConstraint(
-			queryPane.getNodeVarName(queryPane.selected)
-			, null);
-
-		queryPane.updateQuery();
 	}
+
 };
