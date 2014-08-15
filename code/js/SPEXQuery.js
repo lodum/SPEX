@@ -59,7 +59,9 @@ SPEXQuery.prototype.prefix("basic" , "http://def.seegrid.csiro.au/isotc211/iso19
 SPEXQuery.prototype.prefix("bbcprov" , "http://www.bbc.co.uk/ontologies/provenance#");
 SPEXQuery.prototype.prefix("being" , "http://purl.org/ontomedia/ext/common/being#");
 SPEXQuery.prototype.prefix("bevon" , "http://rdfs.co/bevon/");
+*/
 SPEXQuery.prototype.prefix("bibo" , "http://purl.org/ontology/bibo/");
+/*
 SPEXQuery.prototype.prefix("bibtex" , "http://purl.org/net/nknouf/ns/bibtex#");
 SPEXQuery.prototype.prefix("bio" , "http://purl.org/vocab/bio/0.1/");
 SPEXQuery.prototype.prefix("biol" , "http://purl.org/NET/biol/ns#");
@@ -106,17 +108,18 @@ SPEXQuery.prototype.prefix("ctorg" , "http://purl.org/ctic/infraestructuras/orga
 SPEXQuery.prototype.prefix("d2rq" , "http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#");
 SPEXQuery.prototype.prefix("dady" , "http://vocab.deri.ie/dady#");
 SPEXQuery.prototype.prefix("daia" , "http://purl.org/ontology/daia#");
-SPEXQuery.prototype.prefix("dcam" , "http://purl.org/dc/dcam/");
-SPEXQuery.prototype.prefix("dcat" , "http://www.w3.org/ns/dcat#");
 */
+SPEXQuery.prototype.prefix("dbp" , "http://dbpedia.org/resource/");
+SPEXQuery.prototype.prefix("dbp-ont" , "http://dbpedia.org/ontology/");
+SPEXQuery.prototype.prefix("dbp-prop" , "http://dbpedia.org/property/"); 
 SPEXQuery.prototype.prefix("dc" , "http://purl.org/dc/elements/1.1/");
 /*
+SPEXQuery.prototype.prefix("dcam" , "http://purl.org/dc/dcam/");
+SPEXQuery.prototype.prefix("dcat" , "http://www.w3.org/ns/dcat#");
 SPEXQuery.prototype.prefix("dcite" , "http://purl.org/spar/datacite#");
 SPEXQuery.prototype.prefix("dcndl" , "http://ndl.go.jp/dcndl/terms/");
 */
-SPEXQuery.prototype.prefix("dct" , "http://purl.org/dc/terms/");
-
-SPEXQuery.prototype.prefix("maps", "http://www.geographicknowledge.de/vocab/maps#"); 
+SPEXQuery.prototype.prefix("dct" , "http://purl.org/dc/terms/"); 
 /*
 SPEXQuery.prototype.prefix("dctype" , "http://purl.org/dc/dcmitype/");
 SPEXQuery.prototype.prefix("deo" , "http://purl.org/spar/deo#");
@@ -156,10 +159,7 @@ SPEXQuery.prototype.prefix("fabio" , "http://purl.org/spar/fabio/");
 SPEXQuery.prototype.prefix("fea" , "http://vocab.data.gov/def/fea#");
 SPEXQuery.prototype.prefix("fn" , "http://www.w3.org/2005/xpath-functions#");
 */
-SPEXQuery.prototype.prefix("foaf" , "http://xmlns.com/foaf/0.1/");
-SPEXQuery.prototype.prefix("dbp-ont" , "http://dbpedia.org/ontology/");
-SPEXQuery.prototype.prefix("dbp" , "http://dbpedia.org/resource/");
-SPEXQuery.prototype.prefix("dbp-prop" , "http://dbpedia.org/property/");      
+SPEXQuery.prototype.prefix("foaf" , "http://xmlns.com/foaf/0.1/");     
       
 /*
 SPEXQuery.prototype.prefix("food" , "http://data.lirmm.fr/ontologies/food#");
@@ -243,6 +243,9 @@ SPEXQuery.prototype.prefix("lvont" , "http://lexvo.org/ontology#");
 SPEXQuery.prototype.prefix("lyou" , "http://purl.org/linkingyou/");
 SPEXQuery.prototype.prefix("ma-ont" , "http://www.w3.org/ns/ma-ont#");
 SPEXQuery.prototype.prefix("mads" , "http://www.loc.gov/mads/rdf/v1#");
+*/
+SPEXQuery.prototype.prefix("maps", "http://www.geographicknowledge.de/vocab/maps#");
+/*
 SPEXQuery.prototype.prefix("marl" , "http://www.gsi.dit.upm.es/ontologies/marl/ns#");
 SPEXQuery.prototype.prefix("maso" , "http://securitytoolbox.appspot.com/MASO#");
 SPEXQuery.prototype.prefix("meb" , "http://rdf.myexperiment.org/ontologies/base/");
@@ -360,10 +363,11 @@ SPEXQuery.prototype.prefix("rdarel2" , "http://metadataregistry.org/uri/schema/R
 SPEXQuery.prototype.prefix("rdarole" , "http://rdvocab.info/roles#");
 */
 SPEXQuery.prototype.prefix("rdf" , "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-SPEXQuery.prototype.prefix("rdfs" , "http://www.w3.org/2000/01/rdf-schema#");
-SPEXQuery.prototype.prefix("bibo" , "http://purl.org/ontology/bibo/");
 /*
 SPEXQuery.prototype.prefix("rdfg" , "http://www.w3.org/2004/03/trix/rdfg-1/");
+*/
+SPEXQuery.prototype.prefix("rdfs" , "http://www.w3.org/2000/01/rdf-schema#");
+/*
 SPEXQuery.prototype.prefix("rec" , "http://purl.org/ontology/rec/core#");
 SPEXQuery.prototype.prefix("reegle" , "http://reegle.info/schema#");
 SPEXQuery.prototype.prefix("rel" , "http://purl.org/vocab/relationship/");
@@ -478,7 +482,6 @@ SPEXQuery.prototype.prefix("wf-invoc" , "http://purl.org/net/wf-invocation#");
 SPEXQuery.prototype.prefix("wfm" , "http://purl.org/net/wf-motifs#");
 */
 SPEXQuery.prototype.prefix("wgs84" , "http://www.w3.org/2003/01/geo/wgs84_pos#");
-SPEXQuery.prototype.prefix("xsd" , "http://www.w3.org/2001/XMLSchema#");
 /*
 SPEXQuery.prototype.prefix("whisky" , "http://vocab.org/whisky/terms#");
 SPEXQuery.prototype.prefix("whois" , "http://www.kanzaki.com/ns/whois#");
@@ -490,7 +493,9 @@ SPEXQuery.prototype.prefix("wo" , "http://purl.org/ontology/wo/core#");
 SPEXQuery.prototype.prefix("wot" , "http://xmlns.com/wot/0.1#");
 SPEXQuery.prototype.prefix("xhv" , "http://www.w3.org/1999/xhtml/vocab#");
 SPEXQuery.prototype.prefix("xkos" , "http://purl.org/linked-data/xkos#");
-
+*/
+SPEXQuery.prototype.prefix("xsd" , "http://www.w3.org/2001/XMLSchema#");
+/*
 SPEXQuery.prototype.prefix("zbwext" , "http://zbw.eu/namespaces/zbw-extensions#");
 */
 
