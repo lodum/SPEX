@@ -54,11 +54,14 @@ this.timeline;
 			if (sel.length) {
 				if (sel[0].row != undefined) {
 				  var row = sel[0].row;
+				  console.log(JSON.stringify(row));
+				  /*
 				  if (getItem(row)!= undefined){
 					var i = getItem(row);
 					//i.content
 				  }
 				  document.title = "event " + row + " selected";
+				  */
 				}
 			}
 		}
