@@ -70,10 +70,13 @@ ResultsPane.prototype.display = function(spexresultset){
 					if(solution[variableName + '__sliderItemNumber']) {
 						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
 					}
-					//same for map item
+					//...do same for map item...
 					bodyCell.innerHTML = buildHTML(solution, variableName);
 					bodyCell.addEventListener("mouseover", function() {
 						ev.highlight();
+					}, false); 
+					bodyCell.addEventListener("mouseout", function() {
+						ev.dehighlight();
 					}, false); 
 					bodyRow.appendChild(bodyCell);
 				}
