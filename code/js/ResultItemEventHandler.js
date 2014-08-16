@@ -16,8 +16,9 @@ ResultItemEventHandler.prototype.setMapItem = function(item) {
 };
 
 ResultItemEventHandler.prototype.highlight = function(){
-console.log(this.itemuri);
-this.tableObject.css("background","lightgrey");
+  console.log(this.itemuri);
+  this.tableObject.css("background","lightgrey");
+  slider.timeline.zoom(-0.1, this.timeObject.start);
 }
 
 ResultItemEventHandler.prototype.dehighlight = function(){
