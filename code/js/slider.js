@@ -1,5 +1,5 @@
 var slider = new function(){
-this.timeline;
+	this.timeline;
 	// Initialization
 	this.init = function() {
 
@@ -9,8 +9,9 @@ this.timeline;
 		//});			
 		
 		//source : http://almende.github.io/chap-links-library/timeline.html
-        // Create and populate a data table (example).
-        var data = [
+        	
+        	// Create and populate a data table (example).
+        	var data = [
 				//{
 				//'start': new Date(1980, 7, 15),
 				//'end': new Date(2001, 8, 2),  // end is optional
@@ -31,38 +32,37 @@ this.timeline;
        
 
         
-        // specify options
-        var options = {
-          "width":  "100%",
-          "height": "auto",
-		  "minHeight" : "40px",
-		  "stackEvents" : false ,
-          "style": "range" // optional
-        };
+        	// specify options
+        	var options = {
+          		"width":  "100%",
+          		"height": "auto",
+		  	"minHeight" : "40px",
+		  	"stackEvents" : false ,
+          		"style": "range" // optional
+        	};
 
         
-            // Instantiate our timeline object.
-        this.timeline = new links.Timeline(document.getElementById('slider'));
+            	// Instantiate our timeline object.
+        	this.timeline = new links.Timeline(document.getElementById('slider'));
 		
-		  // Draw our timeline with the created data and options
+		// Draw our timeline with the created data and options
 		this.timeline.draw(data, options);
-		
 		
 		//event listeners
 		function onselect() {
 			console.log("onselect() fired");
-		var sel = this.timeline.getSelection();
+			var sel = this.timeline.getSelection();
 			if (sel.length) {
 				if (sel[0].row != undefined) {
-				  var row = sel[0].row;
-				  console.log(JSON.stringify(row));
-				  /*
-				  if (getItem(row)!= undefined){
-					var i = getItem(row);
-					//i.content
-				  }
-				  document.title = "event " + row + " selected";
-				  */
+					var row = sel[0].row;
+				  	console.log(JSON.stringify(row));
+				  	/*
+				  	if (getItem(row)!= undefined){
+						var i = getItem(row);
+						//i.content
+				  	}
+				  	document.title = "event " + row + " selected";
+				  	*/
 				}
 			}
 		}
@@ -70,23 +70,23 @@ this.timeline;
 		links.events.addListener(this.timeline, 'select', onselect);
 	};
 	  
- this.displaytime = function (data){
-//Data needs to come in the format specified above 
+ 	this.displaytime = function (data){
+	//Data needs to come in the format specified above 
 
 		var options = {
-          "width":  "100%",
-          "height": "auto",
-		  "minHeight" : "40px",
-		  "stackEvents" : false ,
-          "style": "range" // optional
-        };
+          		"width":  "100%",
+          		"height": "auto",
+		  	"minHeight" : "40px",
+		  	"stackEvents" : false ,
+          		"style": "range" // optional
+        	};
 
         
-            // Instantiate our timeline object.
-        this.timeline = new links.Timeline(document.getElementById('slider'));
+            	// Instantiate our timeline object.
+        	this.timeline = new links.Timeline(document.getElementById('slider'));
 		
-		  // Draw our timeline with the created data and options
+		// Draw our timeline with the created data and options
 		this.timeline.draw(data, options);
-}; 
+	}; 
 
 };
