@@ -13,7 +13,7 @@ function LabeledQuery(){
     this.filters = [];
     this.combiner = "";
     this.orders = [];
-    this.limitCount = 50; //TODO: Has to be changed back to -1!!
+    this.limitCount = -1;
     this.offsetCount = 0;
     this._prevSubj = null;
     this._prevProp = null;
