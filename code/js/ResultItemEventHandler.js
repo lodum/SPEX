@@ -17,7 +17,8 @@ ResultItemEventHandler.prototype.setMapItem = function(item) {
 
 ResultItemEventHandler.prototype.highlight = function(){
   console.log(this.itemuri);
-  this.tableObject.css("background","lightgrey");
+  //this.tableObject.css("background","lightgrey");
+  this.tableObject.style.background = "lightgrey";
   //slider.timeline.zoom(0.2, this.timeObject.start);
 }
 
