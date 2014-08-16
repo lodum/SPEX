@@ -50,12 +50,12 @@ var slider = new function(){
 		
 		//event listeners
 		function onselect() {
-			console.log("onselect() fired");
+			//console.log("onselect() fired");
 			var sel = this.timeline.getSelection();
 			if (sel.length) {
 				if (sel[0].row != undefined) {
 					var row = sel[0].row;
-				  	console.log(JSON.stringify(row));
+				  	//console.log(JSON.stringify(row));
 				  	alert("event selected!");
 				  	/*
 				  	if (getItem(row)!= undefined){
