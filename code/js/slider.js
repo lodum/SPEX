@@ -56,6 +56,7 @@ var slider = new function(){
 				if (sel[0].row != undefined) {
 					var row = sel[0].row;
 				  	console.log(JSON.stringify(row));
+				  	alert("event selected!");
 				  	/*
 				  	if (getItem(row)!= undefined){
 						var i = getItem(row);
