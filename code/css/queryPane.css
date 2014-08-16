@@ -53,3 +53,8 @@ circle {
   font-size: smaller;
   z-index: 9997;
 }
+
+.ui-autocomplete {
+	position: absolute;
+	z-index: 9998;
+}
