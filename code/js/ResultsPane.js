@@ -40,7 +40,7 @@ ResultsPane.prototype.display = function(spexresultset){
 		  each row lists labels for instances in that particular solution.*/
 				/*Write the result set as a table.  Table header lists the user-selected variables; 
 		  each row lists labels for instances in that particular solution.*/
-/*		var resultsTable = document.createElement('table');
+		var resultsTable = document.createElement('table');
 		resultsTable.className = "table table-hover table-striped table-condensed";
 		
 		//create table head and append it to the results table
@@ -72,7 +72,9 @@ ResultsPane.prototype.display = function(spexresultset){
 					}
 					//same for map item
 					bodyCell.innerHTML = buildHTML(solution, variableName);
-					bodyCell.onmouseover = function() { ev.highlight(); };
+					bodyCell.addEventListener("mouseover", function() {
+						ev.highlight();
+					}, false); 
 					bodyRow.appendChild(bodyCell);
 				}
 			});
@@ -81,8 +83,8 @@ ResultsPane.prototype.display = function(spexresultset){
 		resultsTable.appendChild(tableBody); 
 		document.getElementById('result').innerHTML = "";
 		document.getElementById('result').appendChild(resultsTable);
-*/		
-
+		
+/*
 		var htmlString = "<table class=\"table table-hover table-striped table-condensed\">";
 		//Write table head.
 		htmlString += "<thead><tr>";
@@ -116,9 +118,9 @@ ResultsPane.prototype.display = function(spexresultset){
 		});
 		//Finish writing table.
 		htmlString += "</tbody></table>";
-	
+*/	
 		/* Display table. */
-		document.getElementById("result").innerHTML = htmlString;
+/*		document.getElementById("result").innerHTML = htmlString;
 		
 		//Generate event handlers and set onmouseover event firing for each table cell of the table (works only for an existing table, therefore a new iteration is necessary)
 		$('#result').each(function(){
@@ -137,7 +139,7 @@ ResultsPane.prototype.display = function(spexresultset){
 				}
 			})
 		});
-
+*/
 		
 };
 	
