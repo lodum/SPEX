@@ -50,6 +50,7 @@ this.timeline;
 		
 		//event listeners
 		function onselect() {
+			console.log("onselect() fired");
 		var sel = this.timeline.getSelection();
 			if (sel.length) {
 				if (sel[0].row != undefined) {
