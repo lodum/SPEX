@@ -54,7 +54,7 @@ var slider = new function(){
 			if (sel.length) {
 				if (sel[0].row != undefined) {
 					var row = sel[0].row;
-				  	console.log("selected item:" + JSON.stringify(this.getItem(row)));
+				  	console.log("selected item:" + JSON.stringify(slider.timeline.getItem(row)));
 				  	//alert("event selected!");
 				  	/*
 				  	if (getItem(row)!= undefined){
@@ -95,7 +95,7 @@ var slider = new function(){
 			if (sel.length) {
 				if (sel[0].row != undefined) {
 					var row = sel[0].row;
-				  	console.log("selected item: " + JSON.stringify(this.getItem(row)));
+				  	console.log("selected item: " + JSON.stringify(slider.timeline.getItem(row)));
 				  	//alert("event selected!");
 				  	/*
 				  	if (getItem(row)!= undefined){
