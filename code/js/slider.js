@@ -92,7 +92,7 @@ var slider = new function(){
 		//event listeners
 		function onselect() {
 			//console.log("onselect() fired");
-			var sel = this.timeline.getSelection();
+			var sel = slider.timeline.getSelection();
 			if (sel.length) {
 				if (sel[0].row != undefined) {
 					var row = sel[0].row;
