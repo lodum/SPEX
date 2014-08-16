@@ -88,6 +88,28 @@ var slider = new function(){
 		
 		// Draw our timeline with the created data and options
 		this.timeline.draw(data, options);
+		
+		//event listeners
+		function onselect() {
+			//console.log("onselect() fired");
+			var sel = this.timeline.getSelection();
+			if (sel.length) {
+				if (sel[0].row != undefined) {
+					var row = sel[0].row;
+				  	//console.log(JSON.stringify(row));
+				  	alert("event selected!");
+				  	/*
+				  	if (getItem(row)!= undefined){
+						var i = getItem(row);
+						//i.content
+				  	}
+				  	document.title = "event " + row + " selected";
+				  	*/
+				}
+			}
+		}
+
+		links.events.addListener(this.timeline, 'select', onselect);
 	}; 
 
 };
