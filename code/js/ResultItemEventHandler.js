@@ -20,7 +20,9 @@ ResultItemEventHandler.prototype.highlight = function(){
   //this.tableObject.css("background","lightgrey");
   this.tableObject.style.background = "lightgrey";
   console.log(JSON.stringify(this.timeObject));
-  slider.timeline.zoom(0.2, this.timeObject.start);
+  if(this.timeObject) {
+    slider.timeline.zoom(0.3, this.timeObject.start);
+  }
 }
 
 ResultItemEventHandler.prototype.dehighlight = function(){
