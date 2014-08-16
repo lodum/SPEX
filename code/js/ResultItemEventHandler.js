@@ -28,4 +28,5 @@ ResultItemEventHandler.prototype.highlight = function(){
 ResultItemEventHandler.prototype.dehighlight = function(){
   //this.tableObject.css("background","");
   this.tableObject.style.background = "";
+  slider.timeline.zoom(-0.3);
 }
