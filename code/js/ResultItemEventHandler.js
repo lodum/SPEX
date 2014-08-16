@@ -1,11 +1,19 @@
-function ResultItemEventHandler(uri, tao, tio, so){
-this.itemuri = uri;
-this.tableObject = tao;
-this.timeObject = tio;
-this.spaceObject = so;
+function ResultItemEventHandler(uri, tao){
+  this.itemuri = uri;
+  this.tableObject = tao;
+  this.timeObject = null;
+  this.spaceObject = null;
 }
 
 ResultItemEventHandler.prototype.constructor = ResultItemEventHandler;
+
+ResultItemEventHandler.prototype.setSliderItem = function(item) {
+  this.timeObject = item;
+};
+
+ResultItemEventHandler.prototype.setMapItem = function(item) {
+  this.spaceObject = item;
+};
 
 ResultItemEventHandler.prototype.highlight = function(){
 console.log(this.itemuri);
