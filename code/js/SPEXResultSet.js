@@ -153,6 +153,11 @@ for(userVar in relatedVars) {
 						{"start" : new Date(sol[userVar + "_4_2"].value), "end" : new Date(sol[userVar + "_5_2"].value), 'content': sol[userVar + "__label"].value}
 							
 					);
+					/*If the instance is added as an item to the labeltimepairs array, 
+					the item's index in the array is stored next to the instance in the result set.  
+					This is used to later connect the instance's results table row and time slider item.
+					*/
+					sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
 					console.log("OWL Time intervals detected:" + new Date(sol[userVar + "_4_2"].value));
 				}
 				else if(sol[userVar + "_6_1"]){ //_6_1 refers to xsd:gYears 
@@ -161,6 +166,7 @@ for(userVar in relatedVars) {
 						//{"start" : new Date(sol[userVar + "_6_1"].value, 0, 1), 'content': sol[userVar + "__label"].value}
 						
 					);
+					sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
 					console.log("xsd:gYears detected:" + new Date(sol[userVar + "_6_1"].value));
 				}
 			}
