@@ -31,9 +31,6 @@ path.link {
 	cursor: default;
 }
 
-
-
-
 circle {
 	stroke-width: 2px;
 }
@@ -52,4 +49,8 @@ circle {
   text-align: left;
   font-size: smaller;
   z-index: 9997;
+}
+
+.ui-autocomplete {
+	z-index:10000!important;
 }
