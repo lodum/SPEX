@@ -75,6 +75,7 @@ ResultsPane.prototype.display = function(spexresultset){
 					//...do same for map item...
 					if(solution[variableName + '__mapLayerNumber']) {
 						var layers = map.markerGroup.getLayers();
+						console.log("layers" + layers);
 						ev.setMapLayer(layers[layers.length - (solution[variableName + '__mapLayerNumber'] + 1)]);
 						console.log("map layer" + layers[solution[variableName + '__mapLayerNumber']]);
 					}
