@@ -66,18 +66,30 @@ ResultsPane.prototype.display = function(spexresultset){
 					bodyRow.appendChild(bodyCell);
 				} else {
 					var bodyCell = document.createElement('td');
-					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell, "t", "s");
+					
+					//create object to store the cell and (if they exist) its corresponding slider item and map item
+					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
 					if(solution[variableName + '__sliderItemNumber']) {
 						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
 					}
 					//...do same for map item...
+					
+					//build HTML content for the cell
 					bodyCell.innerHTML = buildHTML(solution, variableName);
+					
+					//attach event listener to the cell
 					bodyCell.addEventListener("mouseover", function() {
 						ev.highlight();
 					}, false); 
 					bodyCell.addEventListener("mouseout", function() {
 						ev.dehighlight();
 					}, false); 
+					//attach event listener to correspoding slider item
+					slider.timeline.getItem(solution[variableName + '__sliderItemNumber']).hover(
+						function () { ev.highlight(); }, 
+					  	function () { ev.dehighlight();	}
+					);
+					
 					bodyRow.appendChild(bodyCell);
 				}
 			});
