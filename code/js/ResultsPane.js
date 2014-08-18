@@ -73,7 +73,9 @@ ResultsPane.prototype.display = function(spexresultset){
 						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
 					}
 					//...do same for map item...
-					
+					if(solution[variableName + '__mapLayerNumber']) {
+						ev.setMapLayer(map.markerGroup.getLayer(solution[variableName + '__mapLayerNumber']));
+					}
 					//build HTML content for the cell
 					bodyCell.innerHTML = buildHTML(solution, variableName);
 					
