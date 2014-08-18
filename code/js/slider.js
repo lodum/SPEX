@@ -110,10 +110,6 @@ var slider = new function(){
 
 		links.events.addListener(this.timeline, 'select', onselect);
 		
-		$('#slider').each(function(){
-			console.log("slider element: " + new String($(this)));
-		});
-		
 	}; 
 
 };
