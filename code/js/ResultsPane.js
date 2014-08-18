@@ -73,7 +73,7 @@ ResultsPane.prototype.display = function(spexresultset){
 						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
 					}
 					//...do same for map item...
-					if(solution[variableName + '__mapLayerNumber']) {
+					if(solution[variableName + '__mapLayerNumber'] !== null) {
 						var layers = map.markerGroup.getLayers();
 						console.log("layers" + layers);
 						ev.setMapLayer(layers[layers.length - (solution[variableName + '__mapLayerNumber'] + 1)]);
