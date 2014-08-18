@@ -30,9 +30,6 @@ LabeledQuery.prototype.getSPARQL = function (){
 }
 
 
-
-
-
 /*
  ---
 // distinct classes in the endpoint (very generic)
@@ -1762,7 +1759,13 @@ function Suggester(){
     var classesArray = [];
     //var instancesArray = [];
 //Define endpoint
-	var endpoint = ""; 
+	var oldEndpoint = "";
+	var endpoint = "";
+	this.endpointSame =  (oldEndpoint === endpoint);
+	this.setEndpoint = function(){
+		oldEndpoint = endpoint;
+		endpoint=document.getElementById("endpoint").value;
+	};
 //Define queries
 	var queryPredicates= new LabeledQuery();
 	queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").orderby("?predicate");
@@ -1833,23 +1836,27 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 
 
 	this.init=function(){
-		endpoint=document.getElementById("endpoint").value;
+		console.log("Suggester-init() execution starts");
+		this.setEndpoint();
 		sugEx.executeQuery(queryClasses, endpoint); 
 		sugEx.executeQuery(queryPredicates, endpoint);
 	};
 	
-	this.createDropdownC=function(StringID){
-	  var s = '#' + StringID;
-	  endpoint=document.getElementById("endpoint").value;
-	  $(s).autocomplete({source: classesArray});
+	var createDropdown=function(idString, dropdownArray){
+	  var s = '#' + idString;
+	  this.setEndpoint();
+	  if(!this.endpointSame) this.init();
+	  $(s).autocomplete({source: dropdownArray});
     	
-    };
+    }
+    
+	this.createDropdownC=function(idString){
+		createDropdown(idString,classesArray);
+	}
 	
-    this.createDropdownP=function(StringID){
-	  var s = '#' + StringID;
-	  endpoint=document.getElementById("endpoint").value;
-	  $(s).autocomplete({source: predicateArray});
-    };
+	this.createDropdownC=function(idString){
+		createDropdown(idString,predicateArray);
+	}
 
 	console.timeEnd(timerName);
 }
