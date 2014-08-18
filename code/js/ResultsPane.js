@@ -74,8 +74,9 @@ ResultsPane.prototype.display = function(spexresultset){
 					}
 					//...do same for map item...
 					if(solution[variableName + '__mapLayerNumber']) {
-						ev.setMapLayer(map.markerGroup.getLayer(solution[variableName + '__mapLayerNumber']));
-						console.log("map layer: " + JSON.stringify(map.markerGroup.getLayer(solution[variableName + '__mapLayerNumber'])));
+						//ev.setMapLayer(map.markerGroup.getLayer(solution[variableName + '__mapLayerNumber']));
+						//console.log("map layer: " + JSON.stringify(map.markerGroup.getLayer(solution[variableName + '__mapLayerNumber'])));
+						console.log("map layer: " + JSON.stringify(map.markerGroup.getLayers()));
 					}
 					//build HTML content for the cell
 					bodyCell.innerHTML = buildHTML(solution, variableName);
