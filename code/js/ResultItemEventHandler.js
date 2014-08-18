@@ -23,9 +23,8 @@ ResultItemEventHandler.prototype.highlight = function(){
   if(this.timeObject) {
     slider.timeline.zoom(0.3, this.timeObject.start);
   }
-  console.log(this.spaceObject[1]);
   if(this.spaceObject) {
-    map.LMap.fitBounds(this.spaceObject.getBounds());
+    //map.LMap.fitBounds(this.spaceObject.getBounds());
   }
 }
 
