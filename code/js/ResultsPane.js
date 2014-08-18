@@ -71,7 +71,7 @@ ResultsPane.prototype.display = function(spexresultset){
 					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
 					if(solution[variableName + '__sliderItemNumber'] !== 0 ) {
 						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
-					} elseif(solution[variableName + '__sliderItemNumber'] == 0 ) {
+					}else if(solution[variableName + '__sliderItemNumber'] == 0 ) {
 						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
 					}					//...do same for map item...
 					if(solution[variableName + '__mapLayerNumber'] !== null) {
