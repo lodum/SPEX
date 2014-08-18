@@ -52,7 +52,8 @@ var slider = new function(){
 		function onselect() {
 			var sel = slider.timeline.getSelection();
 			if (sel.length) {
-				if (sel[0].row != undefined) {
+				if (sel[0].row != undefined) {//row refers to position in item array
+					sel[0].style.background = "yellow";
 					var row = sel[0].row;
 				  	console.log("selected item:" + JSON.stringify(slider.timeline.getItem(row)));
 				  	//alert("event selected!");
@@ -93,7 +94,8 @@ var slider = new function(){
 			//console.log("onselect() fired");
 			var sel = slider.timeline.getSelection();
 			if (sel.length) {
-				if (sel[0].row != undefined) {
+				if (sel[0].row != undefined) {//row refers to position in item array
+					sel[0].style.background = "yellow";
 					var row = sel[0].row;
 				  	console.log("selected item: " + JSON.stringify(slider.timeline.getItem(row)));
 				  	//alert("event selected!");
