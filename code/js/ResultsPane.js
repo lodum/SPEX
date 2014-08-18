@@ -75,7 +75,7 @@ ResultsPane.prototype.display = function(spexresultset){
 					//...do same for map item...
 					if(solution[variableName + '__mapLayerNumber']) {
 						var layers = map.markerGroup.getLayers();
-						ev.setMapLayer(layers[solution[variableName + '__mapLayerNumber']]);
+						ev.setMapLayer(layers[solution[variableName + '__mapLayerNumber'] + 1]);
 						console.log("map layer" + layers[solution[variableName + '__mapLayerNumber']]);
 					}
 					//build HTML content for the cell
