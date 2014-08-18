@@ -11,8 +11,8 @@ ResultItemEventHandler.prototype.setSliderItem = function(item) {
   this.timeObject = item;
 };
 
-ResultItemEventHandler.prototype.setMapItem = function(item) {
-  this.spaceObject = item;
+ResultItemEventHandler.prototype.setMapLayer = function(layer) {
+  this.spaceObject = layer;
 };
 
 ResultItemEventHandler.prototype.highlight = function(){
@@ -23,6 +23,9 @@ ResultItemEventHandler.prototype.highlight = function(){
   if(this.timeObject) {
     slider.timeline.zoom(0.3, this.timeObject.start);
   }
+  if(this.spaceObject) {
+    map.LMap.fitBounds(spaceObject.getBounds());
+  }
 }
 
 ResultItemEventHandler.prototype.dehighlight = function(){
@@ -30,5 +33,8 @@ ResultItemEventHandler.prototype.dehighlight = function(){
   this.tableObject.style.background = "";
   if(this.timeObject) {
     slider.timeline.zoom(-0.3, this.timeObject.start);
+  }
+  if(this.spaceObject) {
+    map.LMap.fitBounds(map.markerGroup.getBounds());
   }
 }
