@@ -53,10 +53,9 @@ var slider = new function(){
 			var sel = slider.timeline.getSelection();
 			if (sel.length) {
 				if (sel[0].row != undefined) {//row refers to position in item array
-					console.log("selection[0]: " + JSON.stringify(sel[0]));
 					var row = sel[0].row;
 				  	console.log("selected item:" + JSON.stringify(slider.timeline.getItem(row)));
-				  	//alert("event selected!");
+				  	alert("event selected!");
 				  	/*
 				  	if (getItem(row)!= undefined){
 						var i = getItem(row);
@@ -95,10 +94,9 @@ var slider = new function(){
 			var sel = slider.timeline.getSelection();
 			if (sel.length) {
 				if (sel[0].row != undefined) {//row refers to position in item array
-					console.log("selection[0]: " + JSON.stringify(sel[0]));
 					var row = sel[0].row;
 				  	console.log("selected item: " + JSON.stringify(slider.timeline.getItem(row)));
-				  	//alert("event selected!");
+				  	alert("event selected!");
 				  	/*
 				  	if (getItem(row)!= undefined){
 						var i = getItem(row);
