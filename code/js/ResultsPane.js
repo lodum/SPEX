@@ -85,10 +85,12 @@ ResultsPane.prototype.display = function(spexresultset){
 						ev.dehighlight();
 					}, false); 
 					//attach event listener to correspoding slider item
+					/*
 					slider.timeline.getItem(solution[variableName + '__sliderItemNumber']).hover(
 						function () { ev.highlight(); }, 
 					  	function () { ev.dehighlight();	}
 					);
+					*/
 					
 					bodyRow.appendChild(bodyCell);
 				}
