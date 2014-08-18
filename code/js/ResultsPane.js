@@ -69,7 +69,7 @@ ResultsPane.prototype.display = function(spexresultset){
 					
 					//create object to store the cell and (if they exist) its corresponding slider item and map item
 					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
-					if(solution[variableName + '__sliderItemNumber'] !== null) {
+					if(solution[variableName + '__sliderItemNumber']) {
 						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
 					}
 					//...do same for map item...
