@@ -106,13 +106,13 @@ SPEXResultSet.prototype.getWKT = function() {
 				if(sol[userVar + "_2_1"]) {//_2_1 refers to property "geo:asWKT"
 					//In this case, two additional values are added to array, for use in FilterResults().
 					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + "_2_1"].value,userVar,i]);
-					sol[userVar + "__mapLayerNumber"] = labeltimepairs.length - 1;
+					sol[userVar + "__mapLayerNumber"] = labelWKTpairs.length - 1;
 				} else if(sol[userVar + "_0_0"] && sol[userVar + "_1_0"]) {//if geo:asWKT is not there, construct WKT point literal
 					labelWKTpairs.push(	
 						[sol[userVar + "__label"].value, 
 						"POINT(" + sol[userVar + "_1_0"].value + " " + sol[userVar + "_0_0"].value + ")"] 
 					);
-					sol[userVar + "__mapLayerNumber"] = labeltimepairs.length - 1;
+					sol[userVar + "__mapLayerNumber"] = labelWKTpairs.length - 1;
 				}
 			}
 		}
