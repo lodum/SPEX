@@ -69,10 +69,11 @@ ResultsPane.prototype.display = function(spexresultset){
 					
 					//create object to store the cell and (if they exist) its corresponding slider item and map item
 					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
-					if(solution[variableName + '__sliderItemNumber']) {
+					if(solution[variableName + '__sliderItemNumber'] !== 0 ) {
 						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
-					}
-					//...do same for map item...
+					} elseif(solution[variableName + '__sliderItemNumber'] == 0 ) {
+						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
+					}					//...do same for map item...
 					if(solution[variableName + '__mapLayerNumber'] !== null) {
 						var layers = map.markerGroup.getLayers();
 						ev.setMapLayer(layers[solution[variableName + '__mapLayerNumber']]);
