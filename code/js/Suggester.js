@@ -1759,13 +1759,7 @@ function Suggester(){
     var classesArray = [];
     //var instancesArray = [];
 //Define endpoint
-	var oldEndpoint = "";
 	var endpoint = "";
-	this.endpointSame =  (oldEndpoint === endpoint);
-	this.setEndpoint = function(){
-		oldEndpoint = endpoint;
-		endpoint=document.getElementById("endpoint").value;
-	};
 //Define queries
 	var queryPredicates= new LabeledQuery();
 	queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").orderby("?predicate");
@@ -1836,16 +1830,13 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 
 
 	this.init=function(){
-		console.log("Suggester-init() execution starts");
-		this.setEndpoint();
+		endpoint=document.getElementById("endpoint").value;
 		sugEx.executeQuery(queryClasses, endpoint); 
 		sugEx.executeQuery(queryPredicates, endpoint);
 	};
 	
 	var createDropdown=function(idString, dropdownArray){
 	  var s = '#' + idString;
-	  this.setEndpoint();
-	  if(!this.endpointSame) this.init();
 	  $(s).autocomplete({source: dropdownArray});
     	
     }
