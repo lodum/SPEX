@@ -1838,16 +1838,15 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 	var createDropdown=function(idString, dropdownArray){
 	  var s = '#' + idString;
 	  $(s).autocomplete({source: dropdownArray});
-    	
-    }
+	};
     
 	this.createDropdownC=function(idString){
 		createDropdown(idString,classesArray);
-	}
+	};
 	
 	this.createDropdownC=function(idString){
 		createDropdown(idString,predicateArray);
-	}
+	};
 
 	console.timeEnd(timerName);
 }
