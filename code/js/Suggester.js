@@ -1769,15 +1769,20 @@ function Suggester(){
 	queryClasses.select(["?aClass","?aClass__label"]).distinct().where("?a" , "rdf:type" , "?aClass").orderby("?aClass"); 
 	queryClasses.SPEXvariables=["?aClass"];
 	
-	function queryPredicatesofClass(classname, subject){
+	function queryPredicatesofClass(subjectclass, objectclass){
 		queryPredicates= new LabeledQuery();
-		if (subject == true) {
-		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?subject", "rdf:type" , classname).orderby("?predicate");
-		} else {
-		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?object", "rdf:type" , classname).orderby("?predicate");
-		}
-		queryPredicates.SPEXvariables=["?predicate"];
-		return queryPredicates;
+		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?subject", "rdf:type" , subjectclass).where("?object", "rdf:type" , objectclass).orderby("?predicate");
+		queryPredicates.SPEXvariables=["?predicate"];		
+	}
+	function queryPredicatesofSClass(subjectclass){
+		queryPredicates= new LabeledQuery();
+		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?subject", "rdf:type" , subjectclass).orderby("?predicate");
+		queryPredicates.SPEXvariables=["?predicate"];		
+	}
+	function queryPredicatesofOClass(objectclass){
+		queryPredicates= new LabeledQuery();
+		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?object", "rdf:type" , objectclass).orderby("?predicate");
+		queryPredicates.SPEXvariables=["?predicate"];		
 	}
 	
 /*
@@ -1859,11 +1864,11 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 	};
 	// method which modifies predicate queries to take into account the current source class of the current node in the query pane 
 	
-	this.suggestPredicatesofClass = function(sClassname, subject){
-		console.log("new auto-suggester predicate list for "+ sClassname +" is being generated!");
+	this.suggestPredicatesofClass = function(sClass, oClass){
+		console.log("new auto-suggester predicate list for "+ sClass +" and "+oClass +" is being generated!");
 		endpoint=document.getElementById("endpoint").value;
-		queryPredicatesofClass(sClassname, subject);
-		//console.log(queryPredicates.getSPARQL());
+		if (sClass && oClass){queryPredicatesofClass(sClass, oClass)} else if (sClass) {queryPredicatesofSClass(sClass)} else if (oClass) {queryPredicatesofOClass(oClass)}		
+		console.log(queryPredicates.getSPARQL());
 		predicateArray = [];
 		sugEx.executeQuery(queryPredicates,endpoint);		
 	};

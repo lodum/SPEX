@@ -43,7 +43,8 @@ var queryPane = {
 	node_drag : null,
 
 	//was a selected node updated? (forces suggester to recompute suggested predicate list)
-	nodeupdate : false,
+	nodeupdateIn : false,
+	nodeupdateOut : false,
 	// Initialization
 	init : function() {
 
@@ -343,10 +344,10 @@ var queryPane = {
 				</div>');	
 		document.getElementById('queryS').value = queryPane.selected.label;				
 		//this updates suggester predicates to contain only those predicates that connect to the selected class.
-		if (this.nodeupdate == true && document.getElementById('queryVar').checked && queryPane.selected.label){
-					spex.sug.suggestPredicatesofClass(queryPane.selected.label, true);					
+		if (this.nodeupdateOut == true && document.getElementById('queryVar').checked && queryPane.selected.label){					
+					spex.sug.suggestPredicatesofClass(queryPane.selected.label,  document.getElementById('queryO').value);										
 		}	
-		this.nodeupdate = false	;
+		this.nodeupdateOut = false	;
 		spex.sug.createDropdownP('queryP');
 		spex.sug.createDropdownC('queryO');
 		
@@ -378,10 +379,10 @@ var queryPane = {
 				</div>');
 		document.getElementById('queryO').value = queryPane.selected.label;
 		//this updates suggester predicates to contain only those predicates that connect to the selected class.
-			if (this.nodeupdate == true && document.getElementById('queryVar').checked && queryPane.selected.label){
-					spex.sug.suggestPredicatesofClass(queryPane.selected.label, false);											
+			if (this.nodeupdateIn == true && document.getElementById('queryVar').checked && queryPane.selected.label){
+					spex.sug.suggestPredicatesofClass(document.getElementById('queryS').value, queryPane.selected.label);											
 			}
-			this.nodeupdate = false	;
+			this.nodeupdateIn = false	;
 		spex.sug.createDropdownC('queryS');
 		spex.sug.createDropdownP('queryP');
 		
@@ -474,7 +475,8 @@ var queryPane = {
 			queryPane.selected.label = document.getElementById('queryS').value;
 			queryPane.selected.variable = document.getElementById('queryVar').checked;				
 			queryPane.updateQuery();
-			this.nodeupdate = true;
+			this.nodeupdateOut = true;
+			this.nodeupdateIn = true;
 			this.update();
 		};
 	},
