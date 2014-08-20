@@ -42,7 +42,7 @@ var queryPane = {
 	// Node drag beahavior
 	node_drag : null,
 
-	//was a selected node updated? (forces suggester to recompute suggested predicate list)
+	//was a selected node updated? (forces suggester to recompute suggested predicate lists for in and out directions)
 	nodeupdateIn : false,
 	nodeupdateOut : false,
 	// Initialization
@@ -378,7 +378,7 @@ var queryPane = {
 					<br> \
 				</div>');
 		document.getElementById('queryO').value = queryPane.selected.label;
-		//this updates suggester predicates to contain only those predicates that connect to the selected class.
+		//this updates suggester predicates to contain only those predicates that connect to the selected node class in the chosen direction.
 			if (this.nodeupdateIn == true && document.getElementById('queryVar').checked && queryPane.selected.label){
 					spex.sug.suggestPredicatesofClass(document.getElementById('queryS').value, queryPane.selected.label);											
 			}
