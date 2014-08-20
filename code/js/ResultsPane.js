@@ -49,7 +49,10 @@ ResultsPane.prototype.display = function(spexresultset){
 		var userSelectedVars = spexresultset.getUserSelectedVariables();
 		$.each(userSelectedVars, function(varIndex, variable) { 
 			var headCell = document.createElement('th');
-			headCell.innerHTML = "?" + variable;
+			//display labels instead of variable names if there are labels for them. Otherwise display variable names
+			var varlabel = spex.q.variablelabels[spex.q.SPEXvariables.indexOf("?"+variable)];
+			if (!varlabel || 0 === variable.length) { headCell.innerHTML = "?"+variable} else {headCell.innerHTML = "?"+varlabel;}
+			//console.log("user variable:" + variable + " : " +varlabel);
 			headRow.appendChild(headCell);
 		});
 		tableHead.appendChild(headRow);
