@@ -1830,7 +1830,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 	 
 	var createDropdown=function(idString, dropdownArray){
 	  var s = '#' + idString;
-	  $(s).autocomplete({source: dropdownArray});
+	  $(s).autocomplete({source: dropdownArray,scroll:true});
 	};
     
 	this.createDropdownC=function(idString){
