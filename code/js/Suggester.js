@@ -20,7 +20,7 @@ function LabeledQuery(){
     this._storedQuery = "";
 }
 
-LabeledQuery.prototype= new SPEXQuery();
+LabeledQuery.prototype = new SPEXQuery();
 LabeledQuery.prototype.constructor=LabeledQuery;
 
 
@@ -1827,14 +1827,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 	   	console.log("The number of classes is:  "+classesArray.length);
 	    console.log("The number of predicates is:  "+predicateArray.length); 	   
      };
-
-
-	this.init=function(){
-		endpoint=document.getElementById("endpoint").value;
-		sugEx.executeQuery(queryClasses, endpoint); 
-		sugEx.executeQuery(queryPredicates, endpoint);
-	};
-	
+	 
 	var createDropdown=function(idString, dropdownArray){
 	  var s = '#' + idString;
 	  $(s).autocomplete({source: dropdownArray});
@@ -1844,9 +1837,17 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 		createDropdown(idString,classesArray);
 	};
 	
-	this.createDropdownC=function(idString){
+	this.createDropdownP=function(idString){
 		createDropdown(idString,predicateArray);
 	};
+
+	this.init=function(){
+		endpoint=document.getElementById("endpoint").value;
+		sugEx.executeQuery(queryClasses, endpoint); 
+		sugEx.executeQuery(queryPredicates, endpoint);
+	};
+	
+	
 
 	console.timeEnd(timerName);
 }
