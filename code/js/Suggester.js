@@ -29,7 +29,22 @@ LabeledQuery.prototype.getSPARQL = function (){
 	return this.serialiseQuery();
 }
 
-
+function copyQuery(copy, q){
+	
+	//this saves only the immediate triple patterns from a query (and throughs away all others)
+	
+	for(var i = 0; i < q.patterns.length; i++) {
+      var pat = q.patterns[i];           
+      // remove only optionals
+      if(pat._sort == "triple") {
+		copy.patterns.push(pat);
+		console.log("saved pattern: "+pat.s + " " + pat.p + " " + pat.o + ".");
+	  }
+	}	
+	return q;
+}
+ 
+ 
 /*
  ---
 // distinct classes in the endpoint (very generic)
@@ -1765,7 +1780,7 @@ function Suggester(){
 	queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").orderby("?predicate");
 	queryPredicates.SPEXvariables=["?predicate"];
 	
-	var queryClasses = new LabeledQuery();
+	var queryClasses = new LabeledQuery();	
 	queryClasses.select(["?aClass","?aClass__label"]).distinct().where("?a" , "rdf:type" , "?aClass").orderby("?aClass"); 
 	queryClasses.SPEXvariables=["?aClass"];
 	
@@ -1862,8 +1877,9 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 		sugEx.executeQuery(queryClasses, endpoint); 
 		sugEx.executeQuery(queryPredicates, endpoint);
 	};
-	// method which modifies predicate queries to take into account the current source class of the current node in the query pane 
 	
+	//both of the following methods are called from queryPane menu
+	// method which modifies predicate suggestions to take into account the current source class of the current node in the query pane 	
 	this.suggestPredicatesofClass = function(sClass, oClass){
 		console.log("new auto-suggester predicate list for "+ sClass +" and "+oClass +" is being generated!");
 		endpoint=document.getElementById("endpoint").value;
@@ -1872,7 +1888,21 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 		predicateArray = [];
 		sugEx.executeQuery(queryPredicates,endpoint);		
 	};
-	
+	//this is a general solution for updating class suggestions which takes into account the whole current spex query (does not work yet)
+	this.getSelNodeClassesofCurrentQuery = function () {
+		 if (queryPane.selected.variable) {		 
+			console.log("new auto-suggester class list is being generated!");
+			 var varname = queryPane.getNodeVarName(queryPane.selected);
+			 queryClasses = new LabeledQuery();			 
+			 copyQuery(queryClasses, spex.q);			 
+			 queryClasses.select(["?aclass","?aclass__label"]).distinct().where(varname, "rdf:type", "?aclass").orderby("?aClass");
+			 queryClasses.SPEXvariables=["?aClass"];
+			 console.log(queryClasses.getSPARQL());
+			 endpoint=document.getElementById("endpoint").value;
+			classesArray = [];
+			sugEx.executeQuery(queryClasses, endpoint);
+		 }
+	};
 	
 
 	console.timeEnd(timerName);

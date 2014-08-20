@@ -305,7 +305,7 @@ var queryPane = {
 					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();">Add incoming Link</a>'
 					+ constraintSpLinks + constraintTeLinks +
 				'</div>');
-
+		
 		spex.sug.createDropdownC('queryS');
 		
 		document.getElementById('queryS').value = queryPane.selected.label;
@@ -471,13 +471,15 @@ var queryPane = {
 	// 
 	updateSelected : function() {
 
-		if (this.isNode(queryPane.selected)) {
+		if (this.isNode(queryPane.selected)) {			
 			queryPane.selected.label = document.getElementById('queryS').value;
 			queryPane.selected.variable = document.getElementById('queryVar').checked;				
 			queryPane.updateQuery();
 			this.nodeupdateOut = true;
 			this.nodeupdateIn = true;
 			this.update();
+			//updates the class list of the suggester w.r.t. current query
+			//spex.sug.getSelNodeClassesofCurrentQuery();
 		};
 	},
 
