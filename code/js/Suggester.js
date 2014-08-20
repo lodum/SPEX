@@ -1768,7 +1768,18 @@ function Suggester(){
 	var queryClasses = new LabeledQuery();
 	queryClasses.select(["?aClass","?aClass__label"]).distinct().where("?a" , "rdf:type" , "?aClass").orderby("?aClass"); 
 	queryClasses.SPEXvariables=["?aClass"];
-
+	
+	function queryPredicatesofClass(classname, subject){
+		queryPredicates= new LabeledQuery();
+		if (subject == true) {
+		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?subject", "rdf:type" , classname).orderby("?predicate");
+		} else {
+		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?object", "rdf:type" , classname).orderby("?predicate");
+		}
+		queryPredicates.SPEXvariables=["?predicate"];
+		return queryPredicates;
+	}
+	
 /*
 Blacklist
 excluded prefixes are entered in the table in alphabetical order
@@ -1788,7 +1799,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 	*/
 	function storeColumn(queryResultJson,prefixList,prefixBlacklist,columnName,storageArray){
 		var queryVars = queryResultJson.head.vars;
-		var sols = queryResultJson.results.bindings;
+		var sols = queryResultJson.results.bindings;		
 		if(queryVars.indexOf(columnName) == -1){
 			console.log("Column " + columnName + " does not exist in the results!");
 		}
@@ -1830,7 +1841,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 	 
 	var createDropdown=function(idString, dropdownArray){
 	  var s = '#' + idString;
-	  $(s).autocomplete({source: dropdownArray,scroll:true});
+	  $(s).autocomplete({source: dropdownArray});
 	};
     
 	this.createDropdownC=function(idString){
@@ -1845,6 +1856,16 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 		endpoint=document.getElementById("endpoint").value;
 		sugEx.executeQuery(queryClasses, endpoint); 
 		sugEx.executeQuery(queryPredicates, endpoint);
+	};
+	// method which modifies predicate queries to take into account the current source class of the current node in the query pane 
+	
+	this.suggestPredicatesofClass = function(sClassname, subject){
+		console.log("new auto-suggester predicate list for "+ sClassname +" is being generated!");
+		endpoint=document.getElementById("endpoint").value;
+		queryPredicatesofClass(sClassname, subject);
+		//console.log(queryPredicates.getSPARQL());
+		predicateArray = [];
+		sugEx.executeQuery(queryPredicates,endpoint);		
 	};
 	
 	

@@ -245,6 +245,7 @@ SPEXQuery.prototype.prefix("ma-ont" , "http://www.w3.org/ns/ma-ont#");
 SPEXQuery.prototype.prefix("mads" , "http://www.loc.gov/mads/rdf/v1#");
 */
 SPEXQuery.prototype.prefix("maps", "http://www.geographicknowledge.de/vocab/maps#");
+SPEXQuery.prototype.prefix("phen", "http://www.geographicknowledge.de/vocab/historicmapsphen#");
 /*
 SPEXQuery.prototype.prefix("marl" , "http://www.gsi.dit.upm.es/ontologies/marl/ns#");
 SPEXQuery.prototype.prefix("maso" , "http://securitytoolbox.appspot.com/MASO#");

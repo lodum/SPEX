@@ -42,8 +42,8 @@ var queryPane = {
 	// Node drag beahavior
 	node_drag : null,
 
-	
-
+	//was a selected node updated? (forces suggester to recompute suggested predicate list)
+	nodeupdate : false,
 	// Initialization
 	init : function() {
 
@@ -340,12 +340,17 @@ var queryPane = {
 					</div> \
 					<input type="button" id="queryAdd" onclick="queryPane.addOut()" value="Add"> \
 					<br> \
-				</div>');
-
+				</div>');	
+		document.getElementById('queryS').value = queryPane.selected.label;				
+		//this updates suggester predicates to contain only those predicates that connect to the selected class.
+		if (this.nodeupdate == true && document.getElementById('queryVar').checked && queryPane.selected.label){
+					spex.sug.suggestPredicatesofClass(queryPane.selected.label, true);					
+		}	
+		this.nodeupdate = false	;
 		spex.sug.createDropdownP('queryP');
 		spex.sug.createDropdownC('queryO');
 		
-		document.getElementById('queryS').value = queryPane.selected.label;
+		
 
 		document.getElementById("queryP").focus();
 	},
@@ -371,11 +376,16 @@ var queryPane = {
 					<input type="button" id="queryAdd" onclick="queryPane.addIn()" value="Add"> \
 					<br> \
 				</div>');
-
+		document.getElementById('queryO').value = queryPane.selected.label;
+		//this updates suggester predicates to contain only those predicates that connect to the selected class.
+			if (this.nodeupdate == true && document.getElementById('queryVar').checked && queryPane.selected.label){
+					spex.sug.suggestPredicatesofClass(queryPane.selected.label, false);											
+			}
+			this.nodeupdate = false	;
 		spex.sug.createDropdownC('queryS');
 		spex.sug.createDropdownP('queryP');
 		
-		document.getElementById('queryO').value = queryPane.selected.label;
+		
 
 		document.getElementById("queryS").focus();	
 	},
@@ -429,8 +439,8 @@ var queryPane = {
 		queryPane.nodes.push({id: queryPane.nodes.length, label: document.getElementById('queryO').value,
 			variable: document.getElementById('queryVar').checked, spConstraint: false, teConstraint: false }); //'?'});// variable should be true by default
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
-			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});
-
+			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});			
+	
 		this.update();
 
 		this.force.start();
@@ -444,7 +454,7 @@ var queryPane = {
 			variable: document.getElementById('queryVar').checked, spConstraint: false, teConstraint: false }); //'?'});//
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
 			source: this.nodes[queryPane.nodes.length - 1], target: this.nodes.indexOf(queryPane.selected)});
-
+				
 		this.update();
 
 		this.force.start();
@@ -462,10 +472,9 @@ var queryPane = {
 
 		if (this.isNode(queryPane.selected)) {
 			queryPane.selected.label = document.getElementById('queryS').value;
-			queryPane.selected.variable = document.getElementById('queryVar').checked;
-
+			queryPane.selected.variable = document.getElementById('queryVar').checked;				
 			queryPane.updateQuery();
-
+			this.nodeupdate = true;
 			this.update();
 		};
 	},
@@ -533,7 +542,7 @@ var queryPane = {
 
 			if (node.variable) {
 				if (node.label != '') {
-					spex.q.where(this.getNodeVarName(node), 'a', node.label);
+					spex.q.where(this.getNodeVarName(node), 'a', node.label);					
 				};
 
 				//set variables and their labels for displaying the variable
