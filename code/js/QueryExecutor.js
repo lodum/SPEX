@@ -14,7 +14,7 @@ QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 		alert('Enter an endpoint URI!');
 		return;
 	}
-	document.getElementById("result").innerHTML = "Waiting for results...";
+	$("#result").text("Waiting for results...").css('color', 'red');
 	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, false);
 }
 
@@ -40,6 +40,7 @@ QueryExecutor.prototype.callback = function(str){
   		spacePane.displayGeometry(results);
 		slider.displaytime(results.getTimes());		
 		//Display results in resultspane as table
+		$("#result").text('').css('color', 'black');
   		spex.rp.display(results);
 }
 

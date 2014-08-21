@@ -304,6 +304,7 @@ var queryPane = {
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent"> \
 					<br> \
+					<div id = "warning"></div>\
 					I am looking for <input type="text" id="queryS" value="Person"></input><br> \
 					<form> \
 						<input type="radio" id="queryVar" name="classThing" >&nbsp;Class \
@@ -311,6 +312,7 @@ var queryPane = {
 					</form> \
 					<input type="button" id="queryAdd" onclick="queryPane.updateSelected()" value="Update"><br> \
 					<br> \
+					\
 					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddOut();">Add outgoing Link</a><br> \
 					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();">Add incoming Link</a>'
 					+ constraintSpLinks + constraintTeLinks +
@@ -343,6 +345,7 @@ var queryPane = {
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent"> \
 					<br> \
+					<div id = "warning"></div>\
 					<div class="linkAdd"> \
 						Things that are \
 						<input type="text" id="queryS" value="" disabled></input> \
@@ -379,6 +382,7 @@ var queryPane = {
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent"> \
 					<br> \
+					<div id = "warning"></div>\
 					<div class="linkAdd"> \
 						Things that are \
 						<input type="text" id="queryS" value=""></input> \

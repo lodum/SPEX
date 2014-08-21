@@ -107,8 +107,9 @@ ResultsPane.prototype.display = function(spexresultset){
 			});
 			tableBody.appendChild(bodyRow);
 		});
-		resultsTable.appendChild(tableBody); 
-		document.getElementById('result').innerHTML = "";
+		resultsTable.appendChild(tableBody); 	
+		//$("#result").text('');		
+		//document.getElementById('result').innerHTML = "";
 		document.getElementById('result').appendChild(resultsTable);
 		
 /*

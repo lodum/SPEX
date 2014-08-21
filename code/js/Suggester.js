@@ -1840,7 +1840,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
     sugEx.callback = function(str) {      // Define a callback function to receive the SPARQL JSON result.
 		var jsonObj = eval('(' + str + ')');      // Convert result to JSON
 		jsonObj=new LabelGenerator().label(new SPEXResultSet(jsonObj)).allResults;    //Add labels to results
-		
+		$('#warning').text('').css("color" , "white");
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"aClass",classesArray); //store in classesArray if results correspond to the query for classes
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate",predicateArray); // store in predicateArray if results correspond to the query for predicates
 
@@ -1851,7 +1851,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 	var createDropdown=function(idString, dropdownArray){
 	  var closing = false;
 	  var s = '#' + idString;
-	  $(s).autocomplete({
+	  $(s).autocomplete({	  
 	  source: dropdownArray,	  
 	  minLength: 0	,  
 	  close: function()
@@ -1897,7 +1897,8 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 			 queryPredicates.SPEXvariables=["?predicate"];
 			 //console.log(queryPredicates.getSPARQL());
 			 endpoint=document.getElementById("endpoint").value;
-			predicateArray = [];			 
+			predicateArray = [];
+			$('#warning').text("Please wait for suggestions...").css("color" , "red");			
 			sugEx.executeQuery(queryPredicates, endpoint);		
 	};
 	//method which modifies class suggestions taking into account the current query 
@@ -1911,7 +1912,8 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 			 queryClasses.SPEXvariables=["?aClass"];
 			 //console.log(queryClasses.getSPARQL());
 			 endpoint=document.getElementById("endpoint").value;
-			classesArray = [];			 
+			classesArray = [];	
+			$('#warning').text("Please wait for suggestions...").css("color" , "red");
 			sugEx.executeQuery(queryClasses, endpoint);
 		 }
 	};
