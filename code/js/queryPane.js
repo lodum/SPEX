@@ -44,7 +44,11 @@ var queryPane = {
 	
 	//flag which tells whether user updated query. for updating suggester classes and suggester predicates (respectively)
 	querywasupdatedCL : false,
-	querywasupdatedPR : false,
+	querywasupdatedPRout : false,
+	querywasupdatedPRin : false,
+	nodeselectedCL : null,
+	nodeselectedPRout : null,
+	nodeselectedPRin : null,
 	
 	// Initialization
 	init : function() {
@@ -107,6 +111,9 @@ var queryPane = {
 		this.updateQuery();
 		queryPane.querywasupdatedCL = false;
 		queryPane.querywasupdatedPR = false;
+		queryPane.nodeselectedCL = queryPane.selected;
+		queryPane.nodeselectedPRout = queryPane.selected;
+		queryPane.nodeselectedPRin = queryPane.selected;
 	},
 
 
@@ -309,10 +316,11 @@ var queryPane = {
 					+ constraintSpLinks + constraintTeLinks +
 				'</div>');
 		
-		//updates the class list of the suggester w.r.t. current query and current selected node if query was updated
-		if (queryPane.querywasupdatedCL){
+		//updates the class list of the suggester w.r.t. current query and current selected node if query was updated or new node was selected
+		if (queryPane.querywasupdatedCL || queryPane.selected != queryPane.nodeselectedCL){
 			spex.sug.getSelNodeClassesofCurrentQuery();
 			queryPane.querywasupdatedCL = false;
+			queryPane.nodeselectedCL = queryPane.selected;
 		}
 		spex.sug.createDropdownC('queryS');		
 		
@@ -351,10 +359,11 @@ var queryPane = {
 					<br> \
 				</div>');	
 		document.getElementById('queryS').value = queryPane.selected.label;				
-		//this updates suggester predicates to contain only those predicates that connect to the selected class.
-		if (queryPane.querywasupdatedPR && document.getElementById('queryVar').checked){					
+		//this updates suggester predicate list such that it contains only those predicates that connect to the currently selected variable node.
+		if (document.getElementById('queryVar').checked){	 //(queryPane.querywasupdatedPRout || queryPane.selected != queryPane.nodeselectedPRout)				
 					spex.sug.getSelNodePredicatesofCurrentQuery(queryPane.getNodeVarName(queryPane.selected),"?tonode");	
-					queryPane.querywasupdatedPR = false;
+					queryPane.querywasupdatedPRout = false;
+					queryPane.nodeselectedPRout = queryPane.selected;
 		}			
 		spex.sug.createDropdownP('queryP');		
 		spex.sug.createDropdownC('queryO');
@@ -386,10 +395,11 @@ var queryPane = {
 					<br> \
 				</div>');
 		document.getElementById('queryO').value = queryPane.selected.label;
-		//this updates suggester predicates to contain only those predicates that connect to the selected node class in the chosen direction.
-			if (queryPane.querywasupdatedPR &&  document.getElementById('queryVar').checked){
+		//this updates suggester predicate list such that it contains only those predicates that connect to the currently selected variable node.
+			if ( document.getElementById('queryVar').checked){ //(queryPane.querywasupdatedPRin || queryPane.selected != queryPane.nodeselectedPRin) && 
 					spex.sug.getSelNodePredicatesofCurrentQuery("?fromnode",queryPane.getNodeVarName(queryPane.selected));	
-					queryPane.querywasupdatedPR = false;
+					queryPane.querywasupdatedPRin = false;
+					queryPane.nodeselectedPRin = queryPane.selected;
 			}			
 		spex.sug.createDropdownC('queryS');
 		spex.sug.createDropdownP('queryP');		
