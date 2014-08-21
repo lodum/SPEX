@@ -1905,7 +1905,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 			 var varname = queryPane.getNodeVarName(queryPane.selected);
 			 queryClasses = new LabeledQuery();			 
 			 copyQuery(queryClasses, spex.q);			 
-			 queryClasses.select(["?aclass","?aclass__label"]).distinct().where(varname, "rdf:type", "?aclass").orderby("?aClass");
+			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname, "rdf:type", "?aClass").orderby("?aClass");
 			 queryClasses.SPEXvariables=["?aClass"];
 			 console.log(queryClasses.getSPARQL());
 			 endpoint=document.getElementById("endpoint").value;

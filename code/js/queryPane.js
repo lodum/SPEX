@@ -42,9 +42,7 @@ var queryPane = {
 	// Node drag beahavior
 	node_drag : null,
 
-	//was a selected node updated? (forces suggester to recompute suggested predicate lists for in and out directions)
-	nodeupdateIn : false,
-	nodeupdateOut : false,
+	
 	// Initialization
 	init : function() {
 
@@ -346,8 +344,7 @@ var queryPane = {
 		//this updates suggester predicates to contain only those predicates that connect to the selected class.
 		if (document.getElementById('queryVar').checked){					
 					spex.sug.suggestPredicatesofClass(queryPane.selected.label,  document.getElementById('queryO').value);										
-		}	
-		//this.nodeupdateOut = false	;
+		}			
 		spex.sug.createDropdownP('queryP');
 		spex.sug.createDropdownC('queryO');
 		
@@ -381,8 +378,7 @@ var queryPane = {
 		//this updates suggester predicates to contain only those predicates that connect to the selected node class in the chosen direction.
 			if ( document.getElementById('queryVar').checked){
 					spex.sug.suggestPredicatesofClass(document.getElementById('queryS').value, queryPane.selected.label);											
-			}
-			//this.nodeupdateIn = false	;
+			}			
 		spex.sug.createDropdownC('queryS');
 		spex.sug.createDropdownP('queryP');
 		
@@ -474,12 +470,10 @@ var queryPane = {
 		if (this.isNode(queryPane.selected)) {			
 			queryPane.selected.label = document.getElementById('queryS').value;
 			queryPane.selected.variable = document.getElementById('queryVar').checked;				
-			queryPane.updateQuery();
-			this.nodeupdateOut = true;
-			this.nodeupdateIn = true;
+			queryPane.updateQuery();			
 			this.update();
 			//updates the class list of the suggester w.r.t. current query
-			//spex.sug.getSelNodeClassesofCurrentQuery();
+			spex.sug.getSelNodeClassesofCurrentQuery();
 		};
 	},
 
