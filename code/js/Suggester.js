@@ -29,16 +29,14 @@ LabeledQuery.prototype.getSPARQL = function (){
 	return this.serialiseQuery();
 }
 
-function copyQuery(copy, q){
-	
-	//this saves only the immediate triple patterns from a query (and throughs away all others)
-	
+function copyQuery(copy, q){	
+	//this saves only the immediate triple patterns from a query (and throws away all other things). This is needed to project the current spex query into the suggester query.
 	for(var i = 0; i < q.patterns.length; i++) {
       var pat = q.patterns[i];           
       // remove only optionals
       if(pat._sort == "triple") {
 		copy.patterns.push(pat);
-		console.log("saved pattern: "+pat.s + " " + pat.p + " " + pat.o + ".");
+		//console.log("saved pattern: "+pat.s + " " + pat.p + " " + pat.o + ".");
 	  }
 	}	
 	return q;
@@ -1788,22 +1786,7 @@ function Suggester(){
 	queryClasses = new LabeledQuery();	
 	queryClasses.select(["?aClass","?aClass__label"]).distinct().where("?a" , "rdf:type" , "?aClass").orderby("?aClass"); 
 	queryClasses.SPEXvariables=["?aClass"];
-	}	
-	function queryPredicatesofClass(subjectclass, objectclass){
-		queryPredicates= new LabeledQuery();
-		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?subject", "rdf:type" , subjectclass).where("?object", "rdf:type" , objectclass).orderby("?predicate");
-		queryPredicates.SPEXvariables=["?predicate"];		
-	}
-	function queryPredicatesofSClass(subjectclass){
-		queryPredicates= new LabeledQuery();
-		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?subject", "rdf:type" , subjectclass).orderby("?predicate");
-		queryPredicates.SPEXvariables=["?predicate"];		
-	}
-	function queryPredicatesofOClass(objectclass){
-		queryPredicates= new LabeledQuery();
-		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?object", "rdf:type" , objectclass).orderby("?predicate");
-		queryPredicates.SPEXvariables=["?predicate"];		
-	}
+	}		
 	
 /*
 Blacklist
@@ -1826,7 +1809,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 		var queryVars = queryResultJson.head.vars;
 		var sols = queryResultJson.results.bindings;		
 		if(queryVars.indexOf(columnName) == -1){
-			console.log("Column " + columnName + " does not exist in the results!");
+			//console.log("Column " + columnName + " does not exist in the results!");
 		}
 		else{
 			
@@ -1861,8 +1844,8 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"aClass",classesArray); //store in classesArray if results correspond to the query for classes
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate",predicateArray); // store in predicateArray if results correspond to the query for predicates
 
-	   	console.log("The number of classes is:  "+classesArray.length);
-	    console.log("The number of predicates is:  "+predicateArray.length); 	   
+	   	console.log("The number of suggester classes is:  "+classesArray.length);
+	    console.log("The number of suggester predicates is:  "+predicateArray.length); 	   
      };
 	 
 	var createDropdown=function(idString, dropdownArray){
@@ -1880,25 +1863,28 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 
 	this.init=function(){
 		endpoint=document.getElementById("endpoint").value;
-		console.log(queryClasses.getSPARQL());
-		console.log(queryPredicates.getSPARQL());
+		//console.log(queryClasses.getSPARQL());
+		//console.log(queryPredicates.getSPARQL());
 		queryforPredicates();
 		queryforClasses();
 		sugEx.executeQuery(queryClasses, endpoint); 
 		sugEx.executeQuery(queryPredicates, endpoint);
 	};
 	
-	//both of the following methods are called from queryPane menu
-	// method which modifies predicate suggestions to take into account the current source class of the current node in the query pane 	
-	this.suggestPredicatesofClass = function(sClass, oClass){
-		console.log("new auto-suggester predicate list for "+ sClass +" and "+oClass +" is being generated!");
-		endpoint=document.getElementById("endpoint").value;
-		if (sClass && oClass){queryPredicatesofClass(sClass, oClass)} else if (sClass) {queryPredicatesofSClass(sClass)} else if (oClass) {queryPredicatesofOClass(oClass)} else {queryforPredicates()}		
-		console.log(queryPredicates.getSPARQL());	
-		predicateArray = [];		
-		sugEx.executeQuery(queryPredicates,endpoint);		
+	//both of the following methods are called from queryPane menu in order to update suggester lists
+	// method which modifies predicate suggestions taking into account the current query	
+	this.getSelNodePredicatesofCurrentQuery = function(fromnodevariable, tonodevariable){
+		console.log("new auto-suggester predicate list is being generated!");			 
+			 queryPredicates = new LabeledQuery();			 
+			 copyQuery(queryPredicates, spex.q);			 
+			 queryPredicates.select(["?predicate","?predicate__label"]).distinct().where(fromnodevariable , "?predicate" , tonodevariable).orderby("?predicate");
+			 queryPredicates.SPEXvariables=["?predicate"];
+			 //console.log(queryPredicates.getSPARQL());
+			 endpoint=document.getElementById("endpoint").value;
+			predicateArray = [];			 
+			sugEx.executeQuery(queryPredicates, endpoint);		
 	};
-	//this is a general solution for updating class suggestions which takes into account the whole current spex query (does not work yet)
+	//method which modifies class suggestions taking into account the current query 
 	this.getSelNodeClassesofCurrentQuery = function () {
 		 if (queryPane.selected.variable) {		 
 			console.log("new auto-suggester class list is being generated!");
@@ -1907,7 +1893,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 			 copyQuery(queryClasses, spex.q);			 
 			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname, "rdf:type", "?aClass").orderby("?aClass");
 			 queryClasses.SPEXvariables=["?aClass"];
-			 console.log(queryClasses.getSPARQL());
+			 //console.log(queryClasses.getSPARQL());
 			 endpoint=document.getElementById("endpoint").value;
 			classesArray = [];			 
 			sugEx.executeQuery(queryClasses, endpoint);

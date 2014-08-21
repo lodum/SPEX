@@ -42,8 +42,9 @@ var queryPane = {
 	// Node drag beahavior
 	node_drag : null,
 	
-	//flag which tells whether user updated query
-	querywasupdated : false,
+	//flag which tells whether user updated query. for updating suggester classes and suggester predicates (respectively)
+	querywasupdatedCL : false,
+	querywasupdatedPR : false,
 	
 	// Initialization
 	init : function() {
@@ -104,6 +105,8 @@ var queryPane = {
 
 		this.update();
 		this.updateQuery();
+		queryPane.querywasupdatedCL = false;
+		queryPane.querywasupdatedPR = false;
 	},
 
 
@@ -307,9 +310,9 @@ var queryPane = {
 				'</div>');
 		
 		//updates the class list of the suggester w.r.t. current query and current selected node if query was updated
-		if (queryPane.querywasupdated){
-		spex.sug.getSelNodeClassesofCurrentQuery();
-		queryPane.querywasupdated = false;
+		if (queryPane.querywasupdatedCL){
+			spex.sug.getSelNodeClassesofCurrentQuery();
+			queryPane.querywasupdatedCL = false;
 		}
 		spex.sug.createDropdownC('queryS');
 		
@@ -349,8 +352,9 @@ var queryPane = {
 				</div>');	
 		document.getElementById('queryS').value = queryPane.selected.label;				
 		//this updates suggester predicates to contain only those predicates that connect to the selected class.
-		if (document.getElementById('queryVar').checked){					
-					spex.sug.suggestPredicatesofClass(queryPane.selected.label,  document.getElementById('queryO').value);										
+		if (queryPane.querywasupdatedPR && document.getElementById('queryVar').checked){					
+					spex.sug.getSelNodePredicatesofCurrentQuery(queryPane.getNodeVarName(queryPane.selected),"?tonode");	
+					queryPane.querywasupdatedPR = false;
 		}			
 		spex.sug.createDropdownP('queryP');
 		spex.sug.createDropdownC('queryO');
@@ -383,8 +387,9 @@ var queryPane = {
 				</div>');
 		document.getElementById('queryO').value = queryPane.selected.label;
 		//this updates suggester predicates to contain only those predicates that connect to the selected node class in the chosen direction.
-			if ( document.getElementById('queryVar').checked){
-					spex.sug.suggestPredicatesofClass(document.getElementById('queryS').value, queryPane.selected.label);											
+			if (queryPane.querywasupdatedPR &&  document.getElementById('queryVar').checked){
+					spex.sug.getSelNodePredicatesofCurrentQuery("?fromnode",queryPane.getNodeVarName(queryPane.selected));	
+					queryPane.querywasupdatedPR = false;
 			}			
 		spex.sug.createDropdownC('queryS');
 		spex.sug.createDropdownP('queryP');
@@ -535,7 +540,8 @@ var queryPane = {
 		spex.q = new SPEXQuery();
 
 		this.parseQuery();
-		queryPane.querywasupdated = true;	
+		queryPane.querywasupdatedCL = true;	
+		queryPane.querywasupdatedPR = true;	
 		//document.getElementById("query").innerHTML = spex.q.getSPARQL();
 		spex.ex.executeQuery(spex.q,document.getElementById("endpoint").value); 
 	},
