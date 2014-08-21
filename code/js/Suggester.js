@@ -1824,7 +1824,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 			console.log("Column " + columnName + " does not exist in the results!");
 		}
 		else{
-			storageArray = [];
+			
 			for( var i = 0; i < sols.length; i++){
 				var currentElement = sols[i][columnName].value; //Get the current element
 				//console.log("Current value of" + columnName + ": " + currentElement);
@@ -1875,6 +1875,8 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 
 	this.init=function(){
 		endpoint=document.getElementById("endpoint").value;
+		console.log(queryClasses.getSPARQL());
+		console.log(queryPredicates.getSPARQL());
 		sugEx.executeQuery(queryClasses, endpoint); 
 		sugEx.executeQuery(queryPredicates, endpoint);
 	};
@@ -1885,7 +1887,8 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 		console.log("new auto-suggester predicate list for "+ sClass +" and "+oClass +" is being generated!");
 		endpoint=document.getElementById("endpoint").value;
 		if (sClass && oClass){queryPredicatesofClass(sClass, oClass)} else if (sClass) {queryPredicatesofSClass(sClass)} else if (oClass) {queryPredicatesofOClass(oClass)}		
-		console.log(queryPredicates.getSPARQL());		
+		console.log(queryPredicates.getSPARQL());	
+		predicateArray = [];		
 		sugEx.executeQuery(queryPredicates,endpoint);		
 	};
 	//this is a general solution for updating class suggestions which takes into account the whole current spex query (does not work yet)
