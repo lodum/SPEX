@@ -314,7 +314,7 @@ var queryPane = {
 			spex.sug.getSelNodeClassesofCurrentQuery();
 			queryPane.querywasupdatedCL = false;
 		}
-		spex.sug.createDropdownC('queryS');
+		spex.sug.createDropdownC('queryS');		
 		
 		document.getElementById('queryS').value = queryPane.selected.label;
 		document.getElementById('queryVar').checked = queryPane.selected.variable;
@@ -356,7 +356,7 @@ var queryPane = {
 					spex.sug.getSelNodePredicatesofCurrentQuery(queryPane.getNodeVarName(queryPane.selected),"?tonode");	
 					queryPane.querywasupdatedPR = false;
 		}			
-		spex.sug.createDropdownP('queryP');
+		spex.sug.createDropdownP('queryP');		
 		spex.sug.createDropdownC('queryO');
 		
 		
@@ -392,7 +392,7 @@ var queryPane = {
 					queryPane.querywasupdatedPR = false;
 			}			
 		spex.sug.createDropdownC('queryS');
-		spex.sug.createDropdownP('queryP');
+		spex.sug.createDropdownP('queryP');		
 		
 		
 

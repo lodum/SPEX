@@ -1849,8 +1849,24 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
      };
 	 
 	var createDropdown=function(idString, dropdownArray){
+	  var closing = false;
 	  var s = '#' + idString;
-	  $(s).autocomplete({source: dropdownArray});
+	  $(s).autocomplete({
+	  source: dropdownArray,	  
+	  minLength: 0	,  
+	  close: function()
+		{
+			// avoid double-pop-up issue
+			closing = true;
+			setTimeout(function() { closing = false; }, 300);
+		}
+	  }) //this turns on the suggesterlist already on focus (without the user having to type anything)
+	  .focus(function(){            
+            if (!closing)
+			$(this).autocomplete("search");
+		})
+		;
+	
 	};
     
 	this.createDropdownC=function(idString){
