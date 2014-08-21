@@ -344,10 +344,10 @@ var queryPane = {
 				</div>');	
 		document.getElementById('queryS').value = queryPane.selected.label;				
 		//this updates suggester predicates to contain only those predicates that connect to the selected class.
-		if (this.nodeupdateOut == true && document.getElementById('queryVar').checked && queryPane.selected.label){					
+		if (document.getElementById('queryVar').checked){					
 					spex.sug.suggestPredicatesofClass(queryPane.selected.label,  document.getElementById('queryO').value);										
 		}	
-		this.nodeupdateOut = false	;
+		//this.nodeupdateOut = false	;
 		spex.sug.createDropdownP('queryP');
 		spex.sug.createDropdownC('queryO');
 		
@@ -379,10 +379,10 @@ var queryPane = {
 				</div>');
 		document.getElementById('queryO').value = queryPane.selected.label;
 		//this updates suggester predicates to contain only those predicates that connect to the selected node class in the chosen direction.
-			if (this.nodeupdateIn == true && document.getElementById('queryVar').checked && queryPane.selected.label){
+			if ( document.getElementById('queryVar').checked){
 					spex.sug.suggestPredicatesofClass(document.getElementById('queryS').value, queryPane.selected.label);											
 			}
-			this.nodeupdateIn = false	;
+			//this.nodeupdateIn = false	;
 		spex.sug.createDropdownC('queryS');
 		spex.sug.createDropdownP('queryP');
 		

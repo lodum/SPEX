@@ -1776,14 +1776,19 @@ function Suggester(){
 //Define endpoint
 	var endpoint = "";
 //Define queries
-	var queryPredicates= new LabeledQuery();
+	var queryPredicates = new LabeledQuery();
+	var queryClasses = new LabeledQuery();
+	
+	function queryforPredicates() {
+	queryPredicates = new LabeledQuery();
 	queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").orderby("?predicate");
 	queryPredicates.SPEXvariables=["?predicate"];
-	
-	var queryClasses = new LabeledQuery();	
+	}
+	function queryforClasses() {
+	queryClasses = new LabeledQuery();	
 	queryClasses.select(["?aClass","?aClass__label"]).distinct().where("?a" , "rdf:type" , "?aClass").orderby("?aClass"); 
 	queryClasses.SPEXvariables=["?aClass"];
-	
+	}	
 	function queryPredicatesofClass(subjectclass, objectclass){
 		queryPredicates= new LabeledQuery();
 		queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").where("?subject", "rdf:type" , subjectclass).where("?object", "rdf:type" , objectclass).orderby("?predicate");
@@ -1877,6 +1882,8 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 		endpoint=document.getElementById("endpoint").value;
 		console.log(queryClasses.getSPARQL());
 		console.log(queryPredicates.getSPARQL());
+		queryforPredicates();
+		queryforClasses();
 		sugEx.executeQuery(queryClasses, endpoint); 
 		sugEx.executeQuery(queryPredicates, endpoint);
 	};
@@ -1886,7 +1893,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 	this.suggestPredicatesofClass = function(sClass, oClass){
 		console.log("new auto-suggester predicate list for "+ sClass +" and "+oClass +" is being generated!");
 		endpoint=document.getElementById("endpoint").value;
-		if (sClass && oClass){queryPredicatesofClass(sClass, oClass)} else if (sClass) {queryPredicatesofSClass(sClass)} else if (oClass) {queryPredicatesofOClass(oClass)}		
+		if (sClass && oClass){queryPredicatesofClass(sClass, oClass)} else if (sClass) {queryPredicatesofSClass(sClass)} else if (oClass) {queryPredicatesofOClass(oClass)} else {queryforPredicates()}		
 		console.log(queryPredicates.getSPARQL());	
 		predicateArray = [];		
 		sugEx.executeQuery(queryPredicates,endpoint);		
@@ -1901,7 +1908,8 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 			 queryClasses.select(["?aclass","?aclass__label"]).distinct().where(varname, "rdf:type", "?aclass").orderby("?aClass");
 			 queryClasses.SPEXvariables=["?aClass"];
 			 console.log(queryClasses.getSPARQL());
-			 endpoint=document.getElementById("endpoint").value;			
+			 endpoint=document.getElementById("endpoint").value;
+			classesArray = [];			 
 			sugEx.executeQuery(queryClasses, endpoint);
 		 }
 	};
