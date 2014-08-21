@@ -1776,7 +1776,7 @@ function Suggester(){
 //Define queries
 	var queryPredicates = new LabeledQuery();
 	var queryClasses = new LabeledQuery();
-	
+/*	NOt needed becaus query needs to be done only on selection of some node
 	function queryforPredicates() {
 	queryPredicates = new LabeledQuery();
 	queryPredicates.select(["?predicate","?predicate__label"]).distinct().where("?subject" , "?predicate" , "?object").orderby("?predicate");
@@ -1787,7 +1787,7 @@ function Suggester(){
 	queryClasses.select(["?aClass","?aClass__label"]).distinct().where("?a" , "rdf:type" , "?aClass").orderby("?aClass"); 
 	queryClasses.SPEXvariables=["?aClass"];
 	}		
-	
+*/	
 /*
 Blacklist
 excluded prefixes are entered in the table in alphabetical order
@@ -1881,10 +1881,10 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 		endpoint=document.getElementById("endpoint").value;
 		//console.log(queryClasses.getSPARQL());
 		//console.log(queryPredicates.getSPARQL());
-		queryforPredicates();
-		queryforClasses();
-		sugEx.executeQuery(queryClasses, endpoint); 
-		sugEx.executeQuery(queryPredicates, endpoint);
+		//queryforPredicates();
+		//queryforClasses();
+		//sugEx.executeQuery(queryClasses, endpoint); 
+		//sugEx.executeQuery(queryPredicates, endpoint);
 	};
 	
 	//both of the following methods are called from queryPane menu in order to update suggester lists
