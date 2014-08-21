@@ -55,7 +55,7 @@ div.timeline-event {
     display: inline-block;
 }
 
-div.timeline-event-selected {
+div.timeline-event-range.ui-widget.timeline-event-selected {
     background-color: #fff785;
     border-color: #ffc200;
     z-index: 999;
