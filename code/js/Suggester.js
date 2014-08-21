@@ -1840,15 +1840,22 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
     sugEx.callback = function(str) {      // Define a callback function to receive the SPARQL JSON result.
 		var jsonObj = eval('(' + str + ')');      // Convert result to JSON
 		jsonObj=new LabelGenerator().label(new SPEXResultSet(jsonObj)).allResults;    //Add labels to results
-		$('#warning').text('').css("color" , "white");
+			
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"aClass",classesArray); //store in classesArray if results correspond to the query for classes
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate",predicateArray); // store in predicateArray if results correspond to the query for predicates
 
 	   	console.log("The number of suggester classes is:  "+classesArray.length);
-	    console.log("The number of suggester predicates is:  "+predicateArray.length); 	   
+	    console.log("The number of suggester predicates is:  "+predicateArray.length); 
+		if (classesArray.length==0 ) {
+			$('#warning').text("no suggestions found!").css("color" , "red");
+		} else {$('#warning').text('').css("color" , "white")};
+		if (predicateArray.length==0 ) {
+			$('#warningpr').text("no suggestions found!").css("color" , "red");
+		}else { $('#warningpr').text('').css("color" , "white")		
+		}			
      };
 	 
-	var createDropdown=function(idString, dropdownArray){
+	var createDropdown=function(idString, dropdownArray){		
 	  var closing = false;
 	  var s = '#' + idString;
 	  $(s).autocomplete({	  
@@ -1898,7 +1905,7 @@ vocabularies referring to spatial and temporal constraints are excluded since sp
 			 //console.log(queryPredicates.getSPARQL());
 			 endpoint=document.getElementById("endpoint").value;
 			predicateArray = [];
-			$('#warning').text("Please wait for suggestions...").css("color" , "red");			
+			$('#warningpr').text("Please wait for suggestions...").css("color" , "red");			
 			sugEx.executeQuery(queryPredicates, endpoint);		
 	};
 	//method which modifies class suggestions taking into account the current query 

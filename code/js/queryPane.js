@@ -345,7 +345,7 @@ var queryPane = {
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent"> \
 					<br> \
-					<div id = "warning"></div>\
+					<div id = "warningpr"></div>\
 					<div class="linkAdd"> \
 						Things that are \
 						<input type="text" id="queryS" value="" disabled></input> \
@@ -382,7 +382,7 @@ var queryPane = {
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent"> \
 					<br> \
-					<div id = "warning"></div>\
+					<div id = "warningpr"></div>\
 					<div class="linkAdd"> \
 						Things that are \
 						<input type="text" id="queryS" value=""></input> \
