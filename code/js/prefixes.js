@@ -73,6 +73,10 @@ var prefixes=
 	"uri": "http://purl.org/linked-data/api/vocab#"
 	},
 	{
+	"prefix":"apps4X",
+	"uri":"http://semweb.mmlab.be/ns/apps4X#"
+	},
+	{
 	"prefix":"arch",
 	"uri": "http://purl.org/archival/vocab/arch#"
 	},
@@ -91,6 +95,14 @@ var prefixes=
 	{
 	"prefix":"basic",
 	"uri": "http://def.seegrid.csiro.au/isotc211/iso19103/2005/basic#"
+	},
+	{
+	"prefix":"bbccms",
+	"uri":"http://www.bbc.co.uk/ontologies/cms/"
+	},
+	{
+	"prefix":"bbccore",
+	"uri":"http://www.bbc.co.uk/ontologies/coreconcepts/"
 	},
 	{
 	"prefix":"bbcprov",
@@ -339,6 +351,10 @@ var prefixes=
 	{
 	"prefix":"dctype",
 	"uri": "http://purl.org/dc/dcmitype/"
+	},
+	{
+	"prefix":"decision",
+	"uri":"https://decision-ontology.googlecode.com/svn/trunk/decision.owl#"
 	},
 	{
 	"prefix":"deo",
@@ -698,7 +714,7 @@ var prefixes=
 	},
 	{
 	"prefix":"lemon",
-	"uri": "http://www.monnet-project.eu/lemon#"
+	"uri": "http://lemon-model.net/lemon#"
 	},
 	{
 	"prefix":"lexinfo",
@@ -858,15 +874,15 @@ var prefixes=
 	},
 	{
 	"prefix":"nao",
-	"uri": "http://www.semanticdesktop.org/ontologies/2007/08/15/nao#"
+	"uri": "http://www.semanticdesktop.org/ontologies/2007/08/15/nao/#"
 	},
 	{
 	"prefix":"ncal",
-	"uri": "http://www.semanticdesktop.org/ontologies/2007/04/02/ncal#"
+	"uri": "http://www.semanticdesktop.org/ontologies/2007/04/02/ncal/#"
 	},
 	{
 	"prefix":"nco",
-	"uri": "http://www.semanticdesktop.org/ontologies/2007/03/22/nco#"
+	"uri": "http://www.semanticdesktop.org/ontologies/2007/03/22/nco/#"
 	},
 	{
 	"prefix":"nfo",
@@ -919,6 +935,9 @@ var prefixes=
 	{
 	"prefix":"odapp",
 	"uri": "http://vocab.deri.ie/odapp#"
+	},
+	{"prefix":"odapps",
+	"uri":"http://semweb.mmlab.be/ns/odapps#"
 	},
 	{
 	"prefix":"odpart",
@@ -1093,6 +1112,10 @@ var prefixes=
 	"uri": "http://www.ontotext.com/proton/protonext#"
 	},
 	{
+	"prefix":"phdd",
+	"uri":"http://rdf-vocabulary.ddialliance.org/phdd#"
+	},
+	{
 	"prefix":"phen",
 	"uri":	"http://www.geographicknowledge.de/vocab/historicmapsphen#"
 	},
@@ -1255,6 +1278,10 @@ var prefixes=
 	{
 	"prefix":"rdf",
 	"uri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	},
+	{
+	"prefix":"rdfa",
+	"uri":"http://www.w3.org/ns/rdfa#"
 	},
 	{
 	"prefix":"rdfg",
@@ -1738,7 +1765,7 @@ var prefixes=
 	},
 	{
 	"prefix":"xkos",
-	"uri": "http://purl.org/linked-data/xkos#"
+	"uri": "http://rdf-vocabulary.ddialliance.org/xkos#"
 	},
 	{
 	"prefix":"xsd",
