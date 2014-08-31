@@ -92,21 +92,17 @@ function Suggester(){
 	queryClasses.SPEXvariables=["?aClass"];
 	}		
 */	
-/*
-Blacklist
-excluded prefixes are entered in the table in alphabetical order
-vocabularies referring to spatial and temporal constraints are excluded since spatial and temporal constraints will be provided through the map and the time slider
-*/
-	var excludedPrefixes = [ "geo", "geo-1-0" , "geod", "gsp", "owl","rdf","rdfs", "skos", "ti", "time", "tis", "xsd", "wgs84"];
+
+
 
 	/*
 	 Function which takes a column out of the json of a query-result, inserts prefixes, and stores the values in an array,
 	 after checking that the prefixes are not in the blacklist. If the column asked for doesn't exist in the query-result, nothing is done.
 	 Format:
-	 queryResultJson must be the result of a sparql query
-	 prefixList must be an array of JSON snippets containing "name" (prefix) and "uri" (URI corresponding to prefix)
-	 prefixBlacklist must be an array of unwanted prefixes, contained in prefixList
-	 columnName must be the variabble name without '?'
+	 'queryResultJson' must be the result of a sparql query
+	 'prefixList' must be an array of JSON snippets containing "prefix" and "uri"
+	 'prefixBlacklist' must be an array of unwanted prefixes, contained in prefixList
+	 'columnName' must be the variabble name (without the '?')
 	 TODO: Build in the labels
 	*/
 	function storeColumn(queryResultJson,prefixList,prefixBlacklist,columnName,storageArray){
