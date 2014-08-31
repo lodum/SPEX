@@ -1796,3 +1796,37 @@ function selectPrefixes(pfxArray){
 var pfxSPEX = ["bibo","dbp","dbp-ont","dbp-prop","dc","dct","foaf","geo","maps","phen","rdf","rdfs","time","wgs84","xsd"];
 
 var SPEXPrefixes = selectPrefixes(pfxSPEX);
+
+/*
+Blacklist of prefixes:
+
+Consists of certain vocabularies in the LOV (Linked Open Vocabularies) database.
+Followinc categories of vocabularies (voaf:VocabularySpace) were included in this blacklist:
+lov:WHERE
+lov:WHEN
+lov:WEB
+lov:TAG
+lov:UPMETA
+lov:GEOMETRY
+lov:KOS
+lov:FRBR
+lov:GRAPH
+lov:MISC
+lov:SSDESK
+lov:UPPER
+
+*/
+var excludedPrefixes =
+["acl", "ad", "akts", "algo", "am", "ao", "api", "apps4X", "awol", "bbccms", "bbccore", "cal", "cdm", "cmo", "cnt",
+"cogs", "coll", "conversion", "coun", "crm", "ct", "ctag", "d2rq", "dady", "dcam", "dctype", "decision", "dl", "dr",
+"drm", "dsn", "dso", "dtype", "dul", "dvia", "ends", "ext", "frad", "frbr", "frbre", "fresnel", "g50k", "geo",
+"geo-1-0", "geod", "geof", "geop", "geos", "gf", "gm", "gml", "gn", "grddl", "gso", "gts", "hdo", "hr", "http",
+"identity", "igeo", "infor", "interval", "iol", "is", "itm", "label", "lcy", "ldp", "lemon", "lexinfo", "lgdo","li",
+"lingvo", "lmf", "lmm1", "lmm2", "loc", "locn", "log", "lvont", "marl", "maso", "moat", "mrel", "msm", "muto","nao",
+"ncal", "nco", "nfo", "ngeo", "nie", "nif", "nrl", "ntag", "odapp", "odapps", "odpart", "og", "olo", "om","ontopic",
+"ontosec", "onyx", "osadm", "oslc", "osr", "osspr", "ostop", "ov", "owl", "pext", "phdd", "pkm", "place","pni", "pnt",
+"postcode", "ppo", "pr", "prissma", "psys", "ptop", "raul", "rdafrbr", "rdag1", "rdag2", "rdag3","rdarel", "rdarel2",
+"rdarole", "rdf", "rdfa", "rdfg", "rdfs", "rr", "rss", "s4ac", "sbench", "schema", "scot","scsv","sd", "search",
+"security", "semio", "seq", "sf", "sim", "skos", "skosxl", "snarm", "sp", "spatial", "spcm","spin", "sql", "stac",
+"swp", "swpm", "swrl", "tac", "tag", "te", "thors", "ti", "time", "tipr", "tis", "tl", "tm","tvc", "tzont", "ui",
+"umbel", "uri4uri", "user", "vmm", "wdrs", "wgs84", "wikim", "wl", "xhv", "xkos", "xsd", "zbwext"];
