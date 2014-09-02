@@ -2,6 +2,14 @@
 LabeledQuery() is a SPEXQuery with modified getSPARQL()-function
 */
 
+//fast unique method for arrays
+Array.prototype.unique = function() {
+    var o = {}, i, l = this.length, r = [];
+    for(i=0; i<l;i+=1) o[this[i]] = this[i];
+    for(i in o) r.push(o[i]);
+    return r;
+};
+
 function LabeledQuery(){
 // redeclare patterns
     this.queryType = "SELECT";
@@ -74,7 +82,8 @@ function Suggester(){
 //Define Arrays
     var predicateArray = [];
     var classesArray = [];
-    //var instancesArray = [];
+    var instancesArray = [];
+	var instancelabelArray = [];
 
 //Define queries
 	var queryPredicates = new LabeledQuery();
@@ -158,7 +167,8 @@ function Suggester(){
 	  var closing = false;
 	  var s = '#' + idString;
 	  $(s).autocomplete({	  
-	  source: dropdownArray,	  
+	  source: dropdownArray,	 
+	  select: function(event, ui) { if(ui.item.id) {console.log(ui.item.id); document.getElementById('queryS').value = ui.item.id; queryPane.selected.label=ui.item.id}}  ,
 	  minLength: 0	,  
 	  close: function()
 		{
@@ -181,6 +191,10 @@ function Suggester(){
 	
 	this.createDropdownP=function(idString){
 		createDropdown(idString,predicateArray);
+	};
+	
+	this.createDropdownI = function(idString) {
+		createDropdown(idString,instancesArray);
 	};
 
 	this.init=function(){
@@ -219,6 +233,23 @@ function Suggester(){
 			$('#warning').text("Please wait for suggestions...").css("color" , "red");
 			sugEx.executeQuery(queryClasses, spex.queryEndpoint());
 		 }
+	};
+	this.getSelNodeInstances = function (){
+		//if (!queryPane.selected.variable) {	
+			instancesArray = [];
+			instancelabelArray = [];
+			var varname = queryPane.getNodeVarName(queryPane.selected).substr(1);
+			console.log("auto-suggester instance list generated from current results for: "+varname);			
+			$.each(spex.rp.currentresults.getAllResults().results.bindings, function(solutionIndex, solution) {		
+				//console.log(solution);
+				if(solution[varname]){ instancesArray.push({ value: solution[varname+'__label'].value, id: solution[varname].value});}
+				//console.log({id: solution[varname].value, value: solution[varname+'__label'].value});
+			});			
+			//instancesArray = instancesArray.unique();
+			if (instancesArray.length==0 ) {
+			$('#warning').text("No instance suggestions found!").css("color" , "red");
+			} else {$('#warning').text('').css("color" , "white")};
+		//}
 	};
 	
 

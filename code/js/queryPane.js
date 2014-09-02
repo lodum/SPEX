@@ -277,8 +277,24 @@ var queryPane = {
 
 		this.node.exit().remove();
 	},
-
-
+	
+	//These methods prepare classes or instances in the suggester  and set corresponding autocomplete lists
+	checkInstanceSuggestion : function () {		
+		if (document.getElementById('queryNonVar').checked) {
+			spex.sug.getSelNodeInstances();
+			spex.sug.createDropdownI('queryS');
+		}	
+	},
+	checkClassSuggestion : function () {
+		if (document.getElementById('queryVar').checked) {
+			if (queryPane.querywasupdatedCL || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedCL){
+					spex.sug.getSelNodeClassesofCurrentQuery();
+					queryPane.querywasupdatedCL = false;
+					queryPane.nodeselectedCL = queryPane.selected;
+				}
+				spex.sug.createDropdownC('queryS');
+		}
+	},
 
 	// Show context menu
 	showContextMenu : function(menu) {
@@ -306,8 +322,8 @@ var queryPane = {
 					'<br>'+					
 					'I am looking for <input type="text" id="queryS" onkeydown="if(event.keyCode==13) queryPane.updateSelected()" value="Person"></input><br> \
 					<form> \
-						<input type="radio" id="queryVar" name="classThing" >&nbsp;Things of a Class \
-						<input type="radio" id="queryNonVar" name="classThing" >&nbsp;a Name \
+						<input type="radio" id="queryVar" name="classThing" onclick="queryPane.checkClassSuggestion()">&nbsp;Things of a Class \
+						<input type="radio" id="queryNonVar" name="classThing" onclick="queryPane.checkInstanceSuggestion()">&nbsp;a Name \
 					</form> \
 					<div id = "warning"></div> \
 					<br> \
@@ -317,18 +333,18 @@ var queryPane = {
 					+ constraintSpLinks + constraintTeLinks +
 				'</div>');
 		
-		//updates the class list of the suggester w.r.t. current query and current selected node if query was updated or new node was selected		
-			if (queryPane.querywasupdatedCL || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedCL){
-				spex.sug.getSelNodeClassesofCurrentQuery();
-				queryPane.querywasupdatedCL = false;
-				queryPane.nodeselectedCL = queryPane.selected;
-			}
-		spex.sug.createDropdownC('queryS');		
-		
 		document.getElementById('queryS').value = queryPane.selected.label;
 		document.getElementById('queryVar').checked = queryPane.selected.variable;
 		document.getElementById('queryNonVar').checked = !(queryPane.selected.variable);
-
+		
+		if (document.getElementById('queryNonVar').checked) {
+				queryPane.checkInstanceSuggestion();	
+		} 
+		else if (document.getElementById('queryVar').checked) {
+		//updates the class list of the suggester w.r.t. current query and current selected node if query was updated or new node was selected		
+				queryPane.checkClassSuggestion();
+		}			
+			 
 		queryPane.menu.each(function(d) {
 			d3.select(this).style("display", "block")
 			.style("left", d.px + 10 + "px")
@@ -337,12 +353,10 @@ var queryPane = {
 
 		document.getElementById("queryS").focus();	
 	},
+	
+	
 
-	// <input type="text" id="queryO" value=""></input> \
-	//					<form> \
-	//						<input type="radio" id="queryVar" name="classThing" checked>&nbsp;Class \
-	//						<input type="radio" id="queryNonVar" name="classThing" >&nbsp;Thing \
-	//					</form> \	
+
 	showContextMenuAddOut : function() {
 		var x;
 		if (document.getElementById('queryVar').checked) { if ( queryPane.selected.label != ""){x = 'Things that are '} else {x = 'Something '}} else {x = ""};
@@ -407,7 +421,7 @@ var queryPane = {
 		
 		//spex.sug.createDropdownC('queryS');
 		spex.sug.createDropdownP('queryP');		
-		$("queryP").on( "autocompleteselect", function (event, ui) {queryPane.addIn();});
+		//$("queryP").on( "autocompleteselect", function (event, ui) {queryPane.addIn();});
 		
 
 		document.getElementById("queryP").focus();	
