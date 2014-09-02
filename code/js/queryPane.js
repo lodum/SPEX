@@ -319,7 +319,7 @@ var queryPane = {
 				'</div>');
 		
 		//updates the class list of the suggester w.r.t. current query and current selected node if query was updated or new node was selected		
-			if (queryPane.querywasupdatedCL || queryPane.selected != queryPane.nodeselectedCL){
+			if (queryPane.querywasupdatedCL || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedCL){
 				spex.sug.getSelNodeClassesofCurrentQuery();
 				queryPane.querywasupdatedCL = false;
 				queryPane.nodeselectedCL = queryPane.selected;
