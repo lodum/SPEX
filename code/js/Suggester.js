@@ -77,6 +77,10 @@ function Suggester(){
     //var instancesArray = [];
 //Define endpoint
 	var endpoint = "";
+	this.setEndpoint = function(){
+		endpoint=document.getElementById("endpoint").value;
+		console.log("Suggester: Endpoint set to '" + endpoint + "'");
+	};
 //Define queries
 	var queryPredicates = new LabeledQuery();
 	var queryClasses = new LabeledQuery();
@@ -185,7 +189,7 @@ function Suggester(){
 	};
 
 	this.init=function(){
-		endpoint=document.getElementById("endpoint").value;
+		this.setEndpoint();
 		//console.log(queryClasses.getSPARQL());
 		//console.log(queryPredicates.getSPARQL());
 		//queryforPredicates();
@@ -203,7 +207,7 @@ function Suggester(){
 			 queryPredicates.select(["?predicate","?predicate__label"]).distinct().where(fromnodevariable , "?predicate" , tonodevariable).orderby("?predicate");
 			 queryPredicates.SPEXvariables=["?predicate"];
 			 //console.log(queryPredicates.getSPARQL());
-			 endpoint=document.getElementById("endpoint").value;
+			 this.setEndpoint();
 			predicateArray = [];
 			$('#warningpr').text("Please wait for suggestions...").css("color" , "red");			
 			sugEx.executeQuery(queryPredicates, endpoint);		
@@ -218,7 +222,7 @@ function Suggester(){
 			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname, "rdf:type", "?aClass").orderby("?aClass");
 			 queryClasses.SPEXvariables=["?aClass"];
 			 //console.log(queryClasses.getSPARQL());
-			 endpoint=document.getElementById("endpoint").value;
+			 this.setEndpoint();
 			classesArray = [];	
 			$('#warning').text("Please wait for suggestions...").css("color" , "red");
 			sugEx.executeQuery(queryClasses, endpoint);
