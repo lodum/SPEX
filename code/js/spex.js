@@ -8,7 +8,25 @@ var spex = new function(){
 	this.ex = new QueryExecutor();
 	this.sug = new Suggester();
 	// Initialization
+	
+	var endpoint = null;
+	
+	this.queryEndpoint = function(){
+		console.log("Fetching endpoint!!");
+		return document.getElementById("endpoint").value;
+	};
+	
+	this.endpointChanged = function(){
+		if(endpoint == this.queryEndpoint()) return false;
+		else{
+			endpoint = this.queryEndpoint();
+			return true;
+		}
+	};
+	
 	this.init = function() {
+		
+		endpoint = document.getElementById("endpoint").value;
 	
 		$("#showquery").click(this.showquery);
 		queryPane.init();
