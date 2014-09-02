@@ -146,10 +146,10 @@ function Suggester(){
 	   	console.log("The number of suggester classes is:  "+classesArray.length);
 	    console.log("The number of suggester predicates is:  "+predicateArray.length); 
 		if (classesArray.length==0 ) {
-			$('#warning').text("no suggestions found!").css("color" , "red");
+			$('#warning').text("No class suggestions found!").css("color" , "red");
 		} else {$('#warning').text('').css("color" , "white")};
 		if (predicateArray.length==0 ) {
-			$('#warningpr').text("no suggestions found!").css("color" , "red");
+			$('#warningpr').text("No predicate suggestions found!").css("color" , "red");
 		}else { $('#warningpr').text('').css("color" , "white")		
 		}			
      };
