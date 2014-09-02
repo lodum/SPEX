@@ -510,7 +510,7 @@ var queryPane = {
 	updateSelected : function() {
 
 		if (this.isNode(queryPane.selected)) {			
-			queryPane.selected.label = document.getElementById('queryS').value;
+			if (document.getElementById('queryVar').checked) {queryPane.selected.label = document.getElementById('queryS').value};
 			queryPane.selected.variable = document.getElementById('queryVar').checked;				
 			queryPane.updateQuery();			
 			this.update();		
@@ -587,7 +587,7 @@ var queryPane = {
 
 				//set variables and their labels for displaying the variable
 				spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
-			};
+			} ;
 
 			for (var j = 0; j < this.links.length; j++) {
 

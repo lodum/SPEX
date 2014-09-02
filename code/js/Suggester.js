@@ -168,7 +168,7 @@ function Suggester(){
 	  var s = '#' + idString;
 	  $(s).autocomplete({	  
 	  source: dropdownArray,	 
-	  select: function(event, ui) { if(ui.item.id) {console.log(ui.item.id); document.getElementById('queryS').value = ui.item.id; queryPane.selected.label=ui.item.id}}  ,
+	  select: function(event, ui) { if(ui.item.id) {console.log(ui.item.id); queryPane.selected.label=ui.item.id;}}  ,
 	  minLength: 0	,  
 	  close: function()
 		{
