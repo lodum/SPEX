@@ -75,11 +75,7 @@ function Suggester(){
     var predicateArray = [];
     var classesArray = [];
     //var instancesArray = [];
-//Define endpoint
-	function queryEndpoint(){
-		console.log("Suggester: Fetching endpoint!!");
-		return document.getElementById("endpoint").value;
-	}
+
 //Define queries
 	var queryPredicates = new LabeledQuery();
 	var queryClasses = new LabeledQuery();
@@ -207,7 +203,7 @@ function Suggester(){
 			 //console.log(queryPredicates.getSPARQL());
 			predicateArray = [];
 			$('#warningpr').text("Please wait for suggestions...").css("color" , "red");			
-			sugEx.executeQuery(queryPredicates, queryEndpoint());		
+			sugEx.executeQuery(queryPredicates, spex.queryEndpoint());		
 	};
 	//method which modifies class suggestions taking into account the current query 
 	this.getSelNodeClassesofCurrentQuery = function () {
@@ -221,7 +217,7 @@ function Suggester(){
 			 //console.log(queryClasses.getSPARQL());
 			classesArray = [];	
 			$('#warning').text("Please wait for suggestions...").css("color" , "red");
-			sugEx.executeQuery(queryClasses, queryEndpoint());
+			sugEx.executeQuery(queryClasses, spex.queryEndpoint());
 		 }
 	};
 	
