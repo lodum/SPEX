@@ -536,8 +536,7 @@ var queryPane = {
 	// 
 	logSubelements : function(node) {
 
-		console.log("node.label == " + node.label);
-		spex.sug.setEndpoint();
+		console.log(node.label);
 
 		for (var i = 0; i < this.links.length; i++) {
 			if (this.links[i].source == node) {
