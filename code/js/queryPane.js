@@ -514,9 +514,7 @@ var queryPane = {
 			queryPane.selected.label = document.getElementById('queryS').value;			
 			queryPane.selected.variable = document.getElementById('queryVar').checked;				
 			queryPane.updateQuery();			
-			this.update();	
-			//console.log(queryPane.selected.label + " " +queryPane.selected.variable );			
-			console.log(spex.q.getSPARQL());		
+			this.update();					
 		};
 	},
 
@@ -590,7 +588,7 @@ var queryPane = {
 				//set variables and their labels for displaying the variable
 				spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
 			} else 
-			{ //if the node is (the only) constant, then add a statement to the query about that constant which retrieves just that instance					
+			{ //for constants, add a filter expression which allows to handle it as if it was a variable					
 					spex.q.filter(this.getNodeVarName(node)+" = "+node.uri);
 					spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
 			};
@@ -600,11 +598,11 @@ var queryPane = {
 				var link = this.links[j];
 
 				if (link.source == node) {	
-					//non-variable nodes are identified by their URI, not by a variable name or label. This uri is set in the suggester autocomplete selection function.				
-					subject = node.variable ? this.getNodeVarName(node) : this.getNodeVarName(node);					
+					//non-variable nodes are handled by filter expression and treated also as a variable (see above)				
+					subject = this.getNodeVarName(node) ;					
 
 					predicate = link.label;
-					object = link.target.variable ? this.getNodeVarName(link.target) :  this.getNodeVarName(link.target);					
+					object = this.getNodeVarName(link.target);					
 					spex.q.where(subject, predicate, object);					
 
 					//console.log(this.links[i].label);
