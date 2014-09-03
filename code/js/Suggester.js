@@ -38,16 +38,23 @@ LabeledQuery.prototype.getSPARQL = function (){
 }
 
 function copyQuery(copy, q){	
-	//this saves only the immediate triple patterns from a query (and throws away all other things). This is needed to project the current spex query into the suggester query.
+	//this saves only the immediate triple patterns from a query as well as filters (and throws away all other things). This is needed to project the current spex query into the suggester query.
 	for(var i = 0; i < q.patterns.length; i++) {
-      var pat = q.patterns[i];           
+      var pat = q.patterns[i];  	  
       // remove only optionals
       if(pat._sort == "triple") {
 		copy.patterns.push(pat);
 		//console.log("saved pattern: "+pat.s + " " + pat.p + " " + pat.o + ".");
 	  }
+	}
+	for(var i = 0; i < q.filters.length; i++) {
+      var fil = q.filters[i]; 
+     
+      //if(pat._sort == "triple") {
+		copy.filters.push(fil);		
+	  //}
 	}	
-	return q;
+	return copy;
 }
  
  
@@ -168,7 +175,7 @@ function Suggester(){
 	  var s = '#' + idString;
 	  $(s).autocomplete({	  
 	  source: dropdownArray,	 
-	  select: function(event, ui) { if(ui.item.id) {console.log(ui.item.id); queryPane.selected.label=ui.item.id;}}  ,
+	  select: function(event, ui) { if(ui.item.id) {console.log(ui.item.id); queryPane.selected.uri="<"+ui.item.id+">";}}  ,
 	  minLength: 0	,  
 	  close: function()
 		{

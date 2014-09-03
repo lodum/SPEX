@@ -510,11 +510,13 @@ var queryPane = {
 	updateSelected : function() {
 
 		if (this.isNode(queryPane.selected)) {			
-			if (document.getElementById('queryVar').checked) {queryPane.selected.label = document.getElementById('queryS').value};
+			//if (!document.getElementById('queryVar').checked) { //};
+			queryPane.selected.label = document.getElementById('queryS').value;			
 			queryPane.selected.variable = document.getElementById('queryVar').checked;				
 			queryPane.updateQuery();			
-			this.update();		
-					
+			this.update();	
+			//console.log(queryPane.selected.label + " " +queryPane.selected.variable );			
+			console.log(spex.q.getSPARQL());		
 		};
 	},
 
@@ -587,31 +589,30 @@ var queryPane = {
 
 				//set variables and their labels for displaying the variable
 				spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
-			} ;
-
+			} else 
+			{ //if the node is (the only) constant, then add a statement to the query about that constant which retrieves just that instance					
+					spex.q.filter(this.getNodeVarName(node)+" = "+node.uri);
+					spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
+			};
+			
 			for (var j = 0; j < this.links.length; j++) {
 
 				var link = this.links[j];
 
-				if (link.source == node) {
-					subject = node.variable ? this.getNodeVarName(node) : node.label;
-					//this registers user selected variables in query 
-					//if (this.node.variable) {spex.q.SPEXvariable(subject,node.label);}
+				if (link.source == node) {	
+					//non-variable nodes are identified by their URI, not by a variable name or label. This uri is set in the suggester autocomplete selection function.				
+					subject = node.variable ? this.getNodeVarName(node) : this.getNodeVarName(node);					
 
 					predicate = link.label;
-					object = link.target.variable ? this.getNodeVarName(link.target) : link.target.label;
-
-					spex.q.where(subject, predicate, object);
-
-					//this registers user selected variables in query
-					//if (link.target.variable) {spex.q.SPEXvariable(object,link.target.label);}
+					object = link.target.variable ? this.getNodeVarName(link.target) :  this.getNodeVarName(link.target);					
+					spex.q.where(subject, predicate, object);					
 
 					//console.log(this.links[i].label);
 					//console.log(this.links[i].target.label);
 				};
 			};
 		};
-
+	
 	},
 
 	getNodeVarName : function(node) {
