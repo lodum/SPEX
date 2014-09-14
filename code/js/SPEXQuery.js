@@ -106,24 +106,27 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
 
  	for (variable in this.spatialConstraints)  {
 
-		//if the variable is not a WKT variable
-		console.log("SPEXQuery.prototype.expandSpaceFilter(): spatial variable w/o '?': " + variable.substr(1));
-		if(WKTvars.indexOf(variable.substr(1)) === -1) { 
-			this.where(variable, "wgs84:lat", variable + "__lat")
-			.where("wgs84:long", variable + "__long");
+        // Check if there is really a Window object
+        if (this.spatialConstraints[variable] != null && this.spatialConstraints[variable] != undefined) {
+    		//if the variable is not a WKT variable
+    		console.log("SPEXQuery.prototype.expandSpaceFilter(): spatial variable w/o '?': " + variable.substr(1));
+    		if(WKTvars.indexOf(variable.substr(1)) === -1) { 
+    			this.where(variable, "wgs84:lat", variable + "__lat")
+    			.where("wgs84:long", variable + "__long");
 
-			this.filter("(" + variable + "__lat  < " + this.spatialConstraints[variable].upperRightLatitude + 
-				        " && " + variable + "__lat > "  + this.spatialConstraints[variable].lowerLeftLatitude + 
-			            " && " + variable + "__long < " + this.spatialConstraints[variable].upperRightLongitude + 
-			            " && " + variable + "__long > " + this.spatialConstraints[variable].lowerLeftLongitude +
-                        ") || (" + variable + "__lat  < '" + this.spatialConstraints[variable].upperRightLatitude + 
-                        "' && " + variable + "__lat > '"  + this.spatialConstraints[variable].lowerLeftLatitude + 
-                        "' && " + variable + "__long < '" + this.spatialConstraints[variable].upperRightLongitude + 
-                        "' && " + variable + "__long > '" + this.spatialConstraints[variable].lowerLeftLongitude + "')");  		
-		} else {//if it is a WKT variable
-			this.where(variable, "geo:hasGeometry", variable + "__geom")
-			.where(variable + "__geom", "geo:asWKT", variable + "__wkt");
-		}
+    			this.filter("(" + variable + "__lat  < " + this.spatialConstraints[variable].upperRightLatitude + 
+    				        " && " + variable + "__lat > "  + this.spatialConstraints[variable].lowerLeftLatitude + 
+    			            " && " + variable + "__long < " + this.spatialConstraints[variable].upperRightLongitude + 
+    			            " && " + variable + "__long > " + this.spatialConstraints[variable].lowerLeftLongitude +
+                            ") || (" + variable + "__lat  < '" + this.spatialConstraints[variable].upperRightLatitude + 
+                            "' && " + variable + "__lat > '"  + this.spatialConstraints[variable].lowerLeftLatitude + 
+                            "' && " + variable + "__long < '" + this.spatialConstraints[variable].upperRightLongitude + 
+                            "' && " + variable + "__long > '" + this.spatialConstraints[variable].lowerLeftLongitude + "')");  		
+    		} else {//if it is a WKT variable
+    			this.where(variable, "geo:hasGeometry", variable + "__geom")
+    			.where(variable + "__geom", "geo:asWKT", variable + "__wkt");
+    		}
+        }
  	}
  	
  	/*
@@ -149,16 +152,18 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
 SPEXQuery.prototype.expandTimeFilter = function(){
  	for (variable in this.temporalConstraints)  {
 		
-		this.where(variable, "time:hasBeginning", "?INSTANT_BEGINNING");
-		this.where("?INSTANT_BEGINNING", "a", "time:Instant"); 
-		this.where("?INSTANT_BEGINNING", "time:inXSDDateTime", "?timeBeginning");
+        // Check if there is really a Time object
+        if (this.temporalConstraints[variable] != null && this.temporalConstraints[variable] != undefined) {
+    		this.where(variable, "time:hasBeginning", "?INSTANT_BEGINNING");
+    		this.where("?INSTANT_BEGINNING", "a", "time:Instant"); 
+    		this.where("?INSTANT_BEGINNING", "time:inXSDDateTime", "?timeBeginning");
 
-		this.where(variable, "time:hasEnd", "?INSTANT_END");
-		this.where("?INSTANT_END", "a", "time:Instant"); 
-		this.where("?INSTANT_END", "time:inXSDDateTime", "?timeEnd");
+    		this.where(variable, "time:hasEnd", "?INSTANT_END");
+    		this.where("?INSTANT_END", "a", "time:Instant"); 
+    		this.where("?INSTANT_END", "time:inXSDDateTime", "?timeEnd");
 
-		this.filter("?timeBeginning  >= '" + this.temporalConstraints[variable].timeBeginning + "'^^xsd:dateTime && ?timeEnd <= '"  + this.temporalConstraints[variable].timeEnd + "'^^xsd:dateTime");  		
-
+    		this.filter("?timeBeginning  >= '" + this.temporalConstraints[variable].timeBeginning + "'^^xsd:dateTime && ?timeEnd <= '"  + this.temporalConstraints[variable].timeEnd + "'^^xsd:dateTime");  		
+        }
  	}
  	/*
  	for (i=0;i<this.temporalConstraints.length;i++)  {

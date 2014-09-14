@@ -42,9 +42,26 @@ body, html {
   padding: 12px;
 }
 
-#nav_endpoint {
+#nav_right {
   float: right;
   padding: 12px;
+}
+
+#nav_buttons {
+  display: inline;
+  padding-right: 20px;
+}
+
+#nav_buttons img {
+    opacity: 0.6;
+}
+
+#nav_buttons img:hover {
+    opacity: 0.8;
+}
+
+#nav_endpoint {
+  display: inline;
 }
 
 #endpoint {
@@ -113,3 +130,19 @@ body, html {
   background-color: white;
 }
 
+.ui-widget-overlay {
+  background: white !important; 
+  z-index: 10001 !important;
+}
+
+.ui-dialog {
+  z-index: 10002 !important;
+} 
+
+.navDialog .ui-dialog-titlebar {
+  background: #eee;
+}
+
+.ui-autocomplete {
+  z-index:10000!important;
+}

@@ -27,8 +27,21 @@ var spex = new function(){
 	this.init = function() {
 		
 		endpoint = document.getElementById("endpoint").value;
-	
+		
+		$("#helpDialog").dialog( {
+			autoOpen: false,
+			height: ($(window).height() * 0.7),
+			width: 700,
+			reziable: false,
+			modal: true,
+			dialogClass: 'navDialog'
+		});
+
+		$("#img_help").click(this.showhelp);
+		$("#img_help").tooltip();
+
 		$("#showquery").click(this.showquery);
+
 		queryPane.init();
 
 		this.sug.init();
@@ -55,7 +68,11 @@ var spex = new function(){
 	};
 	
 	this.showquery = function() {		 
-		  document.getElementById("query").innerHTML = spex.q.serialiseQuery();		 
+		  document.getElementById("query").innerHTML = spex.q.serialiseQuery();
+	};
+
+	this.showhelp = function() { 
+		  $("#helpDialog").dialog( "open" );
 	};
 
 };

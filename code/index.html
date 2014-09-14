@@ -124,11 +124,17 @@
 				Spatio-temporal content explorer
 			</div>	
 
-			<div id="nav_endpoint">
-				Endpoint:
-				<!--<input type="text" id="endpoint" name="endpoint" value="http://data.uni-muenster.de/sparql"></input>-->
-				<input type="text" id="endpoint" name="endpoint" value="http://data.uni-muenster.de/historicmaps/sparql"></input> 
-				<!--<input type="text" id="endpoint" name="endpoint" value=" http://dbpedia.org/sparql"></input> -->
+			<div id="nav_right">
+				<div id="nav_buttons">
+					<img id="img_help" title="Help" src="img/help.png"></img>
+				</div>
+
+				<div id="nav_endpoint">
+					Endpoint:
+					<!--<input type="text" id="endpoint" name="endpoint" value="http://data.uni-muenster.de/sparql"></input>-->
+					<input type="text" id="endpoint" name="endpoint" value="http://data.uni-muenster.de/historicmaps/sparql"></input> 
+					<!--<input type="text" id="endpoint" name="endpoint" value=" http://dbpedia.org/sparql"></input> -->
+				</div>
 			</div>
 		</div>
 	</div>
@@ -176,11 +182,21 @@
 				<!--<button id="addTime">addTime</button>-->
 				<!--<button id="showresults">show results</button>--><br>
 
-				<textarea id="query" name="query" style="font-size: 8pt; width: 399px; height: 150px;"></textarea> 
+				<textarea id="query" name="query" style="font-size: 8pt; width: 399px; height: 150px;" readonly></textarea> 
 	</div>
 
 	<div id="contextMenu">
 
+	</div>
+
+	<div id="helpDialog" title="SPEX - Help">
+
+		<h3>How to formulate a query as a graph.</h3>
+		<h3>About</h3>
+		<p>
+			Spex is a spatial and temporal content explorer and part of the development of the LODUM and LIFE project.
+			See <a href="http://lodum.de/" target="_blank">lodum.de</a> for more details.
+		</p>
 	</div>
 
 </body>

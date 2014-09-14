@@ -19,13 +19,17 @@ FilterResults.prototype.filterWKT=function(spexresultset){
       for(var i=0; i<wktVars.length; i++){ // Go through the wktVars
         if(result[wktVars[i]]){//if wktVar is there in the result
           var wktString=result[wktVars[i]].value;
-          console.log("FilterResults.prototype.filterWKT(): wktString for solution No." + j + ": " + wktString);
-           //remove if bounding-box is not inside constraint window
-          //if(!boundingBox(wktString).inside(sc[wktVars[i].substring(0,wktVars[i].length - 5)])){
-          console.log("FilterResults.prototype.filterWKT(): corresponding constraint window: " + JSON.stringify(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)]));
-          if(!boundingBox(wktString).inside(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)])){
-            sols.splice(j,1);
-            j--;
+
+          // Check if there is really a Window object
+          if (sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)] != null && sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)] != undefined) {
+            console.log("FilterResults.prototype.filterWKT(): wktString for solution No." + j + ": " + wktString);
+             //remove if bounding-box is not inside constraint window
+            //if(!boundingBox(wktString).inside(sc[wktVars[i].substring(0,wktVars[i].length - 5)])){
+            console.log("FilterResults.prototype.filterWKT(): corresponding constraint window: " + JSON.stringify(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)]));
+            if(!boundingBox(wktString).inside(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)])){
+              sols.splice(j,1);
+              j--;
+            }
           }
         }
       }
