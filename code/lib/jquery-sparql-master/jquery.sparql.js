@@ -198,7 +198,7 @@
       queryString.push("OFFSET " + this.offsetCount);
     }
     
-    return queryString.join(" ");
+    return queryString.join("\n");
   };
   
   Query.prototype.serialiseBlock = function() {
