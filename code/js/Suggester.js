@@ -158,7 +158,21 @@ function Suggester(){
 			
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"aClass",classesArray); //store in classesArray if results correspond to the query for classes
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate",predicateArray); // store in predicateArray if results correspond to the query for predicates
-
+		
+		//Remove label properties from 'predicateArray'
+		//Following code assumes that predicateArray has no duplicates!!
+		var labelProps = spex.q.le.listOfLabelProperties.slice();
+		for (var x=0;x<predicateArray.length;x++){
+			var y = labelProps.indexOf(predicateArray[x]);
+			if(y != -1){
+				predicateArray.splice(x,1);
+				x--;
+				console.log("Label property '" + labelProps[y] + "' was removed from predicate suggester");
+				labelProps.splice(y,1);
+			}
+		}
+		
+		
 	   	console.log("The number of suggester classes is:  "+classesArray.length);
 	    console.log("The number of suggester predicates is:  "+predicateArray.length); 
 		if (classesArray.length==0 ) {
