@@ -320,11 +320,10 @@ var queryPane = {
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent">'+
 					'<br>'+					
-					'I am looking for Things that are: <input type="text" id="queryS" onkeydown="if(event.keyCode==13) queryPane.updateSelected()" value="Person"></input><br> \
+					'I am looking for: <input type="text" id="queryS" onkeydown="if(event.keyCode==13) queryPane.updateSelected()" value="Person"></input><br> \
 					<form> \
-						Things of \
-						<input type="radio" id="queryVar" name="classThing" onclick="queryPane.checkClassSuggestion()">&nbsp;a Class \
-						<input type="radio" id="queryNonVar" name="classThing" onclick="queryPane.checkInstanceSuggestion()">&nbsp;a Name \
+						<input type="radio" id="queryVar" name="classThing" onclick="queryPane.checkClassSuggestion()">&nbsp;Things of a class\
+						<input type="radio" id="queryNonVar" name="classThing" onclick="queryPane.checkInstanceSuggestion()">&nbsp;Things with a name \
 					</form> \
 					<div id = "warning"></div> \
 					<br> \
