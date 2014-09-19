@@ -30,7 +30,7 @@ var queryPane = {
 	pathText : null,
 
 	// Data
-	nodes : [{id: 0, label: '', className: '', variable: true, x: 100, y: 0, spConstraint: false, teConstraint: false}],
+	nodes : [{id: 0, label: '', className: '', variable: true, x: 100, y: 0, spConstraint: false, spConstrSet: false, teConstraint: false, teConstrSet : false}],
 	links : [],
 
 	// Selected node
@@ -302,18 +302,14 @@ var queryPane = {
 		var constraintSpLinks = '';
 		var constraintTeLinks = '';
 
-		if (queryPane.selected.spConstraint) {
-			constraintSpLinks =
-				'<br><br>' + 
-				'<a href="javascript:void(0)" onclick="queryPane.setSpConstraint();">Set Spatial Constraint</a><br>' +
-				'<a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Spatial Constraint</a>';
+		if (queryPane.selected.spConstraint) {			
+				if (queryPane.selected.spConstrSet) {constraintSpLinks = '<br><br> <a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Spatial Filter</a>';} 
+				else {constraintSpLinks = '<br><br><a href="javascript:void(0)" onclick="queryPane.setSpConstraint();">Filter results by map window</a>';};				
 		};
 
 		if (queryPane.selected.teConstraint) {
-			constraintTeLinks =
-				'<br><br>' + 
-				'<a href="javascript:void(0)" onclick="queryPane.setTeConstraint();">Set Temporal Constraint</a><br>' +
-				'<a href="javascript:void(0)" onclick="queryPane.removeTeConstraint();">Remove Temporal Constraint</a>';
+				if (queryPane.selected.teConstrSet) {constraintTeLinks = '<br><a href="javascript:void(0)" onclick="queryPane.removeTeConstraint();">Remove Temporal Filter</a>';} 
+				else {constraintTeLinks = '<br><a href="javascript:void(0)" onclick="queryPane.setTeConstraint();">Filter results by time window</a>';};	
 		};
 
 		d3.select("#contextMenu")
@@ -322,8 +318,8 @@ var queryPane = {
 					'<br>'+					
 					'I am looking for: <input type="text" id="queryS" onkeydown="if(event.keyCode==13) queryPane.updateSelected()" value="Person"></input><br> \
 					<form> \
-						<input type="radio" id="queryVar" name="classThing" onclick="queryPane.checkClassSuggestion()">&nbsp;Things of a class\
-						<input type="radio" id="queryNonVar" name="classThing" onclick="queryPane.checkInstanceSuggestion()">&nbsp;Things with a name \
+						<input type="radio" id="queryVar" name="classThing" onclick="queryPane.checkClassSuggestion()">&nbsp;Things of a kind\
+						<input type="radio" id="queryNonVar" name="classThing" onclick="queryPane.checkInstanceSuggestion()">&nbsp;Particular things \
 					</form> \
 					<div id = "warning"></div> \
 					<br> \
@@ -359,7 +355,8 @@ var queryPane = {
 
 	showContextMenuAddOut : function() {
 		var x;
-		if (document.getElementById('queryVar').checked) { if ( queryPane.selected.label != ""){x = 'Things that are '} else {x = 'Something '}} else {x = ""};
+		var y;
+		if (document.getElementById('queryVar').checked) { if ( queryPane.selected.label != ""){x = 'Things that are '; y = 'Things that are maps ';} else {x = 'Something '; y = x;}} else {x = ""; y = 'Something ';};
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div>' +
 				'<div id="contextMenuContent">' +
@@ -372,6 +369,12 @@ var queryPane = {
 						'<input type="text" id="queryP" onkeydown="if(event.keyCode==13) queryPane.addOut()" value=""></input>'+
 						' to something else'+										
 					'</div>'+	
+						'<br>'+
+					'<div class="linkAdd">' +
+						'For example: <br>'+
+						y+						
+						'<i>created by</i> some person' +
+					'</div>'+
 					'<div id = "warningpr"></div>' +
 					'<br>'+
 				'</div>');	
@@ -654,7 +657,7 @@ var queryPane = {
 	},
 
 	setSpConstraint : function() {
-
+		queryPane.selected.spConstrSet=true;
 		var win = new Window();
 		win.setCorners(
 			map.LMap.getBounds()._northEast.lat,
@@ -671,7 +674,7 @@ var queryPane = {
 	},
 
 	removeSpConstraint : function() {
-
+		queryPane.selected.spConstrSet=false;
 		spex.q.setSpatialConstraint(
 			queryPane.getNodeVarName(queryPane.selected)
 			, null);
@@ -680,7 +683,7 @@ var queryPane = {
 	},
 
 	setTeConstraint : function() {
-
+		queryPane.selected.teConstrSet=true;
 		var temp = new Time();
 		temp.timeBeginning = slider.timeline.getVisibleChartRange().start.xsdDateTime();
 		temp.timeEnd = slider.timeline.getVisibleChartRange().end.xsdDateTime();
@@ -693,7 +696,7 @@ var queryPane = {
 	},
 
 	removeTeConstraint : function() {
-
+		queryPane.selected.teConstrSet=false;
 		spex.q.setTemporalConstraint(
 			queryPane.getNodeVarName(queryPane.selected)
 			, null);
