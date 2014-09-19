@@ -369,13 +369,12 @@ var queryPane = {
 						'<input type="text" id="queryP" onkeydown="if(event.keyCode==13) queryPane.addOut()" value=""></input>'+
 						' to something else'+										
 					'</div>'+	
-						'<br>'+
+						'<div id = "warningpr"></div><br>' +
 					'<div class="linkAdd">' +
 						'For example: <br>'+
 						y+						
 						'<i>created by</i> some person' +
-					'</div>'+
-					'<div id = "warningpr"></div>' +
+					'</div>'+					
 					'<br>'+
 				'</div>');	
 		//document.getElementById('queryS').value = queryPane.selected.label;				
