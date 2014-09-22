@@ -92,7 +92,9 @@ function Suggester(){
     var classesArray = [];
     var instancesArray = [];
 	var instancelabelArray = [];
+	
 	var suggestClasses = false;
+	var queryChain = 0;
 
 //Define queries
 	var queryPredicates = new LabeledQuery();
@@ -133,14 +135,9 @@ function Suggester(){
 		}
 		else{			
 			for( var i = 0; i < sols.length; i++){
-				var currentElement = sols[i][columnName].value; //Get the current element
-				var isClass = false;
-				if (columnName == "aClass") {
-					isClass = (sols[i]["predicate_o"].value == "rdf:type" || sols[i]["predicate_o"].value=="http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
-				}
+				var currentElement = sols[i][columnName].value; //Get the current element				
 				//console.log("Current value of" + columnName + ": " + currentElement);
-				// go through the list of prefixes to check if one of the urls associated with a prefix is substring of the current element
-				if ((columnName == "aClass"&&isClass)||columnName != "aClass") {
+				// go through the list of prefixes to check if one of the urls associated with a prefix is substring of the current element				
 				for (var j = 0; j < prefixList.length; j++ ){
 					if (currentElement.indexOf(prefixList[j].uri) != -1){  // if yes
 						// check if the corresponding prefix is in the blacklist
@@ -154,7 +151,7 @@ function Suggester(){
 						//Add corresponding prefix to prefixList ??
 					}
 				}
-				}
+				
 			}
 		}
 		 
@@ -190,13 +187,31 @@ function Suggester(){
 	   	console.log("The number of suggester classes is:  "+classesArray.length);
 	    console.log("The number of suggester predicates/in is:  "+predicateArrayin.length); 
 		console.log("The number of suggester predicates/out is:  "+predicateArrayout.length); 	
-		spex.sug.setLinkText();	
+		
 		if (spex.sug.suggestClasses==true) {		
 		spex.sug.createDropdownC('queryS');
 		}
 		else {		
 		spex.sug.createDropdownI('queryS');	
+		};
+		//chains the suggester queries
+		if (spex.sug.queryChain == 0) {	
+			spex.sug.setLinkText();
+			spex.sug.queryChain++;
+			spex.sug.getSelNodePredicatesofCurrentQuery();
+			
 		}
+		else if (spex.sug.queryChain == 1) {
+			spex.sug.setLinkText();
+			spex.sug.queryChain++;
+			spex.sug.getSelNodeInPredicatesofCurrentQuery();
+			
+		}
+		else {
+		spex.sug.queryChain= 0;
+		spex.sug.setLinkText();	
+		};
+		
      };
 	 
 	 
@@ -225,8 +240,7 @@ function Suggester(){
 	};
     
 	this.createDropdownC=function(idString){
-		createDropdown(idString,classesArray);
-		//spex.sug.setLinkText();	
+		createDropdown(idString,classesArray);			
 	};
 	
 	this.createDropdownPout=function(idString){
@@ -243,6 +257,7 @@ function Suggester(){
 	};
 
 	this.init=function(){
+		
 		//console.log(queryClasses.getSPARQL());
 		//console.log(queryPredicates.getSPARQL());
 		//queryforPredicates();
@@ -290,17 +305,28 @@ function Suggester(){
 	 };
 	//both of the following methods are called from queryPane menu in order to update suggester lists
 	// method which modifies predicate and class suggestions taking into account the current query	
-	this.getSelNodePredicatesandClassesofCurrentQuery = function(){
-		console.log("new auto-suggester out predicate and class list is being generated!");			 
+	this.getSelNodeClassesofCurrentQuery= function(){
+			console.log("new auto-suggester class list is being generated!");			 
+			 queryClasses = new LabeledQuery();			 
+			 copyQuery(queryClasses, spex.q);	
+			 var varname = queryPane.getNodeVarName(queryPane.selected);			 
+			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname , "rdf:type" , "?aClass");
+			 queryClasses.SPEXvariables=["?aClass"];
+			 console.log("sugpredicatesparql:  "+queryClasses.getSPARQL());			
+			classesArray = [];	
+			$('#warning').text("Please wait for class suggestions being generated...").css("color" , "red");			
+			sugEx.executeQuery(queryClasses, spex.queryEndpoint());		
+	};
+	this.getSelNodePredicatesofCurrentQuery = function(){
+		console.log("new auto-suggester out predicate list is being generated!");			 
 			 queryPredicates = new LabeledQuery();			 
 			 copyQuery(queryPredicates, spex.q);	
 			 var varname = queryPane.getNodeVarName(queryPane.selected);			 
-			 queryPredicates.select(["?predicate_o","?predicate_o__label","?aClass","?aClass__label"]).distinct().where(varname , "?predicate_o" , "?aClass").end();
-			 queryPredicates.SPEXvariables=["?predicate_o","?aClass"];
-			 //console.log("sugpredicatesparql:  "+queryPredicates.getSPARQL());
-			predicateArrayout = [];
-			classesArray = [];	
-			$('#warning').text("Please wait for suggestions being generated...").css("color" , "red");			
+			 queryPredicates.select(["?predicate_o","?predicate_o__label"]).distinct().where(varname , "?predicate_o" , "?tonode");
+			 queryPredicates.SPEXvariables=["?predicate_o"];
+			 console.log("sugpredicatesparql:  "+queryPredicates.getSPARQL());
+			predicateArrayout = [];				
+			$('#addout').click(function (){}).text("Suggestions for outgoing links being generated...");			
 			sugEx.executeQuery(queryPredicates, spex.queryEndpoint());		
 	};
 	//method which modifies class suggestions taking into account the current query 
@@ -308,16 +334,22 @@ function Suggester(){
 		 if (queryPane.selected.variable) {		 
 			console.log("new auto-suggester in prediate list is being generated!");
 			 var varname = queryPane.getNodeVarName(queryPane.selected);
-			 queryClasses = new LabeledQuery();			 
-			 copyQuery(queryClasses, spex.q);			 
-			 queryClasses.select(["?predicate_i","?predicate_i__label"]).distinct().where("?fromnode", "?predicate_i", varname).orderby("?predicate_i");
-			 queryClasses.SPEXvariables=["?predicate_i"];
-			 //console.log(queryClasses.getSPARQL());
+			 queryPredicates = new LabeledQuery();			 
+			 copyQuery(queryPredicates, spex.q);			 
+			 queryPredicates.select(["?predicate_i","?predicate_i__label"]).where("?fromnode", "?predicate_i", varname);
+			 queryPredicates.SPEXvariables=["?predicate_i"];
+			 //console.log(queryPredicates.getSPARQL());
 			predicateArrayin = [];	
-			$('#warning').text("Please wait for suggestions being generated...").css("color" , "red");
-			sugEx.executeQuery(queryClasses, spex.queryEndpoint());
+			$('#addin').click(function (){}).text("Suggestions for ingoing links being generated...");
+			sugEx.executeQuery(queryPredicates, spex.queryEndpoint());
 		 }
 	};
+	this.chainVariableQueries = function () {		
+		this.queryChain =0;
+		console.log("queryChain :"+this.queryChain);
+		this.getSelNodeClassesofCurrentQuery();
+	}
+	
 	this.getSelNodeInstances = function (){
 		//if (!queryPane.selected.variable) {	
 			instancesArray = [];

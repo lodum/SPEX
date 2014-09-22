@@ -284,17 +284,15 @@ var queryPane = {
 			spex.sug.setLinkText();				
 			spex.sug.suggestClasses=false;	
 			spex.sug.createDropdownI('queryS');				
-					
+			//spex.sug.setLinkText();		
 		
 	},
 	checkClassSuggestion : function () {		
 			if (queryPane.querywasupdatedCL || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedCL){
-					spex.sug.getSelNodePredicatesandClassesofCurrentQuery();
-					spex.sug.getSelNodeInPredicatesofCurrentQuery();									
+					spex.sug.chainVariableQueries();									
 					queryPane.querywasupdatedCL = false;
 					queryPane.nodeselectedCL = queryPane.selected;
-				}
-				spex.sug.setLinkText();	
+				}else {spex.sug.setLinkText();}					
 				spex.sug.suggestClasses=true;
 				spex.sug.createDropdownC('queryS');
 								
@@ -330,8 +328,8 @@ var queryPane = {
 					'</form>' +
 					'<div id = "warning"></div>'+
 					'<br>'+					
-					'<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddOut();" id="addout">Add outgoing Link</a><br>'+	
-					'<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();" id="addin">Add incoming Link</a>'
+					'<a href="javascript:void(0)"  id="addout"></a><br>'+	
+					'<a href="javascript:void(0)"  id="addin"></a>'
 					+ constraintSpLinks + constraintTeLinks +
 				'</div>');
 				
@@ -416,7 +414,7 @@ var queryPane = {
 		spex.sug.createDropdownPin('queryP');		
 		//$("queryP").on( "autocompleteselect", function (event, ui) {queryPane.addIn();});
 		
-		$('#numbpr').text(''+spex.sug.predicateArrayin.length+' predicates)');
+		
 		document.getElementById("queryP").focus();	
 	},
 
