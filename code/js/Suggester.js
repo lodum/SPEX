@@ -273,14 +273,14 @@ function Suggester(){
 			$('#addout').click(function (){});
 		}else { 
 			$('#numbpr').text('('+predicateArrayout.length+' predicates)');
-			$('#addout').click=queryPane.showContextMenuAddOut;		
+			$('#addout').click(queryPane.showContextMenuAddOut);		
 			$('#addout').text('Add outgoing Link ('+predicateArrayout.length+')');		
 		};
 		if (predicateArrayin.length==0 ) {			
 			$('#addin').text('');
 			$('#addin').click(function (){});
 		}else { 
-			$('#addin').click=queryPane.showContextMenuAddIn;	
+			$('#addin').click(queryPane.showContextMenuAddIn);	
 			$('#numbpr').text(''+predicateArrayin.length+' prediates)');			
 			$('#addin').text('Add incoming Link ('+predicateArrayin.length+')');		
 		};
