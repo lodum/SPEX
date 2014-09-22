@@ -280,21 +280,28 @@ var queryPane = {
 	
 	//These methods prepare classes or instances in the suggester  and set corresponding autocomplete lists
 	checkInstanceSuggestion : function () {		
-		if (document.getElementById('queryNonVar').checked) {
 			spex.sug.getSelNodeInstances();
-			spex.sug.createDropdownI('queryS');
-		}	
+			spex.sug.setLinkText();				
+			spex.sug.suggestClasses=false;	
+			spex.sug.createDropdownI('queryS');				
+					
+		
 	},
-	checkClassSuggestion : function () {
-		if (document.getElementById('queryVar').checked) {
+	checkClassSuggestion : function () {		
 			if (queryPane.querywasupdatedCL || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedCL){
-					spex.sug.getSelNodeClassesofCurrentQuery();
+					spex.sug.getSelNodePredicatesandClassesofCurrentQuery();
+					spex.sug.getSelNodeInPredicatesofCurrentQuery();									
 					queryPane.querywasupdatedCL = false;
 					queryPane.nodeselectedCL = queryPane.selected;
 				}
+				spex.sug.setLinkText();	
+				spex.sug.suggestClasses=true;
 				spex.sug.createDropdownC('queryS');
-		}
+								
+							
+		
 	},
+	
 
 	// Show context menu
 	showContextMenu : function(menu) {
@@ -316,18 +323,19 @@ var queryPane = {
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent">'+
 					'<br>'+					
-					'I am looking for: <input type="text" id="queryS" onkeydown="if(event.keyCode==13) queryPane.updateSelected()" value="Person"></input><br> \
-					<form> \
-						<input type="radio" id="queryVar" name="classThing" onclick="queryPane.checkClassSuggestion()">&nbsp;Things of a kind\
-						<input type="radio" id="queryNonVar" name="classThing" onclick="queryPane.checkInstanceSuggestion()">&nbsp;Particular things \
-					</form> \
-					<div id = "warning"></div> \
-					<br> \
-					\
-					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddOut();">Add outgoing Link</a><br> \
-					<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();">Add incoming Link</a>'
+					'I am looking for: <input type="text" id="queryS" onkeydown="if(event.keyCode==13) queryPane.updateSelected()" value="Person"></input> <div id="numb"></div>' +
+					'<form>' +
+						'<input type="radio" id="queryVar" name="classThing" onclick="queryPane.checkClassSuggestion()">&nbsp;Things of a kind </input>' +
+						'<input type="radio" id="queryNonVar" name="classThing" onclick="queryPane.checkInstanceSuggestion()">&nbsp;Particular things </input>'+
+					'</form>' +
+					'<div id = "warning"></div>'+
+					'<br>'+					
+					'<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddOut();" id="addout">Add outgoing Link</a><br>'+	
+					'<a href="javascript:void(0)" onclick="queryPane.showContextMenuAddIn();" id="addin">Add incoming Link</a>'
 					+ constraintSpLinks + constraintTeLinks +
 				'</div>');
+				
+		
 		
 		document.getElementById('queryS').value = queryPane.selected.label;
 		document.getElementById('queryVar').checked = queryPane.selected.variable;
@@ -337,10 +345,10 @@ var queryPane = {
 				queryPane.checkInstanceSuggestion();	
 		} 
 		else if (document.getElementById('queryVar').checked) {
-		//updates the class list of the suggester w.r.t. current query and current selected node if query was updated or new node was selected		
+		//updates the class and predicate lists of the suggester w.r.t. current query and current selected node if query was updated or new node was selected		
 				queryPane.checkClassSuggestion();
-		}			
-			 
+		}	
+						 
 		queryPane.menu.each(function(d) {
 			d3.select(this).style("display", "block")
 			.style("left", d.px + 10 + "px")
@@ -362,32 +370,23 @@ var queryPane = {
 				'<div id="contextMenuContent">' +
 					'<br>'+
 					'<div class="linkAdd">' +
-						'I am looking for: <br>'+
-						x+
-						'<b>' +  queryPane.selected.label +'</b> ' +	
-						'connected via ' +			
+						'I am looking for:<br>'+
+						'<b>' +x+
+						  queryPane.selected.label +	
+						' connected via ' +	'</b> ' +		
 						'<input type="text" id="queryP" onkeydown="if(event.keyCode==13) queryPane.addOut()" value=""></input>'+
-						' to something else'+										
+						'<b>' +' to something else'+'</b> ' +										
 					'</div>'+	
-						'<div id = "warningpr"></div><br>' +
+						'<div id = "numbpr"></div><br>' +
 					'<div class="linkAdd">' +
 						'For example: <br>'+
 						y+						
 						'<i>created by</i> some person' +
 					'</div>'+					
 					'<br>'+
-				'</div>');	
-		//document.getElementById('queryS').value = queryPane.selected.label;				
-		//this updates suggester predicate list such that it contains only those predicates that connect to the currently selected variable node.
-		//if (document.getElementById('queryVar').checked){	 //(queryPane.querywasupdatedPRout || queryPane.selected != queryPane.nodeselectedPRout)				
-					spex.sug.getSelNodePredicatesofCurrentQuery(queryPane.getNodeVarName(queryPane.selected),"?tonode");	
-					//queryPane.querywasupdatedPRout = false;
-					//queryPane.nodeselectedPRout = queryPane.selected;
-		//}		
+				'</div>');			
 			
-		spex.sug.createDropdownP('queryP');		
-		//spex.sug.createDropdownC('queryO');
-		
+		spex.sug.createDropdownPout('queryP');	
 		
 
 		document.getElementById("queryP").focus();
@@ -409,23 +408,15 @@ var queryPane = {
 						to ' + x +
 						'<b>' +  queryPane.selected.label +'</b>' +						
 					'</div>'+
-					'<div id = "warningpr"></div>'+					
+					'<div id = "numbpr"></div>'+					
 					'<br>'+					
-				'</div>');
-				
-		//document.getElementById('queryO').innerText = queryPane.selected.label;
-		//this updates suggester predicate list such that it contains only those predicates that connect to the currently selected variable node.
-			//if ( document.getElementById('queryVar').checked){ //(queryPane.querywasupdatedPRin || queryPane.selected != queryPane.nodeselectedPRin) && 
-					spex.sug.getSelNodePredicatesofCurrentQuery("?fromnode",queryPane.getNodeVarName(queryPane.selected));	
-					//queryPane.querywasupdatedPRin = false;
-					//queryPane.nodeselectedPRin = queryPane.selected;
-			//}			
+				'</div>');			
+			
 		
-		//spex.sug.createDropdownC('queryS');
-		spex.sug.createDropdownP('queryP');		
+		spex.sug.createDropdownPin('queryP');		
 		//$("queryP").on( "autocompleteselect", function (event, ui) {queryPane.addIn();});
 		
-
+		$('#numbpr').text(''+spex.sug.predicateArrayin.length+' predicates)');
 		document.getElementById("queryP").focus();	
 	},
 

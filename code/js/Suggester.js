@@ -87,10 +87,12 @@ function Suggester(){
 	console.time(timerName);
 
 //Define Arrays
-    var predicateArray = [];
+    var predicateArrayin = [];
+	var predicateArrayout = [];
     var classesArray = [];
     var instancesArray = [];
 	var instancelabelArray = [];
+	var suggestClasses = false;
 
 //Define queries
 	var queryPredicates = new LabeledQuery();
@@ -120,18 +122,25 @@ function Suggester(){
 	 'columnName' must be the variabble name (without the '?')
 	 TODO: Build in the labels
 	*/
+	
+	 
 	function storeColumn(queryResultJson,prefixList,prefixBlacklist,columnName,storageArray){
 		var queryVars = queryResultJson.head.vars;
 		var sols = queryResultJson.results.bindings;		
+		
 		if(queryVars.indexOf(columnName) == -1){
 			//console.log("Column " + columnName + " does not exist in the results!");
 		}
-		else{
-			
+		else{			
 			for( var i = 0; i < sols.length; i++){
 				var currentElement = sols[i][columnName].value; //Get the current element
+				var isClass = false;
+				if (columnName == "aClass") {
+					isClass = (sols[i]["predicate_o"].value == "rdf:type" || sols[i]["predicate_o"].value=="http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+				}
 				//console.log("Current value of" + columnName + ": " + currentElement);
 				// go through the list of prefixes to check if one of the urls associated with a prefix is substring of the current element
+				if ((columnName == "aClass"&&isClass)||columnName != "aClass") {
 				for (var j = 0; j < prefixList.length; j++ ){
 					if (currentElement.indexOf(prefixList[j].uri) != -1){  // if yes
 						// check if the corresponding prefix is in the blacklist
@@ -145,44 +154,52 @@ function Suggester(){
 						//Add corresponding prefix to prefixList ??
 					}
 				}
+				}
 			}
 		}
+		 
 		console.log("storage array of " + columnName + ":\n" + storageArray);
 	}	
 	
 	var sugEx=new QueryExecutor();
+	
 
     sugEx.callback = function(str) {      // Define a callback function to receive the SPARQL JSON result.
 		var jsonObj = eval('(' + str + ')');      // Convert result to JSON
 		jsonObj=new LabelGenerator().label(new SPEXResultSet(jsonObj)).allResults;    //Add labels to results
 			
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"aClass",classesArray); //store in classesArray if results correspond to the query for classes
-		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate",predicateArray); // store in predicateArray if results correspond to the query for predicates
-		
+		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate_o",predicateArrayout); // store in predicateArray if results correspond to the query for predicates
+		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate_i",predicateArrayin); // store in predicateArray if results correspond to the query for predicates
 		//Remove label properties from 'predicateArray'
 		//Following code assumes that predicateArray has no duplicates!!
 		var labelProps = spex.q.le.listOfLabelProperties.slice();
-		for (var x=0;x<predicateArray.length;x++){
-			var y = labelProps.indexOf(predicateArray[x]);
+		for (var x=0;x<predicateArrayout.length;x++){
+			var y = labelProps.indexOf(predicateArrayout[x]);
 			if(y != -1){
-				predicateArray.splice(x,1);
+				predicateArrayout.splice(x,1);
 				x--;
 				console.log("Label property '" + labelProps[y] + "' was removed from predicate suggester");
 				labelProps.splice(y,1);
 			}
-		}
-		
-		
+		}	
+		 
+		classesArray = classesArray.unique().sort();
+		predicateArrayin = predicateArrayin.unique().sort();
+		predicateArrayout = predicateArrayout.unique().sort();
 	   	console.log("The number of suggester classes is:  "+classesArray.length);
-	    console.log("The number of suggester predicates is:  "+predicateArray.length); 
-		if (classesArray.length==0 ) {
-			$('#warning').text("No class suggestions found!").css("color" , "red");
-		} else {$('#warning').text('').css("color" , "white")};
-		if (predicateArray.length==0 ) {
-			$('#warningpr').text("No predicate suggestions found!").css("color" , "red");
-		}else { $('#warningpr').text('').css("color" , "white")		
-		}			
+	    console.log("The number of suggester predicates/in is:  "+predicateArrayin.length); 
+		console.log("The number of suggester predicates/out is:  "+predicateArrayout.length); 	
+		spex.sug.setLinkText();	
+		if (spex.sug.suggestClasses==true) {		
+		spex.sug.createDropdownC('queryS');
+		}
+		else {		
+		spex.sug.createDropdownI('queryS');	
+		}
      };
+	 
+	 
 	 
 	var createDropdown=function(idString, dropdownArray){		
 	  var closing = false;
@@ -190,29 +207,36 @@ function Suggester(){
 	  $(s).autocomplete({	  
 	  source: dropdownArray,	 
 	  select: function(event, ui) { if(ui.item.id) {console.log(ui.item.id); queryPane.selected.uri="<"+ui.item.id+">";}}  ,
-	  minLength: 0	,  
-	  close: function()
-		{
+	  minLength: 0  
+	  //close: function()
+	 //	{
 			// avoid double-pop-up issue
-			closing = true;
-			setTimeout(function() { closing = false; }, 300);
-		}
-	  }) //this turns on the suggesterlist already on focus (without the user having to type anything)
-	  .focus(function(){            
-            if (!closing)
-			$(this).autocomplete("search");
-		})
+	//		closing = true;
+	//	setTimeout(function() { closing = false; }, 300);
+	//	}
+	  })
+	   //this turns on the suggesterlist already on focus (without the user having to type anything)
+	  //.focus(function(){            
+      //      if (!closing)
+		//	$(s).autocomplete("search");
+	//	})
 		;
 	
 	};
     
 	this.createDropdownC=function(idString){
 		createDropdown(idString,classesArray);
+		//spex.sug.setLinkText();	
 	};
 	
-	this.createDropdownP=function(idString){
-		createDropdown(idString,predicateArray);
+	this.createDropdownPout=function(idString){
+		createDropdown(idString,predicateArrayout);
+		$('#numbpr').text('('+predicateArrayout.length+' predicates to choose from)');
 	};
+	this.createDropdownPin=function(idString){
+		createDropdown(idString,predicateArrayin);
+		$('#numbpr').text('('+predicateArrayin.length+' predicates to choose from)');
+	}; 
 	
 	this.createDropdownI = function(idString) {
 		createDropdown(idString,instancesArray);
@@ -227,31 +251,70 @@ function Suggester(){
 		//sugEx.executeQuery(queryPredicates, endpoint);
 	};
 	
+	this.setLinkText = function() {
+		//console.log("link text: " + predicateArrayout.length + classesArray.length);
+		if (predicateArrayout.length==0 ) {			
+			$('#addout').text('');
+			$('#addout').click(function (){});
+		}else { 
+			$('#numbpr').text('('+predicateArrayout.length+' predicates)');
+			$('#addout').click=queryPane.showContextMenuAddOut;		
+			$('#addout').text('Add outgoing Link ('+predicateArrayout.length+')');		
+		};
+		if (predicateArrayin.length==0 ) {			
+			$('#addin').text('');
+			$('#addin').click(function (){});
+		}else { 
+			$('#addin').click=queryPane.showContextMenuAddIn;	
+			$('#numbpr').text(''+predicateArrayin.length+' prediates)');			
+			$('#addin').text('Add incoming Link ('+predicateArrayin.length+')');		
+		};
+		if (document.getElementById('queryVar').checked){
+		if (classesArray.length==0 ) {
+			$('#warning').text("No class suggestions found!").css("color" , "red");			
+		} else {
+			if(classesArray.length==1){var cl=' class'}else{var cl=' classes'};
+			$('#numb').text('('+classesArray.length +cl+' to choose from)');				
+			$('#warning').text('').css("color" , "white");			
+		}};
+		if (document.getElementById('queryNonVar').checked){
+		if (instancesArray.length==0 ) {
+			$('#warning').text("No instance suggestions found!").css("color" , "red");			
+		} else {	
+			$('#numb').text('('+instancesArray.length+' things to choose from)');		
+			$('#warning').text('').css("color" , "white");			
+		}
+		};
+		
+	 
+	 };
 	//both of the following methods are called from queryPane menu in order to update suggester lists
-	// method which modifies predicate suggestions taking into account the current query	
-	this.getSelNodePredicatesofCurrentQuery = function(fromnodevariable, tonodevariable){
-		console.log("new auto-suggester predicate list is being generated!");			 
+	// method which modifies predicate and class suggestions taking into account the current query	
+	this.getSelNodePredicatesandClassesofCurrentQuery = function(){
+		console.log("new auto-suggester out predicate and class list is being generated!");			 
 			 queryPredicates = new LabeledQuery();			 
-			 copyQuery(queryPredicates, spex.q);			 
-			 queryPredicates.select(["?predicate","?predicate__label"]).distinct().where(fromnodevariable , "?predicate" , tonodevariable).orderby("?predicate");
-			 queryPredicates.SPEXvariables=["?predicate"];
-			 //console.log(queryPredicates.getSPARQL());
-			predicateArray = [];
-			$('#warningpr').text("Please wait for suggestions...").css("color" , "red");			
+			 copyQuery(queryPredicates, spex.q);	
+			 var varname = queryPane.getNodeVarName(queryPane.selected);			 
+			 queryPredicates.select(["?predicate_o","?predicate_o__label","?aClass","?aClass__label"]).distinct().where(varname , "?predicate_o" , "?aClass").end();
+			 queryPredicates.SPEXvariables=["?predicate_o","?aClass"];
+			 //console.log("sugpredicatesparql:  "+queryPredicates.getSPARQL());
+			predicateArrayout = [];
+			classesArray = [];	
+			$('#warning').text("Please wait for suggestions being generated...").css("color" , "red");			
 			sugEx.executeQuery(queryPredicates, spex.queryEndpoint());		
 	};
 	//method which modifies class suggestions taking into account the current query 
-	this.getSelNodeClassesofCurrentQuery = function () {
+	this.getSelNodeInPredicatesofCurrentQuery = function () {
 		 if (queryPane.selected.variable) {		 
-			console.log("new auto-suggester class list is being generated!");
+			console.log("new auto-suggester in prediate list is being generated!");
 			 var varname = queryPane.getNodeVarName(queryPane.selected);
 			 queryClasses = new LabeledQuery();			 
 			 copyQuery(queryClasses, spex.q);			 
-			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname, "rdf:type", "?aClass").orderby("?aClass");
-			 queryClasses.SPEXvariables=["?aClass"];
+			 queryClasses.select(["?predicate_i","?predicate_i__label"]).distinct().where("?fromnode", "?predicate_i", varname).orderby("?predicate_i");
+			 queryClasses.SPEXvariables=["?predicate_i"];
 			 //console.log(queryClasses.getSPARQL());
-			classesArray = [];	
-			$('#warning').text("Please wait for suggestions...").css("color" , "red");
+			predicateArrayin = [];	
+			$('#warning').text("Please wait for suggestions being generated...").css("color" , "red");
 			sugEx.executeQuery(queryClasses, spex.queryEndpoint());
 		 }
 	};

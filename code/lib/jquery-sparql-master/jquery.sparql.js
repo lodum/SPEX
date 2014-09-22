@@ -150,6 +150,12 @@
       if(pat._sort == "triple") {
         queryString.push(pat.s + " " + pat.p + " " + pat.o + ".");
       }
+	   // Union blocks
+      else if(pat._sort == "union") {                
+        queryString.push(pat.subquery.serialiseBlock());
+		queryString.push("UNION");
+		queryString.push(pat.subquery2.serialiseBlock());
+      }
       // Optionals
       else if(pat._sort == "optional") {
         queryString.push("OPTIONAL");
@@ -215,6 +221,12 @@
       if(pat._sort == "triple") {
         queryString.push(pat.s + " " + pat.p + " " + pat.o + ".");
       }
+	  // Union blocks
+      else if(pat._sort == "union") {                
+        queryString.push(pat.subquery.serialiseBlock());
+		queryString.push("UNION");
+		queryString.push(pat.subquery2.serialiseBlock());
+      }
       // Optionals
       else if(pat._sort == "optional") {
         queryString.push("OPTIONAL");
@@ -225,7 +237,7 @@
         queryString.push("GRAPH");
         queryString.push(pat.graphName);
         queryString.push(pat.subquery.serialiseBlock());
-      }
+      }	  
       // Service blocks
       else if (pat._sort == "service") {
         queryString.push("SERVICE");
@@ -338,6 +350,14 @@
     this.patterns.push({ "_sort" : "graph", "graphName" : name, "subquery" : grph });
     return grph;
   };
+  
+   Query.prototype.union = function() {
+    var one = new Query(this.config.endpoint, this.config, this);
+	var two = new Query(this.config.endpoint, this.config, this);
+    this.patterns.push({ "_sort" : "union", "subquery" : one,  "subquery2" : two,});
+    return [one, two];
+  };
+  
 
   Query.prototype.service = function(endpoint) {
     var srvc = new Query(this.config.endpoint, this.config, this);
