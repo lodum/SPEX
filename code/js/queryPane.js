@@ -107,13 +107,15 @@ var queryPane = {
 
 		this.resize();
 
-		this.update();
-		this.updateQuery();
 		queryPane.querywasupdatedCL = false;
+		queryPane.querywasupdatedI = false;
 		queryPane.querywasupdatedPR = false;
 		queryPane.nodeselectedCL = queryPane.selected;
+		queryPane.nodeselectedI  = queryPane.selected;
 		queryPane.nodeselectedPRout = queryPane.selected;
 		queryPane.nodeselectedPRin = queryPane.selected;
+		this.update();
+		this.updateQuery();
 	},
 
 
@@ -280,21 +282,26 @@ var queryPane = {
 	},
 	
 	//These methods prepare classes or instances in the suggester  and set corresponding autocomplete lists
-	checkInstanceSuggestion : function () {		
-			spex.sug.getSelNodeInstances();
-			spex.sug.setLinkText();				
-			spex.sug.suggestClasses=false;	
+	checkInstanceSuggestion : function () {					
+			spex.sug.suggestClasses=false;
+			if (queryPane.querywasupdatedI || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedI){					
+					spex.sug.chainInstanceQueries();
+					queryPane.querywasupdatedI = false;
+					queryPane.nodeselectedI = queryPane.selected;
+				}else {spex.sug.setLinkText();}								
+				
 			spex.sug.createDropdownI('queryS');				
 			//spex.sug.setLinkText();		
 		
 	},
-	checkClassSuggestion : function () {		
-			if (queryPane.querywasupdatedCL || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedCL){
+	checkClassSuggestion : function () {	
+				spex.sug.suggestClasses=true;	
+				if (queryPane.querywasupdatedCL || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedCL){
 					spex.sug.chainVariableQueries();									
 					queryPane.querywasupdatedCL = false;
 					queryPane.nodeselectedCL = queryPane.selected;
 				}else {spex.sug.setLinkText();}					
-				spex.sug.suggestClasses=true;
+				
 				spex.sug.createDropdownC('queryS');			
 		
 	},
@@ -559,6 +566,7 @@ var queryPane = {
 
 		this.parseQuery();
 		queryPane.querywasupdatedCL = true;	
+		queryPane.querywasupdatedI = true;	
 		queryPane.querywasupdatedPR = true;	
 		
 		spex.ex.executeQuery(spex.q,document.getElementById("endpoint").value); 

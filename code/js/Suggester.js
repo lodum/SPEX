@@ -91,7 +91,7 @@ function Suggester(){
 	var predicateArrayout = [];
     var classesArray = [];
     var instancesArray = [];
-	var instancelabelArray = [];
+	var instanceIDArray = [];
 	
 	var suggestClasses = false;
 	var queryChain = 0;
@@ -211,13 +211,17 @@ function Suggester(){
 		}
 		else if (spex.sug.queryChain == 1) {			
 			spex.sug.queryChain++;
-			var triples = false;
-			//tests whether query has additional triples coming from spex query. If not, it is not required to query for "in" predicates, since node in focus does not have any further constraints which would distinguish in from out
+			var back = false;
+			//tests whether query has additional triples coming from spex query or whether there are instance filters. If not, it is not required to query for "in" predicates, since node in focus does not have any further constraints which would distinguish in from out
 			for (var i = 0; i< spex.q.patterns.length; i++) {
 				var pat = spex.q.patterns[i];
-				if (pat._sort == "triple"){triples = true; break;}
+				if (pat._sort == "triple"){back = true; break;}
 			}
-			if (triples) {spex.sug.getSelNodeInPredicatesofCurrentQuery();}		
+			for (var i = 0; i< spex.q.filters.length; i++) {
+				var fil = spex.q.filters[i];
+				if (fil.indexOf("=")!=-1){back = true; break;}
+			}
+			if (back) {spex.sug.getSelNodeInPredicatesofCurrentQuery();}		
 		}
 		else {
 		spex.sug.queryChain= 0;			
@@ -353,6 +357,12 @@ function Suggester(){
 		this.queryChain =0;
 		//console.log("queryChain :"+this.queryChain);
 		this.getSelNodeClassesofCurrentQuery();
+	}
+	this.chainInstanceQueries = function () {		
+		spex.sug.getSelNodeInstances();
+		this.queryChain =1;
+		//console.log("queryChain :"+this.queryChain);
+		this.getSelNodePredicatesofCurrentQuery();
 	}
 	
 	this.getSelNodeInstances = function (){
