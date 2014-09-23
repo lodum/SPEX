@@ -1,7 +1,7 @@
 
 function SPEXQuery(){ 
 this.limit(50); 
-this.timeout = 50000;
+this.timeout = 100000;
 this.fe = new FilterExpander();
 this.le = new LiteralExpander();
 this.SPEXvariables = [];

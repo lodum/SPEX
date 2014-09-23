@@ -194,22 +194,25 @@ function Suggester(){
 		else {		
 		spex.sug.createDropdownI('queryS');	
 		};
-		//chains the suggester queries
-		if (spex.sug.queryChain == 0) {	
-			spex.sug.setLinkText();
+		
+		spex.sug.setLinkText();
+		//chains the next suggester queries
+		if (spex.sug.queryChain == 0) {				
 			spex.sug.queryChain++;
-			spex.sug.getSelNodePredicatesofCurrentQuery();
-			
+			spex.sug.getSelNodePredicatesofCurrentQuery();			
 		}
-		else if (spex.sug.queryChain == 1) {
-			spex.sug.setLinkText();
+		else if (spex.sug.queryChain == 1) {			
 			spex.sug.queryChain++;
-			spex.sug.getSelNodeInPredicatesofCurrentQuery();
-			
+			var triples = false;
+			//test whether query has additional triples coming from spex query. If not, it is not required to query for "in" predicates, since node in focus does not have any further constraints which would distinguish in from out
+			for (var i = 0; i< spex.q.patterns.length; i++) {
+				var pat = spex.q.patterns[i];
+				if (pat._sort == "triple"){triples = true; break;}
+			}
+			if (triples) {spex.sug.getSelNodeInPredicatesofCurrentQuery();}		
 		}
 		else {
-		spex.sug.queryChain= 0;
-		spex.sug.setLinkText();	
+		spex.sug.queryChain= 0;			
 		};
 		
      };
@@ -266,6 +269,7 @@ function Suggester(){
 		//sugEx.executeQuery(queryPredicates, endpoint);
 	};
 	
+	//This adjusts menu texts accordingly
 	this.setLinkText = function() {
 		//console.log("link text: " + predicateArrayout.length + classesArray.length);
 		if (predicateArrayout.length==0 ) {			
@@ -310,7 +314,7 @@ function Suggester(){
 			 queryClasses = new LabeledQuery();			 
 			 copyQuery(queryClasses, spex.q);	
 			 var varname = queryPane.getNodeVarName(queryPane.selected);			 
-			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname , "rdf:type" , "?aClass");
+			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname , "rdf:type" , "?aClass").limit(500);
 			 queryClasses.SPEXvariables=["?aClass"];
 			 console.log("sugpredicatesparql:  "+queryClasses.getSPARQL());			
 			classesArray = [];	
@@ -322,7 +326,7 @@ function Suggester(){
 			 queryPredicates = new LabeledQuery();			 
 			 copyQuery(queryPredicates, spex.q);	
 			 var varname = queryPane.getNodeVarName(queryPane.selected);			 
-			 queryPredicates.select(["?predicate_o","?predicate_o__label"]).distinct().where(varname , "?predicate_o" , "?tonode");
+			 queryPredicates.select(["?predicate_o","?predicate_o__label"]).distinct().where(varname , "?predicate_o" , "?tonode").limit(500);
 			 queryPredicates.SPEXvariables=["?predicate_o"];
 			 console.log("sugpredicatesparql:  "+queryPredicates.getSPARQL());
 			predicateArrayout = [];				
@@ -336,7 +340,7 @@ function Suggester(){
 			 var varname = queryPane.getNodeVarName(queryPane.selected);
 			 queryPredicates = new LabeledQuery();			 
 			 copyQuery(queryPredicates, spex.q);			 
-			 queryPredicates.select(["?predicate_i","?predicate_i__label"]).where("?fromnode", "?predicate_i", varname);
+			 queryPredicates.select(["?predicate_i","?predicate_i__label"]).distinct().where("?fromnode", "?predicate_i", varname).limit(500);
 			 queryPredicates.SPEXvariables=["?predicate_i"];
 			 //console.log(queryPredicates.getSPARQL());
 			predicateArrayin = [];	
