@@ -165,7 +165,7 @@ SPEXQuery.prototype.expandTimeFilter = function(){
     		
     		
     		timeQuery[1].where(variable, "xsd:gYear", "?year")
-    		.filter("?year >= '" + this.temporalConstraints[variable].timeBeginning.slice(0,4) + "'^^xsd:gYear && ?year <= '"  + this.temporalConstraints[variable].timeEnd.slice(0,4) + "'^^xsd:gYear");
+    		.filter("?year >= '" + this.temporalConstraints[variable].timeBeginning.slice(0,4) + "' && ?year <= '"  + this.temporalConstraints[variable].timeEnd.slice(0,4) + "'");
     		/*
     		this.where(variable, "time:hasBeginning", "?INSTANT_BEGINNING");
     		this.where("?INSTANT_BEGINNING", "a", "time:Instant"); 
