@@ -155,6 +155,7 @@ SPEXQuery.prototype.expandTimeFilter = function(){
         // Check if there is really a Time object
         if (this.temporalConstraints[variable] != null && this.temporalConstraints[variable] != undefined) {
     		var timeQuery = this.union();
+    		
     		timeQuery[0].where(variable, "time:hasBeginning", variable + "INSTANT_BEGINNING")
     		.where(variable + "INSTANT_BEGINNING", "a", "time:Instant")
     		.where(variable + "INSTANT_BEGINNING", "time:inXSDDateTime", variable + "timeBeginning")
@@ -163,21 +164,9 @@ SPEXQuery.prototype.expandTimeFilter = function(){
     		.where(variable + "INSTANT_END", "time:inXSDDateTime", variable + "timeEnd")
     		.filter(variable + "timeBeginning  >= '" + this.temporalConstraints[variable].timeBeginning + "'^^xsd:dateTime && " + variable + "timeEnd <= '"  + this.temporalConstraints[variable].timeEnd + "'^^xsd:dateTime");
     		
-    		
     		timeQuery[1].where(variable, variable + "timelink", variable + "link")
     		.where(variable + "link", "xsd:gYear", variable + "year")
     		.filter(variable + "year >= '" + this.temporalConstraints[variable].timeBeginning.slice(0,4) + "' && " + variable + "year <= '"  + this.temporalConstraints[variable].timeEnd.slice(0,4) + "'");
-    		/*
-    		this.where(variable, "time:hasBeginning", "?INSTANT_BEGINNING");
-    		this.where("?INSTANT_BEGINNING", "a", "time:Instant"); 
-    		this.where("?INSTANT_BEGINNING", "time:inXSDDateTime", "?timeBeginning");
-
-    		this.where(variable, "time:hasEnd", "?INSTANT_END");
-    		this.where("?INSTANT_END", "a", "time:Instant"); 
-    		this.where("?INSTANT_END", "time:inXSDDateTime", "?timeEnd");
-
-    		this.filter("?timeBeginning  >= '" + this.temporalConstraints[variable].timeBeginning + "'^^xsd:dateTime && ?timeEnd <= '"  + this.temporalConstraints[variable].timeEnd + "'^^xsd:dateTime"); 
-    		*/
         }
  	}
  	/*
