@@ -1,5 +1,10 @@
 /*This class has methods which expand a query by variables which include all literal values for which SPEX has registered filter panes
 */
+/**
+* Expands a query by variables which catch (space,time,...) literals for which SPEX has registered filter panes
+* @class
+*  @property {object}  filterDataProperties  - holds the list of prefixes and property chains which link a filter literal to a resource
+**/
 function FilterExpander(){}
 //FilterExpander.prototype.constructor = FilterExpander;
 
@@ -15,7 +20,8 @@ FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink", "time:hasEnd",  "time:inXSDDateTime"]}); 
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink", "xsd:gYear"]}); 
 
-//This method takes a query and adds for all user selected variables some optional statements which automatically load filter literals by one of the chains of properties defined above
+/**This method takes a query and adds for all user selected variables some optional statements which automatically load filter literals by one of the chains of properties defined above
+* @function */
 FilterExpander.prototype.expandFilterLiterals = function(spexquery){
 	for (var i = 0; i < spexquery.SPEXvariables.length; i++) {
         var v = spexquery.SPEXvariables[i]; 

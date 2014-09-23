@@ -1,7 +1,12 @@
 /* Constructor function for LabelGenerator objects */
+/**
+* Automatically labels results based on label properties or generates a label
+* @class
+**/
 function LabelGenerator() {}
 
-/* This function takes a SPARQL JSON result set, checks for missing labels, and fills them in. */
+/** This function takes a SPARQL JSON result set, checks for missing labels, and fills them in. 
+* @function */
 LabelGenerator.prototype.label = function(resultSet) {
 	
 	/* Define reference points. */
@@ -28,7 +33,8 @@ LabelGenerator.prototype.label = function(resultSet) {
 	
 	return resultSet;
 	
-	/* Function to create a label for a variable according to its type. */
+	/** Function to create a label for a variable according to its type. 
+	* @function */
 	function createLabel(variable) {
 		if(variable.type === "uri") {
 			return handleURI(variable.value);
@@ -41,7 +47,8 @@ LabelGenerator.prototype.label = function(resultSet) {
 		}
 	}
 
-	/* Function to parse a URI to create a label. */
+	/** Function to parse a URI to create a label. 
+		* @function */
 	function handleURI(uri) {
 		var URIEnding = "";
 		for(var i = uri.length - 1; i >= 0; i--) {

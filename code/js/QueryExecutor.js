@@ -1,6 +1,7 @@
 
 /**
-Executes a SPEX query via http post and calls a callback function which turns results into a JSON object (sparql-results+json) and displays it in the registered resultspane.
+* Executes a SPEX query via http post and calls a callback function which turns results into a JSON object (sparql-results+json) and displays it in the registered resultspane.
+* @class
 **/
 function QueryExecutor(){ 
 	this.spatiallyEnabledVars = null;
@@ -8,6 +9,12 @@ function QueryExecutor(){
 } 
 QueryExecutor.prototype.constructor = QueryExecutor;
 
+/** 
+* Executes a spex query
+* @function 
+* @param {object} spexquery the input spex query
+* @param {string} endpoint  
+*/
 QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 	//Test whether endpoint is non empty:
 	if (endpoint == '' || endpoint == null) {

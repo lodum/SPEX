@@ -1,5 +1,10 @@
-function FilterResults(){}
 
+/**
+* A special filter for space literals (WKT) which filters query results by the current space window
+* @class
+**/
+function FilterResults(){}
+/** @function */
 FilterResults.prototype.filterWKT=function(spexresultset){
   
   //Remove all the wkt-results from resultset which don't fulfill the spatial constraints.

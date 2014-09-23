@@ -1,15 +1,25 @@
+
+/**
+* A results pane that displays the result set in terms of a table
+* @class
+*  @property {object} currentresults - holds the current result set
+**/
 function ResultsPane(){
 this.currentresults = new SPEXResultSet(" ");
 };
 ResultsPane.prototype.constructor = ResultsPane;
 
+/** @function */
 ResultsPane.prototype.getcurrentresults = function(){
 var res = this.currentresults.getAllResults();
 return escape(JSON.stringify(res));
 };
 
 
-
+/** 
+* displays a spex result set in the results pane
+*@function 
+*/
 ResultsPane.prototype.display = function(spexresultset){
 		
 		this.currentresults = spexresultset;

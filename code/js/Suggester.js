@@ -82,11 +82,20 @@ reduce the predicates displayed: dcterms:title might be useful, but dcterms:date
 possibility of a cliquable link (to the description of the vocabulary) for the autocomplete
 
 */
+/**
+* A suggester which queries an endpoint for constructive (non-syntactical) vocabularies relative to the current query and node in focus. The lists of terms are displayed by autosuggestion. 
+* @class
+* @property {object}  predicateArrayin  - holds RDF properties that link into the node in focus.
+* @property {object} predicateArrayout	- holds RDF properties that link outof the node in focus.
+* @property {object}  classesArray		- holds RDF classes of the node in focus.
+* @property {object} instancesArray		- holds RDF instances of the variable node in focus.
+**/
 function Suggester(){
 	var timerName='This is the suggester-builder timer';
 	console.time(timerName);
 
 //Define Arrays
+
     var predicateArrayin = [];
 	var predicateArrayout = [];
     var classesArray = [];
@@ -230,7 +239,6 @@ function Suggester(){
      };
 	 
 	 
-	 
 	var createDropdown=function(idString, dropdownArray){		
 	  var closing = false;
 	  var s = '#' + idString;
@@ -253,20 +261,29 @@ function Suggester(){
 		;
 	
 	};
-    
+    /** 
+	 * creates a class autosuggestion drop down menu
+	 *@function */
 	this.createDropdownC=function(idString){
 		createDropdown(idString,classesArray);			
 	};
-	
+	/** 
+	 * creates a property (out) autosuggestion drop down menu
+	 *@function */
 	this.createDropdownPout=function(idString){
 		createDropdown(idString,predicateArrayout);
 		$('#numbpr').text('('+predicateArrayout.length+' predicates to choose from)');
 	};
+	/** 
+	 * creates a property (in) autosuggestion drop down menu
+	 *@function */
 	this.createDropdownPin=function(idString){
 		createDropdown(idString,predicateArrayin);
 		$('#numbpr').text('('+predicateArrayin.length+' predicates to choose from)');
 	}; 
-	
+	/** 
+	 * creates an instance autosuggestion drop down menu
+	 *@function */
 	this.createDropdownI = function(idString) {
 		createDropdown(idString,instancesArray);
 	};
@@ -353,11 +370,17 @@ function Suggester(){
 			sugEx.executeQuery(queryPredicates, spex.queryEndpoint());
 		 }
 	};
+	/** 
+	* Executes suggester queries (for classes and linked properties) for a variable node in focus
+	*@function */
 	this.chainVariableQueries = function () {		
 		this.queryChain =0;
 		//console.log("queryChain :"+this.queryChain);
 		this.getSelNodeClassesofCurrentQuery();
 	}
+	/** 
+	* Executes suggester queries (for instances and linked properties) for an instant node in focus
+	*@function */
 	this.chainInstanceQueries = function () {		
 		spex.sug.getSelNodeInstances();
 		this.queryChain =1;

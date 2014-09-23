@@ -1,3 +1,8 @@
+
+/**
+* A SPEX results set, which holds JSON and has methods for preparing spatial and temporal information for display and furthermore detects whether it is present or not
+* @class
+**/
 function SPEXResultSet(json) {
 	this.allResults = json;
 	//this.displayResults = this.prepareresultstodisplay(json);
@@ -19,12 +24,14 @@ function SPEXResultSet(json) {
 
 //SPEXResultSet.prototype.constructor = SPEXResultSet;
 
-/* Function to return the SPARQL JSON as it was returned from the endpoint. */
+/** Function to return the SPARQL JSON as it was returned from the endpoint. 
+* @function */
 SPEXResultSet.prototype.getAllResults = function() {
 	return this.allResults;
 };
 
-/*Function to add new solution into result set. */
+/**Function to add new solution into result set. 
+* @function */
 SPEXResultSet.prototype.addNewResult = function(resultObject) { //is this what it's meant to do?
 	this.allResults.results.bindings.push(resultObject);
 	//If a new solution has been added, we have to reformat the labeledResults attribute.
@@ -49,10 +56,10 @@ SPEXResultSet.prototype.getUserSelectedVariables = function() {
 };
 
 
-/*This function relates spatio-temporal variables created by FilterExpander to their 'parent' variables.
+/**This function relates spatio-temporal variables created by FilterExpander to their 'parent' variables.
 The result is an object whose keys are the parents (= user-selected variables from the original query). 
 The value for each key is an array of spatio-temporal variables 
-related through property chains to the key variable.*/
+related through property chains to the key variable.**/
 SPEXResultSet.prototype.relateSpaceTime = function() {
 	var userVars = this.getUserSelectedVariables();
 	//debug(JSON.stringify(userVars));
@@ -78,7 +85,8 @@ SPEXResultSet.prototype.relateSpaceTime = function() {
 	return spaceTimeMatches;
 };
 
-/*This function prepares results for display on the map by relating each result with its geometry (if available).*/
+/**This function prepares results for display on the map by relating each result with its geometry (if available).
+* @function */
 SPEXResultSet.prototype.getWKT = function() {
 	var relatedVars = this.relateSpaceTime();
 	var solutions = this.allResults.results.bindings;
@@ -141,7 +149,8 @@ SPEXResultSet.prototype.getWKT = function() {
 	return labelWKTpairs;
 };
 
-/*This generates a json table which contains time points, ranges and labels as needed by the timeline object*/
+/**This generates a json table which contains time points, ranges and labels as needed by the timeline object
+* @function */
 SPEXResultSet.prototype.getTimes= function() {
 var solutions = this.allResults.results.bindings;
 var labeltimepairs = [];
@@ -181,12 +190,11 @@ for(userVar in relatedVars) {
 	return labeltimepairs ;
 }
 
-/* Function to detect which of the user-selected variables are spatial.  
+/** Function to detect which of the user-selected variables are spatial.  
 The function iterates through all the solutions in the SPARQL JSON result and 
 if a user-selected variable has at least one spatial literal associated with it
-in at least one of the solutions, 
-the variable is added to a list of spatially enabled variables.
-*/
+in at least one of the solutions, the variable is added to a list of spatially enabled variables.
+* @function */
 SPEXResultSet.prototype.detectSpatiallyEnabledVars = function() {
 	var relatedVars = this.relateSpaceTime();
 	var solutions = this.allResults.results.bindings;
@@ -222,11 +230,11 @@ SPEXResultSet.prototype.detectSpatiallyEnabledVars = function() {
 	return spatiallyEnabledVars;
 };
 
-/* Function to detect which of the user-selected variables are temporal.  
+/** Function to detect which of the user-selected variables are temporal.  
 The function iterates through all the solutions in the SPARQL JSON result and 
 if a user-selected variable has at least one temporal literal associated with it, 
 the variable is added to a list of temporally enabled variables.
-*/
+* @function */
 SPEXResultSet.prototype.detectTemporallyEnabledVars = function() {
 	var relatedVars = this.relateSpaceTime();
 	var solutions = this.allResults.results.bindings;

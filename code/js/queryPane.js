@@ -4,6 +4,13 @@
 	Author: Peter Zimmerhof
 */
 
+//JSDoc
+/**
+* A query pane in which one can manipulate a visual query pattern graph which translates into SPARQL and gets automatically executed
+* @class
+*  @property {object} nodes - holds the array of current user generated visual (variable or instant) nodes 
+*  @property {object}  links - holds the array of current user generated visual property links (triple patterns)
+**/
 var queryPane = {
 
 	// Variables
@@ -120,7 +127,8 @@ var queryPane = {
 
 
 
-	// Graph animation function
+	/** Graph animation function
+	*@function */
 	tick : function()
 	{
 		queryPane.path.attr('d', function(d) {
@@ -148,7 +156,8 @@ var queryPane = {
 
 
 
-	// Graph update function
+	/** Graph update function
+	*@function */
 	update : function() {
 
 		this.path = this.visPath.selectAll(".link").data(this.links);
@@ -281,7 +290,8 @@ var queryPane = {
 		this.node.exit().remove();
 	},
 	
-	//These methods prepare classes or instances in the suggester  and set corresponding autocomplete lists
+	/**Prepares instances in the suggester  and set corresponding autocomplete lists
+	*@function */
 	checkInstanceSuggestion : function () {					
 			spex.sug.suggestClasses=false;
 			if (queryPane.querywasupdatedI || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedI){					
@@ -294,6 +304,8 @@ var queryPane = {
 			//spex.sug.setLinkText();		
 		
 	},
+	/**Prepares classes  in the suggester  and set corresponding autocomplete lists
+	*@function */
 	checkClassSuggestion : function () {	
 				spex.sug.suggestClasses=true;	
 				if (queryPane.querywasupdatedCL || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedCL){
@@ -307,7 +319,8 @@ var queryPane = {
 	},
 	
 
-	// Show context menu
+	/** Shows context menu
+	* @function */
 	showContextMenu : function(menu) {
 		
 		var constraintSpLinks = '';
@@ -364,7 +377,8 @@ var queryPane = {
 	
 	
 
-
+	/** shows context menu for links (out) 
+	* @function */
 	showContextMenuAddOut : function() {
 		var x;
 		var y;
@@ -397,6 +411,8 @@ var queryPane = {
 	},
 
 	//
+	/** shows context menu for links (in) 
+	* @function */
 	showContextMenuAddIn : function() {
 		var x;
 		if (document.getElementById('queryVar').checked) { if ( queryPane.selected.label != ""){x = 'things that are '} else {x = 'something '}} else {x = ""};
@@ -503,7 +519,8 @@ var queryPane = {
 
 	},
 
-	// 
+	/** Writes input text into node and updates graph 
+	* @function */
 	updateSelected : function() {
 
 		if (this.isNode(queryPane.selected)) {			
@@ -557,7 +574,8 @@ var queryPane = {
 			};
 		};
 	},
-
+	/** Updates central SPEX query after user manipulation of visual graph 
+	* @function */
 	updateQuery : function() {
 
 		queryPane.hideContextMenu();
@@ -650,7 +668,7 @@ var queryPane = {
 
 		this.update();
 	},
-
+	/** @function */
 	setSpConstraint : function() {
 		queryPane.selected.spConstrSet=true;
 		var win = new Window();
@@ -667,7 +685,7 @@ var queryPane = {
 
 		queryPane.updateQuery();
 	},
-
+	/** @function */
 	removeSpConstraint : function() {
 		queryPane.selected.spConstrSet=false;
 		spex.q.setSpatialConstraint(
@@ -676,7 +694,7 @@ var queryPane = {
 
 		queryPane.updateQuery();
 	},
-
+	/** @function */
 	setTeConstraint : function() {
 		queryPane.selected.teConstrSet=true;
 		var temp = new Time();
@@ -690,7 +708,7 @@ var queryPane = {
 
 		queryPane.updateQuery();
 	},
-
+	/** @function */
 	removeTeConstraint : function() {
 		queryPane.selected.teConstrSet=false;
 		spex.q.setTemporalConstraint(

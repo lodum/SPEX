@@ -1,3 +1,8 @@
+/**
+* A display/filter pane for time (a time slider). Is based on the timeline library of  http://almende.github.io/chap-links-library/timeline.html by Almende
+* @class
+* @property {object}  timeline  - the timeline object
+**/
 var slider = new function(){
 	this.timeline;
 	// Initialization
@@ -45,10 +50,12 @@ var slider = new function(){
             	// Instantiate our timeline object.
         	this.timeline = new links.Timeline(document.getElementById('slider'));
 		
-		// Draw our timeline with the created data and options
+		/** Draw the timeline with the created data and options
+		* @function */
 		this.timeline.draw(data, options);
 		
-		//event listeners
+		/**event listener 
+		* @function */
 		function onselect() {
 			var sel = slider.timeline.getSelection();
 			if (sel.length) {
@@ -69,7 +76,8 @@ var slider = new function(){
 
 		links.events.addListener(this.timeline, 'select', onselect);
 	};
-	  
+	/**the display function which takes data and displays it in timeline object
+		* @function */  
  	this.displaytime = function (data){
 	//Data needs to come in the format specified above 
 

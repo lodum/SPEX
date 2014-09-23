@@ -1,10 +1,16 @@
 
-
+/**
+* A display/filter pane for space (a map)
+* @class
+**/
 function SpaceFilterPane() {
 	
 } 	
 
 SpaceFilterPane.prototype.markerGroup = null;
+/** 
+* displays the geometries in a spex result set on a  map
+@function */
 SpaceFilterPane.prototype.displayGeometry = function(resultset){
 
 	if (map.markerGroup != null && map.markerGroup != undefined) {

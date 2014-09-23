@@ -1,4 +1,9 @@
 /* Constructor function for LiteralExpander objects. */
+/**
+* Expands a query by variables which catch properties which can be used for labelling
+* @class
+*  @property {object}  listOfLabelProperties  - holds the list of RDF properties that label RDF resources
+**/
 function LiteralExpander() {
 	this.listOfLabelProperties = ["rdfs:label", "dct:title", "dc:title", "foaf:name", "maps:title"];	
 }
@@ -7,7 +12,8 @@ LiteralExpander.prototype.addLabelProperty = function(property) {
 	this.listOfLabelProperties.push(property);
 };
 
-/* Function to add triples to retrieve labels for user-selected query variables. */
+/** Function to add triples to retrieve labels for user-selected query variables. 
+* @function */
 LiteralExpander.prototype.expandLabels = function(spexquery) {  
 		//Check if there are original __label variables!!
 

@@ -1,3 +1,15 @@
+/**
+* Spex is the spatio-temporal content explorer for SPARQL endpoints. It is part of the development of the LODUM initiative and the LIFE project.	
+* This is the central controller class. It initiates every other needed object and holds them together.
+* @class
+* @property {object}  q  - SPEXQuery() (the current SPEX query manipulated by the user).
+* @property {object}  lg  - LabelGenerator().
+* @property {object}  rp  - ResultsPane().
+* @property {object}  ex  - QueryExecutor().
+* @property {object}  sug - Suggester().
+* @property {object}  queryPane - The query pane.
+* @property {object}  endpoint - The current endpoint.
+**/
 var spex = new function(){
 
 	this.q = new SPEXQuery();
@@ -66,11 +78,16 @@ var spex = new function(){
 			//;
 			//.SPEXvariable("?c");
 	};
-	
+	/** 
+	* shows the current query
+	*@function 	
+	*/
 	this.showquery = function() {		 
 		  document.getElementById("query").innerHTML = spex.q.serialiseQuery();
 	};
-
+	/** 
+	* shows help
+	*@function */
 	this.showhelp = function() { 
 		  $("#helpDialog").dialog( "open" );
 	};
