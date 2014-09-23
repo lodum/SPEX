@@ -315,12 +315,12 @@ var queryPane = {
 
 		if (queryPane.selected.spConstraint) {			
 				if (queryPane.selected.spConstrSet) {constraintSpLinks = '<br><br> <a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Spatial Filter</a>';} 
-				else {constraintSpLinks = '<br><br><a href="javascript:void(0)" onclick="queryPane.setSpConstraint();">Filter results by map window</a>';};				
+				else {constraintSpLinks = '<br><br><a href="javascript:void(0)" onclick="queryPane.setSpConstraint();" title="Go to map.">Filter results by map window</a>';};				
 		};
 
 		if (queryPane.selected.teConstraint) {
 				if (queryPane.selected.teConstrSet) {constraintTeLinks = '<br><a href="javascript:void(0)" onclick="queryPane.removeTeConstraint();">Remove Temporal Filter</a>';} 
-				else {constraintTeLinks = '<br><a href="javascript:void(0)" onclick="queryPane.setTeConstraint();">Filter results by time window</a>';};	
+				else {constraintTeLinks = '<br><a href="javascript:void(0)" onclick="queryPane.setTeConstraint();" title="Go to slider.">Filter results by time window</a>';};	
 		};
 
 		d3.select("#contextMenu")
