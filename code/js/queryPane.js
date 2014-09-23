@@ -251,7 +251,7 @@ var queryPane = {
 
 		this.node.select("text.id")
       	.text(function(d) { 
-			if (d.label==''){var lab = 'var'+d.id}else{var lab =d.label}
+			if (d.label==''){ if (d.variable) {var lab = 'var'+d.id}else{var lab = '';}}else{var lab =d.label};
       		return  lab; 
       	});
 
@@ -587,8 +587,8 @@ var queryPane = {
 
 				//set variables and their labels for displaying the variable
 				spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
-			} else 
-			{ //for constants, add a filter expression which allows to handle it as if it was a variable					
+			} else if (node.label != '') {
+			//for constants, add a filter expression which allows to handle it as if it was a variable					
 					spex.q.filter(this.getNodeVarName(node)+" = "+node.uri);
 					spex.q.SPEXvariable(this.getNodeVarName(node),node.label);
 			};
