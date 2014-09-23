@@ -153,12 +153,9 @@
 	   // Union blocks
       else if(pat._sort == "union") {                
         queryString.push(pat.subquery.serialiseBlock());
-        	var unionQueryOne = queryString[queryString.length - 1];
-        	console.log("before: " + unionQueryOne);
-        	unionQueryOne = unionQueryOne.slice(0,unionQueryOne.length - 1);
-        	console.log("after: " + unionQueryOne);
-		queryString.push("UNION");
-		queryString.push(pat.subquery2.serialiseBlock());
+        queryString[queryString.length - 1] = queryString[queryString.length - 1].slice(0,queryString[queryString.length - 1].length - 1);
+	queryString.push("UNION");
+	queryString.push(pat.subquery2.serialiseBlock());
       }
       // Optionals
       else if(pat._sort == "optional") {
@@ -228,10 +225,9 @@
 	  // Union blocks
       else if(pat._sort == "union") {                
         queryString.push(pat.subquery.serialiseBlock());
-        	var unionQueryOne = queryString[queryString.length - 1];
-        	unionQueryOne = unionQueryOne.slice(0,unionQueryOne.length - 1);
-		queryString.push("UNION");
-		queryString.push(pat.subquery2.serialiseBlock());
+        queryString[queryString.length - 1] = queryString[queryString.length - 1].slice(0,queryString[queryString.length - 1].length - 1);
+	queryString.push("UNION");
+	queryString.push(pat.subquery2.serialiseBlock());
       }
       // Optionals
       else if(pat._sort == "optional") {
