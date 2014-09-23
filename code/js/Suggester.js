@@ -190,8 +190,8 @@ function Suggester(){
 		predicateArrayin = predicateArrayin.unique().sort();
 		predicateArrayout = predicateArrayout.unique().sort(); 		
 		
-		spex.sug.removeLabelProperties(predicateArrayout);
-		spex.sug.removeLabelProperties(predicateArrayin);
+		removeLabelProperties(predicateArrayout);
+		removeLabelProperties(predicateArrayin);
 		
 		console.log("The number of suggester classes is:  "+classesArray.length);
 	    console.log("The number of suggester predicates/in is:  "+predicateArrayin.length); 
