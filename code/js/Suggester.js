@@ -160,6 +160,21 @@ function Suggester(){
 	
 	var sugEx=new QueryExecutor();
 	
+	function removeLabelProperties(prediarray) {
+		//Remove label properties from 'predicateArray'
+		//Following code assumes that predicateArray has no duplicates!!
+		var labelProps = spex.q.le.listOfLabelProperties.slice();
+		for (var x=0;x<prediarray.length;x++){
+			var y = labelProps.indexOf(prediarray[x]);
+			if(y != -1){
+				prediarray.splice(x,1);
+				x--;
+				console.log("Label property '" + labelProps[y] + "' was removed from predicate suggester");
+				labelProps.splice(y,1);
+			}
+		}
+	
+	}
 
     sugEx.callback = function(str) {      // Define a callback function to receive the SPARQL JSON result.
 		var jsonObj = eval('(' + str + ')');      // Convert result to JSON
@@ -168,26 +183,21 @@ function Suggester(){
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"aClass",classesArray); //store in classesArray if results correspond to the query for classes
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate_o",predicateArrayout); // store in predicateArray if results correspond to the query for predicates
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate_i",predicateArrayin); // store in predicateArray if results correspond to the query for predicates
-		//Remove label properties from 'predicateArray'
-		//Following code assumes that predicateArray has no duplicates!!
-		var labelProps = spex.q.le.listOfLabelProperties.slice();
-		for (var x=0;x<predicateArrayout.length;x++){
-			var y = labelProps.indexOf(predicateArrayout[x]);
-			if(y != -1){
-				predicateArrayout.splice(x,1);
-				x--;
-				console.log("Label property '" + labelProps[y] + "' was removed from predicate suggester");
-				labelProps.splice(y,1);
-			}
-		}	
+		
+		
 		 
 		classesArray = classesArray.unique().sort();
 		predicateArrayin = predicateArrayin.unique().sort();
-		predicateArrayout = predicateArrayout.unique().sort();
-	   	console.log("The number of suggester classes is:  "+classesArray.length);
-	    console.log("The number of suggester predicates/in is:  "+predicateArrayin.length); 
-		console.log("The number of suggester predicates/out is:  "+predicateArrayout.length); 	
+		predicateArrayout = predicateArrayout.unique().sort(); 		
 		
+		spex.sug.removeLabelProperties(predicateArrayout);
+		spex.sug.removeLabelProperties(predicateArrayin);
+		
+		console.log("The number of suggester classes is:  "+classesArray.length);
+	    console.log("The number of suggester predicates/in is:  "+predicateArrayin.length); 
+		console.log("The number of suggester predicates/out is:  "+predicateArrayout.length); 
+		
+		//sets the autosuggest lists when they are available
 		if (spex.sug.suggestClasses==true) {		
 		spex.sug.createDropdownC('queryS');
 		}
