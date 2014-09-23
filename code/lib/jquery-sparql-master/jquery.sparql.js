@@ -153,6 +153,7 @@
 	   // Union blocks
       else if(pat._sort == "union") {                
         queryString.push(pat.subquery.serialiseBlock());
+		queryString.slice(0,queryString.length - 1);
 		queryString.push("UNION");
 		queryString.push(pat.subquery2.serialiseBlock());
       }
@@ -224,6 +225,7 @@
 	  // Union blocks
       else if(pat._sort == "union") {                
         queryString.push(pat.subquery.serialiseBlock());
+        	queryString.slice(0,queryString.length - 1);
 		queryString.push("UNION");
 		queryString.push(pat.subquery2.serialiseBlock());
       }
@@ -259,7 +261,7 @@
     // End block
     queryString.push("} .");
     
-    return queryString.join(" ");
+    return queryString.join("\n");
     
   };
   
