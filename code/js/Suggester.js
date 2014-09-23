@@ -183,9 +183,7 @@ function Suggester(){
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"aClass",classesArray); //store in classesArray if results correspond to the query for classes
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate_o",predicateArrayout); // store in predicateArray if results correspond to the query for predicates
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate_i",predicateArrayin); // store in predicateArray if results correspond to the query for predicates
-		
-		
-		 
+				 
 		classesArray = classesArray.unique().sort();
 		predicateArrayin = predicateArrayin.unique().sort();
 		predicateArrayout = predicateArrayout.unique().sort(); 		
@@ -197,7 +195,7 @@ function Suggester(){
 	    console.log("The number of suggester predicates/in is:  "+predicateArrayin.length); 
 		console.log("The number of suggester predicates/out is:  "+predicateArrayout.length); 
 		
-		//sets the autosuggest lists when they are available
+		//sets the autosuggestion lists when they are available
 		if (spex.sug.suggestClasses==true) {		
 		spex.sug.createDropdownC('queryS');
 		}
@@ -269,14 +267,8 @@ function Suggester(){
 		createDropdown(idString,instancesArray);
 	};
 
-	this.init=function(){
+	this.init=function(){	
 		
-		//console.log(queryClasses.getSPARQL());
-		//console.log(queryPredicates.getSPARQL());
-		//queryforPredicates();
-		//queryforClasses();
-		//sugEx.executeQuery(queryClasses, endpoint); 
-		//sugEx.executeQuery(queryPredicates, endpoint);
 	};
 	
 	//This adjusts menu texts accordingly
@@ -367,18 +359,24 @@ function Suggester(){
 	this.getSelNodeInstances = function (){
 		//if (!queryPane.selected.variable) {	
 			instancesArray = [];
-			instancelabelArray = [];
+			instanceIDArray = [];
 			var varname = queryPane.getNodeVarName(queryPane.selected).substr(1);
 			console.log("auto-suggester instance list generated from current results for: "+varname);			
 			$.each(spex.rp.currentresults.getAllResults().results.bindings, function(solutionIndex, solution) {		
 				//console.log(solution);
-				if(solution[varname]){ instancesArray.push({ value: solution[varname+'__label'].value, id: solution[varname].value});}
-				//console.log({id: solution[varname].value, value: solution[varname+'__label'].value});
+				if(solution[varname]&& instanceIDArray.indexOf(solution[varname].value)==-1 && solution[varname+'__label'].value!= "Something"){ //This filters out blank nodes and duplicates
+					instancesArray.push({ value: solution[varname+'__label'].value, id: solution[varname].value});
+					instanceIDArray.push(solution[varname].value); //this assures uniqueness of instance ids
+				}			
+				console.log({id: solution[varname].value, value: solution[varname+'__label'].value});
 			});			
-			//instancesArray = instancesArray.unique();
+			
 			if (instancesArray.length==0 ) {
 			$('#warning').text("No instance suggestions found!").css("color" , "red");
-			} else {$('#warning').text('').css("color" , "white")};
+			} else {
+			$('#warning').text('').css("color" , "white");
+			instancesArray = instancesArray.sort();
+			};
 		//}
 	};
 	
