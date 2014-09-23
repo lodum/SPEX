@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SPEXResultSet.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SPEXResultSet.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+/**
+* A SPEX results set, which holds JSON and has methods for preparing spatial and temporal information for display and furthermore detects whether it is present or not
+* @class
+**/
+function SPEXResultSet(json) {
+	this.allResults = json;
+	//this.displayResults = this.prepareresultstodisplay(json);
+}
+
+//Generates a second json object for display containing only user selected variables of the query (spex.q.SPEXvariables)
+//SPEXResultSet.prototype.prepareresultstodisplay = function(json) {
+//var displayjson = JSON.parse(JSON.stringify(json));
+//	$.each(displayjson.head.vars, function(index2, value2) { 
+//		if( 
+//		spex.q.SPEXvariables.indexOf('?'+value2)==-1 &amp;&amp; value2!=undefined 
+//		){ 						
+//					delete displayjson.head.vars[index2];
+//		}else{};						
+//	});			
+//return  displayjson;
+//}
+
+
+//SPEXResultSet.prototype.constructor = SPEXResultSet;
+
+/** Function to return the SPARQL JSON as it was returned from the endpoint. 
+* @function */
+SPEXResultSet.prototype.getAllResults = function() {
+	return this.allResults;
+};
+
+/**Function to add new solution into result set. 
+* @function */
+SPEXResultSet.prototype.addNewResult = function(resultObject) { //is this what it's meant to do?
+	this.allResults.results.bindings.push(resultObject);
+	//If a new solution has been added, we have to reformat the labeledResults attribute.
+	this.prepareForDisplay();
+}; 
+
+SPEXResultSet.prototype.getUserSelectedVariables = function() {	
+	/* Since only variables originally selected by the user got a corresponding 'child' variable with a "__label" ending 
+	(while processed by LiteralExpander),
+	we can trace back the original variables by looking for their children. */
+		var allVariables = this.allResults.head.vars;
+		var userSelection = [];
+		for(i = 0; i &lt; allVariables.length; i++) {
+			var v = allVariables[i];
+			if(v.substring(v.length - 7, v.length) === "__label") {
+				var parent = v.substring(0, v.length - 7);
+				var parentIndex = allVariables.indexOf(parent);
+				userSelection.push(allVariables[parentIndex]);
+			}
+		}
+		return userSelection;
+};
+
+
+/**This function relates spatio-temporal variables created by FilterExpander to their 'parent' variables.
+The result is an object whose keys are the parents (= user-selected variables from the original query). 
+The value for each key is an array of spatio-temporal variables 
+related through property chains to the key variable.**/
+SPEXResultSet.prototype.relateSpaceTime = function() {
+	var userVars = this.getUserSelectedVariables();
+	//debug(JSON.stringify(userVars));
+	var allVars = this.allResults.head.vars
+	var spaceTimeMatches = {};
+	for(var i = 0; i &lt; userVars.length; i++) {
+		var userVariable = userVars[i];
+		var pattern = "^" + userVariable + "_[0-9]+_[0-9]+$";
+		var re = new RegExp(pattern);
+		for(var j = 0; j &lt; allVars.length; j++) {
+			var aVar = allVars[j];
+			if(re.test(aVar)) {
+				 if(!spaceTimeMatches[userVariable]){
+				 	spaceTimeMatches[userVariable] = [aVar];
+				 	//debug(JSON.stringify(spaceTimeMatches[userVariable]));
+				 } else {
+				 	spaceTimeMatches[userVariable].push(aVar);
+				 	//debug(JSON.stringify(spaceTimeMatches[userVariable]));
+				 }
+			}
+		}
+	}
+	return spaceTimeMatches;
+};
+
+/**This function prepares results for display on the map by relating each result with its geometry (if available).
+* @function */
+SPEXResultSet.prototype.getWKT = function() {
+	var relatedVars = this.relateSpaceTime();
+	var solutions = this.allResults.results.bindings;
+	var labelWKTpairs = [];
+	
+/*
+	//Find the indices of "geo:asWKT", "wgs84:lat" and "wgs84:long" in FilterExpander.prototype.filterDataProperties array:
+	var WKTindex, latIndex, longIndex;
+	for(var j = 0; j &lt; FilterExpander.prototype.filterDataProperties.length; j++) {
+		var property = FilterExpander.prototype.filterDataProperties[j];
+		if(property.prop[property.prop.length - 1] === "geo:asWKT") {
+			WKTindex = "_" + j + "_" + (property.prop.length - 1);
+		} else if(property.prop[property.prop.length - 1] === "wgs84:lat") {
+			latIndex = "_" + j + "_" + (property.prop.length - 1);
+		} else if(property.prop[property.prop.length - 1] === "wgs84:long") {
+			longIndex = "_" + j + "_" + (property.prop.length - 1);
+		}
+	}
+*/
+	
+	for(userVar in relatedVars) {
+		for(var i = 0; i &lt; solutions.length; i++) {
+			var sol = solutions[i];
+			if(sol[userVar]) {
+				if(sol[userVar + "_2_1"]) {//_2_1 refers to property "geo:asWKT"
+					//In this case, two additional values are added to array, for use in FilterResults().
+					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + "_2_1"].value,userVar,i]);
+					sol[userVar + "__mapLayerNumber"] = labelWKTpairs.length - 1;
+					console.log("map layer number: " + sol[userVar + "__mapLayerNumber"]);
+				} else if(sol[userVar + "_0_0"] &amp;&amp; sol[userVar + "_1_0"]) {//if geo:asWKT is not there, construct WKT point literal
+					labelWKTpairs.push(	
+						[sol[userVar + "__label"].value, 
+						"POINT(" + sol[userVar + "_1_0"].value + " " + sol[userVar + "_0_0"].value + ")"] 
+					);
+					sol[userVar + "__mapLayerNumber"] = labelWKTpairs.length - 1;
+					console.log("map layer number: " + sol[userVar + "__mapLayerNumber"]);
+				}
+			}
+		}
+	}
+	
+/*
+	for(userVar in relatedVars) {
+		for(var i = 0; i &lt; solutions.length; i++) {
+			var sol = solutions[i];
+			if(sol[userVar]) {
+				if(sol[userVar + WKTindex]) {//_2_1 refers to property "geo:asWKT"
+					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + WKTindex].value]);
+				} else if(sol[userVar + latIndex] &amp;&amp; sol[userVar + longIndex]) {//if geo:asWKT is not there, construct WKT point literal
+					labelWKTpairs.push(	
+						[sol[userVar + "__label"].value, 
+						"POINT(" + sol[userVar + longIndex].value + " " + sol[userVar + latIndex].value + ")"] 
+					);
+				}
+			}
+		}
+	}
+*/
+	
+	return labelWKTpairs;
+};
+
+/**This generates a json table which contains time points, ranges and labels as needed by the timeline object
+* @function */
+SPEXResultSet.prototype.getTimes= function() {
+var solutions = this.allResults.results.bindings;
+var labeltimepairs = [];
+var relatedVars = this.relateSpaceTime();
+
+for(userVar in relatedVars) {
+		for(var i = 0; i &lt; solutions.length; i++) {
+			var sol = solutions[i];
+			if(sol[userVar]) {
+				if(sol[userVar + "_4_2"] &amp;&amp; sol[userVar + "_5_2"]) {//_4_2 and /_5_2  refer to beginning and end in owl time (intervals)
+					//new Date(1980, 7, 15)
+					labeltimepairs.push(
+						{"start" : new Date(sol[userVar + "_4_2"].value), "end" : new Date(sol[userVar + "_5_2"].value), 'content': sol[userVar + "__label"].value}
+							
+					);
+					/*If the instance is added as an item to the labeltimepairs array, 
+					the item's index in the array is stored next to the instance in the result set.  
+					This is used to later connect the instance's results table row and time slider item.
+					*/
+					sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
+					console.log("OWL Time intervals detected:" + new Date(sol[userVar + "_4_2"].value));
+				}
+				else if(sol[userVar + "_6_1"]){ //_6_1 refers to xsd:gYears 
+					labeltimepairs.push(
+						{"start" : new Date(sol[userVar + "_6_1"].value, 0, 1), "end" : new Date(sol[userVar + "_6_1"].value, 11, 31), 'content': sol[userVar + "__label"].value}
+						//{"start" : new Date(sol[userVar + "_6_1"].value, 0, 1), 'content': sol[userVar + "__label"].value}
+						
+					);
+					sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
+					console.log("xsd:gYears detected:" + sol[userVar + "_6_1"].value);
+					console.log("xsd:gYears converted to Date:" + new Date(sol[userVar + "_6_1"].value));
+				}
+			}
+		}
+}
+
+	return labeltimepairs ;
+}
+
+/** Function to detect which of the user-selected variables are spatial.  
+The function iterates through all the solutions in the SPARQL JSON result and 
+if a user-selected variable has at least one spatial literal associated with it
+in at least one of the solutions, the variable is added to a list of spatially enabled variables.
+* @function */
+SPEXResultSet.prototype.detectSpatiallyEnabledVars = function() {
+	var relatedVars = this.relateSpaceTime();
+	var solutions = this.allResults.results.bindings;
+	var spatiallyEnabledVars = {};
+	
+	//Find spatial properties in FilterExpander.prototype.filterDataProperties:
+	var spatialSubscripts = [];//subscripts!
+	for(var j = 0; j &lt; FilterExpander.prototype.filterDataProperties.length; j++) {
+		var property = FilterExpander.prototype.filterDataProperties[j];
+		if(property.prefix === "wgs84" || property.prefix === "geo") {
+			spatialSubscripts.push("_" + j + "_" + (property.prop.length - 1));
+		} 
+	}
+
+	for(userVar in relatedVars) {
+		for(var i = 0; i &lt; solutions.length; i++) {
+			var sol = solutions[i];
+			if(sol[userVar]) {
+				for(var k = 0; k &lt; spatialSubscripts.length; k++) {
+					var subscript = spatialSubscripts[k];
+					if(sol[userVar + subscript]) {
+						if(!spatiallyEnabledVars[userVar]) {
+							spatiallyEnabledVars[userVar] = [userVar + subscript];
+						} else if(spatiallyEnabledVars[userVar].indexOf(userVar + subscript) === -1){
+							spatiallyEnabledVars[userVar].push(userVar + subscript);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	return spatiallyEnabledVars;
+};
+
+/** Function to detect which of the user-selected variables are temporal.  
+The function iterates through all the solutions in the SPARQL JSON result and 
+if a user-selected variable has at least one temporal literal associated with it, 
+the variable is added to a list of temporally enabled variables.
+* @function */
+SPEXResultSet.prototype.detectTemporallyEnabledVars = function() {
+	var relatedVars = this.relateSpaceTime();
+	var solutions = this.allResults.results.bindings;
+	var temporallyEnabledVars = {};
+	
+	//Find temporal properties in FilterExpander.prototype.filterDataProperties:
+	var temporalSubscripts = [];
+	for(var j = 0; j &lt; FilterExpander.prototype.filterDataProperties.length; j++) {
+		var property = FilterExpander.prototype.filterDataProperties[j];
+		if(property.prefix == "time") {
+			temporalSubscripts.push("_" + j + "_" + (property.prop.length - 1));
+		} 
+	}
+
+	for(userVar in relatedVars) {
+		for(var i = 0; i &lt; solutions.length; i++) {
+			var sol = solutions[i];
+			if(sol[userVar]) {
+				for(var k = 0; k &lt; temporalSubscripts.length; k++) {
+					var subscript = temporalSubscripts[k];
+					if(sol[userVar + subscript]) {
+						if(!temporallyEnabledVars[userVar]) {
+							temporallyEnabledVars[userVar] = [userVar + subscript];
+						} else if(temporallyEnabledVars[userVar].indexOf(userVar + subscript) === -1){
+							temporallyEnabledVars[userVar].push(userVar + subscript);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	return temporallyEnabledVars;
+};
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="FilterExpander.html">FilterExpander</a></li><li><a href="FilterResults.html">FilterResults</a></li><li><a href="LabelGenerator.html">LabelGenerator</a></li><li><a href="LiteralExpander.html">LiteralExpander</a></li><li><a href="QueryExecutor.html">QueryExecutor</a></li><li><a href="queryPane.html">queryPane</a></li><li><a href="ResultsPane.html">ResultsPane</a></li><li><a href="slider.html">slider</a></li><li><a href="SpaceFilterPane.html">SpaceFilterPane</a></li><li><a href="spex.html">spex</a></li><li><a href="SPEXQuery.html">SPEXQuery</a></li><li><a href="SPEXResultSet.html">SPEXResultSet</a></li><li><a href="Suggester.html">Suggester</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Tue Sep 23 2014 16:52:30 GMT+0200 (MESZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
