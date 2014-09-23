@@ -171,7 +171,8 @@ for(userVar in relatedVars) {
 						
 					);
 					sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
-					console.log("xsd:gYears detected:" + new Date(sol[userVar + "_6_1"].value));
+					console.log("xsd:gYears detected:" + sol[userVar + "_6_1"].value);
+					console.log("xsd:gYears converted to Date:" + new Date(sol[userVar + "_6_1"].value));
 				}
 			}
 		}
