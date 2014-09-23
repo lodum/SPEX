@@ -682,6 +682,7 @@ var queryPane = {
 		var temp = new Time();
 		temp.timeBeginning = slider.timeline.getVisibleChartRange().start.xsdDateTime();
 		temp.timeEnd = slider.timeline.getVisibleChartRange().end.xsdDateTime();
+		console.log("TIME FILTER OBJECT: " + JSON.stringify(temp));
 
 		spex.q.setTemporalConstraint(
 			queryPane.getNodeVarName(queryPane.selected)
