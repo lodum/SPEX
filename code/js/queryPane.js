@@ -249,12 +249,13 @@ var queryPane = {
 
 		this.node.select("text.id")
       	.text(function(d) { 
-      		return d.label; 
+			if (d.label==''){var lab = 'var'+d.id}else{var lab =d.label}
+      		return  lab; 
       	});
 
       	this.node.select("text.var")
       	.text(function(d) { 
-      		return (d.variable) ? '?': '';
+      		return (d.variable) ? '?' : '';
       	});
 
       	this.node.select("circle")
@@ -294,9 +295,7 @@ var queryPane = {
 					queryPane.nodeselectedCL = queryPane.selected;
 				}else {spex.sug.setLinkText();}					
 				spex.sug.suggestClasses=true;
-				spex.sug.createDropdownC('queryS');
-								
-							
+				spex.sug.createDropdownC('queryS');			
 		
 	},
 	

@@ -212,7 +212,7 @@ function Suggester(){
 		else if (spex.sug.queryChain == 1) {			
 			spex.sug.queryChain++;
 			var triples = false;
-			//test whether query has additional triples coming from spex query. If not, it is not required to query for "in" predicates, since node in focus does not have any further constraints which would distinguish in from out
+			//tests whether query has additional triples coming from spex query. If not, it is not required to query for "in" predicates, since node in focus does not have any further constraints which would distinguish in from out
 			for (var i = 0; i< spex.q.patterns.length; i++) {
 				var pat = spex.q.patterns[i];
 				if (pat._sort == "triple"){triples = true; break;}
@@ -267,8 +267,7 @@ function Suggester(){
 		createDropdown(idString,instancesArray);
 	};
 
-	this.init=function(){	
-		
+	this.init=function(){			
 	};
 	
 	//This adjusts menu texts accordingly
@@ -352,7 +351,7 @@ function Suggester(){
 	};
 	this.chainVariableQueries = function () {		
 		this.queryChain =0;
-		console.log("queryChain :"+this.queryChain);
+		//console.log("queryChain :"+this.queryChain);
 		this.getSelNodeClassesofCurrentQuery();
 	}
 	
@@ -368,7 +367,7 @@ function Suggester(){
 					instancesArray.push({ value: solution[varname+'__label'].value, id: solution[varname].value});
 					instanceIDArray.push(solution[varname].value); //this assures uniqueness of instance ids
 				}			
-				console.log({id: solution[varname].value, value: solution[varname+'__label'].value});
+				//console.log({id: solution[varname].value, value: solution[varname+'__label'].value});
 			});			
 			
 			if (instancesArray.length==0 ) {
