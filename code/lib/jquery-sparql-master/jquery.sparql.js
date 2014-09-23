@@ -154,9 +154,9 @@
       else if(pat._sort == "union") {                
         queryString.push(pat.subquery.serialiseBlock());
         	var unionQueryOne = queryString[queryString.length - 1];
-        	console.log("before: " + unionQueryOne.charAt(unionQueryOne.length - 1));
+        	console.log("before: " + unionQueryOne);
         	unionQueryOne = unionQueryOne.slice(0,unionQueryOne.length - 1);
-        	console.log("after: " + unionQueryOne.charAt(unionQueryOne.length - 1));
+        	console.log("after: " + unionQueryOne);
 		queryString.push("UNION");
 		queryString.push(pat.subquery2.serialiseBlock());
       }
