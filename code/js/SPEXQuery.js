@@ -120,7 +120,7 @@ SPEXQuery.prototype.detectWKTvars = function() {
 	return WKTvars;
 };
 /** 
-* Expands the query by filter and optional statements which catch spatial geometries
+* Expands the query by filter statements for spatial geometries
 *@function */
 SPEXQuery.prototype.expandSpaceFilter = function(){
  	var WKTvars = this.detectWKTvars();
@@ -170,7 +170,7 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
 }
 
 /** 
-* Expands the query by optional statements and filters which catch temporal information
+* Expands the query by filters for temporal information
 *@function */
 SPEXQuery.prototype.expandTimeFilter = function(){
  	for (variable in this.temporalConstraints)  {
