@@ -6,7 +6,6 @@
 * @property {object}  temporalConstraints  - holds the temporal constraints on a node in focus.
 * @property {object}  patterns  - holds SPARQL patterns (triples, subgraphs, optionals).
 * @property {object}  filters  - holds SPARQL filters .
-* @property {object}  prefixes  - holds the list of SPEX prefixes.
  * @property {number}  timeout  - number of seconds before timeout is thrown.
  * @property {number}  limit - maximum number of result items displayed
 **/
@@ -20,7 +19,6 @@ this.variablelabels = [];
 
 // redeclare patterns
     this.queryType = "SELECT";
-    this.prefixes = SPEXPrefixes;
     this.defaultGraphs = [];
     this.namedGraphs = [];
     this.variables = [];
@@ -59,7 +57,7 @@ SPEXQuery.prototype.getSPARQL = function (){
 	this.expandTimeFilter();	
 	this.fe.expandFilterLiterals(this);
 	this.le.expandLabels(this);
-	return this.serialiseQuery();
+	return this.getPrefixedQueryString();
 }
 /** 
 * sets a space window on some variable as a spatial constraint
@@ -209,3 +207,95 @@ SPEXQuery.prototype.expandTimeFilter = function(){
  	*/
 	
 }
+
+/**
+* Returns the query as a string with prefixes
+*@function */
+SPEXQuery.prototype.getPrefixedQueryString = function(){
+	var prefixList = [];
+	var string = this.serialiseQuery();
+	
+	//Find prefixes in the querystring
+	var newString = string;	
+	var j = newString.indexOf(":");
+	while(j != -1){
+		for (var i=j-1; i>=0; i--){
+			var char=newString.charAt(i);
+			if(char == '<') i = -1;
+			else if([' ','|','{','\n','}','.','>'].indexOf(char) != -1){
+				var pfx = newString.substring(i+1,j);
+				//compare prefix with prefixlist. If found, add to prefixes of query
+				for(var k=0; k<prefixes.length; k++){
+					if(prefixes[k].prefix == pfx){
+						k = prefixes.length;
+						prefixList.push(pfx);
+					}
+				}				
+				i = -1;
+			}
+		}
+		newString = newString.substring(j+1);
+		j = newString.indexOf(":");
+	}
+	
+	//Replace uri's enclosed in '<' and '>' with the corresponding prefix
+	newString = string;
+	var stringChanged = false;
+	do{
+		stringChanged = false;
+		//Find the string enclosed in '<' and '>'
+		var i = string.indexOf("<");
+		if(i != -1){
+			var j = string.substring(i).indexOf(">") + i;
+			if(j != -1){
+				var theUri = string.substring(i+1,j);
+				//Replace this string with the correct prefix from the prefixlist, and add to query prefixes
+				if(theUri.indexOf(" ") == -1){
+					for(var k=0; k<prefixes.length; k++){
+						if(theUri.indexOf(prefixes[k].uri) != -1){
+							newString = string.substring(0,i) + theUri.replace(prefixes[k].uri, prefixes[k].prefix + ':') + string.substring(j+1);
+							prefixList.push(prefixes[k].prefix);
+							k = prefixes.length;
+							stringChanged = true;
+						}
+					}
+				}
+			}
+		}
+		string = newString;
+	} while (stringChanged == true);
+	
+	//store the query in 'string'
+	string = newString;
+	
+	//remove duplicates from prefixList
+	prefixList.sort();
+	for(var i=0; i< prefixList.length;i++){
+		if(prefixList[i]==prefixList[i+1]){
+			prefixList.splice(i+1,1);
+			i--;
+		}
+	}
+	
+	var queryString = "";
+	
+	//Add prefixes to 'queryString', using 'prefixList' and master prefix list 'prefixes' 
+	for(var i=0;i<prefixList.length;i++){
+		for(var j=0;j<prefixes.length;j++){
+			var pfx=prefixes[j];
+			if(prefixList[i] == pfx.prefix){
+				queryString += "PREFIX " + pfx.prefix + ": <" + pfx.uri + ">\n";
+				j=prefixes.length;
+			} else if(j==prefixes.length - 1){
+				console.log("The prefix " + prefixList[i] + " was not found in the stored prefixes!");
+			}
+		}
+	}
+	
+	//Add the actual query 'string' to 'queryString'
+	
+	queryString+=string;
+	
+	return queryString;
+};
+
