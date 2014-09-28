@@ -1777,26 +1777,6 @@ var prefixes=
 	}
 ];
 
-
-function selectPrefixes(pfxArray){
-	var a=[];
-	for(var i=0;i<pfxArray.length;i++){
-		for(var j=0;j<prefixes.length;j++){
-			if(pfxArray[i] == prefixes[j].prefix){
-				a.push(prefixes[j]);
-				j=prefixes.length;
-			} else if(j==prefixes.length - 1){
-				console.log("The prefix " + pfxArray[i] + " was not found in the stored prefixes!");
-			}
-		}
-	}
-	return a;
-}
-
-var pfxSPEX = ["bibo","dbp","dbp-ont","dbp-prop","dc","dct","foaf","geo","maps","phen","rdf","rdfs","time","wgs84","xsd"];
-
-var SPEXPrefixes = selectPrefixes(pfxSPEX);
-
 /*
 Blacklist of prefixes:
 
