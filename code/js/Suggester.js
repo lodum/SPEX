@@ -34,7 +34,7 @@ LabeledQuery.prototype.constructor=LabeledQuery;
 
 LabeledQuery.prototype.getSPARQL = function (){
 	this.le.expandLabels(this);
-	return this.serialiseQuery();
+	return this.getPrefixedQueryString();
 }
 
 function copyQuery(copy, q){	
