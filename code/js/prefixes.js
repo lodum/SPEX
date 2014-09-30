@@ -5,6 +5,26 @@
 var prefixes=
 [
 	{
+	"prefix":"lodum-occu",
+	"uri": "http://vocab.lodum.de/occupations/"
+	},
+	{
+	"prefix":"lodum-helper",
+	"uri": "http://vocab.lodum.de/helper/"
+	},
+	{
+	"prefix":"lodum-limap",
+	"uri": "http://vocab.lodum.de/limap/"
+	},
+	{
+	"prefix":"lodum-istg",
+	"uri": "http://vocab.lodum.de/istg/"
+	},
+	{
+	"prefix":"lodum-access",
+	"uri": "http://vocab.lodum.de/buildingaccessibility/"
+	},
+	{
 	"prefix":"acco",
 	"uri": "http://purl.org/acco/ns#"
 	},
@@ -293,6 +313,10 @@ var prefixes=
 	"uri": "http://purl.org/ctic/infraestructuras/organizacion#"
 	},
 	{
+	"prefix":"cv",
+	"uri": "http://rdfs.org/resume-rdf/#"
+	},
+	{
 	"prefix":"cv_base",
 	"uri": "http://rdfs.org/resume-rdf/base.rdfs#"
 	},
@@ -323,6 +347,10 @@ var prefixes=
 	{
 	"prefix":"dbp-prop",
 	"uri": "http://dbpedia.org/property/"
+	},
+	{
+	"prefix":"dbp-yago",
+	"uri": "http://live.dbpedia.org/class/yago/"
 	},
 	{
 	"prefix":"dc",
@@ -430,6 +458,10 @@ var prefixes=
 	},
 	{
 	"prefix":"dul",
+	"uri": "http://www.loa-cnr.it/ontologies/DUL.owl#"
+	},
+	{
+	"prefix":"dul2",
 	"uri": "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"
 	},
 	{
