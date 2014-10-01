@@ -222,7 +222,7 @@ SPEXQuery.prototype.getPrefixedQueryString = function(){
 		for (var i=j-1; i>=0; i--){
 			var char=newString.charAt(i);
 			if(char == '<') i = -1;
-			else if([' ','|','{','\n','}','.','>'].indexOf(char) != -1){
+			else if([' ','|','{','\n','}','.','>','^','/','!','(','\t'].indexOf(char) != -1){
 				var pfx = newString.substring(i+1,j);
 				//compare prefix with prefixlist. If found, add to prefixes of query
 				for(var k=0; k<prefixes.length; k++){
