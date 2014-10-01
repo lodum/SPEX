@@ -10,7 +10,7 @@
  * @property {number}  limit - maximum number of result items displayed
 **/
 function SPEXQuery(){ 
-this.limit(50); 
+this.limit(100); 
 this.timeout = 100000;
 this.fe = new FilterExpander();
 this.le = new LiteralExpander();
