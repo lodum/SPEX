@@ -224,13 +224,8 @@ SPEXQuery.prototype.getPrefixedQueryString = function(){
 			if(char == '<') i = -1;
 			else if([' ','|','{','\n','}','.','>','^','/','!','(','\t'].indexOf(char) != -1){
 				var pfx = newString.substring(i+1,j);
-				//compare prefix with prefixlist. If found, add to prefixes of query
-				for(var k=0; k<prefixes.length; k++){
-					if(prefixes[k].prefix == pfx){
-						k = prefixes.length;
-						prefixList.push(pfx);
-					}
-				}				
+				//Add prefix to prefixes of query
+				prefixList.push(pfx);				
 				i = -1;
 			}
 		}
@@ -257,6 +252,9 @@ SPEXQuery.prototype.getPrefixedQueryString = function(){
 							prefixList.push(prefixes[k].prefix);
 							k = prefixes.length;
 							stringChanged = true;
+						}
+						else if(k == prefixes.length -1){
+							console.log(".getPrefixedQueryString(): The uri <" + theUri +"> could not be matched with the prefix list!");
 						}
 					}
 				}
@@ -287,7 +285,7 @@ SPEXQuery.prototype.getPrefixedQueryString = function(){
 				queryString += "PREFIX " + pfx.prefix + ": <" + pfx.uri + ">\n";
 				j=prefixes.length;
 			} else if(j==prefixes.length - 1){
-				console.log("The prefix " + prefixList[i] + " was not found in the stored prefixes!");
+				console.log(".getPrefixedQueryString(): The prefix '" + prefixList[i] +"' could not be matched with the prefix list!");
 			}
 		}
 	}
