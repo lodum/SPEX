@@ -15,10 +15,15 @@ FilterExpander.prototype.filterDataProperties.push({"prefix" : "wgs84", "uri" : 
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "wgs84", "uri" : "http://www.w3.org/2003/01/geo/wgs84_pos#", "prop" : [ "wgs84:long"]});
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry", "geo:asWKT"]});
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry",  "geo:asGML"]});
+
+FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "maps:mapsArea", "geo:asWKT"]});
+
 //Dealing with time
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink","time:hasBeginning", "time:inXSDDateTime"]}); 
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink", "time:hasEnd",  "time:inXSDDateTime"]}); 
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink", "xsd:gYear"]}); 
+
+
 
 /**This method takes a query and adds for all user selected variables some optional statements which automatically load filter literals by one of the chains of properties defined above
 * @function */
