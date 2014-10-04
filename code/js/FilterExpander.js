@@ -14,16 +14,13 @@ FilterExpander.prototype.filterDataProperties = [];
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "wgs84", "uri" : "http://www.w3.org/2003/01/geo/wgs84_pos#", "prop" : [ "wgs84:lat"]});
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "wgs84", "uri" : "http://www.w3.org/2003/01/geo/wgs84_pos#", "prop" : [ "wgs84:long"]});
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry", "geo:asWKT"]});
-//FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "?mhasgeo", "geo:asWKT"]});
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry",  "geo:asGML"]});
-
-
+FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "maps:mapsArea", "geo:asWKT"]});
 
 //Dealing with time
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink","time:hasBeginning", "time:inXSDDateTime"]}); 
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink", "time:hasEnd",  "time:inXSDDateTime"]}); 
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink", "xsd:gYear"]}); 
-
 
 
 /**This method takes a query and adds for all user selected variables some optional statements which automatically load filter literals by one of the chains of properties defined above
@@ -51,4 +48,71 @@ FilterExpander.prototype.expandFilterLiterals = function(spexquery){
 		}        
     }
 	//return spexquery;
-}
+};
+
+FilterExpander.prototype.subscripts = function(){
+	var subscripts = {
+		"WKT":{
+			"lastLinks":["geo:asWKT"],
+			"value":[],
+			"type":"spatial"
+		},
+		"GML":{
+			"lastLinks":["geo:asGML"],
+			"value":[],
+			"type":"spatial"
+		},
+		"lat":{
+			"lastLinks":["wgs84:lat"],
+			"value":[],
+			"type":"spatial"
+		},
+		"long":{
+			"lastLinks": ["wgs84:long"],
+			"value":[],
+			"type":"spatial"
+		},
+		"timeBeg":{
+			"lastLinks":["time:hasBeginning", "time:inXSDDateTime"],
+			"value":[],
+			"type":"temporal"
+		},
+		"timeEnd":{
+			"lastLinks":["time:hasEnd", "time:inXSDDateTime"],
+			"value":[],
+			"type":"temporal"
+		},
+		"gYear":{
+			"lastLinks":["xsd:gYear"],
+			"value":[],
+			"type":"temporal"
+		}
+	};
+	//fill the values
+	for(var j = 0; j < this.filterDataProperties.length; j++) {
+		var propertyPath = this.filterDataProperties[j].prop;
+		for(var k in subscripts){
+			var breakNow = false;
+			var lastLinks = subscripts[k].lastLinks;
+			for(var i=0;i<lastLinks.length; i++){
+				if(lastLinks[lastLinks.length - i - 1] != propertyPath[propertyPath.length - i - 1]){
+					i=lastLinks.length;
+				} else if(i == lastLinks.length -1){
+					subscripts[k].value.push("_" + j + "_" + (propertyPath.length - 1));
+					i=lastLinks.length;
+					breakNow = true;
+				}
+			}
+			if(breakNow) break;
+		}
+	}
+	var logString="Space-Time subscripts:\n";
+	for(var i in subscripts){
+		logString += i + ":" + JSON.stringify(subscripts[i].value) + ", ";
+	}
+	logString = logString.substring(0,logString.length - 2);
+	console.log(logString);
+	return subscripts;
+};
+
+
