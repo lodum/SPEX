@@ -5,6 +5,19 @@
 **/
 function SPEXResultSet(json) {
 	this.allResults = json;
+	this.subscripts = FilterExpander.prototype.subscripts();
+	this.subscriptArray = function(name){
+		return this.subscripts[name].value;
+	};
+	this.subscriptsOfType = function(type){
+		var selected=[];
+		for (var i in this.subscripts){
+			if(this.subscripts[i].type == type){
+				selected = selected.concat(this.subscriptArray(i));
+			}
+		}
+		return selected;
+	};
 	//this.displayResults = this.prepareresultstodisplay(json);
 }
 
@@ -87,42 +100,46 @@ SPEXResultSet.prototype.relateSpaceTime = function() {
 
 /**This function prepares results for display on the map by relating each result with its geometry (if available).
 * @function */
-SPEXResultSet.prototype.getWKT = function() {
+SPEXResultSet.prototype.getWKT = function(){
 	var relatedVars = this.relateSpaceTime();
 	var solutions = this.allResults.results.bindings;
 	var labelWKTpairs = [];
 	
-/*
-	//Find the indices of "geo:asWKT", "wgs84:lat" and "wgs84:long" in FilterExpander.prototype.filterDataProperties array:
-	var WKTindex, latIndex, longIndex;
-	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
-		var property = FilterExpander.prototype.filterDataProperties[j];
-		if(property.prop[property.prop.length - 1] === "geo:asWKT") {
-			WKTindex = "_" + j + "_" + (property.prop.length - 1);
-		} else if(property.prop[property.prop.length - 1] === "wgs84:lat") {
-			latIndex = "_" + j + "_" + (property.prop.length - 1);
-		} else if(property.prop[property.prop.length - 1] === "wgs84:long") {
-			longIndex = "_" + j + "_" + (property.prop.length - 1);
-		}
-	}
-*/
-	
-	for(userVar in relatedVars) {
-		for(var i = 0; i < solutions.length; i++) {
+	for(userVar in relatedVars){
+		for(var i = 0; i < solutions.length; i++){
 			var sol = solutions[i];
-			if(sol[userVar]) {
-				if(sol[userVar + "_2_1"]) {//_2_1 refers to property "geo:asWKT"
-					//In this case, two additional values are added to array, for use in FilterResults().
-					labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + "_2_1"].value,userVar,i]);
-					sol[userVar + "__mapLayerNumber"] = labelWKTpairs.length - 1;
-					console.log("map layer number: " + sol[userVar + "__mapLayerNumber"]);
-				} else if(sol[userVar + "_0_0"] && sol[userVar + "_1_0"]) {//if geo:asWKT is not there, construct WKT point literal
-					labelWKTpairs.push(	
-						[sol[userVar + "__label"].value, 
-						"POINT(" + sol[userVar + "_1_0"].value + " " + sol[userVar + "_0_0"].value + ")"] 
-					);
-					sol[userVar + "__mapLayerNumber"] = labelWKTpairs.length - 1;
-					console.log("map layer number: " + sol[userVar + "__mapLayerNumber"]);
+			if(sol[userVar]){
+				var addingWKTisDone = false;
+				for(var j = 0; j < this.subscriptArray("WKT").length; j++){
+					var subscript = this.subscriptArray("WKT")[j];
+					if(addingWKTisDone){
+						j = this.subscriptArray("WKT").length;
+					} else if(sol[userVar + subscript]) {
+						console.log("WKT subscript: " + subscript);
+						//In this case, two additional values are added to array, for use in FilterResults().
+						labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + subscript].value,userVar,i]);
+						sol[userVar + "__mapLayerNumber"] = labelWKTpairs.length - 1;
+						console.log("map layer number: " + sol[userVar + "__mapLayerNumber"]);
+						addingWKTisDone = true;
+					}
+				}
+				for(var j = 0; j < this.subscriptArray("lat").length; j++){
+					var subscriptLat = this.subscriptArray("lat")[j];
+					for(var k=0; k < this.subscriptArray("long").length; k++){
+						var subscriptLong = this.subscriptArray("long")[k];
+						if(addingWKTisDone){
+							k = this.subscriptArray("long").length;
+							j = this.subscriptArray("lat").length;
+						} else if(sol[userVar + subscriptLat] && sol[userVar + subscriptLong]) {//if geo:asWKT is not there, construct WKT point literal
+							labelWKTpairs.push([
+								sol[userVar + "__label"].value, 
+								"POINT(" + sol[userVar + subscriptLong].value + " " + sol[userVar + subscriptLat].value + ")"
+							]);
+							sol[userVar + "__mapLayerNumber"] = labelWKTpairs.length - 1;
+							console.log("map layer number: " + sol[userVar + "__mapLayerNumber"]);
+							addingWKTisDone = true;
+						}
+					}
 				}
 			}
 		}
@@ -152,43 +169,62 @@ SPEXResultSet.prototype.getWKT = function() {
 /**This generates a json table which contains time points, ranges and labels as needed by the timeline object
 * @function */
 SPEXResultSet.prototype.getTimes= function() {
-var solutions = this.allResults.results.bindings;
-var labeltimepairs = [];
-var relatedVars = this.relateSpaceTime();
-
-for(userVar in relatedVars) {
+	var solutions = this.allResults.results.bindings;
+	var labeltimepairs = [];
+	var relatedVars = this.relateSpaceTime();
+	for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
 			var sol = solutions[i];
-			if(sol[userVar]) {
-				if(sol[userVar + "_4_2"] && sol[userVar + "_5_2"]) {//_4_2 and /_5_2  refer to beginning and end in owl time (intervals)
-					//new Date(1980, 7, 15)
-					labeltimepairs.push(
-						{"start" : new Date(sol[userVar + "_4_2"].value), "end" : new Date(sol[userVar + "_5_2"].value), 'content': sol[userVar + "__label"].value}
-							
-					);
-					/*If the instance is added as an item to the labeltimepairs array, 
-					the item's index in the array is stored next to the instance in the result set.  
-					This is used to later connect the instance's results table row and time slider item.
-					*/
-					sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
-					console.log("OWL Time intervals detected:" + new Date(sol[userVar + "_4_2"].value));
+			if(sol[userVar]){
+				var addingDateTimeIsDone = false;
+				for(var j = 0; j < this.subscriptArray("timeBeg").length; j++){
+					var subscriptBeg =this.subscriptArray("timeBeg")[j];
+					for(var k=0; k <this.subscriptArray("timeEnd").length; k++){
+						var subscriptEnd =this.subscriptArray("timeEnd")[k];
+						if(addingDateTimeIsDone){
+							k = this.subscriptArray("timeEnd").length;
+							j = this.subscriptArray("timeBeg").length;
+						} else if(sol[userVar + subscriptBeg] && sol[userVar + subscriptEnd]) {
+							labeltimepairs.push(
+								{
+									"start" : new Date(sol[userVar + subscriptBeg].value),
+									"end" : new Date(sol[userVar + subscriptEnd].value),
+									"content": sol[userVar + "__label"].value
+								}
+							);
+							/*if the instance is added as an item to the labeltimepairs array, 
+							the item's index in the array is stored next to the instance in the result set.  
+							This is used to later connect the instance's results table row and time slider item.
+							*/
+							sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
+							console.log("OWL Time intervals detected:" + new Date(sol[userVar + subscriptBeg].value));
+							addingDateTimeIsDone = true;
+						}
+					}
 				}
-				else if(sol[userVar + "_6_1"]){ //_6_1 refers to xsd:gYears 
-					labeltimepairs.push(
-						{"start" : new Date(sol[userVar + "_6_1"].value, 0, 1), "end" : new Date(sol[userVar + "_6_1"].value, 11, 31), 'content': sol[userVar + "__label"].value}
-						//{"start" : new Date(sol[userVar + "_6_1"].value, 0, 1), 'content': sol[userVar + "__label"].value}
-						
-					);
-					sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
-					console.log("xsd:gYears detected:" + sol[userVar + "_6_1"].value);
-					console.log("xsd:gYears converted to Date:" + new Date(sol[userVar + "_6_1"].value));
+				for(var j=0; j<this.subscriptArray("gYear").length; j++){
+					var subscript = this.subscriptArray("gYear")[j];
+					if(addingDateTimeIsDone){
+						j = this.subscriptArray("gYear").length;
+					} else if(sol[userVar + subscript]){ 
+						labeltimepairs.push(
+							{
+								"start" : new Date(sol[userVar + subscript].value, 0, 1),
+								"end" : new Date(sol[userVar + subscript].value, 11, 31),
+								"content": sol[userVar + "__label"].value
+							}
+						);
+						sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
+						console.log("xsd:gYears detected:" + sol[userVar + subscript].value);
+						console.log("xsd:gYears converted to Date:" + new Date(sol[userVar + subscript].value));
+						addingDateTimeIsDone = true;
+					}
 				}
 			}
 		}
-}
-
+	}
 	return labeltimepairs ;
-}
+};
 
 /** Function to detect which of the user-selected variables are spatial.  
 The function iterates through all the solutions in the SPARQL JSON result and 
@@ -201,13 +237,7 @@ SPEXResultSet.prototype.detectSpatiallyEnabledVars = function() {
 	var spatiallyEnabledVars = {};
 	
 	//Find spatial properties in FilterExpander.prototype.filterDataProperties:
-	var spatialSubscripts = [];//subscripts!
-	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
-		var property = FilterExpander.prototype.filterDataProperties[j];
-		if(property.prefix === "wgs84" || property.prefix === "geo") {
-			spatialSubscripts.push("_" + j + "_" + (property.prop.length - 1));
-		} 
-	}
+	var spatialSubscripts = this.subscriptsOfType("spatial");
 
 	for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
@@ -241,13 +271,7 @@ SPEXResultSet.prototype.detectTemporallyEnabledVars = function() {
 	var temporallyEnabledVars = {};
 	
 	//Find temporal properties in FilterExpander.prototype.filterDataProperties:
-	var temporalSubscripts = [];
-	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
-		var property = FilterExpander.prototype.filterDataProperties[j];
-		if(property.prefix == "time") {
-			temporalSubscripts.push("_" + j + "_" + (property.prop.length - 1));
-		} 
-	}
+	var temporalSubscripts = this.subscriptsOfType("temporal");
 
 	for(userVar in relatedVars) {
 		for(var i = 0; i < solutions.length; i++) {
