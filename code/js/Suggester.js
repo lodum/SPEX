@@ -396,7 +396,7 @@ function Suggester(){
 			console.log("auto-suggester instance list generated from current results for: "+varname);			
 			$.each(spex.rp.currentresults.getAllResults().results.bindings, function(solutionIndex, solution) {		
 				//console.log(solution);
-				if(solution[varname]&& instanceIDArray.indexOf(solution[varname].value)==-1 && solution[varname+'__label'].value!= "Something"){ //This filters out blank nodes and duplicates
+				if(solution[varname]&& solution[varname+'__label']&& instanceIDArray.indexOf(solution[varname].value)==-1 && solution[varname+'__label'].value!= "Something"){ //This filters out blank nodes and duplicates
 					instancesArray.push({ value: solution[varname+'__label'].value, id: solution[varname].value});
 					instanceIDArray.push(solution[varname].value); //this assures uniqueness of instance ids
 				}			

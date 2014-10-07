@@ -6,6 +6,7 @@
 **/
 function ResultsPane(){
 this.currentresults = new SPEXResultSet(" ");
+this.enabled = true; //This disables results highlighting
 };
 ResultsPane.prototype.constructor = ResultsPane;
 
@@ -82,10 +83,14 @@ ResultsPane.prototype.display = function(spexresultset){
 					
 					//create object to store the cell and (if they exist) its corresponding slider item and map item
 					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
+					
 					if(solution[variableName + '__sliderItemNumber']) {
-						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
+						var item = slider.timeline.items[solution[variableName + '__sliderItemNumber']];
+						var itemget = slider.timeline.getItem(solution[variableName + '__sliderItemNumber']);
+						//console.log("slider item: "+item itemget));
+						ev.setSliderItem(item,solution[variableName + "__label"].value);
 					}else if(solution[variableName + '__sliderItemNumber'] === 0) {
-						ev.setSliderItem(slider.timeline.getItem(solution[variableName + '__sliderItemNumber']));
+						ev.setSliderItem(slider.timeline.items[solution[variableName + '__sliderItemNumber']], solution[variableName + "__label"].value);
 					}
 					//...do same for map item...
 					if(solution[variableName + '__mapLayerNumber'] !== null) {
@@ -98,19 +103,23 @@ ResultsPane.prototype.display = function(spexresultset){
 					bodyCell.innerHTML = buildHTML(solution, variableName);
 					
 					//attach event listener to the cell
-					bodyCell.addEventListener("mouseover", function() {
+					var highl = function() {
 						ev.highlight();
-					}, false); 
-					bodyCell.addEventListener("mouseout", function() {
+					};
+					var dehighl =  function() {
 						ev.dehighlight();
-					}, false); 
-					//attach event listener to correspoding slider item
-					/*
-					slider.timeline.getItem(solution[variableName + '__sliderItemNumber']).hover(
-						function () { ev.highlight(); }, 
-					  	function () { ev.dehighlight();	}
-					);
-					*/
+					};
+					bodyCell.addEventListener("mouseover", highl, false); 
+					bodyCell.addEventListener("mouseout", dehighl , false); 
+					bodyCell.addEventListener("click", function() {			
+						//console.log("spex.rp.enabled" + spex.rp.enabled);
+						spex.rp.enabled = false;	
+					}, false);
+					bodyCell.addEventListener("dblclick", function() {
+						//console.log("spex.rp.enabled" + spex.rp.enabled);
+						spex.rp.enabled = true;													
+					}, false);
+					
 					
 					bodyRow.appendChild(bodyCell);
 				}

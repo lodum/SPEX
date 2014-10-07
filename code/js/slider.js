@@ -55,7 +55,7 @@ var slider = new function(){
 		this.timeline.draw(data, options);
 		
 		/**event listener 
-		* @function */
+		* @function 
 		function onselect() {
 			var sel = slider.timeline.getSelection();
 			if (sel.length) {
@@ -70,11 +70,11 @@ var slider = new function(){
 				  	}
 				  	document.title = "event " + row + " selected";
 				  	*/
-				}
+				/*}
 			}
-		}
+		}*/
 
-		links.events.addListener(this.timeline, 'select', onselect);
+		//links.events.addListener(this.timeline, 'select', onselect);
 	};
 	/**the display function which takes data and displays it in timeline object
 		* @function */  
@@ -97,7 +97,7 @@ var slider = new function(){
 		this.timeline.draw(data, options);
 		
 		//event listeners
-		function onselect() {
+		/*function onselect() {
 			//console.log("onselect() fired");
 			var sel = slider.timeline.getSelection();
 			if (sel.length) {
@@ -112,11 +112,11 @@ var slider = new function(){
 				  	}
 				  	document.title = "event " + row + " selected";
 				  	*/
-				}
+				/*}
 			}
-		}
+		}*/
 
-		links.events.addListener(this.timeline, 'select', onselect);
+		//links.events.addListener(this.timeline, 'select', onselect);
 		
 	}; 
 

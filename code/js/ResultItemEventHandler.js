@@ -1,40 +1,56 @@
 function ResultItemEventHandler(uri, tao){
   this.itemuri = uri;
-  this.tableObject = tao;
+  this.tableObject = tao; 
   this.timeObject = null;
   this.spaceObject = null;
 }
 
 ResultItemEventHandler.prototype.constructor = ResultItemEventHandler;
 
-ResultItemEventHandler.prototype.setSliderItem = function(item) {
-  this.timeObject = item;
-};
+
 
 ResultItemEventHandler.prototype.setMapLayer = function(layer) {
   this.spaceObject = layer;
 };
 
 ResultItemEventHandler.prototype.highlight = function(){
-  //console.log(this.itemuri);
-  //this.tableObject.css("background","lightgrey");
-  this.tableObject.style.background = "lightgrey";
-  console.log(JSON.stringify(this.timeObject));
-  if(this.timeObject) {
-    slider.timeline.zoom(1, this.timeObject.start);
+if (spex.rp.enabled) { //this checks whether highlighting is enabled or not
+    this.tableObject.style.background = "lightgrey";
+  
+  if(this.timeObject) {  
+	slider.timeline.zoom(1, this.timeObject.start);	
   }
   if(this.spaceObject) {
-    //map.LMap.fitBounds(this.spaceObject.getBounds());
+    map.LMap.fitBounds(this.spaceObject.getBounds());
   }
+}
 }
 
 ResultItemEventHandler.prototype.dehighlight = function(){
-  //this.tableObject.css("background","");
+if (spex.rp.enabled) {  
   this.tableObject.style.background = "";
-  if(this.timeObject) {
-    slider.timeline.zoom(-1, this.timeObject.start);
+  if(this.timeObject) {	
+    slider.timeline.zoom(-1);	
   }
   if(this.spaceObject) {
     map.LMap.fitBounds(map.markerGroup.getBounds());
   }
 }
+}
+
+ResultItemEventHandler.prototype.setSliderItem = function(item, label) {
+  this.timeObject = item;  
+  //console.log("time item property list: "+(Object.getOwnPropertyNames(item))); 
+  if (item.dom) {
+  $(item.dom).prepend("<div class='description'></div>");
+  $(item.dom).hover(function() {						
+						$(this).children(".description").text(label).show();
+						//console.log(label);
+					},
+					function() {
+						$(this).children(".description").hide();
+						
+					}					
+					);  
+  }
+};
