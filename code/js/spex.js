@@ -52,7 +52,7 @@ var spex = new function(){
 		$("#img_help").click(this.showhelp);
 		$("#img_help").tooltip();
 
-		$("#showquery").click(this.showquery);
+		//$("#showquery").click(this.showquery);
 
 		queryPane.init();
 
