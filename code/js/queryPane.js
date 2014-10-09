@@ -328,7 +328,7 @@ var queryPane = {
 
 		if (queryPane.selected.spConstraint) {			
 				if (queryPane.selected.spConstrSet) {constraintSpLinks = '<br><br> <a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Spatial Filter</a>';} 
-				else {constraintSpLinks = '<br><br><a href="javascript:void(0)" onclick="queryPane.setSpConstraint();" title="Click this link, then go to map and set desired search area by zooming in/out.">Filter results by map window</a>';};				
+				else {constraintSpLinks = '<br><br><a href="javascript:void(0)" onclick="queryPane.setSpConstraint();" title="Go to map and set desired search area by zooming in/out, only after that click this link.">Filter results by map window</a>';};				
 		};
 
 		if (queryPane.selected.teConstraint) {
