@@ -80,9 +80,9 @@ SPEXQuery.prototype.detectWKTvars = function() {
 	var WKTvars = [];
 	/* Find the index of "geo:asWKT". */
 	var latIndex, longIndex, WKTindex = null;
-	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
+	for(var j = FilterExpander.prototype.filterDataProperties.length - 1; j >= 0 ; j--) {
 		var property = FilterExpander.prototype.filterDataProperties[j];
-		if(property.prop[property.prop.length - 1] === "geo:asWKT") {
+		if(property.prop[property.prop.length - 1] === "geo:asWKT|geo-1-0:asWKT") {
 			WKTindex = "_" + j + "_" + (property.prop.length - 1);
 		} else if(property.prop[property.prop.length - 1] === "wgs84:lat") {
 			latIndex = "_" + j + "_" + (property.prop.length - 1);
@@ -142,8 +142,8 @@ SPEXQuery.prototype.expandSpaceFilter = function(){
                             "' && " + variable + "__long < '" + this.spatialConstraints[variable].upperRightLongitude + 
                             "' && " + variable + "__long > '" + this.spatialConstraints[variable].lowerLeftLongitude + "')");  		
     		} else {//if it is a WKT variable
-    			this.where(variable, "geo:hasGeometry", variable + "__geom")
-    			.where(variable + "__geom", "geo:asWKT", variable + "__wkt");
+    			this.where(variable, "geo:hasGeometry|maps:mapsArea", variable + "__geom")
+    			.where(variable + "__geom", "geo:asWKT|geo-1-0:asWKT", variable + "__wkt");
     		}
         }
  	}
