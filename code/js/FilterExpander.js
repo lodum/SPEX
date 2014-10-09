@@ -13,9 +13,9 @@ FilterExpander.prototype.filterDataProperties = [];
 //Dealing with space
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "wgs84", "uri" : "http://www.w3.org/2003/01/geo/wgs84_pos#", "prop" : [ "wgs84:lat"]});
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "wgs84", "uri" : "http://www.w3.org/2003/01/geo/wgs84_pos#", "prop" : [ "wgs84:long"]});
-FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry", "geo:asWKT"]});
-FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry",  "geo:asGML"]});
-FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "maps:mapsArea", "geo:asWKT"]});
+FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry", "geo:asWKT|geo-1-0:asWKT"]});
+FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "geo:hasGeometry",  "geo:asGML|geo-1-0:asGML"]});
+FilterExpander.prototype.filterDataProperties.push({"prefix" : "geo", "uri" : "http://www.opengis.net/ont/geosparql#", "prop" : [ "maps:mapsArea", "geo:asWKT|geo-1-0:asWKT"]});
 
 //Dealing with time
 FilterExpander.prototype.filterDataProperties.push({"prefix" : "time", "uri" : "http://www.w3.org/2006/time#", "prop" : [ "?timelink","time:hasBeginning", "time:inXSDDateTime"]}); 
@@ -53,12 +53,12 @@ FilterExpander.prototype.expandFilterLiterals = function(spexquery){
 FilterExpander.prototype.subscripts = function(){
 	var subscripts = {
 		"WKT":{
-			"lastLinks":["geo:asWKT"],
+			"lastLinks":["geo:asWKT|geo-1-0:asWKT"],
 			"value":[],
 			"type":"spatial"
 		},
 		"GML":{
-			"lastLinks":["geo:asGML"],
+			"lastLinks":["geo:asGML|geo-1-0:asGML"],
 			"value":[],
 			"type":"spatial"
 		},
