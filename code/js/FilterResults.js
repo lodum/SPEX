@@ -27,10 +27,10 @@ FilterResults.prototype.filterWKT=function(spexresultset){
 
           // Check if there is really a Window object
           if (sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)] != null && sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)] != undefined) {
-            console.log("FilterResults.prototype.filterWKT(): wktString for solution No." + j + ": " + wktString);
+            //console.log("FilterResults.prototype.filterWKT(): wktString for solution No." + j + ": " + wktString);
              //remove if bounding-box is not inside constraint window
             //if(!boundingBox(wktString).inside(sc[wktVars[i].substring(0,wktVars[i].length - 5)])){
-            console.log("FilterResults.prototype.filterWKT(): corresponding constraint window: " + JSON.stringify(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)]));
+            //console.log("FilterResults.prototype.filterWKT(): corresponding constraint window: " + JSON.stringify(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)]));
             if(!boundingBox(wktString).inside(sc["?"+wktVars[i].substring(0,wktVars[i].length - 5)])){
               sols.splice(j,1);
               j--;
@@ -49,7 +49,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
     var a,b,c,d;
     var wktWindow=new Window();
     str=cutStringFrontUptoChar(str,'('); //cut off beginning of string upto the last '(' 
-    console.log("FilterResults.prototype.filterWKT(): WKT string cut up to the last '(': " + str);
+    //console.log("FilterResults.prototype.filterWKT(): WKT string cut up to the last '(': " + str);
     //remove all the '(' and ')' characters
     for(var i=0;i<str.length;i++){
       if(str[i]=='('||str[i]==')'){
@@ -57,17 +57,17 @@ FilterResults.prototype.filterWKT=function(spexresultset){
         i--;
       }
     }
-    console.log("FilterResults.prototype.filterWKT(): WKT string with all '('s and ')'s removed: " + str);
+    //console.log("FilterResults.prototype.filterWKT(): WKT string with all '('s and ')'s removed: " + str);
     strArray=str.split(","); // fill strArray
-    console.log("FilterResults.prototype.filterWKT(): WKT string split at ',': " + JSON.stringify(strArray));
+    //console.log("FilterResults.prototype.filterWKT(): WKT string split at ',': " + JSON.stringify(strArray));
     //cut off spaces at beginning and end of elements of strArray, and split up lat & long into the arrays.
     for(var i=0;i<strArray.length;i++){
       var s=strArray[i];
-      console.log("string before removing spaces:" + s);
+      //console.log("string before removing spaces:" + s);
       s=removeSpacesAtEnds(s);
-      console.log("spaces front and end removed (returned):" + JSON.stringify(s));
+      //console.log("spaces front and end removed (returned):" + JSON.stringify(s));
       s=s.split(" "); // type of s changes from string to array
-      console.log("lat and long split: " + JSON.stringify(s));
+      //console.log("lat and long split: " + JSON.stringify(s));
       if(s.length!=2) console.log("Error in strArray["+i+"]");
       longArray.push(parseInt(s[0]));
       latArray.push(parseInt(s[1]));
@@ -108,7 +108,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
       string = string.substring(1, string.length);
       return removeSpacesFront(string, ch);
     } else {
-      console.log("space at front removed:" + string);
+      //console.log("space at front removed:" + string);
       return string;
     }
   }
@@ -127,7 +127,7 @@ FilterResults.prototype.filterWKT=function(spexresultset){
       string = string.substring(0, string.length - 1);
       return removeSpacesBack(string, ch);
     } else {
-      console.log("space at back removed:" + string);
+      //console.log("space at back removed:" + string);
       return string;
     }
   }
