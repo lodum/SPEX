@@ -78,19 +78,10 @@ SPEXQuery.prototype.setTemporalConstraint = function(va, time){
 SPEXQuery.prototype.detectWKTvars = function() {
 	
 	var WKTvars = [];
+	var s = FilterExpander.prototype.subscripts();
 	/* Find the index of "geo:asWKT". */
-	var latIndex=[], longIndex=[], WKTindex = [];
-	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
-		var property = FilterExpander.prototype.filterDataProperties[j];
-		if(property.prop[property.prop.length - 1] === "geo:asWKT|geo-1-0:asWKT") {
-			WKTindex.push("_" + j + "_" + (property.prop.length - 1));
-		} else if(property.prop[property.prop.length - 1] === "wgs84:lat") {
-			latIndex.push("_" + j + "_" + (property.prop.length - 1));
-		} else if(property.prop[property.prop.length - 1] === "wgs84:long") {
-			longIndex.push("_" + j + "_" + (property.prop.length - 1));
-		}
-	}
-
+	var latIndex=s.lat.value, longIndex=s.long.value, WKTindex = s.WKT.value;
+	
 	/* For a variable to qualify as a WKT variable it should be conected to a WKT literal and
 	not be connected to both wgs84:lat and wgs84:long literals. */
 	/*
@@ -104,12 +95,15 @@ SPEXQuery.prototype.detectWKTvars = function() {
 		}
 	}
 	*/
-	console.log("SPEXQuery.prototype.detectWKTvars(): spatally enabled vars from previous query: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
+	console.log("SPEXQuery.prototype.detectWKTvars(): spatially enabled vars from previous query: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
 	if(spex.ex.spatiallyEnabledVars) {
 		for(variable in spex.ex.spatiallyEnabledVars) {
+			console.log("variable: " +  variable);
 			function checkSpatialEnabledVarsFor(indexArray){
+				console.log(JSON.stringify(indexArray));
 				var indexThere = false;
-				for(var i=0; i<indexArray;i++){
+				for(var i=0; i<indexArray.length;i++){
+					console.log("var with index: " + variable + indexArray[i]);
 					if(spex.ex.spatiallyEnabledVars[variable].indexOf(variable + indexArray[i]) !== -1){
 						indexThere = true;
 						i=indexArray.length;
@@ -120,6 +114,7 @@ SPEXQuery.prototype.detectWKTvars = function() {
 			var latIndexThere = checkSpatialEnabledVarsFor(latIndex);
 			var longIndexThere = checkSpatialEnabledVarsFor(longIndex);
 			var WKTindexThere = checkSpatialEnabledVarsFor(WKTindex);
+			console.log("lat: "+ latIndexThere +", long: " + longIndexThere + ", WKT: " + WKTindexThere +"!!!!!");
 			if(!(latIndexThere && longIndexThere) && WKTindexThere) {
 					WKTvars.push(variable);
 			}
@@ -133,8 +128,8 @@ SPEXQuery.prototype.detectWKTvars = function() {
 *@function */
 SPEXQuery.prototype.expandSpaceFilter = function(){
  	var WKTvars = this.detectWKTvars();
-
- 	for (variable in this.spatialConstraints)  {
+	
+	for (variable in this.spatialConstraints)  {
 
         // Check if there is really a Window object
         if (this.spatialConstraints[variable] != null && this.spatialConstraints[variable] != undefined) {
