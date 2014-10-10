@@ -79,15 +79,15 @@ SPEXQuery.prototype.detectWKTvars = function() {
 	
 	var WKTvars = [];
 	/* Find the index of "geo:asWKT". */
-	var latIndex, longIndex, WKTindex = null;
-	for(var j = FilterExpander.prototype.filterDataProperties.length - 1; j >= 0 ; j--) {
+	var latIndex=[], longIndex=[], WKTindex = [];
+	for(var j = 0; j < FilterExpander.prototype.filterDataProperties.length; j++) {
 		var property = FilterExpander.prototype.filterDataProperties[j];
 		if(property.prop[property.prop.length - 1] === "geo:asWKT|geo-1-0:asWKT") {
-			WKTindex = "_" + j + "_" + (property.prop.length - 1);
+			WKTindex.push("_" + j + "_" + (property.prop.length - 1));
 		} else if(property.prop[property.prop.length - 1] === "wgs84:lat") {
-			latIndex = "_" + j + "_" + (property.prop.length - 1);
+			latIndex.push("_" + j + "_" + (property.prop.length - 1));
 		} else if(property.prop[property.prop.length - 1] === "wgs84:long") {
-			longIndex = "_" + j + "_" + (property.prop.length - 1);
+			longIndex.push("_" + j + "_" + (property.prop.length - 1));
 		}
 	}
 
@@ -107,9 +107,20 @@ SPEXQuery.prototype.detectWKTvars = function() {
 	console.log("SPEXQuery.prototype.detectWKTvars(): spatally enabled vars from previous query: " + JSON.stringify(spex.ex.spatiallyEnabledVars));
 	if(spex.ex.spatiallyEnabledVars) {
 		for(variable in spex.ex.spatiallyEnabledVars) {
-			if((spex.ex.spatiallyEnabledVars[variable].indexOf(variable + latIndex) === -1 ||
-			   spex.ex.spatiallyEnabledVars[variable].indexOf(variable + longIndex) === -1) && 
-			   spex.ex.spatiallyEnabledVars[variable].indexOf(variable + WKTindex) !== -1) {
+			function checkSpatialEnabledVarsFor(indexArray){
+				var indexThere = false;
+				for(var i=0; i<indexArray;i++){
+					if(spex.ex.spatiallyEnabledVars[variable].indexOf(variable + indexArray[i]) !== -1){
+						indexThere = true;
+						i=indexArray.length;
+					}
+				}
+				return indexThere;
+			}
+			var latIndexThere = checkSpatialEnabledVarsFor(latIndex);
+			var longIndexThere = checkSpatialEnabledVarsFor(longIndex);
+			var WKTindexThere = checkSpatialEnabledVarsFor(WKTindex);
+			if(!(latIndexThere && longIndexThere) && WKTindexThere) {
 					WKTvars.push(variable);
 			}
 		}
