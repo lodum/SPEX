@@ -115,11 +115,11 @@ SPEXResultSet.prototype.getWKT = function(){
 					if(addingWKTisDone){
 						j = this.subscriptArray("WKT").length;
 					} else if(sol[userVar + subscript]) {
-						console.log("WKT subscript: " + subscript);
+						//console.log("WKT subscript: " + subscript);
 						//In this case, two additional values are added to array, for use in FilterResults().
 						labelWKTpairs.push([sol[userVar + "__label"].value, sol[userVar + subscript].value,userVar,i]);
 						sol[userVar + "__mapLayerNumber"] = labelWKTpairs.length - 1;
-						console.log("map layer number: " + sol[userVar + "__mapLayerNumber"]);
+						//console.log("map layer number: " + sol[userVar + "__mapLayerNumber"]);
 						addingWKTisDone = true;
 					}
 				}
