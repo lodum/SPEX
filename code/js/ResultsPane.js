@@ -33,7 +33,7 @@ ResultsPane.prototype.display = function(spexresultset){
 		//A function that replaces URIs with HTML links.
 		var buildHTML = function(solution, variableName){
 	    		var text = solution[variableName].value; //instance URL
-	    		console.log("solution[variable] value: " + text);
+	    		//console.log("solution[variable] value: " + text);
 	    		//console.log("solution[variable__label] value: " + solution[variableName + "__label"].value);
 	    		//var exp = /(\b(?:https?|ftp|file):\/\/\bdata.uni-muenster.de[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 	    		//var html = text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>");
@@ -97,7 +97,7 @@ ResultsPane.prototype.display = function(spexresultset){
 						var layers = map.markerGroup.getLayers();
 						ev.setMapLayer(layers[solution[variableName + '__mapLayerNumber']]);
 						//ev.setMapLayer(layers[layers.length - (solution[variableName + '__mapLayerNumber'] + 1)]);
-						console.log("map layer" + layers[solution[variableName + '__mapLayerNumber']]);
+						//console.log("map layer" + layers[solution[variableName + '__mapLayerNumber']]);
 					}
 					//build HTML content for the cell
 					bodyCell.innerHTML = buildHTML(solution, variableName);
