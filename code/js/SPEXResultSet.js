@@ -215,8 +215,8 @@ SPEXResultSet.prototype.getTimes= function() {
 							}
 						);
 						sol[userVar + "__sliderItemNumber"] = labeltimepairs.length - 1;
-						console.log("xsd:gYears detected:" + sol[userVar + subscript].value);
-						console.log("xsd:gYears converted to Date:" + new Date(sol[userVar + subscript].value));
+						//console.log("xsd:gYears detected:" + sol[userVar + subscript].value);
+						//console.log("xsd:gYears converted to Date:" + new Date(sol[userVar + subscript].value));
 						addingDateTimeIsDone = true;
 					}
 				}
