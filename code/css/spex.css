@@ -103,8 +103,8 @@ body, html {
 }
 
 #results_header {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  bottom: 165;
   left: 0;
   background-color: white;	
 }
