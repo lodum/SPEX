@@ -72,6 +72,7 @@ ResultsPane.prototype.display = function(spexresultset){
 
 		//body
 		var tableBody = document.createElement('tbody');
+		tableBody.id = "results_body";
 		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
 			var bodyRow = document.createElement('tr');
 			$.each(userSelectedVars, function(variableIndex, variableName) { 
