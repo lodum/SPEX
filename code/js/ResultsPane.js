@@ -56,7 +56,7 @@ ResultsPane.prototype.display = function(spexresultset){
 		
 		//create table head and append it to the results table
 		var tableHead = document.createElement('thead');
-		tableHead.id = "result_header";
+		tableHead.id = "resultHeader";
 		var headRow = document.createElement('tr');
 		var userSelectedVars = spexresultset.getUserSelectedVariables();
 		$.each(userSelectedVars, function(varIndex, variable) { 
