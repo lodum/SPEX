@@ -108,13 +108,14 @@ body, html {
   bottom: 126px;
   left: 0;
   
-  border: 2px 0px 0px 0px solid gray;
+  border: 2px 0px 0px 0px;
+  border-color: gray;
   background-color: white;
 }
 
 #results_body {
    margin-top: 36px;
-   /*background-color: #F5F5DC;*/
+   background-color: #F5F5DC;
 }
 
 #right_panel_container {
