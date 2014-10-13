@@ -5,6 +5,7 @@
 *  @property {object} currentresults - holds the current result set
 **/
 function ResultsPane(){
+this.currentnumberofresults = 0;
 this.currentresults = new SPEXResultSet(" ");
 this.enabled = true; //This disables results highlighting
 };
@@ -24,7 +25,7 @@ return escape(JSON.stringify(res));
 ResultsPane.prototype.display = function(spexresultset){
 		
 		this.currentresults = spexresultset;
-		var currentnumberofresults = 0;
+		 var currentnumberofresults = 0;
 		
 		var a = document.getElementById("getresults");
 		a.download = "export.txt";
@@ -53,13 +54,16 @@ ResultsPane.prototype.display = function(spexresultset){
 				/*Write the result set as a table.  Table header lists the user-selected variables; 
 		  each row lists labels for instances in that particular solution.*/
 		var resultsTable = document.createElement('table');
-		resultsTable.className = "table table-hover table-striped table-condensed";
+		var headers = 0;
 		resultsTable.id = "RST";
+		resultsTable.className = "table table-hover table-striped table-condensed";
+		
 		//create table head and append it to the results table
 		var tableHead = document.createElement('thead');
 		var headRow = document.createElement('tr');
 		var userSelectedVars = spexresultset.getUserSelectedVariables();
 		$.each(userSelectedVars, function(varIndex, variable) { 
+			headers ++;
 			var headCell = document.createElement('th');
 			//display labels instead of variable names if there are labels for them. Otherwise display variable names
 			var varlabel = spex.q.variablelabels[spex.q.SPEXvariables.indexOf("?"+variable)];
@@ -73,7 +77,6 @@ ResultsPane.prototype.display = function(spexresultset){
 		//body
 		var tableBody = document.createElement('tbody');
 		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
-			
 			currentnumberofresults ++;
 			var bodyRow = document.createElement('tr');
 			$.each(userSelectedVars, function(variableIndex, variableName) { 
@@ -130,12 +133,14 @@ ResultsPane.prototype.display = function(spexresultset){
 			tableBody.appendChild(bodyRow);
 		});
 		resultsTable.appendChild(tableBody); 	
-		//$("#result").text('');		
-		//document.getElementById('result').innerHTML = "";
+				
+		
 		document.getElementById('result').appendChild(resultsTable);
 		document.getElementById('resultnumber').innerHTML = currentnumberofresults;
 		//this fixes the header row 
-		fxheaderInit('RST',140);
+		fxheaderInit('RST',140);		
+		
+		
 		
 /*
 		var htmlString = "<table class=\"table table-hover table-striped table-condensed\">";
@@ -192,7 +197,7 @@ ResultsPane.prototype.display = function(spexresultset){
 				}
 			})
 		});
-*/
+*/   
 		
 };
 	
