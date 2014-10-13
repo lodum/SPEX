@@ -8,6 +8,10 @@ body, html {
   color: #333;
 }
 
+th {
+	border-bottom-width: 0px;
+}
+
 #navBar_container {
   position: absolute;
   width: 100%;
