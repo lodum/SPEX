@@ -105,14 +105,14 @@ body, html {
 #results_header {
   position: fixed;
   width: 100%;
-  bottom: 135px;
+  bottom: 132px;
   left: 0;
   
   background-color: white;
 }
 
 #results_body {
-   margin-top: 31px;
+   margin-top: 52px;
 }
 
 #right_panel_container {
