@@ -1,3 +1,5 @@
+
+//http://jaimonmathew.wordpress.com/2010/02/02/scroller/
 (function() {
     var flag=false;
     var tid; //table id as defined on html page
