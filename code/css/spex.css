@@ -104,9 +104,15 @@ body, html {
 
 #results_header {
   position: fixed;
+  width: 100%;
   bottom: 165;
   left: 0;
-  background-color: white;	
+  
+  background-color: white;
+}
+
+#results_body {
+   margin-top: 31;
 }
 
 #right_panel_container {
