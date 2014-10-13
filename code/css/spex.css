@@ -102,6 +102,13 @@ body, html {
   overflow: scroll;
 }
 
+#results_header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;	
+}
+
 #right_panel_container {
   position: absolute;
   width: 400px;
