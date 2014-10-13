@@ -108,11 +108,13 @@ body, html {
   bottom: 132px;
   left: 0;
   
+  border: 2px solid gray;
   background-color: white;
 }
 
 #results_body {
-   margin-top: 52px;
+   margin-top: 48px;
+   background-color: #F5F5DC;
 }
 
 #right_panel_container {
