@@ -102,6 +102,12 @@ body, html {
   overflow: scroll;
 }
 
+#result_header {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 #right_panel_container {
   position: absolute;
   width: 400px;
