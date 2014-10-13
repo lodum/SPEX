@@ -71,8 +71,9 @@ ResultsPane.prototype.display = function(spexresultset){
 		resultsTable.appendChild(tableHead);
 
 		//body
+		var tableBodyDiv = document.createElement('div');
+		tableBodyDiv.id = "results_body";
 		var tableBody = document.createElement('tbody');
-		tableBody.id = "results_body";
 		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
 			var bodyRow = document.createElement('tr');
 			$.each(userSelectedVars, function(variableIndex, variableName) { 
@@ -128,7 +129,8 @@ ResultsPane.prototype.display = function(spexresultset){
 			});
 			tableBody.appendChild(bodyRow);
 		});
-		resultsTable.appendChild(tableBody); 	
+		tableBodyDiv.appendChild(tableBody);
+		resultsTable.appendChild(tableBodyDiv); 	
 		//$("#result").text('');		
 		//document.getElementById('result').innerHTML = "";
 		document.getElementById('result').appendChild(resultsTable);
