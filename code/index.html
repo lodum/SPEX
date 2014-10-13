@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset=utf-8 />
+	<meta http-equiv="X-UA-Compatible" content="IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
 	<title>SPEX - Spatio-temporal content explorer</title>
 
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
@@ -15,6 +16,7 @@
 	<!-- Libraries and resources -->
 	<!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">-->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+	
 	
 	<!-- 
 		!!!This Style Sheet is not available anymore!!!
@@ -62,6 +64,10 @@
 	<!--This is the sparql query class we inherit-->
 	<script src="lib/jquery-sparql-master/urlEncode.js"></script>
 	<script src="lib/jquery-sparql-master/jquery.sparql.js"></script>
+	
+	<!--Fixed header tables -->	
+	<script src="lib/fxheader2.js"></script>
+	
 
 
 	<!--These are our own classes-->
@@ -172,7 +178,7 @@
 	</div>
 
 	<div id="result_container">
-		Results: <a id="getresults"></a>
+		Results (<a id="resultnumber"></a>): <a id="getresults"></a>
 		<div id="result" style="width : 100%">
 		</div>
 		
