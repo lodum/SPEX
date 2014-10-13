@@ -105,7 +105,7 @@ body, html {
 #results_header {
   position: fixed;
   width: 100%;
-  bottom: 132px;
+  bottom: 128px;
   left: 0;
   
   border: 2px solid gray;
