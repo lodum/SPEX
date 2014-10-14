@@ -8,6 +8,10 @@ body, html {
   color: #333;
 }
 
+.table>thead>tr>th {
+	border-bottom-width: 0px;
+}
+
 #navBar_container {
   position: absolute;
   width: 100%;
@@ -100,6 +104,23 @@ body, html {
   width: 100%;
 
   overflow: scroll;
+}
+
+#result_header {
+  position: fixed;
+  width: 100%;
+  bottom: 126px;
+  left: 0;
+  
+  border-top: 2px;
+  border-top-style: solid;
+  border-top-color: gray;
+  background-color: white;
+}
+
+#result_body {
+  margin-top: 36px;
+  /*background-color: #F5F5DC;	 */
 }
 
 #right_panel_container {
