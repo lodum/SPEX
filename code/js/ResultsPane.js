@@ -24,7 +24,6 @@ return escape(JSON.stringify(res));
 ResultsPane.prototype.display = function(spexresultset){
 		
 		this.currentresults = spexresultset;
-		var currentnumberofresults = 0;
 		
 		var a = document.getElementById("getresults");
 		a.download = "export.txt";
@@ -54,7 +53,7 @@ ResultsPane.prototype.display = function(spexresultset){
 		  each row lists labels for instances in that particular solution.*/
 		var resultsTable = document.createElement('table');
 		resultsTable.className = "table table-hover table-striped table-condensed";
-		resultsTable.id = "RST";
+		
 		//create table head and append it to the results table
 		var tableHead = document.createElement('thead');
 		var headRow = document.createElement('tr');
@@ -73,8 +72,6 @@ ResultsPane.prototype.display = function(spexresultset){
 		//body
 		var tableBody = document.createElement('tbody');
 		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
-			
-			currentnumberofresults ++;
 			var bodyRow = document.createElement('tr');
 			$.each(userSelectedVars, function(variableIndex, variableName) { 
 				if(!solution[variableName + "__label"]) {
@@ -133,9 +130,6 @@ ResultsPane.prototype.display = function(spexresultset){
 		//$("#result").text('');		
 		//document.getElementById('result').innerHTML = "";
 		document.getElementById('result').appendChild(resultsTable);
-		document.getElementById('resultnumber').innerHTML = currentnumberofresults;
-		//this fixes the header row 
-		fxheaderInit('RST',140);
 		
 /*
 		var htmlString = "<table class=\"table table-hover table-striped table-condensed\">";
