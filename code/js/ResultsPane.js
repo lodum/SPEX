@@ -61,9 +61,11 @@ ResultsPane.prototype.display = function(spexresultset){
 		var tableHead = document.createElement('thead');
 		tableHead.id = "result_header";
 		var headRow = document.createElement('tr');
+		headRow.width = "100%";
 		var userSelectedVars = spexresultset.getUserSelectedVariables();
 		$.each(userSelectedVars, function(varIndex, variable) { 
 			var headCell = document.createElement('th');
+			headCell.width = 100/(userSelectedVars.length)+"%";
 			//display labels instead of variable names if there are labels for them. Otherwise display variable names
 			var varlabel = spex.q.variablelabels[spex.q.SPEXvariables.indexOf("?"+variable)];
 			if (!varlabel || 0 === variable.length) { headCell.innerHTML = "?"+variable} else {headCell.innerHTML = "?"+varlabel;}
@@ -90,7 +92,7 @@ ResultsPane.prototype.display = function(spexresultset){
 					bodyRow.appendChild(bodyCell);
 				} else {
 					var bodyCell = document.createElement('td');
-					//bodyCell.id = "body td";
+					bodyCell.width = 100/(userSelectedVars.length)+"%";
 					//create object to store the cell and (if they exist) its corresponding slider item and map item
 					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
 					

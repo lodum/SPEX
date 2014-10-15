@@ -100,8 +100,8 @@ body, html {
 
 #result {
   position: inherit;
-  height: 100%;
-  width: 100%;
+  height: 100% ;
+  width: 100% !important;
 	
   /*overflow: scroll;*/
 }
@@ -109,7 +109,7 @@ body, html {
 #result_header {
   position: fixed !important;
   
-  width: 100%;
+  width: 100% !important;
   bottom: 126px;
   left: 0;
   
