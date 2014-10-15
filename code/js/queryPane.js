@@ -382,7 +382,7 @@ var queryPane = {
 	showContextMenuAddOut : function() {
 		var x;
 		var y;
-		if (document.getElementById('queryVar').checked) { if ( queryPane.selected.label != ""){x = 'Things that are '; y = 'Things that are maps ';} else {x = 'Something '; y = x;}} else {x = ""; y = 'Something ';};
+		if (queryPane.selected.variable) { if ( queryPane.selected.label != ""){x = 'Things that are '; y = 'Things that are maps ';} else {x = 'Something '; y = x;}} else {x = ""; y = 'Something ';};
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div>' +
 				'<div id="contextMenuContent">' +
@@ -415,7 +415,7 @@ var queryPane = {
 	* @function */
 	showContextMenuAddIn : function() {
 		var x;
-		if (document.getElementById('queryVar').checked) { if ( queryPane.selected.label != ""){x = 'things that are '} else {x = 'something '}} else {x = ""};
+		if (queryPane.selected.variable) { if ( queryPane.selected.label != ""){x = 'things that are '} else {x = 'something '}} else {x = ""};
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent">'+
