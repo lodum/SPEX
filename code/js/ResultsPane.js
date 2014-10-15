@@ -29,6 +29,8 @@ ResultsPane.prototype.display = function(spexresultset){
 		a.download = "export.txt";
 		a.href = "data:text/plain," + this.getcurrentresults();
 		a.innerHTML = "download results as JSON";
+		var b = document.getElementById("resultsnumber");
+		var numberofresults = 0;
 		
 		//A function that replaces URIs with HTML links.
 		var buildHTML = function(solution, variableName){
@@ -75,6 +77,7 @@ ResultsPane.prototype.display = function(spexresultset){
 		tableBodyDiv.id = "result_body";
 		var tableBody = document.createElement('tbody');
 		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
+			numberofresults ++;
 			var bodyRow = document.createElement('tr');
 			$.each(userSelectedVars, function(variableIndex, variableName) { 
 				if(!solution[variableName + "__label"]) {
@@ -129,6 +132,7 @@ ResultsPane.prototype.display = function(spexresultset){
 			});
 			tableBody.appendChild(bodyRow);
 		});
+		b.innerHTML = numberofresults;
 		//resultsTable.appendChild(tableBody); 
 		tableBodyDiv.appendChild(tableBody);
 		resultsTable.appendChild(tableBodyDiv); 
