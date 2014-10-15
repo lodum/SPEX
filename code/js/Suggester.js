@@ -144,14 +144,17 @@ function Suggester(){
 		}
 		else{			
 			for( var i = 0; i < sols.length; i++){
-				var currentElement = sols[i][columnName].value; //Get the current element				
-				//console.log("Current value of" + columnName + ": " + currentElement);
+				var currentElement = sols[i][columnName].value; //Get the current element
+				var	prefixedelement = "";			
+				//console.log("Current value of " + columnName + ": " + currentElement);
+							
 				// go through the list of prefixes to check if one of the urls associated with a prefix is substring of the current element				
 				for (var j = 0; j < prefixList.length; j++ ){
 					if (currentElement.indexOf(prefixList[j].uri) != -1){  // if yes
-						// check if the corresponding prefix is in the blacklist
-						if (prefixBlacklist.indexOf(prefixList[j].prefix) == -1){  // if it is not in the blacklist
-							storageArray.push(currentElement.replace(prefixes[j].uri, prefixes[j].prefix + ':')); //Add current element to storageArray
+						prefixedelement = currentElement.replace(prefixes[j].uri, prefixes[j].prefix + ':');
+						// check if the corresponding prefix is in the blacklist						
+						if (prefixBlacklist.indexOf(prefixList[j].prefix) == -1){  // if it is not in the blacklist, add it
+							storageArray.push(prefixedelement);
 						}
 						break;
 					}
@@ -159,7 +162,7 @@ function Suggester(){
 						console.log("Following value ("+ currentElement +") cannot be matched with the prefix list!");
 						//Add corresponding prefix to prefixList ??
 					}
-				}
+				}	
 				
 			}
 		}
@@ -170,18 +173,27 @@ function Suggester(){
 	var sugEx=new QueryExecutor();
 	
 	function removeLabelProperties(prediarray) {
-		//Remove label properties from 'predicateArray'
+		//Remove label properties and other excluded properties from 'predicateArray'
 		//Following code assumes that predicateArray has no duplicates!!
 		var labelProps = spex.q.le.listOfLabelProperties.slice();
+		var excludedRes = excludedResources.slice();
 		for (var x=0;x<prediarray.length;x++){
 			var y = labelProps.indexOf(prediarray[x]);
-			if(y != -1){
+			var j = excludedRes.indexOf(prediarray[x]);			
+			if(y != -1 || j != -1){
 				prediarray.splice(x,1);
 				x--;
+				if(y != -1){
 				console.log("Label property '" + labelProps[y] + "' was removed from predicate suggester");
 				labelProps.splice(y,1);
-			}
-		}
+				}
+				if (j != -1){
+				console.log("Property '" + excludedRes[j] + "' was removed from predicate suggester");
+				excludedRes.splice(j,1);
+				}
+			}			
+				
+		}	
 	
 	}
 
