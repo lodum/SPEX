@@ -56,10 +56,13 @@ ResultsPane.prototype.display = function(spexresultset){
 		var resultsTable = document.createElement('table');
 		//resultsTable.id = "table";
 		resultsTable.className = "table table-hover table-striped table-condensed";
-		
+		resultsTable.width = "100%";
 		//create table head and append it to the results table
+		var tableHeadDiv = document.createElement('div');
+		tableHeadDiv.id = "result_header";
 		var tableHead = document.createElement('thead');
-		tableHead.id = "result_header";
+		//tableHead.id = "result_header";
+		tableHead.width = "100%";
 		var headRow = document.createElement('tr');
 		headRow.width = "100%";
 		var userSelectedVars = spexresultset.getUserSelectedVariables();
@@ -73,7 +76,8 @@ ResultsPane.prototype.display = function(spexresultset){
 			headRow.appendChild(headCell);
 		});
 		tableHead.appendChild(headRow);
-		resultsTable.appendChild(tableHead);
+		tableHeadDiv.appendChild(tableHead);
+		resultsTable.appendChild(tableHeadDiv);
 
 		//body
 		var tableBodyDiv = document.createElement('div');
