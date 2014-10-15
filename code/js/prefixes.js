@@ -1811,7 +1811,7 @@ var prefixes=
 
 //These resources are excluded temporally because they should not be used in Spex suggester
 var excludedResources =
-["maps:represents", "dct:references"]
+["maps:represents", "dct:references", "maps:mapsArea", "maps:mapsTime"];
 /*
 Blacklist of prefixes:
 
