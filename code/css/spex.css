@@ -102,26 +102,38 @@ body, html {
   position: inherit;
   height: 100%;
   width: 100%;
-
-  overflow: scroll;
+	
+  /*overflow: scroll;*/
 }
 
 #result_header {
-  position: fixed;
+  position: fixed !important;
+  
   width: 100%;
   bottom: 126px;
   left: 0;
   
-  border-top: 2px;
+  border-top: 1px;
   border-top-style: solid;
-  border-top-color: red;
+  border-top-color: lightgrey;
+  border-bottom-color: lightgrey;
   background-color: white;
 }
 
 #result_body {
+ 
   margin-top: 36px;
+  width: 100% !important;
+  height: 140px;
+   overflow:scroll;
   /*background-color: #F5F5DC;	 */
 }
+
+
+
+
+
+
 
 #right_panel_container {
   position: absolute;

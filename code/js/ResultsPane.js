@@ -54,6 +54,7 @@ ResultsPane.prototype.display = function(spexresultset){
 				/*Write the result set as a table.  Table header lists the user-selected variables; 
 		  each row lists labels for instances in that particular solution.*/
 		var resultsTable = document.createElement('table');
+		//resultsTable.id = "table";
 		resultsTable.className = "table table-hover table-striped table-condensed";
 		
 		//create table head and append it to the results table
@@ -76,17 +77,20 @@ ResultsPane.prototype.display = function(spexresultset){
 		var tableBodyDiv = document.createElement('div');
 		tableBodyDiv.id = "result_body";
 		var tableBody = document.createElement('tbody');
+		//tableBody.class = "body";
 		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
 			numberofresults ++;
 			var bodyRow = document.createElement('tr');
+			//bodyRow.id = "body tr";
 			$.each(userSelectedVars, function(variableIndex, variableName) { 
 				if(!solution[variableName + "__label"]) {
 					var bodyCell = document.createElement('td');
+					//bodyCell.id = "body td";
 					bodyCell.innerHTML = "";
 					bodyRow.appendChild(bodyCell);
 				} else {
 					var bodyCell = document.createElement('td');
-					
+					//bodyCell.id = "body td";
 					//create object to store the cell and (if they exist) its corresponding slider item and map item
 					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
 					
