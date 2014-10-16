@@ -21,6 +21,8 @@ return escape(JSON.stringify(res));
 * displays a spex result set in the results pane
 *@function 
 */
+
+
 ResultsPane.prototype.display = function(spexresultset){
 		
 		this.currentresults = spexresultset;
@@ -56,19 +58,19 @@ ResultsPane.prototype.display = function(spexresultset){
 		var resultsTable = document.createElement('table');
 		//resultsTable.id = "table";
 		resultsTable.className = "table table-hover table-striped table-condensed";
-		resultsTable.width = "100%";
+		//resultsTable.width = "100%";
 		//create table head and append it to the results table
-		var tableHeadDiv = document.createElement('div');
-		tableHeadDiv.id = "result_header";
+		//var tableHeadDiv = document.createElement('div');
+		//tableHeadDiv.id = "result_header";
 		var tableHead = document.createElement('thead');
 		//tableHead.id = "result_header";
-		tableHead.width = "100%";
+		//tableHead.width = "100%";
 		var headRow = document.createElement('tr');
-		headRow.width = "100%";
+		//headRow.width = "100%";
 		var userSelectedVars = spexresultset.getUserSelectedVariables();
 		$.each(userSelectedVars, function(varIndex, variable) { 
 			var headCell = document.createElement('th');
-			headCell.width = 100/(userSelectedVars.length)+"%";
+			//headCell.width = 100/(userSelectedVars.length)+"%";
 			//display labels instead of variable names if there are labels for them. Otherwise display variable names
 			var varlabel = spex.q.variablelabels[spex.q.SPEXvariables.indexOf("?"+variable)];
 			if (!varlabel || 0 === variable.length) { headCell.innerHTML = "?"+variable} else {headCell.innerHTML = "?"+varlabel;}
@@ -76,12 +78,13 @@ ResultsPane.prototype.display = function(spexresultset){
 			headRow.appendChild(headCell);
 		});
 		tableHead.appendChild(headRow);
-		tableHeadDiv.appendChild(tableHead);
-		resultsTable.appendChild(tableHeadDiv);
+		//tableHeadDiv.appendChild(tableHead);
+		//resultsTable.appendChild(tableHeadDiv);
+		resultsTable.appendChild(tableHead);
 
 		//body
-		var tableBodyDiv = document.createElement('div');
-		tableBodyDiv.id = "result_body";
+		//var tableBodyDiv = document.createElement('div');
+		//tableBodyDiv.id = "result_body";
 		var tableBody = document.createElement('tbody');
 		//tableBody.class = "body";
 		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
@@ -96,7 +99,7 @@ ResultsPane.prototype.display = function(spexresultset){
 					bodyRow.appendChild(bodyCell);
 				} else {
 					var bodyCell = document.createElement('td');
-					bodyCell.width = 100/(userSelectedVars.length)+"%";
+					//bodyCell.width = 100/(userSelectedVars.length)+"%";
 					//create object to store the cell and (if they exist) its corresponding slider item and map item
 					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
 					
@@ -143,12 +146,43 @@ ResultsPane.prototype.display = function(spexresultset){
 			tableBody.appendChild(bodyRow);
 		});
 		b.innerHTML = numberofresults;
-		//resultsTable.appendChild(tableBody); 
-		tableBodyDiv.appendChild(tableBody);
-		resultsTable.appendChild(tableBodyDiv); 
+		resultsTable.appendChild(tableBody); 
+		//tableBodyDiv.appendChild(tableBody);
+		//resultsTable.appendChild(tableBodyDiv); 
 		//$("#result").text('');		
 		//document.getElementById('result').innerHTML = "";
 		document.getElementById('result').appendChild(resultsTable);
+		fixHeader();
+
+		/*This function creates a div element (headerDiv) into which it copies the first (i.e. header) row
+		of the original table.  It then dimensions this div dynamically to correspond to the dimensions of the original
+		table header, and positions the div as fixed so that it overlays the header of the original table. */
+		function fixHeader() {
+			var headerDiv = document.createElement('div');
+			var table2 = document.createElement('table');
+			var table2Header = document.createElement('thead');
+			var table2HeaderRow = resultsTable.rows[0].cloneNode(true);			
+
+			for(var i = 0; i < table2HeaderRow.cells.length; i++) {
+				table2HeaderRow.cells[i].style.width = resultsTable.rows[0].cells[i].offsetWidth + "px";
+				table2HeaderRow.cells[i].style.height = resultsTable.rows[0].cells[i].offsetHeight + "px";
+			}
+			
+			table2Header.appendChild(table2HeaderRow);
+			table2.appendChild(table2Header);
+			headerDiv.appendChild(table2);
+
+			//headerDiv.style.overflow = "hidden";
+			headerDiv.style.position = "fixed";	
+			headerDiv.style.bottom = (180 - 20 - resultsTable.rows[0].offsetHeight) + "px";
+			headerDiv.style.left = "0px";
+			headerDiv.style.width = resultsTable.offsetWidth + "px";
+			headerDiv.style.height = resultsTable.rows[0].offsetHeight + "px";
+			headerDiv.style.marginTop = "0px";
+			headerDiv.style.backgroundColor = "lightgray";
+
+			resultsTable.parentNode.insertBefore(headerDiv, resultsTable);
+		}
 		
 /*
 		var htmlString = "<table class=\"table table-hover table-striped table-condensed\">";
@@ -208,6 +242,8 @@ ResultsPane.prototype.display = function(spexresultset){
 */
 		
 };
+
+
 	
 		
         
