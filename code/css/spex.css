@@ -8,10 +8,6 @@ body, html {
   color: #333;
 }
 
-.table>thead>tr>th {
-	border-bottom-width: 0px;
-}
-
 #navBar_container {
   position: absolute;
   width: 100%;
@@ -102,10 +98,10 @@ body, html {
   position: inherit;
   height: 100% ;
   width: 100% !important;
-	
-  /*overflow: scroll;*/
+  overflow: scroll;
 }
 
+/*
 #result_header {
   position: fixed !important;
   
@@ -125,15 +121,10 @@ body, html {
   margin-top: 36px;
   width: 100% !important;
   height: 140px;
-   overflow:scroll;
-  /*background-color: #F5F5DC;	 */
+  overflow:scroll;
+
 }
-
-
-
-
-
-
+*/
 
 #right_panel_container {
   position: absolute;
