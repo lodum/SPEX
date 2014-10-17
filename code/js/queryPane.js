@@ -340,7 +340,7 @@ var queryPane = {
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent">'+
 					'<br>'+					
-					'I am looking for: <input type="text" id="queryS" onkeydown="if(event.keyCode==13) queryPane.updateSelected()" value="Person"></input> <div id="numb"></div>' +
+					'I am looking for: <input type="text" id="queryS" onkeydown="if(event.keyCode==13) queryPane.updateSelected()" ></input> <div id="numb"></div>' +
 					'<form>' +
 						'<input type="radio" id="queryVar" name="classThing" onclick="queryPane.checkClassSuggestion()">&nbsp;Things of a kind </input>' +
 						'<input type="radio" id="queryNonVar" name="classThing" onclick="queryPane.checkInstanceSuggestion()">&nbsp;Particular things </input>'+
@@ -524,9 +524,15 @@ var queryPane = {
 	updateSelected : function() {
 
 		if (this.isNode(queryPane.selected)) {			
-			//if (!document.getElementById('queryVar').checked) { //};
+			//if (!document.getElementById('queryNonVar').checked) and no label given, then this means that the menu should go back to its initial empty variable state;
+				if (document.getElementById('queryNonVar').checked && document.getElementById('queryS').value =="") {
+					queryPane.checkClassSuggestion();
+					document.getElementById('queryVar').checked = true;
+					document.getElementById('queryNonVar').checked = false;
+					queryPane.selected.variable = document.getElementById('queryVar').checked;					
+				} 
 			queryPane.selected.label = document.getElementById('queryS').value;			
-			queryPane.selected.variable = document.getElementById('queryVar').checked;				
+			queryPane.selected.variable = document.getElementById('queryVar').checked;	
 			queryPane.updateQuery();			
 			this.update();					
 		};

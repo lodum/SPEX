@@ -216,17 +216,20 @@
 				Spex is an spatio-temporal exploration and query tool for SPARQL endpoints. It is part of the development in LODUM and LIFE.
 				See <a href="http://lodum.de/" target="_blank">http://lodum.de/</a>.
 		</p>
-		<h3>How to formulate a query as a graph.</h2>
+		<h3>How to explore and query and endpoint in space and time.</h2>
 				<p> This tutorial shows how queries on a given endpoint can be built interactively in SPEX. The endpoint can be entered in the text field on the right.</p>
 				<p><img src="img/spex_tut0.png" alt="spex bar" width="100%"></p>
 				<p><font color = "red">Note:</font> Red texts warn you that the query is unsuccessful or the endpoint is not responding.</p>
 				<br>
+				With SPEX, you can build complex queries interactively. For example: show me all battles of Napoleon's invasion to Russia in 1812, 
+				together with their place, the number of participants, and the temperature:
+				<p><img src="img/invasionexample.png" alt="spex bar" width="100%"></p>
+				<br>
 		<h4>(1) Start with an empty question (node with question mark).</h4>
-			<p> Every node stands for particular things described in the endpoint. Nodes with question marks are variables that stand for all things that fit into this node. 
-			Nodes in green indicate that spatial or temporal information is present in the endpoint.</p>
+			
 			<p><img src="img/spex_tut01.png" alt="spex start" width="14%"></p>
-			<p>At the beginning, there is only a single node with question mark, which queries for all things that have space or time in them. 
-			If there are results, they are immediately shown below in a table (with node labels as columns) as well as in the map and the timeline on the right. </p>
+			<p>At the beginning, there is only a single node with question mark and without any further restriction, which simply queries for all things that have space or time in them. 
+			If there are any results, they are immediately shown below in a table (with node labels as table columns) as well as in the map and the timeline on the right. </p>
 			<p><img src="img/spex_tut1.png" alt="spex start" width="100%"></p>
 				<br>
 			
@@ -249,6 +252,7 @@
 				<li>Remove filter again.</li>
 				<p><img src="img/spex_tut7.png" alt="spex bar" width="30%"></p>
 			</ul>
+			<br>
 		<h4>(3) Explore results.</h4>
 			<ul>	
 				<li>Zoom into space / time by scrolling mouse over map / time line. </li>
@@ -259,6 +263,7 @@
 				<li>Click on a result cell to fix the current result zoom (and double click to release again).</li>
 				<li>Click on a result name (URI link) to open its description on the Web.</li>							
 			</ul>
+			<br>
 		<h4>(4) Further restrict query by particular things.</h4>
 			<ul>
 				<li>Select a question marked node to open its content menu.</li>
@@ -268,6 +273,12 @@
 				<li>Type in text to search for particular things contained in this node and press return.</li>
 				<p><img src="img/spex_tut11.png" alt="spex bar" width="100%"></p>
 			</ul>
+			<br>
+		<h4>If you want to know more ....</h4>	
+		<p> Every node stands for particular things described in the endpoint. Nodes with question marks are variables that stand for all things that fit into this node. 
+			You can add class labels to variable nodes in order to restrict things in that node to a class. Furthermore, you can add links to a node in order to filter out things with links to other things.
+			Nodes without question marks stand for one particular thing. Nodes in light green indicate that spatial or temporal information is present, nodes in dark green indicate the contrary.</p>	
+			For further information, see...
 	</div>
 
 </body>
