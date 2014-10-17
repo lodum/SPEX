@@ -1,8 +1,8 @@
-function ResultItemEventHandler(uri, tao){
-  this.itemuri = uri;
+function ResultItemEventHandler(tao){  
   this.tableObject = tao; 
   this.timeObject = null;
   this.spaceObject = null;
+  
 }
 
 ResultItemEventHandler.prototype.constructor = ResultItemEventHandler;
@@ -19,22 +19,23 @@ if (spex.rp.enabled) { //this checks whether highlighting is enabled or not
   
   if(this.timeObject) {  
 	slider.timeline.zoom(1, this.timeObject.start);	
+	//console.log("Time object"+this.timeObject.start);		
+	//$(this.timeObject.dom).prepend("<div class='ui-highlight'></div>");
+	//console.log($(this.timeObject.dom).css('borderTopColor'));
+  }else {slider.timeline.zoom(-1); 
   }
   if(this.spaceObject) {
     map.LMap.fitBounds(this.spaceObject.getBounds());
+  } else {map.LMap.fitBounds(map.markerGroup.getBounds());
   }
 }
 }
 
 ResultItemEventHandler.prototype.dehighlight = function(){
 if (spex.rp.enabled) {  
-  this.tableObject.style.background = "";
-  if(this.timeObject) {	
-    slider.timeline.zoom(-1);	
-  }
-  if(this.spaceObject) {
-    map.LMap.fitBounds(map.markerGroup.getBounds());
-  }
+  this.tableObject.style.background = "";  
+  slider.timeline.zoom(-1);
+  map.LMap.fitBounds(map.markerGroup.getBounds());
 }
 }
 

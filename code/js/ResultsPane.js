@@ -92,65 +92,60 @@ ResultsPane.prototype.display = function(spexresultset){
 			var bodyRow = document.createElement('tr');
 			//bodyRow.id = "body tr";
 			$.each(userSelectedVars, function(variableIndex, variableName) { 
-				if(!solution[variableName + "__label"]) {
-					var bodyCell = document.createElement('td');
+				var bodyCell = document.createElement('td');
+				
+				//create object to store the cell and (if they exist) its corresponding slider item and map item
+				var ev = new ResultItemEventHandler(bodyCell);
+				
+				if(solution[variableName + '__sliderItemNumber']) {
+					var item = slider.timeline.items[solution[variableName + '__sliderItemNumber']];						
+					ev.setSliderItem(item,solution[variableName + "__label"].value);
+				}//else if(solution[variableName + '__sliderItemNumber'] === 0) {
+				//	ev.setSliderItem(slider.timeline.items[solution[variableName + '__sliderItemNumber']], solution[variableName + "__label"].value);
+				//}
+				//...do same for map item...
+				if(solution[variableName + '__mapLayerNumber'] !== null) {
+					var layers = map.markerGroup.getLayers();
+					ev.setMapLayer(layers[solution[variableName + '__mapLayerNumber']]);
+					//ev.setMapLayer(layers[layers.length - (solution[variableName + '__mapLayerNumber'] + 1)]);
+					//console.log("map layer" + layers[solution[variableName + '__mapLayerNumber']]);
+				}
+				
+				
+				//attach event listener to the cell
+				var highl = function() {
+					ev.highlight();
+				};
+				var dehighl =  function() {
+					ev.dehighlight();
+				};
+				bodyCell.addEventListener("mouseover", highl, true); 
+				bodyCell.addEventListener("mouseout", dehighl , true); 
+				bodyCell.addEventListener("click", function() {			
+					//console.log("spex.rp.enabled" + spex.rp.enabled);
+					spex.rp.enabled = false;	
+				}, true);
+				bodyCell.addEventListener("dblclick", function() {
+					//console.log("spex.rp.enabled" + spex.rp.enabled);
+					spex.rp.enabled = true;													
+				}, true);
+				
+				if(!solution[variableName + "__label"]) {					
 					//bodyCell.id = "body td";
 					bodyCell.innerHTML = "";
-					bodyRow.appendChild(bodyCell);
-				} else {
-					var bodyCell = document.createElement('td');
-					//bodyCell.width = 100/(userSelectedVars.length)+"%";
-					//create object to store the cell and (if they exist) its corresponding slider item and map item
-					var ev = new ResultItemEventHandler(solution[variableName].value, bodyCell);
 					
-					if(solution[variableName + '__sliderItemNumber']) {
-						var item = slider.timeline.items[solution[variableName + '__sliderItemNumber']];
-						var itemget = slider.timeline.getItem(solution[variableName + '__sliderItemNumber']);
-						//console.log("slider item: "+item itemget));
-						ev.setSliderItem(item,solution[variableName + "__label"].value);
-					}else if(solution[variableName + '__sliderItemNumber'] === 0) {
-						ev.setSliderItem(slider.timeline.items[solution[variableName + '__sliderItemNumber']], solution[variableName + "__label"].value);
-					}
-					//...do same for map item...
-					if(solution[variableName + '__mapLayerNumber'] !== null) {
-						var layers = map.markerGroup.getLayers();
-						ev.setMapLayer(layers[solution[variableName + '__mapLayerNumber']]);
-						//ev.setMapLayer(layers[layers.length - (solution[variableName + '__mapLayerNumber'] + 1)]);
-						//console.log("map layer" + layers[solution[variableName + '__mapLayerNumber']]);
-					}
+				} else {					
 					//build HTML content for the cell
 					bodyCell.innerHTML = buildHTML(solution, variableName);
+				}	
 					
-					//attach event listener to the cell
-					var highl = function() {
-						ev.highlight();
-					};
-					var dehighl =  function() {
-						ev.dehighlight();
-					};
-					bodyCell.addEventListener("mouseover", highl, false); 
-					bodyCell.addEventListener("mouseout", dehighl , false); 
-					bodyCell.addEventListener("click", function() {			
-						//console.log("spex.rp.enabled" + spex.rp.enabled);
-						spex.rp.enabled = false;	
-					}, false);
-					bodyCell.addEventListener("dblclick", function() {
-						//console.log("spex.rp.enabled" + spex.rp.enabled);
-						spex.rp.enabled = true;													
-					}, false);
-					
-					
-					bodyRow.appendChild(bodyCell);
-				}
+				bodyRow.appendChild(bodyCell);
+				
 			});
 			tableBody.appendChild(bodyRow);
 		});
 		b.innerHTML = numberofresults;
-		resultsTable.appendChild(tableBody); 
-		//tableBodyDiv.appendChild(tableBody);
-		//resultsTable.appendChild(tableBodyDiv); 
-		//$("#result").text('');		
-		//document.getElementById('result').innerHTML = "";
+		resultsTable.appendChild(tableBody); 		
 		document.getElementById('result').appendChild(resultsTable);
 		fixHeader();
 
@@ -184,62 +179,7 @@ ResultsPane.prototype.display = function(spexresultset){
 			resultsTable.parentNode.insertBefore(headerDiv, resultsTable);
 		}
 		
-/*
-		var htmlString = "<table class=\"table table-hover table-striped table-condensed\">";
-		//Write table head.
-		htmlString += "<thead><tr>";
-		var userSelectedVars = spexresultset.getUserSelectedVariables();
-		console.log("SPEXVARIABLES: "+spex.q.SPEXvariables);
-		$.each(userSelectedVars, function(varIndex, variable) { 
-			//Get the original label of the variable in display
-			var varlabel = spex.q.variablelabels[spex.q.SPEXvariables.indexOf("?"+variable)];
-			console.log("user variable:" + variable + " : " +varlabel);
-			htmlString += "<th>?" + varlabel + "</th>";
-		});
-		htmlString+="</tr></thead><tbody>";
-		//Write table body.
-		$.each(spexresultset.getAllResults().results.bindings, function(solutionIndex, solution) { 
-			htmlString+="<tr>";
-			$.each(userSelectedVars, function(variableIndex, variableName) { 
-				if(!solution[variableName + "__label"]) {
-					htmlString += "<td></td>";
-				} else {
-					//htmlString += "<td>"+ solution[variableName + "__label"].value + "</td>";
-					//htmlString += "<td>"+ buildHTML(solution, variableName) + "</td>";
-					//console.log("URI: " + encodeURI(buildHTML(solution, variableName)));
-					//htmlString += "<td> <a href="+ buildHTML(solution, variableName) +">"+ solution[variableName + "__label"].value + "</a></td>";
-					
-					htmlString += "<td >" + buildHTML(solution, variableName) + "</td>";
-					//$("#"+solutionIndex).hover(A, B);
-				} 
-				//console.log(value1[value2].value)
-			});
-			htmlString += "</tr>";
-		});
-		//Finish writing table.
-		htmlString += "</tbody></table>";
-*/	
-		/* Display table. */
-/*		document.getElementById("result").innerHTML = htmlString;
-		
-		//Generate event handlers and set onmouseover event firing for each table cell of the table (works only for an existing table, therefore a new iteration is necessary)
-		$('#result').each(function(){
-			$(this).find('td').each(function(){
-				//you can use $(this) to get current cell in the table
-				if ($(this).find('a')) {
-					var ev = new ResultItemEventHandler($(this).find('a').attr('href'),$(this), "t", "s");
-					$(this).hover(
-					  function () {
-						ev.highlight();								
-					  }, 
-					  function () {
-						ev.dehighlight();					  
-					  }
-					);
-				}
-			})
-		});
-*/
+
 		
 };
 
