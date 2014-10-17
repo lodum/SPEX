@@ -69,8 +69,7 @@ ResultsPane.prototype.display = function(spexresultset){
 		//headRow.width = "100%";
 		var userSelectedVars = spexresultset.getUserSelectedVariables();
 		$.each(userSelectedVars, function(varIndex, variable) { 
-			var headCell = document.createElement('th');
-			//headCell.width = 100/(userSelectedVars.length)+"%";
+			var headCell = document.createElement('th');						
 			//display labels instead of variable names if there are labels for them. Otherwise display variable names
 			var varlabel = spex.q.variablelabels[spex.q.SPEXvariables.indexOf("?"+variable)];
 			if (!varlabel || 0 === variable.length) { headCell.innerHTML = "?"+variable} else {headCell.innerHTML = "?"+varlabel;}
@@ -175,7 +174,11 @@ ResultsPane.prototype.display = function(spexresultset){
 			headerDiv.style.height = resultsTable.rows[0].offsetHeight + "px";
 			headerDiv.style.marginTop = "0px";
 			headerDiv.style.backgroundColor = "lightgray";
-
+			//set back map to bounds if hovering over table column
+			var settobounds = function() {					
+					map.LMap.fitBounds(map.markerGroup.getBounds());
+			}			
+			headerDiv.addEventListener("mouseover", settobounds, true);
 			resultsTable.parentNode.insertBefore(headerDiv, resultsTable);
 		}
 		

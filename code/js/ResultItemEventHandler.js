@@ -31,11 +31,13 @@ if (spex.rp.enabled) { //this checks whether highlighting is enabled or not
 }
 }
 
+
 ResultItemEventHandler.prototype.dehighlight = function(){
 if (spex.rp.enabled) {  
   this.tableObject.style.background = "";  
   slider.timeline.zoom(-1);
-  map.LMap.fitBounds(map.markerGroup.getBounds());
+  //mnap zoom should not be reset to bounds, because the highlighting order gets confused because of delay
+  //map.LMap.fitBounds(map.markerGroup.getBounds());
 }
 }
 
