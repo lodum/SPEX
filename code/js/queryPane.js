@@ -11,54 +11,54 @@
 *  @property {object} nodes - holds the array of current user generated visual (variable or instant) nodes 
 *  @property {object}  links - holds the array of current user generated visual property links (triple patterns)
 **/
-var queryPane = {
+var queryPane = function(){
 
 	// Variables
-	varCount : 0,
+	this.varCount =0,
 
 	// Height and Width of the queryPane
-	width : '500',
-	height : '700',
+	this.width ='500',
+	this.height ='700',
 
 	// Main visual
-	vis : null,
+	this.vis =null,
 
 	// D3.js force
-	force : null,
+	this.force =null,
 
 	// Visual classes
-	visNode : null,
-	visPath : null,
-	visPathText : null,
+	this.visNode =null,
+	this.visPath =null,
+	this.visPathText =null,
 
 	// Visual elements
-	node : null,
-	path : null,
-	pathText : null,
+	this.node =null,
+	this.path =null,
+	this.pathText =null,
 
 	// Data
-	nodes : [{id: 0, label: '', className: '', variable: true, x: 100, y: 0, spConstraint: false, spConstrSet: false, teConstraint: false, teConstrSet : false}],
-	links : [],
+	this.nodes =[{id: 0, label: '', className: '', variable: true, x: 100, y: 0, spConstraint: false, spConstrSet: false, teConstraint: false, teConstrSet : false}],
+	this.links =[],
 
 	// Selected node
-	selected : null,
+	this.selected =null,
 
 	// Context menu
-	menu : null,
+	this.menu =null,
 
 	// Node drag beahavior
-	node_drag : null,
+	this.node_drag =null,
 	
 	//flag which tells whether user updated query. for updating suggester classes and suggester predicates (respectively)
-	querywasupdatedCL : false,
+	this.querywasupdatedCL =false,
 	//querywasupdatedPRout : false,
 	//querywasupdatedPRin : false,
-	nodeselectedCL : null,
+	this.nodeselectedCL =null,
 	//nodeselectedPRout : null,
 	//nodeselectedPRin : null,
 	
 	// Initialization
-	init : function() {
+	this.init =function() {
 
 		d3.select(window)
     		.on("resize", queryPane.resize);
@@ -129,7 +129,7 @@ var queryPane = {
 
 	/** Graph animation function
 	*@function */
-	tick : function()
+	this.tick =function()
 	{
 		queryPane.path.attr('d', function(d) {
 			var deltaX = d.target.x - d.source.x,
@@ -158,7 +158,7 @@ var queryPane = {
 
 	/** Graph update function
 	*@function */
-	update : function() {
+	this.update =function() {
 
 		this.path = this.visPath.selectAll(".link").data(this.links);
 
@@ -292,7 +292,7 @@ var queryPane = {
 	
 	/**Prepares instances in the suggester  and set corresponding autocomplete lists
 	*@function */
-	checkInstanceSuggestion : function () {					
+	this.checkInstanceSuggestion =function () {					
 			spex.sug.suggestClasses=false;
 			if (queryPane.querywasupdatedI || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedI){					
 					spex.sug.chainInstanceQueries();
@@ -306,7 +306,7 @@ var queryPane = {
 	},
 	/**Prepares classes  in the suggester  and set corresponding autocomplete lists
 	*@function */
-	checkClassSuggestion : function () {	
+	this.checkClassSuggestion =function () {	
 				spex.sug.suggestClasses=true;	
 				if (queryPane.querywasupdatedCL || spex.endpointChanged() || queryPane.selected != queryPane.nodeselectedCL){
 					spex.sug.chainVariableQueries();									
@@ -321,7 +321,7 @@ var queryPane = {
 
 	/** Shows context menu
 	* @function */
-	showContextMenu : function(menu) {
+	this.showContextMenu =function(menu) {
 		
 		var constraintSpLinks = '';
 		var constraintTeLinks = '';
@@ -378,7 +378,7 @@ var queryPane = {
 
 	/** shows context menu for links (out) 
 	* @function */
-	showContextMenuAddOut : function() {
+	this.showContextMenuAddOut =function() {
 		var x;
 		var y;
 		if (queryPane.selected.variable) { if ( queryPane.selected.label != ""){x = 'Things that are '; y = 'Things that are maps ';} else {x = 'Something '; y = x;}} else {x = ""; y = 'Something ';};
@@ -412,7 +412,7 @@ var queryPane = {
 	//
 	/** shows context menu for links (in) 
 	* @function */
-	showContextMenuAddIn : function() {
+	this.showContextMenuAddIn =function() {
 		var x;
 		if (queryPane.selected.variable) { if ( queryPane.selected.label != ""){x = 'things that are '} else {x = 'something '}} else {x = ""};
 		d3.select("#contextMenu")
@@ -440,7 +440,7 @@ var queryPane = {
 	},
 
 	// Hide context menu
-	hideContextMenu : function(){
+	this.hideContextMenu =function(){
 		queryPane.menu.each(function(d) {
 			d3.select(this).style("display", "none");
 		});
@@ -449,7 +449,7 @@ var queryPane = {
 
 
 	// Node drag start
-	dragStart : function(d, i) {
+	this.dragStart =function(d, i) {
 		d3.event.sourceEvent.stopPropagation();
 
 		queryPane.hideContextMenu();
@@ -458,7 +458,7 @@ var queryPane = {
 	},
 
 	// Node drag move
-	dragMove : function(d, i) {
+	this.dragMove =function(d, i) {
 
 		d3.event.sourceEvent.stopPropagation();
 
@@ -471,7 +471,7 @@ var queryPane = {
 	},
 
 	// Node drag end
-	dragEnd : function(d, i) {
+	this.dragEnd =function(d, i) {
 
 		d3.event.sourceEvent.stopPropagation();
 
@@ -484,7 +484,7 @@ var queryPane = {
 
 
 	// 
-	addOut : function(){
+	this.addOut =function(){
 		queryPane.nodes.push({id: queryPane.nodes.length, label: "",
 			variable: true, spConstraint: false, teConstraint: false }); //'?'});// variable should be true by default
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
@@ -499,7 +499,7 @@ var queryPane = {
 	},
 
 	// 
-	addIn : function(){
+	this.addIn =function(){
 		queryPane.nodes.push({id: queryPane.nodes.length, label: "",
 			variable: true, spConstraint: false, teConstraint: false }); //'?'});//
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
@@ -514,13 +514,13 @@ var queryPane = {
 	},
 
 	// 
-	addToSelected : function(pLabel, pClass, cLabel, cClass) {
+	this.addToSelected =function(pLabel, pClass, cLabel, cClass) {
 
 	},
 
 	/** Writes input text into node and updates graph 
 	* @function */
-	updateSelected : function() {
+	this.updateSelected =function() {
 
 		if (this.isNode(queryPane.selected)) {			
 			//if (!document.getElementById('queryNonVar').checked) and no label given, then this means that the menu should go back to its initial empty variable state;
@@ -538,12 +538,12 @@ var queryPane = {
 	},
 
 	// 
-	removeSelected : function() {
+	this.removeSelected =function() {
 
 	},
 
 
-	resize : function() {
+	this.resize =function() {
 	  width = window.innerWidth -400;
 	  height = window.innerHeight - 200;
 	  queryPane.vis
@@ -557,17 +557,17 @@ var queryPane = {
 
 
 	// 
-	isNode : function(node) {
+	this.isNode =function(node) {
 		return (this.nodes.indexOf(node) >= 0);
 	},
 
 	// 
-	isLink : function(link) {
+	this.isLink =function(link) {
 		return (this.links.indexOf(link) >= 0);
 	},
 
 	// 
-	logSubelements : function(node) {
+	this.logSubelements =function(node) {
 
 		console.log(node.label);
 
@@ -581,7 +581,7 @@ var queryPane = {
 	},
 	/** Updates central SPEX query after user manipulation of visual graph 
 	* @function */
-	updateQuery : function() {
+	this.updateQuery =function() {
 
 		queryPane.hideContextMenu();
 
@@ -597,7 +597,7 @@ var queryPane = {
 		document.getElementById("query").innerHTML = spex.q.serialiseQuery();
 	},
 
-	parseQuery : function() {
+	this.parseQuery =function() {
 
 		for (var i = 0; i < this.nodes.length; i++) {
 
@@ -636,11 +636,11 @@ var queryPane = {
 	
 	},
 
-	getNodeVarName : function(node) {
+	this.getNodeVarName =function(node) {
 		return '?var' + node.id;
 	},
 
-	setSpatialVars : function(vars) {
+	this.setSpatialVars =function(vars) {
 
 		for (variable in vars) {
 		
@@ -657,7 +657,7 @@ var queryPane = {
 		this.update();
 	},
 
-	setTemporalVars : function(vars) {
+	this.setTemporalVars =function(vars) {
 
 		for (variable in vars) {
 		
@@ -674,7 +674,7 @@ var queryPane = {
 		this.update();
 	},
 	/** @function */
-	setSpConstraint : function() {
+	this.setSpConstraint =function() {
 		queryPane.selected.spConstrSet=true;
 		var win = new Window();
 		win.setCorners(
@@ -691,7 +691,7 @@ var queryPane = {
 		queryPane.updateQuery();
 	},
 	/** @function */
-	removeSpConstraint : function() {
+	this.removeSpConstraint =function() {
 		queryPane.selected.spConstrSet=false;
 		spex.q.setSpatialConstraint(
 			queryPane.getNodeVarName(queryPane.selected)
@@ -700,7 +700,7 @@ var queryPane = {
 		queryPane.updateQuery();
 	},
 	/** @function */
-	setTeConstraint : function() {
+	this.setTeConstraint =function() {
 		queryPane.selected.teConstrSet=true;
 		var temp = new Time();
 		temp.timeBeginning = slider.timeline.getVisibleChartRange().start.xsdDateTime();
@@ -714,7 +714,7 @@ var queryPane = {
 		queryPane.updateQuery();
 	},
 	/** @function */
-	removeTeConstraint : function() {
+	this.removeTeConstraint =function() {
 		queryPane.selected.teConstrSet=false;
 		spex.q.setTemporalConstraint(
 			queryPane.getNodeVarName(queryPane.selected)

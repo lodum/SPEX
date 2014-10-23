@@ -19,6 +19,7 @@ var spex = new function(){
 	
 	this.ex = new QueryExecutor();
 	this.sug = new Suggester();
+	this.qp = new querypane();
 	// Initialization
 	
 	var endpoint = null;
