@@ -97,10 +97,19 @@ var spex = new function(){
 	/** 
 	* undoes the last query construction step
 	*@function */
-	this.undo = function() { 
-		  //d3.select("svg").remove();
-		  //queryPane.last_qp.init();
-		  //queryPane = queryPane.last_qp;		  
+	this.undo = function() { 		  
+		  if (queryPane.last_qp != null && queryPane.last_qp.nodes.length !=0) {			  
+			  /*queryPane.vis.remove();			  
+			  console.log(" links: "+queryPane.links.length);
+			  console.log(" nodes: "+queryPane.nodes.length); 			  
+			  queryPane = queryPane.last_qp;	
+			  console.log(" old links: "+queryPane.links.length);
+			  console.log(" old nodes: "+queryPane.nodes.length);			  
+			  queryPane.init();
+			  console.log(" old links: "+queryPane.links.length);
+			  console.log(" old nodes: "+queryPane.nodes.length);			  
+			  queryPane.force.start();	*/	   
+		  }		  
 	};
 	
 	//some general recursive clone method

@@ -350,7 +350,7 @@ function Suggester(){
 			 var varname = queryPane.getNodeVarName(queryPane.selected);			 
 			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname , "rdf:type" , "?aClass").limit(500);
 			 queryClasses.SPEXvariables=["?aClass"];
-			 console.log("sugpredicatesparql:  "+queryClasses.getSPARQL());			
+			 //console.log("sugpredicatesparql:  "+queryClasses.getSPARQL());			
 			classesArray = [];	
 			$('#warning').text("Please wait for class suggestions being generated...").css("color" , "red");			
 			sugEx.executeQuery(queryClasses, spex.queryEndpoint());		
@@ -362,7 +362,7 @@ function Suggester(){
 			 var varname = queryPane.getNodeVarName(queryPane.selected);			 
 			 queryPredicates.select(["?predicate_o","?predicate_o__label"]).distinct().where(varname , "?predicate_o" , "?tonode").limit(500);
 			 queryPredicates.SPEXvariables=["?predicate_o"];
-			 console.log("sugpredicatesparql:  "+queryPredicates.getSPARQL());
+			 //console.log("sugpredicatesparql:  "+queryPredicates.getSPARQL());
 			predicateArrayout = [];				
 			$('#addout').click(function (){}).text("Suggestions for outgoing links being generated...");			
 			sugEx.executeQuery(queryPredicates, spex.queryEndpoint());		

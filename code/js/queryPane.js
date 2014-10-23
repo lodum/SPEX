@@ -200,7 +200,7 @@ var queryPane = {
 
 		// remove old links
 		this.path.exit().remove();
-		this.pathText.exit().remove()
+		this.pathText.exit().remove();
 
 
 		// Draw the nodes
@@ -289,9 +289,8 @@ var queryPane = {
 			return d3.rgb(rgb); 
 		});
 
-		this.node.exit().remove();
+		this.node.exit().remove();		
 		
-		this.last_qp = spex.clone(this);
 	},
 	
 	/**Prepares instances in the suggester  and set corresponding autocomplete lists
@@ -489,11 +488,12 @@ var queryPane = {
 
 	// 
 	addOut : function(){
+		this.last_qp = spex.clone(this);
 		queryPane.nodes.push({id: queryPane.nodes.length, label: "",
 			variable: true, spConstraint: false, teConstraint: false }); //'?'});// variable should be true by default
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
 			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});			
-	
+		
 		this.update();
 		
 
@@ -504,6 +504,7 @@ var queryPane = {
 
 	// 
 	addIn : function(){
+		this.last_qp = spex.clone(this);
 		queryPane.nodes.push({id: queryPane.nodes.length, label: "",
 			variable: true, spConstraint: false, teConstraint: false }); //'?'});//
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
@@ -526,7 +527,8 @@ var queryPane = {
 	* @function */
 	updateSelected : function() {
 
-		if (this.isNode(queryPane.selected)) {			
+		if (this.isNode(queryPane.selected)) {	
+			this.last_qp = spex.clone(this);			
 			//if (!document.getElementById('queryNonVar').checked) and no label given, then this means that the menu should go back to its initial empty variable state;
 				if (document.getElementById('queryNonVar').checked && document.getElementById('queryS').value =="") {
 					queryPane.checkClassSuggestion();
@@ -537,7 +539,8 @@ var queryPane = {
 			queryPane.selected.label = document.getElementById('queryS').value;			
 			queryPane.selected.variable = document.getElementById('queryVar').checked;	
 			queryPane.updateQuery();			
-			this.update();					
+			this.update();	
+					
 		};
 	},
 
@@ -606,7 +609,8 @@ var queryPane = {
 		for (var i = 0; i < this.nodes.length; i++) {
 
 			var node = this.nodes[i];
-
+			//console.log("node :" +node);
+			
 			if (node.variable) {
 				if (node.label != '') {
 					spex.q.where(this.getNodeVarName(node), 'a', node.label);					
@@ -623,7 +627,8 @@ var queryPane = {
 			for (var j = 0; j < this.links.length; j++) {
 
 				var link = this.links[j];
-
+				//console.log("link label: "+link.label);
+				//console.log("link source: "+link.source + " " + node + " " + (link.source === node));
 				if (link.source == node) {	
 					//non-variable nodes are handled by filter expression and treated also as a variable (see above)				
 					subject = this.getNodeVarName(node) ;					
@@ -632,8 +637,8 @@ var queryPane = {
 					object = this.getNodeVarName(link.target);					
 					spex.q.where(subject, predicate, object);					
 
-					//console.log(this.links[i].label);
-					//console.log(this.links[i].target.label);
+					//console.log("link label: "+this.links[j].label);
+					//console.log(this.links[j].target.label);
 				};
 			};
 		};
