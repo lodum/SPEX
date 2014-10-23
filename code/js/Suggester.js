@@ -284,14 +284,14 @@ function Suggester(){
 	 *@function */
 	this.createDropdownPout=function(idString){
 		createDropdown(idString,predicateArrayout);
-		$('#numbpr').text('('+predicateArrayout.length+' relations available)');
+		$('#numbpr').text('('+predicateArrayout.length+' predicates to choose from)');
 	};
 	/** 
 	 * creates a property (in) autosuggestion drop down menu
 	 *@function */
 	this.createDropdownPin=function(idString){
 		createDropdown(idString,predicateArrayin);
-		$('#numbpr').text('('+predicateArrayin.length+' relations available)');
+		$('#numbpr').text('('+predicateArrayin.length+' predicates to choose from)');
 	}; 
 	/** 
 	 * creates an instance autosuggestion drop down menu
@@ -303,38 +303,38 @@ function Suggester(){
 	this.init=function(){			
 	};
 	
-	//This adjusts menu the menu text on a node once new suggestions have been generated
+	//This adjusts menu texts accordingly
 	this.setLinkText = function() {
 		//console.log("link text: " + predicateArrayout.length + classesArray.length);
 		if (predicateArrayout.length==0 ) {			
 			$('#addout').text('');
 			$('#addout').click(function (){});
 		}else { 
-			//$('#numbpr').text('('+predicateArrayout.length+' predicates)');
+			$('#numbpr').text('('+predicateArrayout.length+' predicates)');
 			$('#addout').click(queryPane.showContextMenuAddOut);		
-			$('#addout').text('Specify relationship to other things ('+predicateArrayout.length+')');		
+			$('#addout').text('Add outgoing Link ('+predicateArrayout.length+')');		
 		};
 		if (predicateArrayin.length==0 ) {			
 			$('#addin').text('');
 			$('#addin').click(function (){});
 		}else { 
 			$('#addin').click(queryPane.showContextMenuAddIn);	
-			//$('#numbpr').text(''+predicateArrayin.length+' prediates)');			
-			$('#addin').text('Specify relationship from other things ('+predicateArrayin.length+')');		
+			$('#numbpr').text(''+predicateArrayin.length+' prediates)');			
+			$('#addin').text('Add incoming Link ('+predicateArrayin.length+')');		
 		};
 		if (document.getElementById('queryVar').checked){
 		if (classesArray.length==0 ) {
 			$('#warning').text("No class suggestions found!").css("color" , "red");			
 		} else {
 			if(classesArray.length==1){var cl=' class'}else{var cl=' classes'};
-			$('#numb').text('('+classesArray.length +cl+' available)');				
+			$('#numb').text('('+classesArray.length +cl+' to choose from)');				
 			$('#warning').text('').css("color" , "white");			
 		}};
 		if (document.getElementById('queryNonVar').checked){
 		if (instancesArray.length==0 ) {
 			$('#warning').text("No instance suggestions found!").css("color" , "red");			
 		} else {	
-			$('#numb').text('('+instancesArray.length+' things available)');		
+			$('#numb').text('('+instancesArray.length+' things to choose from)');		
 			$('#warning').text('').css("color" , "white");			
 		}
 		};
