@@ -186,7 +186,9 @@ var queryPane = {
 			
 
 			queryPane.path.classed("selected", function(d) { 
-				return d == queryPane.selected; 
+				var a;
+				if (queryPane.selected){a = (d.id == queryPane.selected.id);} else {a = (d == queryPane.selected);};
+				return  a ; 
 			});
 		});
 
@@ -238,7 +240,9 @@ var queryPane = {
 			queryPane.menu.datum(queryPane.selected = d).call(queryPane.showContextMenu);
 
 			queryPane.node.classed("selected", function(d) { 
-				return d == queryPane.selected; 
+				var a;
+				if (queryPane.selected){a = (d.id == queryPane.selected.id);} else {a = (d == queryPane.selected);};
+				return  a ; 
 			});
 		});
 
@@ -257,7 +261,9 @@ var queryPane = {
 		.text(function(d) { return d.label; });
 
 		this.node.classed("selected", function(d) { 
-			return d == queryPane.selected; 
+			var a;
+				if (queryPane.selected){a = (d.id == queryPane.selected.id);} else {a = (d == queryPane.selected);};
+				return  a ;  
 		});
 
 		this.node.select("text.id")
@@ -579,7 +585,7 @@ var queryPane = {
 		console.log(node.label);
 
 		for (var i = 0; i < this.links.length; i++) {
-			if (this.links[i].source == node) {
+			if (this.links[i].source.id == node.id) {
 				console.log(this.links[i].label);
 				//console.log(this.links[i].target.label);
 				this.logSubelements(this.links[i].target);
@@ -627,8 +633,7 @@ var queryPane = {
 			for (var j = 0; j < this.links.length; j++) {
 
 				var link = this.links[j];
-				//console.log("link label: "+link.label);
-				//console.log("link source: "+link.source.id + " " + node.id + " " + (link.source.id === node.id));
+				
 				if (link.source.id == node.id) {	
 					//non-variable nodes are handled by filter expression and treated also as a variable (see above)				
 					subject = this.getNodeVarName(node) ;					
