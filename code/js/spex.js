@@ -104,11 +104,12 @@ var spex = new function(){
 			  //console.log(" nodes: "+queryPane.nodes.length); 			  
 			  queryPane = queryPane.last_qp;	
 			  //console.log(" old links: "+queryPane.links.length);
-			  //console.log(" old nodes: "+queryPane.nodes.length);			  
+			  //console.log(" old nodes: "+queryPane.nodes.length);			
+			  queryPane.force.start();			  
 			  queryPane.init();
 			  //console.log(" old links: "+queryPane.links.length);
 			  //console.log(" old nodes: "+queryPane.nodes.length);			  
-			  queryPane.force.start();		   
+			  		   
 		  }		  
 	};
 	

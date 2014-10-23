@@ -22,7 +22,7 @@ if (spex.rp.enabled) { //this checks whether highlighting is enabled or not
 	//console.log("Time object"+this.timeObject.start);		
 	//$(this.timeObject.dom).prepend("<div class='ui-highlight'></div>");
 	//console.log($(this.timeObject.dom).css('borderTopColor'));
-  }else {slider.timeline.zoom(-1); 
+  }else {slider.timeline.setVisibleChartRangeAuto; 
   }
   if(this.spaceObject) {
     map.LMap.fitBounds(this.spaceObject.getBounds());
@@ -34,8 +34,9 @@ if (spex.rp.enabled) { //this checks whether highlighting is enabled or not
 
 ResultItemEventHandler.prototype.dehighlight = function(){
 if (spex.rp.enabled) {  
-  this.tableObject.style.background = "";  
-  slider.timeline.zoom(-1);
+  this.tableObject.style.background = ""; 
+	slider.timeline.zoom(-1);  
+	slider.timeline.setVisibleChartRangeAuto;
   //mnap zoom should not be reset to bounds, because the highlighting order gets confused because of delay
   //map.LMap.fitBounds(map.markerGroup.getBounds());
 }
