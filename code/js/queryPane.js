@@ -12,6 +12,8 @@
 *  @property {object}  links - holds the array of current user generated visual property links (triple patterns)
 **/
 var queryPane = {
+	//last version of this query pane
+	last_qp : null,	
 
 	// Variables
 	varCount : 0,
@@ -288,6 +290,8 @@ var queryPane = {
 		});
 
 		this.node.exit().remove();
+		
+		this.last_qp = spex.clone(this);
 	},
 	
 	/**Prepares instances in the suggester  and set corresponding autocomplete lists
@@ -722,5 +726,7 @@ var queryPane = {
 
 		queryPane.updateQuery();
 	}
+	
+	
 
 };
