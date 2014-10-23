@@ -628,8 +628,8 @@ var queryPane = {
 
 				var link = this.links[j];
 				//console.log("link label: "+link.label);
-				//console.log("link source: "+link.source + " " + node + " " + (link.source === node));
-				if (link.source == node) {	
+				//console.log("link source: "+link.source.id + " " + node.id + " " + (link.source.id === node.id));
+				if (link.source.id == node.id) {	
 					//non-variable nodes are handled by filter expression and treated also as a variable (see above)				
 					subject = this.getNodeVarName(node) ;					
 

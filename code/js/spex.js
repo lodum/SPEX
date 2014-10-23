@@ -99,7 +99,7 @@ var spex = new function(){
 	*@function */
 	this.undo = function() { 		  
 		  if (queryPane.last_qp != null && queryPane.last_qp.nodes.length !=0) {			  
-			  /*queryPane.vis.remove();			  
+			  queryPane.vis.remove();			  
 			  console.log(" links: "+queryPane.links.length);
 			  console.log(" nodes: "+queryPane.nodes.length); 			  
 			  queryPane = queryPane.last_qp;	
@@ -108,7 +108,7 @@ var spex = new function(){
 			  queryPane.init();
 			  console.log(" old links: "+queryPane.links.length);
 			  console.log(" old nodes: "+queryPane.nodes.length);			  
-			  queryPane.force.start();	*/	   
+			  queryPane.force.start();		   
 		  }		  
 	};
 	
