@@ -100,19 +100,19 @@ var spex = new function(){
 	this.undo = function() { 		  
 		  if (queryPane.last_qp != null && queryPane.last_qp.nodes.length !=0) {			  
 			  queryPane.vis.remove();			  
-			  console.log(" links: "+queryPane.links.length);
-			  console.log(" nodes: "+queryPane.nodes.length); 			  
+			  //console.log(" links: "+queryPane.links.length);
+			  //console.log(" nodes: "+queryPane.nodes.length); 			  
 			  queryPane = queryPane.last_qp;	
-			  console.log(" old links: "+queryPane.links.length);
-			  console.log(" old nodes: "+queryPane.nodes.length);			  
+			  //console.log(" old links: "+queryPane.links.length);
+			  //console.log(" old nodes: "+queryPane.nodes.length);			  
 			  queryPane.init();
-			  console.log(" old links: "+queryPane.links.length);
-			  console.log(" old nodes: "+queryPane.nodes.length);			  
+			  //console.log(" old links: "+queryPane.links.length);
+			  //console.log(" old nodes: "+queryPane.nodes.length);			  
 			  queryPane.force.start();		   
 		  }		  
 	};
 	
-	//some general recursive clone method
+	//some general recursive clone method (used for undo method)
 	this.clone = function(obj) {
 			var copy;
 
