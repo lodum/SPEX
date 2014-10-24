@@ -25,6 +25,15 @@ QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, false);
 }
 
+QueryExecutor.prototype.executeSideQuery = function(spexquery, endpoint) {
+	//Test whether endpoint is non empty:
+	if (endpoint == '' || endpoint == null) {
+		alert('Enter an endpoint URI!');
+		return;
+	}
+	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, false);
+}
+
 QueryExecutor.prototype.callback = function(str){
   		var jsonObj = eval('(' + str + ')');
   		//Create a SPEXResultSet object, fill in any missing labels, and store the object in the variable results.
