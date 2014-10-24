@@ -36,8 +36,8 @@ ResultItemEventHandler.prototype.dehighlight = function(){
 if (spex.rp.enabled) {  
   this.tableObject.style.background = ""; 
 	slider.timeline.zoom(-1);  
-	slider.timeline.setVisibleChartRangeAuto;
-  //mnap zoom should not be reset to bounds, because the highlighting order gets confused because of delay
+	//slider.timeline.setVisibleChartRangeAuto;
+  //map zoom should not be reset to bounds, because the highlighting order gets confused because of delay
   //map.LMap.fitBounds(map.markerGroup.getBounds());
 }
 }

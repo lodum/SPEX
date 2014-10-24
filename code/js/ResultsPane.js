@@ -176,7 +176,8 @@ ResultsPane.prototype.display = function(spexresultset){
 			headerDiv.style.backgroundColor = "lightgray";
 			//set back map to bounds if hovering over table column
 			var settobounds = function() {	
-					if (spex.rp.enabled) map.LMap.fitBounds(map.markerGroup.getBounds());
+					if (spex.rp.enabled) { map.LMap.fitBounds(map.markerGroup.getBounds()); slider.timeline.setVisibleChartRangeAuto;};
+					
 			}			
 			headerDiv.addEventListener("mouseover", settobounds, true);
 			resultsTable.parentNode.insertBefore(headerDiv, resultsTable);
