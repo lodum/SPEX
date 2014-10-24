@@ -143,15 +143,16 @@
 			<div id="nav_title">
 				Spatio-temporal content explorer
 			</div>	
-
+				
 			<div id="nav_right">
-				<div id="nav_undo" style="padding:15px">	
-					<img id="img_undo" title="Undo last step" src="img/undo.png"></img>
-				</div>		
-				<div id="nav_buttons">						
-					<img id="img_help" title="Help" src="img/help.png"></img>
-				</div>
-
+				<div id="nav_buttons">
+					<div id="nav_undo" >	
+							<img id="img_undo" title="Undo last step" src="img/undo.png"></img>
+					</div>			
+					<div id="nav_help" >						
+						<img id="img_help" title="Help" src="img/help.png"></img>
+					</div>
+				</div> 
 				<div id="nav_endpoint">
 					Endpoint:
 					<!--<input type="text" id="endpoint" name="endpoint" value="http://data.uni-muenster.de/sparql"></input>-->
@@ -213,13 +214,9 @@
 	</div>
 
 	<div id="helpDialog" title="SPEX - Help">		
-		<h3>About</h2>
-		<p>
-				Spex is an spatio-temporal exploration and query tool for SPARQL endpoints. It is part of the development in LODUM and LIFE.
-				See <a href="http://lodum.de/" target="_blank">http://lodum.de/</a>.
-		</p>
-		<h3>How to explore and query and endpoint in space and time.</h2>
-				<p> This tutorial shows how queries on a given endpoint can be built interactively in SPEX. The endpoint can be entered in the text field on the right.</p>
+		
+		<h3>How to explore and query a SPARQL endpoint in space and time.</h2>
+				<p> This tutorial shows how queries can be built interactively in SPEX. The endpoint can be entered in the text field on the right.</p>
 				<p><img src="img/spex_tut0.png" alt="spex bar" width="100%"></p>
 				<p><font color = "red">Note:</font> Red texts warn you that the query is unsuccessful or the endpoint is not responding.</p>
 				<br>
@@ -275,12 +272,17 @@
 				<li>Type in text to search for particular things contained in this node and press return.</li>
 				<p><img src="img/spex_tut11.png" alt="spex bar" width="100%"></p>
 			</ul>
-			<br>
+			<br>			
 		<h4>If you want to know more ....</h4>	
 		<p> Every node stands for particular things described in the endpoint. Nodes with question marks are variables that stand for all things that fit into this node. 
 			You can add class labels to variable nodes in order to restrict things in that node to a class. Furthermore, you can add links to a node in order to filter out things with links to other things.
 			Nodes without question marks stand for one particular thing. Nodes in light green indicate that spatial or temporal information is present, nodes in dark green indicate the contrary.</p>	
 			For further information, see...
+		<h3>About</h2>
+		<p>
+				Spex is an spatio-temporal exploration and query tool for SPARQL endpoints. It is part of the development in LODUM and LIFE.
+				See <a href="http://lodum.de/" target="_blank">http://lodum.de/</a>.
+		</p>	
 	</div>
 	
 	
