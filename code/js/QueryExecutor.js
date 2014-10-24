@@ -23,7 +23,7 @@ QueryExecutor.prototype.executeQuery = function(spexquery, endpoint) {
 	}
 	$("#result").text("Waiting for results...").css('color', 'red');
 	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, false);
-}
+};
 
 QueryExecutor.prototype.executeSideQuery = function(spexquery, endpoint) {
 	//Test whether endpoint is non empty:
@@ -32,7 +32,7 @@ QueryExecutor.prototype.executeSideQuery = function(spexquery, endpoint) {
 		return;
 	}
 	this.sparqlQueryJson(spexquery.getSPARQL(), endpoint, this.callback, spexquery.timeout, false);
-}
+};
 
 QueryExecutor.prototype.callback = function(str){
   		var jsonObj = eval('(' + str + ')');
@@ -58,7 +58,7 @@ QueryExecutor.prototype.callback = function(str){
 		//Display results in resultspane as table
 		$("#result").text('').css('color', 'black');
   		spex.rp.display(results);
-}
+};
 
 QueryExecutor.prototype.sparqlQueryJson = function(queryStr, endpoint, callback, timeout, isDebug) {
       	var querypart = "query=" + escape(queryStr);
