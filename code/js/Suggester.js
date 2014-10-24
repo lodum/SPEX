@@ -353,7 +353,7 @@ function Suggester(){
 			 //console.log("sugpredicatesparql:  "+queryClasses.getSPARQL());			
 			classesArray = [];	
 			$('#warning').text("Please wait for class suggestions being generated...").css("color" , "red");			
-			sugEx.executeQuery(queryClasses, spex.queryEndpoint());		
+			sugEx.executeSideQuery(queryClasses, spex.queryEndpoint());		
 	};
 	this.getSelNodePredicatesofCurrentQuery = function(){
 		console.log("new auto-suggester out predicate list is being generated!");			 
@@ -365,7 +365,7 @@ function Suggester(){
 			 //console.log("sugpredicatesparql:  "+queryPredicates.getSPARQL());
 			predicateArrayout = [];				
 			$('#addout').click(function (){}).text("Suggestions for outgoing links being generated...");			
-			sugEx.executeQuery(queryPredicates, spex.queryEndpoint());		
+			sugEx.executeSideQuery(queryPredicates, spex.queryEndpoint());		
 	};
 	//method which modifies class suggestions taking into account the current query 
 	this.getSelNodeInPredicatesofCurrentQuery = function () {
@@ -379,7 +379,7 @@ function Suggester(){
 			 //console.log(queryPredicates.getSPARQL());
 			predicateArrayin = [];	
 			$('#addin').click(function (){}).text("Suggestions for ingoing links being generated...");
-			sugEx.executeQuery(queryPredicates, spex.queryEndpoint());
+			sugEx.executeSideQuery(queryPredicates, spex.queryEndpoint());
 		 }
 	};
 	/** 
