@@ -215,73 +215,87 @@
 
 	<div id="helpDialog" title="SPEX - Help">		
 		
-		<h3>How to explore and query a SPARQL endpoint in space and time.</h2>
-				<p> This tutorial shows how queries can be built interactively in SPEX. The endpoint can be entered in the text field on the right.</p>
-				<p><img src="img/spex_tut0.png" alt="spex bar" width="100%"></p>
-				<p><font color = "red">Note:</font> Red texts warn you that the query is unsuccessful or the endpoint is not responding.</p>
+		<h3>How to explore and query a SPARQL endpoint in space and time.</h2>				
+				<p>With  <a href="http://lodum.de/" >SPEX</a>, you can query and simultaneously explore a SPARQL endpoint without knowing what it contains. 
+				For example, you can find maps which represent Napoleon's invasion to Russia in 1812 together with all battles, 
+				their place and their number of participants by interactively constructing the following visual query on the SPARQL endpoint <a href="http://data.uni-muenster.de/historicmaps/sparql" >http://data.uni-muenster.de/historicmaps/sparql</a>:</p>
+				<p><img src="img/invasionexample.png" alt="spex bar" width="100%"></p>				
+				Results are displayed in the grey table (with node labels as table columns) as well as in the map and the timeline on the right. 
+				In this tutorial, you learn how to explore and query endpoints by space, time and content.
+				<p><font color = "red">Note:</font> Red texts warn you if the endpoint is not responding.</p>
 				<br>
-				With SPEX, you can build complex queries interactively. For example: show me all battles of Napoleon's invasion to Russia in 1812, 
-				together with their place, the number of participants, and the temperature:
-				<p><img src="img/invasionexample.png" alt="spex bar" width="100%"></p>
-				<br>
-		<h4>(1) Start with an empty question (node with question mark).</h4>
+		<h4>(1) Start with an empty question.</h4>			
+			<p><img src="img/spex_tut01.png" alt="spex start" width="80px"></p>
+			<p>At the beginning, there is only a single node with question mark and without any further restriction. You can make your query more specific by adding constraints to a node.</p>
 			
-			<p><img src="img/spex_tut01.png" alt="spex start" width="14%"></p>
-			<p>At the beginning, there is only a single node with question mark and without any further restriction, which simply queries for all things that have space or time in them. 
-			If there are any results, they are immediately shown below in a table (with node labels as table columns) as well as in the map and the timeline on the right. </p>
-			<p><img src="img/spex_tut1.png" alt="spex start" width="100%"></p>
 				<br>
 			
-		<h4>(2) Make your question more specific by selecting a node and opening its context menu.</h4>
+		<h4>(2) Restrict your query by restricting a node to a class.</h4>
 			<ul>
-				<li>Select a node and open its context menu</li>
-				<p><img src="img/spex_tut20.png" alt="spex bar" width="30%"></p>
-				<li>Type in text to search for kinds of things (classes).</li>
-				<p><img src="img/spex_tut2.png" alt="spex bar" width="30%"></p>
-				<li>Press return to restrict query to things of this class (and see how results change).</li>
-				<p><img src="img/spex_tut21.png" alt="spex bar" width="14%"></p>
-				<li>Add in- or outgoing links to other things.</li>
-				<p><img src="img/spex_tut3.png" alt="spex bar" width="30%"></p>
-				<li>Type in text to search for links </li>
-				<p><img src="img/spex_tut4.png" alt="spex bar" width="65%"></p>
-				<li>Press return to add a new edge to the query graph (and see how results change).</li>
-				<p><img src="img/spex_tut5.png" alt="spex bar" width="30%"></p>
-				<li>Filter results by current map or time window (and see how results change).</li>
-				<p><img src="img/spex_tut6.png" alt="spex bar" width="30%"></p>
-				<li>Remove filter again.</li>
-				<p><img src="img/spex_tut7.png" alt="spex bar" width="30%"></p>
+				<li>Select a node and open its context menu. </li>
+				<p><img src="img/spex_tut20.png" alt="spex bar" width="28%"></p>
+				<li>The first option is to restrict the things in this node by a class. If you enter the text field or if you type in something, SPEX suggests classes you may be looking for.
+				<p><img src="img/spex_tut2a.png" alt="spex bar" width="30%"></p>
+				<li>Select a class (e.g. "Map") and press return to restrict the node to things of this class.</li>
+				<p><img src="img/spex_tut2.png" alt="spex bar" width="30%"></p>	
+				<li>See how the label of the node changes and how the results in this node are filtered to things of this class.				
+				<p><img src="img/spex_tut21.png" alt="spex bar" width="80px"></p>
+				<p><img src="img/spex_tut211.png" alt="spex bar" width="70%"></p>
 			</ul>
-			<br>
-		<h4>(3) Explore results.</h4>
+			<br>		
+		<h4>(3) Restrict node by relationship to other things.</h4>
 			<ul>	
-				<li>Zoom into space / time by scrolling mouse over map / time line. </li>
-				<p><img src="img/spex_tut8.png" alt="spex bar" width="50%"></p>
-				<li>Hover over a map object or time event to reveal the name of the corresponding result.</li>	
-				<li>Hover mouse over a result cell to highlight/rezoom to the result in space and time.</li>
-				<p><img src="img/spex_tut9.png" alt="spex bar" width="100%"></p>
-				<li>Click on a result cell to fix the current result zoom (and double click to release again).</li>
-				<li>Click on a result name (URI link) to open its description on the Web.</li>							
+				<li>You can also restrict a node by specifying its relationship to other things. 
+				In the context menu, there is a relationship link with the number of available relationships in brackets from this node to something else.
+				Click on the link. 
+				</li>
+				<p><img src="img/spex_tut3.png" alt="spex bar" width="30%"></p>
+				<li>Type in text or scroll in suggested list to select a relationship, for example the "dct:creator" of a map. </li>
+				<p><img src="img/spex_tut4.png" alt="spex bar" width="55%"></p>
+				<li>Press return to add a new edge to the query graph which restricts results to those things that are in this relationship. See how results change.</li>
+				<p><img src="img/spex_tut5.png" alt="spex bar" width="22%"></p>
+				<p><img src="img/spex_tut52.png" alt="spex bar" width="80%"></p>				
 			</ul>
 			<br>
-		<h4>(4) Further restrict query by particular things.</h4>
+		<h4>(3) Restrict node to particular things.</h4>
 			<ul>
-				<li>Select a question marked node to open its content menu.</li>
-				<p><img src="img/spex_tut101.png" alt="spex bar" width="8%"></p>
-				<li>Select button "particular things".</li>
-				<p><img src="img/spex_tut10.png" alt="spex bar" width="30%"></p>
-				<li>Type in text to search for particular things contained in this node and press return.</li>
-				<p><img src="img/spex_tut11.png" alt="spex bar" width="100%"></p>
+				<li>You can furthermore restrict nodes to particular things. First, select a node. </li>
+				<p><img src="img/spex_tut101.png" alt="spex bar" width="50px"></p>
+				<li>In the node's context menu, press button "Particular things".</li>
+				<p><img src="img/spex_tut10.png" alt="spex bar" width="25%"></p>
+				<li>Select a particular thing, such as a particular map creator, from the suggested list and press return. 
+				Now the node looses its question mark and is labelled by the name of the thing.</li>
+				<p><img src="img/spex_tut11a.png" alt="spex bar" width="30%"> <img src="img/spex_tut11.png" alt="spex bar" width="60%"> </p>
 			</ul>
-			<br>			
+			<br>	
+		<h4>(5) Explore results and filter by space and time.</h4>
+			<ul>	
+				<li>Zoom into space / time by scrolling mouse over map / time line. Hover over a map object or time event to reveal the name of the corresponding result. </li>
+				<p><img src="img/spex_tut81.png" alt="spex bar" width="40%"></p>
+				<p><img src="img/spex_tut82.png" alt="spex bar" width="40%"></p>				
+				<li>Hover mouse over a table result cell to zoom to the result in space and time. In order to fix the current space-time zoom, just click on the result cell (and double click to release again).</li>
+				<p><img src="img/spex_tut9.png" alt="spex bar" width="60%"><img src="img/spex_tut9a.png" alt="spex bar" width="40%"></p>
+				<li>Click on a result name (URI link) to open its description on the Web.</li>	
+				<p><img src="img/spex_tut12.png" alt="spex bar" width="70%"></p>
+				<li>You can also filter nodes by the current map or time window. 
+				For example, you can filter a node for all things located in Egypt by zooming the map window to Egypt and by pressing the link "Filter results by map window" in the context menu of the node.</li>
+				<p><img src="img/spex_tut6.png" alt="spex bar" width="40%" ><img src="img/spex_tut6a.png" alt="spex bar" width="40%" ></p>
+				<li>Remove the filter again by clicking on the corresponding link in the context menu.</li>
+				<p><img src="img/spex_tut7.png" alt="spex bar" width="25%" >
+								
+			</ul>
+			<br>
+					
 		<h4>If you want to know more ....</h4>	
 		<p> Every node stands for particular things described in the endpoint. Nodes with question marks are variables that stand for all things that fit into this node. 
 			You can add class labels to variable nodes in order to restrict things in that node to a class. Furthermore, you can add links to a node in order to filter out things with links to other things.
 			Nodes without question marks stand for one particular thing. Nodes in light green indicate that spatial or temporal information is present, nodes in dark green indicate the contrary.</p>	
-			For further information, see...
+			The endpoint can be entered in the text field on the right.</p>
+				<p><img src="img/spex_tut0.png" alt="spex bar" width="100%"></p>
 		<h3>About</h2>
 		<p>
-				Spex is an spatio-temporal exploration and query tool for SPARQL endpoints. It is part of the development in LODUM and LIFE.
-				See <a href="http://lodum.de/" target="_blank">http://lodum.de/</a>.
+		Spex is a spatio-temporal exploration and query tool for SPARQL endpoints. It is part of the development in <a href="http://lodum.de/">LODUM</a> and LIFE. For further information about SPEX development, see us on <a href="https://github.com/lodum/SPEX">Github</a>.
+				
 		</p>	
 	</div>
 	

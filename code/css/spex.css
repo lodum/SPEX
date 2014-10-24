@@ -66,8 +66,8 @@ body, html {
    
 }
 #nav_help{
-  display: inline; 
-	float: left; 	 
+  display: inline; 	 
+   text-align: center;	
    
 }
 
@@ -96,6 +96,8 @@ body, html {
 	height: 100%;
   width: 100%;
 }
+
+
 
 #result_container {
   float: center;
@@ -179,7 +181,10 @@ body, html {
 } 
 
 .navDialog .ui-dialog-titlebar {
-  background: #eee;
+  background: #eee; 
+}
+a:link {
+    
 }
 
 .ui-autocomplete {

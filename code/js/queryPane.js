@@ -337,12 +337,12 @@ var queryPane = {
 
 		if (queryPane.selected.spConstraint) {			
 				if (queryPane.selected.spConstrSet) {constraintSpLinks = '<br><br> <a href="javascript:void(0)" onclick="queryPane.removeSpConstraint();">Remove Spatial Filter</a>';} 
-				else {constraintSpLinks = '<br><br><a href="javascript:void(0)" onclick="queryPane.setSpConstraint();" title="Go to map and set desired search area by zooming in/out, only after that click this link.">Filter results by map window</a>';};				
+				else {constraintSpLinks = '<br><br><a href="javascript:void(0)" onclick="queryPane.setSpConstraint();" title="Go to map and set search area by scrolling in/out. Then click this link.">Filter results by map window</a>';};				
 		};
 
 		if (queryPane.selected.teConstraint) {
 				if (queryPane.selected.teConstrSet) {constraintTeLinks = '<br><a href="javascript:void(0)" onclick="queryPane.removeTeConstraint();">Remove Temporal Filter</a>';} 
-				else {constraintTeLinks = '<br><a href="javascript:void(0)" onclick="queryPane.setTeConstraint();" title="Click this link, then go to time slider and set desired search time interval by scrolling.">Filter results by time window</a>';};	
+				else {constraintTeLinks = '<br><a href="javascript:void(0)" onclick="queryPane.setTeConstraint();" title="Go to time slider and set search interval by scrolling in/out. Then click this link.">Filter results by time window</a>';};	
 		};
 
 		d3.select("#contextMenu")

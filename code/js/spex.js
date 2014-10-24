@@ -42,9 +42,9 @@ var spex = new function(){
 		
 		$("#helpDialog").dialog( {
 			autoOpen: false,
-			height: ($(window).height() * 0.7),
-			width: 700,
-			reziable: false,
+			height: ($(window).height() * 0.9),
+			width: 1000,
+			//reziable: false,
 			modal: true,
 			dialogClass: 'navDialog'
 		});		
