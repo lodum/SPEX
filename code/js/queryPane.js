@@ -180,7 +180,7 @@ var queryPane = {
 		.classed('selected', function(d) { return false; })
 		.style('marker', 'url(#arrow)');
 
-		gPath.on("mousedown", function(d) {
+		gPath.on("click", function(d) {
 			queryPane.menu.datum(queryPane.selected = d).call(queryPane.showContextMenu);
 
 			
