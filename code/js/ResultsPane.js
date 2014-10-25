@@ -45,7 +45,12 @@ ResultsPane.prototype.display = function(spexresultset){
 	    		//var html = text.replace(exp, "<a href='$1' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>");
 	    		//console.log("html from solution[variable] value: " + html);
 	    		
-	    		var html = "<a href='" + text + "' target=\"_blank\">" + solution[variableName + "__label"].value + "</a>";
+	    		var label = solution[variableName + "__label"].value;
+	    		if(label == "Something") {
+	    			var html = "noName";
+	    		} else {
+	    			var html = "<a href='" + text + "' target=\"_blank\">" + label + "</a>";
+	    		}
 	    		
 	    		return html; 
 		}
