@@ -266,10 +266,10 @@ function Suggester(){
 	//	}
 	  })
 	   //this turns on the suggesterlist already on focus (without the user having to type anything)
-	  //.focus(function(){            
+	  .focus(function(){            
       //      if (!closing)
-		//	$(s).autocomplete("search");
-	//	})
+			$(s).autocomplete("search","");
+		})
 		;
 	
 	};
