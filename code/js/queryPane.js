@@ -380,7 +380,7 @@ var queryPane = {
 			.style("top", d.py + 50 + 15 + "px");
 		});
 
-		document.getElementById("queryS").focus();	
+		//document.getElementById("queryS").focus();	
 	},
 	
 	
@@ -415,7 +415,7 @@ var queryPane = {
 		spex.sug.createDropdownPout('queryP');	
 		
 
-		document.getElementById("queryP").focus();
+		//document.getElementById("queryP").focus();
 	},
 
 	//
@@ -445,7 +445,7 @@ var queryPane = {
 		//$("queryP").on( "autocompleteselect", function (event, ui) {queryPane.addIn();});
 		
 		
-		document.getElementById("queryP").focus();	
+		//document.getElementById("queryP").focus();	
 	},
 
 	// Hide context menu
