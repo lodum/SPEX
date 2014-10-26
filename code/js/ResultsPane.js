@@ -186,6 +186,18 @@ ResultsPane.prototype.display = function(spexresultset){
 			}			
 			headerDiv.addEventListener("mouseover", settobounds, true);
 			resultsTable.parentNode.insertBefore(headerDiv, resultsTable);
+			
+			//make sure the fixed header resizes as the table resizes
+			window.onresize = function(){
+				headerDiv.style.width = resultsTable.offsetWidth + "px";
+				headerDiv.style.height = resultsTable.rows[0].offsetHeight + "px";
+
+				var headerCells = headerDiv.getElementsByTagName("th");
+				for(var i = 0; i < headerCells.length; i++) {
+					headerCells[i].style.width = resultsTable.rows[0].cells[i].offsetWidth + "px";
+					headerCells[i].style.height = resultsTable.rows[0].cells[i].offsetHeight + "px";
+				}
+			};
 		}
 		
 
