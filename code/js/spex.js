@@ -144,6 +144,9 @@ var spex = new function(){
 		  	queryPane.update();
 		  	queryPane.updateQuery();
 
+		  	// Avoid collapsing
+		  	queryPane.resize();
+
 		  	//console.log(" old links: "+queryPane.links.length);
 		  	//console.log(" old nodes: "+queryPane.nodes.length);			  
 		  	  		   
