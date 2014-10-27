@@ -98,19 +98,56 @@ var spex = new function(){
 	* undoes the last query construction step
 	*@function */
 	this.undo = function() { 		  
-		  if (queryPane.last_qp != null && queryPane.last_qp.nodes.length !=0) {			  
-			  queryPane.vis.remove();			  
-			  //console.log(" links: "+queryPane.links.length);
-			  //console.log(" nodes: "+queryPane.nodes.length); 			  
-			  queryPane = queryPane.last_qp;	
-			  //console.log(" old links: "+queryPane.links.length);
-			  //console.log(" old nodes: "+queryPane.nodes.length);			
-			  queryPane.force.start();			  
-			  queryPane.init();
-			  //console.log(" old links: "+queryPane.links.length);
-			  //console.log(" old nodes: "+queryPane.nodes.length);			  
-			  		   
-		  }		  
+		if (queryPane.last_qp != null && queryPane.last_qp.nodes.length !=0) {			  
+
+			// Remove everything
+		    while (queryPane.links.length > 0) {
+			  	queryPane.links.pop();
+			  	queryPane.update();
+		  	}
+		  	while (queryPane.nodes.length > 0) {
+			  	queryPane.nodes.pop();
+			  	queryPane.update();
+			  }
+
+		  	//queryPane.vis.selectAll('*').remove();
+		  	//console.log(" links: "+queryPane.links.length);
+		  	//console.log(" nodes: "+queryPane.nodes.length); 			  
+		  	
+		  	// Reestablish object relations
+		  	for (var i = 0; i < queryPane.last_qp.nodes.length; i++) {
+		  		queryPane.nodes.push(queryPane.last_qp.nodes[i]);
+		  	};
+		  	for (var i = 0; i < queryPane.last_qp.links.length; i++) {
+		  		queryPane.links.push(queryPane.last_qp.links[i]);
+
+		  	  	for (var j = 0; j < queryPane.nodes.length; j++) {
+		  	  		if (queryPane.links[i].target.id == queryPane.nodes[j].id)
+		  	  			queryPane.links[i].target = queryPane.nodes[j];
+		  	  	};
+		  	  	for (var j = 0; j < queryPane.nodes.length; j++) {
+		  	  		if (queryPane.links[i].source.id == queryPane.nodes[j].id)
+		  	  			queryPane.links[i].source = queryPane.nodes[j];
+		  	  	};
+		  	};
+		  	
+		  	//  queryPane.nodes = queryPane.last_qp.nodes;
+		  	//queryPane.links = queryPane.last_qp.links;
+		  	
+		  	// Reset the object
+		  	queryPane.last_qp = queryPane.last_qp.last_qp;
+		  	//console.log("links: "+queryPane.links);
+		  	//console.log("nodes: "+queryPane.nodes);			
+		  	// queryPane.force.start();			  
+		  	
+		  	// Update the graph
+		  	queryPane.update();
+		  	queryPane.updateQuery();
+
+		  	//console.log(" old links: "+queryPane.links.length);
+		  	//console.log(" old nodes: "+queryPane.nodes.length);			  
+		  	  		   
+		}		  
 	};
 	
 	//some general recursive clone method (used for undo method)
