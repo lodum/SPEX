@@ -8,6 +8,12 @@ body, html {
   color: #333;
 }
 
+@media only screen and (max-width: 900px) { 
+  #nav_title { 
+    display: none; 
+  } 
+}
+
 #navBar_container {
   position: absolute;
   width: 100%;
