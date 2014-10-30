@@ -40,14 +40,14 @@ var spex = new function(){
 		
 		endpoint = document.getElementById("endpoint").value;
 		
-		$("#helpDialog").dialog( {
-			autoOpen: false,
-			height: ($(window).height() * 0.9),
-			width: 1000,
-			//reziable: false,
-			modal: true,
-			dialogClass: 'navDialog'
-		});		
+		//$("#helpDialog").dialog( {
+		//	autoOpen: false,
+		//	height: ($(window).height() * 0.9),
+		//	width: 1000,
+		//	//reziable: false,
+		//	modal: true,
+		//	dialogClass: 'navDialog'
+		//});		
 
 		$("#img_help").click(this.showhelp);
 		$("#img_help").tooltip();
@@ -92,7 +92,9 @@ var spex = new function(){
 	* shows help
 	*@function */
 	this.showhelp = function() { 
-		  $("#helpDialog").dialog( "open" );
+		  //$("#helpDialog").dialog( "open" );
+		  var h = $(window).height() * 0.9;
+		  window.open("help.html", "_blank", "toolbar=1, scrollbars=1, resizable=1, top=500, left=500, height="+h+", width=1000");
 	};
 	/** 
 	* undoes the last query construction step

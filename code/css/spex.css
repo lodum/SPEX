@@ -189,9 +189,7 @@ body, html {
 .navDialog .ui-dialog-titlebar {
   background: #eee; 
 }
-a:link {
-    
-}
+
 
 .ui-autocomplete {
   z-index:10000!important;
