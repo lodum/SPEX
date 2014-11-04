@@ -2,12 +2,56 @@
 LabeledQuery() is a SPEXQuery with modified getSPARQL()-function
 */
 
-//fast unique method for arrays
-Array.prototype.unique = function() {
+//Sort array considering part after separator (':' for prefix lists), and remove duplicates
+Array.prototype.uniqueAndSort = function(separator) {
+    /*
     var o = {}, i, l = this.length, r = [];
     for(i=0; i<l;i+=1) o[this[i]] = this[i];
     for(i in o) r.push(o[i]);
     return r;
+    */
+    if(separator == ""){
+		this.sort()
+		return this;
+	}else{
+		var unexpected=[], expected=[],sorter=[],someJSON={};
+		for(var i=0;i<this.length;i++){
+			var thisElem = this[i], index = thisElem.indexOf(separator);
+			if(index == -1){
+				unexpected.push(thisElem);
+			} else{
+				var string1 = thisElem.substring(0,index), string2 = thisElem.substring(index + separator.length);
+				if(!someJSON[string2]){
+					someJSON[string2]={};
+				}
+				if(!someJSON[string2].pfxArray){
+					someJSON[string2].pfxArray=[];
+				}
+				if(someJSON[string2].pfxArray.indexOf(string1) == -1){
+					someJSON[string2].pfxArray.push(string1);
+				}
+				if(!someJSON[string2][string1]){
+					someJSON[string2][string1]={};
+				}
+				someJSON[string2][string1] = thisElem;
+				if(sorter.indexOf(string2) == -1){
+					sorter.push(string2);
+				}
+			}
+		}
+		unexpected.sort();
+		sorter.sort();
+		for(var i=0;i<sorter.length;i++){
+			var thisElem=someJSON[sorter[i]], thisPrefixes=thisElem.pfxArray;
+			thisPrefixes.sort();
+			for(var j=0;j<thisPrefixes.length; j++){
+				var pfx = thisPrefixes[j];
+				expected.push(thisElem[pfx]);
+			}
+		}
+		//console.log(JSON.stringify(someJSON,null,'\t'));
+		return expected.concat(unexpected);
+	}
 };
 
 function LabeledQuery(){
@@ -19,7 +63,7 @@ function LabeledQuery(){
     this.variables = [];
     this.patterns = [];
     this.filters = [];
-    this.combiner = "";
+    this.combiner = "DISTINCT";
     this.orders = [];
     this.limitCount = -1;
     this.offsetCount = 0;
@@ -205,9 +249,9 @@ function Suggester(){
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate_o",predicateArrayout); // store in predicateArray if results correspond to the query for predicates
 		storeColumn(jsonObj,prefixes,excludedPrefixes,"predicate_i",predicateArrayin); // store in predicateArray if results correspond to the query for predicates
 				 
-		classesArray = classesArray.unique().sort();
-		predicateArrayin = predicateArrayin.unique().sort();
-		predicateArrayout = predicateArrayout.unique().sort(); 		
+		classesArray = classesArray.uniqueAndSort(":");
+		predicateArrayin = predicateArrayin.uniqueAndSort(":");
+		predicateArrayout = predicateArrayout.uniqueAndSort(":"); 		
 		
 		removeLabelProperties(predicateArrayout);
 		removeLabelProperties(predicateArrayin);
