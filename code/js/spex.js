@@ -53,6 +53,8 @@ var spex = new function(){
 		$("#img_help").tooltip();
 		$("#img_undo").click(this.undo);
 		$("#img_undo").tooltip();
+		$("#img_reset").click(this.reset);
+		$("#img_reset").tooltip();
 		
 
 		//$("#showquery").click(this.showquery);
@@ -187,10 +189,22 @@ var spex = new function(){
 				return copy;
 			}
 
-    throw new Error("Unable to copy obj! Its type isn't supported.");
+    			throw new Error("Unable to copy obj! Its type isn't supported.");
 	};
 	
-
+	this.reset = function() {
+		//erase all stored data and start anew with a default variable
+		queryPane.links = [];
+		queryPane.nodes = [{id: 0, label: '', className: '', variable: true, 
+							//position the graph node for the default variable at the centre of the query pane
+							x:((document.getElementById("queryPane").offsetWidth)/2.0), 
+							y:((document.getElementById("queryPane").offsetHeight - document.getElementById("result_container").offsetHeight)/2.0) , 
+							spConstraint: false, spConstrSet: false, teConstraint: false, teConstrSet : false}];
+		
+		queryPane.update();
+		queryPane.updateQuery();
+		queryPane.resize();
+	};
 };
 
 
