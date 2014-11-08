@@ -54,9 +54,8 @@ body, html {
 }
 
 #nav_buttons {
-  display: inline;  
-  width : 20 px;
-  padding: 12px;
+  float:left;
+  padding: 0px;
 }
 
 #nav_buttons img {
@@ -66,18 +65,21 @@ body, html {
 #nav_buttons img:hover {
     opacity: 0.8;
 }
+
 #nav_undo {
-  display: inline; 
-	float: left;  
-   
+    float: left; 
 }
+
+#nav_reset {
+  float: left; 
+  padding-top: 3px;
+  padding-right: 5px;
+}
+
 #nav_help{
-  display: inline; 	 
-   text-align: center;	
-   
+  float: left;
+  padding-right: 5px;
 }
-
-
 
 #nav_endpoint {
 	float: right;
