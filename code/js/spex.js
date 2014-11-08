@@ -195,16 +195,16 @@ var spex = new function(){
 	this.reset = function() {
 		//erase all stored data and start anew with a default variable
 		queryPane.links = [];
-		queryPane.nodes = [{id: 0, label: '', className: '', variable: true, 
-				    spConstraint: false, spConstrSet: false, teConstraint: false, teConstrSet : false,
-				    //position the graph node for the default variable at the centre of the query pane
-				    x:((document.getElementById("queryPane").offsetWidth)/2.0), 
-				    y:((document.getElementById("queryPane").offsetHeight - document.getElementById("result_container").offsetHeight)/2.0) 
-		}];
+		queryPane.nodes = [{id: 0, label: '', className: '', variable: true, x: 100, y: 0, spConstraint: false, spConstrSet: false, teConstraint: false, teConstrSet: false}];
 		
+		queryPane.force.nodes(queryPane.nodes)
+		.links(queryPane.links)
+		.start();
+		/*queryPane.force.start();*/
 		queryPane.update();
 		queryPane.updateQuery();
 		queryPane.resize();
+		
 	};
 };
 
