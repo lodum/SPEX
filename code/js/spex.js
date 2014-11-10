@@ -142,8 +142,9 @@ var spex = new function(){
 		  	queryPane.last_qp = queryPane.last_qp.last_qp;
 		  	//console.log("links: "+queryPane.links);
 		  	//console.log("nodes: "+queryPane.nodes);			
-		  	// queryPane.force.start();			  
-		  	
+		  	//queryPane.force.start();	
+
+
 		  	// Update the graph
 		  	queryPane.update();
 		  	queryPane.updateQuery();
@@ -200,8 +201,15 @@ var spex = new function(){
 		queryPane.force.nodes(queryPane.nodes)
 		.links(queryPane.links)
 		.start();
-		/*queryPane.force.start();*/
 		queryPane.update();
+
+		for(var variable in spex.q.spatialConstraints) {
+			delete spex.q.spatialConstraints[variable];
+		}
+		for(var variable in spex.q.temporalConstraints) {
+			delete spex.q.temporalConstraints[variable];
+		}
+		spex.q.thematicConstraints.splice(0, spex.q.thematicConstraints.length);
 		queryPane.updateQuery();
 		queryPane.resize();
 		

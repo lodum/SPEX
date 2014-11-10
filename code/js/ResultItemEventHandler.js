@@ -14,33 +14,59 @@ ResultItemEventHandler.prototype.setMapLayer = function(layer) {
 };
 
 ResultItemEventHandler.prototype.highlight = function(){
-if (spex.rp.enabled) { //this checks whether highlighting is enabled or not
-    this.tableObject.style.background = "lightgrey";
+ if (spex.rp.enabled) { //this checks whether highlighting is enabled or not
+  this.tableObject.style.background = "lightgrey";
   
   if(this.timeObject) {  
-	slider.timeline.zoom(1, this.timeObject.start);	
-	//console.log("Time object"+this.timeObject.start);		
-	//$(this.timeObject.dom).prepend("<div class='ui-highlight'></div>");
-	//console.log($(this.timeObject.dom).css('borderTopColor'));
-  }else {slider.timeline.setVisibleChartRangeAuto; 
+	  slider.timeline.zoom(1, this.timeObject.start);	
+	  //console.log("Time object"+this.timeObject.start);		
+	  //$(this.timeObject.dom).prepend("<div class='ui-highlight'></div>");
+	  //console.log($(this.timeObject.dom).css('borderTopColor'));
+  } else {
+    slider.timeline.setVisibleChartRangeAuto; 
   }
+  
   if(this.spaceObject) {
     map.LMap.fitBounds(this.spaceObject.getBounds());
-  } else {map.LMap.fitBounds(map.markerGroup.getBounds());
+    map.markerGroup.setStyle({'fill':false, 'opacity':0.05});
+    this.spaceObject.setStyle({
+    'color': '#333333',
+    'fill':true,
+    'fillColor': '#FFFF00',
+    'weight': 5,
+    'opacity': 1,
+    });
+  } else { 
+    map.LMap.fitBounds(map.markerGroup.getBounds());
   }
-}
-}
+ }
+};
 
 
 ResultItemEventHandler.prototype.dehighlight = function(){
-if (spex.rp.enabled) {  
-  this.tableObject.style.background = ""; 
-	slider.timeline.zoom(-1, this.timeObject.start);   
-	//slider.timeline.setVisibleChartRangeAuto;
-  //map zoom should not be reset to bounds, because the highlighting order gets confused because of delay
-  //map.LMap.fitBounds(map.markerGroup.getBounds());
-}
-}
+ if (spex.rp.enabled) {  
+   this.tableObject.style.background = ""; 
+	 if(this.timeObject) {  
+     slider.timeline.zoom(-1, this.timeObject.start);  
+   } 
+	 //slider.timeline.setVisibleChartRangeAuto;
+   //map zoom should not be reset to bounds, because the highlighting order gets confused because of delay
+   //map.LMap.fitBounds(map.markerGroup.getBounds());
+   if(this.spaceObject) {
+     //map zoom should not be reset to bounds, because the highlighting order gets confused because of delay
+     //map.LMap.fitBounds(map.markerGroup.getBounds());
+     map.markerGroup.setStyle({'fill':true, 'opacity':1});
+    /*
+    this.spaceObject.setStyle({
+    'color': '#333333',
+    'fill':true,
+    'fillColor': '#FFFF00',
+    'weight': 5,
+    'opacity': 1,
+    });*/
+   } 
+ }
+};
 
 ResultItemEventHandler.prototype.setSliderItem = function(item, label) {
   this.timeObject = item;  
