@@ -68,17 +68,24 @@ body, html {
 
 #nav_undo {
     float: left; 
+	bottom: 0;
+	
+	
 }
 
 #nav_reset {
   float: left; 
-  padding-top: 3px;
+  
   padding-right: 5px;
+  bottom: 0;
+  padding-bottom: 3px;
 }
 
 #nav_help{
   float: left;
-  padding-right: 5px;
+  
+  padding-right: 10px;
+  bottom: 0;
 }
 
 #nav_endpoint {
