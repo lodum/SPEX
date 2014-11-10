@@ -28,12 +28,9 @@ ResultItemEventHandler.prototype.highlight = function(){
   
   if(this.spaceObject) {
     map.LMap.fitBounds(this.spaceObject.getBounds());
-    map.markerGroup.setStyle({'fill':false, 'opacity':0.05});
+    map.markerGroup.setStyle({'fill':false, 'opacity':0.025});
     this.spaceObject.setStyle({
-    'color': '#333333',
     'fill':true,
-    'fillColor': '#FFFF00',
-    'weight': 5,
     'opacity': 1,
     });
   } else { 
@@ -53,17 +50,7 @@ ResultItemEventHandler.prototype.dehighlight = function(){
    //map zoom should not be reset to bounds, because the highlighting order gets confused because of delay
    //map.LMap.fitBounds(map.markerGroup.getBounds());
    if(this.spaceObject) {
-     //map zoom should not be reset to bounds, because the highlighting order gets confused because of delay
-     //map.LMap.fitBounds(map.markerGroup.getBounds());
      map.markerGroup.setStyle({'fill':true, 'opacity':1});
-    /*
-    this.spaceObject.setStyle({
-    'color': '#333333',
-    'fill':true,
-    'fillColor': '#FFFF00',
-    'weight': 5,
-    'opacity': 1,
-    });*/
    } 
  }
 };
