@@ -300,8 +300,11 @@ function Suggester(){
 	  var s = '#' + idString;
 	  $(s).autocomplete({	  
 	  source: dropdownArray,	 
-	  select: function(event, ui) { if(ui.item.id) {console.log(ui.item.id); queryPane.selected.uri="<"+ui.item.id+">";}}  ,
-	  minLength: 0  
+	  select: function(event, ui) { 
+	  if(ui.item.id) {console.log(ui.item.id); queryPane.selected.uri="<"+ui.item.id+">";};
+	  //if (dropdownArray==classesArray) {queryPane.updateSelected();} else if (dropdownArray==predicateArrayout) {queryPane.addOut();} else  {queryPane.addIn();};	  
+	  }  ,
+	  minLength: 0	  	  
 	  //close: function()
 	 //	{
 			// avoid double-pop-up issue
@@ -321,7 +324,10 @@ function Suggester(){
 	 * creates a class autosuggestion drop down menu
 	 *@function */
 	this.createDropdownC=function(idString){
-		createDropdown(idString,classesArray);			
+		createDropdown(idString,classesArray);
+		//var s = '#' + idString;			
+		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label); queryPane.updateSelected();} );	
+			
 	};
 	/** 
 	 * creates a property (out) autosuggestion drop down menu
@@ -329,6 +335,8 @@ function Suggester(){
 	this.createDropdownPout=function(idString){
 		createDropdown(idString,predicateArrayout);
 		$('#numbpr').text('('+predicateArrayout.length+' relations available)');
+		//var s = '#' + idString;			
+		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label);queryPane.addOut();} );
 	};
 	/** 
 	 * creates a property (in) autosuggestion drop down menu
@@ -336,12 +344,16 @@ function Suggester(){
 	this.createDropdownPin=function(idString){
 		createDropdown(idString,predicateArrayin);
 		$('#numbpr').text('('+predicateArrayin.length+' relations available)');
+		//var s = '#' + idString;			
+		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label);queryPane.addIn();} );
 	}; 
 	/** 
 	 * creates an instance autosuggestion drop down menu
 	 *@function */
 	this.createDropdownI = function(idString) {
 		createDropdown(idString,instancesArray);
+		//var s = '#' + idString;			
+		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label);queryPane.updateSelected();} );	
 	};
 
 	this.init=function(){			

@@ -348,7 +348,7 @@ var queryPane = {
 		d3.select("#contextMenu")
 		.html('<div style="position:inherit; top: 0; right: 0; padding: 3px;"><a onclick="queryPane.hideContextMenu()">X</a></div> \
 				<div id="contextMenuContent">'+
-					'<br>'+					
+					'<br>'+																								//
 					'I am looking for: <input type="text" id="queryS" size="22" placeholder="type/select, press return" onkeydown="if(event.keyCode==13) queryPane.updateSelected()"></input> <div id="numb"></div>' +
 					'<form>' +
 						'<input type="radio" id="queryVar" name="classThing" onclick="queryPane.checkClassSuggestion()">&nbsp;Things of a kind </input>' +
@@ -399,8 +399,8 @@ var queryPane = {
 						'I am looking for:<br>'+
 						'<b>' +x+
 						  queryPane.selected.label +	
-						' connected via ' +	'</b> ' +		
-						'<input type="text" id="queryP" size="22" placeholder="type/select, press return"  onkeydown="if(event.keyCode==13) queryPane.addOut()" value=""></input>'+
+						' connected via ' +	'</b> ' +										
+						'<input type="text" id="queryP" size="22" placeholder="type/select, press return" onkeydown="if(event.keyCode==13) queryPane.addOut()"  value=""></input>'+
 						'<b>' +' to something else'+'</b> ' +										
 					'</div>'+	
 						'<div id = "numbpr"></div><br>' +
@@ -430,9 +430,8 @@ var queryPane = {
 					'<br>'+					
 					'<div class="linkAdd">'+
 						'I am looking for: <br>'+
-						'Something \
-						connected via \
-						<input type="text" id="queryP" size="22" placeholder="type/select, press return"  onkeydown="if(event.keyCode==13) queryPane.addIn()" value=""></input> \
+						'Something connected via' + 											
+						'<input type="text" id="queryP" size="22" placeholder="type/select, press return" onkeydown="if(event.keyCode==13) queryPane.addIn()"  value=""></input> \
 						to ' + x +
 						'<b>' +  queryPane.selected.label +'</b>' +						
 					'</div>'+
