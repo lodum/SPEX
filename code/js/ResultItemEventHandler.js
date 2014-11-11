@@ -51,8 +51,8 @@ ResultItemEventHandler.prototype.dehighlight = function(){
    //map.LMap.fitBounds(map.markerGroup.getBounds());
    if(this.spaceObject) {
      map.markerGroup.setStyle({'fill':true, 'opacity':1});
-     //map zoom should not be reset to bounds, because the highlighting order gets confused because of delay
-     map.LMap.fitBounds(map.markerGroup.getBounds());
+     //map zoom should not be reset to bounds, because the highlighting order gets confused because of delay!!! Works also without this
+     //map.LMap.fitBounds(map.markerGroup.getBounds());
    } 
  }
 };
