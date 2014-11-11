@@ -1,17 +1,18 @@
 <!doctype html>
 <html lang="en">
-
+<!--[if IE lte 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 <head>
 	<meta charset=utf-8 />
 	<title>SPEX - Spatio-temporal content explorer</title>
 	<link rel="stylesheet" href="css/spex.css">
 	<style>
 	html {
-    overflow: -moz-scrollbars-vertical;
+    overflow: -moz-scrollbars-vertical;	
 	}
 	div {
     margin : 25px;
-	}     
+	}  	
+
 	
 	</style>
 </head>
@@ -24,107 +25,126 @@
 				<p>In this tutorial you will learn how to use the SPEX tool by exploring a collection of historical maps.</p>
 		<h3>1. Introduction</h3>			
 				<p>With  <a href="http://lodum.de/" >SPEX</a>, 
-				you can query and simultaneously explore linked data without knowing exactly what it contains. 
-				For this purpose, linked data is accessed through what we call a SPARQL endpoint (SPARQL is an advanced query language for linked data). 				 
-				For example, you can find maps which represent Napoleon's invasion to Russia in 1812 together with all battle parts, their place and their number of 
-				participants by interactively constructing a query on the SPARQL endpoint: 
+				 you can query and simultaneously explore linked data without knowing exactly what it contains. 
+				 For this purpose, linked data is accessed through what we call a SPARQL endpoint (SPARQL is an advanced query language for linked data). 
+				 For example, you can find maps which represent Napoleon's invasion to Russia in 1812 together with all battle parts, their place and their number of participants 
+				 by interactively constructing a query on the SPARQL endpoint: 
 				 <a href="http://data.uni-muenster.de/historicmaps/sparql" >http://data.uni-muenster.de/historicmaps/sparql</a>. We will use this endpoint in this tutorial.</p>
 				<p> In SPEX, you can construct visual queries. Each visual query consists of nodes and relations and is displayed in the upper left part of the screen, as below (this is the visual <i>query window</i>). </p>
-				<p><img src="img/invasionexample.png" alt="spex bar" width="100%"></p>				
-				<p>Nodes stand for things in the database which fit into them, in other words, for those things that are found by the query (for example maps and countries). Arrows depict relations between these things (for example ‘creator’ and ‘created’). 
-				The visual query window shows the term ‘Map’ together with its prefix as ‘maps:Map’. This prefix represents a knowledge domain in which the term ‘Map’ is defined. </p>
+				<p align="center" style="text-align: center"><img src="img/invasionexample.png" alt="spex bar" width="100%"><div align="center" style="font-style:italic">Figure 1</div></p>	
+								
+				<p>Nodes stand for things in the database which fit into them, in other words, for those things that are found by the query (for example maps and countries). 
+				Arrows depict relations between these things (for example ‘creator’ and ‘created’). The visual query window shows the term ‘Map’ together with its prefix as ‘maps:Map’. 
+				This prefix represents a knowledge domain in which the term ‘Map’ is defined.  </p>
 				
-				<p> Query results are displayed in the grey table at the bottom of the SPEX screen as well as in the map and the timeline on the right of it. The table columns correspond to the node labels. 
-				Table cells contain particular things that fit into the corresponding node (for example, ‘Charles Minard’ fits as a particular thing into the end node of the relation ‘creator’). 
+				<p> Query results are displayed in the grey table at the bottom of the SPEX screen as well as in the map and the timeline on the right of it. 
+				The table columns correspond to the node labels. Table cells contain particular things that fit into the corresponding node (for example, ‘Charles Minard’ fits as a particular thing into the end node of the relation ‘creator’). 
 				In this tutorial, you learn how to explore and query SPARQL endpoints by space, time and content. </p>			
 				<p>Note: <font color = "red">Red texts warn you if the computer at the SPARQL endpoint is not responding</font>.</p>
 				Now let us look at some simple and more complex examples.
 		<h3>2. How to explore</h3>	
-		<p>First we will explore the data without creating a query. As shown by the figure, it is possible to explore without posing a query as well as after posing a query 
-		(SPEX shows ‘results’ provided by the SPARQL endpoint in any case). A query just restricts the results according to the information we are searching for. 
-		After posing a query, you can explore its results and, based on this, refine the query again, and again..</p>
-		<p><img src="img/loop.png" alt="spex bar" width="20%"></p>
+		<p>First we will explore the data without creating a query. 
+		As shown by the figure, it is possible to explore without posing a query as well as after posing a query (SPEX shows ‘results’ provided by the SPARQL endpoint in any case). 
+		A query just restricts the results according to the information we are searching for. 
+		After posing a query, you can explore its results and, based on this, refine the query again, and again...</p>
+		<p align="center" ><img src="img/loop.png" alt="spex bar" width="20%"> <div align="center" style="font-style:italic">Figure 2</div></p>
 		<h4>2.1 Explore results in table.</h4>		
-			<ul><li>Open the SPEX application in a new browser window. </li>
-				<li>The number of results is shown in brackets above the results table. Scroll down to see all query results. 	</li>							
-				<p><img src="img/spex_tut1.png" alt="spex bar" width="70%"></p>
-				<li>Click on a result item name (URI link) to open its description on the Web.</li>	
-				<p><img src="img/spex_tut12.png" alt="spex bar" width="70%"></p>
+			<ul><li>Open the SPEX application in a new browser window, or if you already have one open, reset it with the on/off button at the top of the screen. </li>
+				<li>The number of results is shown in brackets above the results table, see Figure 3. Scroll down to see all query results. 	</li>							
+				<p style="text-align: center"><img src="img/spex_tut1.png" alt="spex bar" width="70%"> <div align="center" style="font-style:italic">Figure 3</div></p>
+				<li>Click on a result item name (URI link) to open its description on the Web, see Figure 4.</li>	
+				<p style="text-align: center"><img src="img/spex_tut12.png" alt="spex bar" width="70%"> <div align="center" style="font-style:italic">Figure 4</div></p>
 				<li>Hover the mouse over a table result cell to zoom to the result in the space and time window. In order to fix the current space-time zoom, just click on the result cell (and double click to release again).</li>
-				<p><img src="img/spex_tut9.png" alt="spex bar" width="60%"><img src="img/spex_tut9a.png" alt="spex bar" width="40%"></p>																
+				<p style="text-align: center"><img src="img/spex_tut9.png" alt="spex bar" width="60%"><img src="img/spex_tut9a.png" alt="spex bar" width="40%"> <div align="center" style="font-style:italic">Figure 5</div></p>																
 			</ul>
 		<h4>2.2 Explore results in space and time.</h4>
-			If results have space or time values associated with them, these time or space extents are displayed in the map and on the timeline. For example, maps have a time period that they represent as well as a spatial extent.
+			If results have space or time values associated with them, these time or space extents are displayed in the map and on the timeline. 
+			For example, maps have a time period that they represent as well as a spatial extent.
 			<ul>
 			<li>Zoom into space / time by scrolling mouse over map / time line. Hover over a map object or time event to reveal the name of the corresponding result. </li>
-				<p><img src="img/spex_tut81.png" alt="spex bar" width="40%"></p>
-				<p><img src="img/spex_tut82.png" alt="spex bar" width="40%"></p>	
+				<p style="text-align: center"><img src="img/spex_tut81.png" alt="spex bar" width="40%"><br><img src="img/spex_tut82.png" alt="spex bar" width="40%"> <div align="center" style="font-style:italic">Figure 6</div></p>
 			</ul>
 		<h3>3. How to query</h3>	
 		<p>In addition to exploring, you can find specific entries in the database by means of visual queries. 
-		You will learn how to build your visual query in steps: You start with a ‘coarse’ query and then refine it to restrict your results further in one or more extra steps. Each step results in extra arrows and nodes in the query window.  
+		You will learn how to build your visual query in steps: You start with a ‘coarse’ query and then refine it to restrict your results further in one or more extra steps. 
+		Each step results in extra arrows and nodes in the query window.  
 		</p>
 		<h4>3.1 Start with an empty question and select a node.</h4>		
 				<ul>
-				<li>At the beginning, there is only a single node with question mark and without any further restriction, which therefore stands for all things in the endpoint.
+				<li>At the beginning, there is only a single node with question mark and without any further restriction, which therefore stands for all things in the endpoint. 
 				The node is labelled arbitrarily (var0), which changes as soon as you add more detail to your query.
 				</li> 
-				<p><img src="img/spex_tut01.png" alt="spex start" width="80px"></p>
+				<p style="text-align: center"><img src="img/spex_tut01.png" alt="spex start" width="80px"></p>	
 				<li>You can make your query more specific by adding constraints to a node. For this purpose, select a node and open its menu by clicking on it. </li>
-				<p><img src="img/spex_tut20.png" alt="spex bar" width="28%"></p>
+				<p style="text-align: center"><img src="img/spex_tut20.png" alt="spex bar" width="28%"> <div align="center" style="font-style:italic">Figure 7</div></p>
 				<li>Note that in the following, you can always go back to your previous query state by clicking on this button: </li>
-				<p><img src="img/undo.png" alt="spex bar"></p>
+				<p style="text-align: center"><img src="img/undo.png" alt="spex bar"></p>
 				</ul>
 		<h4>3.2 Filter node by space and time.</h4>			
 			<p>You can filter results in a node by the extent of the current map window or time window (provided that there are any results with space or time values).	</p>
 				<ul>
-				<li> For example, you can filter a node for all things located in Egypt by zooming the map window to Egypt and by pressing the link "Filter results by map window" in the  menu of the node.</li>
-				<p><img src="img/spex_tut6.png" alt="spex bar" width="40%" ><img src="img/spex_tut6a.png" alt="spex bar" width="40%" ></p>
+				<li>For example, you can filter a node for all things located in Egypt by zooming the map window to Egypt and by pressing the link "Filter results by map window" in the menu of the node. The results are shown in Figure 8.</li>
+				<p style="text-align: center"><img src="img/spex_tut6.png" alt="spex bar" width="40%" ><img src="img/spex_tut6a.png" alt="spex bar" width="40%" > <div align="center" style="font-style:italic">Figure 8</div></p>
 				<li>Remove the filter again by clicking on the corresponding link in the menu.</li>
-				<p><img src="img/spex_tut7.png" alt="spex bar" width="25%" >
+				<p style="text-align: center"><img src="img/spex_tut7.png" alt="spex bar" width="25%"> <div align="center" style="font-style:italic">Figure 9</div></p>
 				</ul>
 		<h4>3.3 Refine your query by restricting a node to things of a kind.</h4>
-				<p>You can restrict the things in a node to be things of a certain class (for example ‘Country’) or to particular things (for example ‘Germany’).</p>
+				<p>You can restrict the things in a node to be things of a kind (a certain class (for example ‘Country’)) or to particular things (for example ‘Germany’).</p>
 			<ul>				
-				<li>If you enter the text field or if you type in something, SPEX suggests classes you may be looking for. Only those classes which have non-empty results are displayed. </li>
-				<p><img src="img/spex_tut2a.png" alt="spex bar" width="30%"></p>
-				<li>Select a class (e.g. "Map") and press return to restrict the things in this node to things of this kind.</li>
-				<p><img src="img/spex_tut2.png" alt="spex bar" width="30%"></p>	
-				<li>See how the label of the node changes and how the results in this node are filtered to things  of this kind.</li>				
-				<p><img src="img/spex_tut21.png" alt="spex bar" width="80px"></p>
-				<p><img src="img/spex_tut211.png" alt="spex bar" width="70%"></p>
+				<li>If you enter the text field or if you type in something, SPEX suggests classes you may be looking for. Only those classes which have non-empty results are displayed as in Figure 10.  </li>
+				<p style="text-align: center"><img src="img/spex_tut2a.png" alt="spex bar" width="30%"> <div align="center" style="font-style:italic">Figure 10</div></p>
+				<li>Select a class (e.g. "Map") as in Figure 11 and press return to restrict the things in this node to things of this kind.</li>
+				<p style="text-align: center"><img src="img/spex_tut2.png" alt="spex bar" width="30%"> <div align="center" style="font-style:italic">Figure 11</div></p>
+				<li>See how the label of the node changes and how the results in this node are filtered to things of this kind, see Figure 12.</li>				
+				<p style="text-align: center" ><div><img src="img/spex_tut21.png" alt="spex bar" width="90px"></div><div><img src="img/spex_tut211.png" alt="spex bar" width="70%"></div> <div align="center" style="font-style:italic">Figure 12</div></p>
 			</ul>
 					
 		<h4>3.4 Constrain nodes by relationship to other things.</h4>
-				<p>You can also constrain a node by specifying its relationship to other things. Again, things can be things of a kind (for example ‘Country’) or particular things (for example ‘Germany’). 
-				In the node menu, relationship links are shown together with the number of available relationships in brackets. The first one of these ("Specify relationship to other things") adds relationships which point from this node to something else. 
-				For example, "dct:creator" relates maps to their creators. The second option ("Specify relationship from other things") adds relationships which point from something else to this node. For example, if a map consists of parts, those parts may be related by "dct:isPartOf" to the map. 
+				<p>You can also constrain a node by specifying its relationship to other things. 
+				Again, things can be things of a kind (for example ‘Country’) or particular things (for example ‘Germany’). 
+				In the node menu, relationship links are shown together with the number of available relationships in brackets. 
+				The first one of these ("Specify relationship to other things") adds relationships which point from this node to something else. 
+				For example, "dct:creator" relates maps to their creators. The second option ("Specify relationship from other things") adds relationships which point from something else to this node. 
+				For example, if a map consists of parts, those parts may be related by "dct:isPartOf" to the map. 
 				</p>
 			<ul>	
-				<li>If you want to add such a relationship constraint, click on the corresponding link.	</li>
-				<p><img src="img/spex_tut3.png" alt="spex bar" width="30%"></p>
-				<li>Type in text or scroll in suggested list to select a relationship, for example the "dct:creator" of a map. </li>
-				<p><img src="img/spex_tut4.png" alt="spex bar" width="55%"></p>
-				<li>Press return to add a new edge to the query graph which restricts results to those things that stand in the chosen relationship. See how query results change.</li>
-				<p><img src="img/spex_tut5.png" alt="spex bar" width="22%"></p>
-				<p><img src="img/spex_tut52.png" alt="spex bar" width="80%"></p>				
+				<li>If you want to add such a relationship constraint, click on the corresponding link, as in Figure 13.	</li>
+				<p style="text-align: center"><img src="img/spex_tut3.png" alt="spex bar" width="30%"> <div align="center" style="font-style:italic">Figure 13</div></p>
+				<li>Type in text or scroll in suggested list to select a relationship, for example the "dct:creator" of a map, as in Figure 14.  </li>
+				<p style="text-align: center"><img src="img/spex_tut4.png" alt="spex bar" width="55%"> <div align="center" style="font-style:italic">Figure 14</div></p>
+				<li>Press return to add a new edge to the query graph as in Figure 15, which restricts results to those things that stand in the chosen relationship. 
+				See how query results change in the table window (bottom part of Figure 15). 
+				We have now chosen to list all maps and display its creator (this can be the name or id number of a person or organization).</li>
+				<p style="text-align: center"><div><img src="img/spex_tut5.png" alt="spex bar" width="22%"></div><div><img src="img/spex_tut52.png" alt="spex bar" width="80%"></div> <div align="center" style="font-style:italic">Figure 15</div></p>				
 			</ul>
 			
 		<h4>3.5 Constrain nodes to particular things.</h4>
 			<ul>
-				<li>You can furthermore constrain nodes to particular things.  </li>
-				<p><img src="img/spex_tut101.png" alt="spex bar" width="50px"></p>
+				<li>You can furthermore constrain nodes to particular things. For example, in the situation of Figure 15, you could select the blue node indicated by 'var1'.</li>
+				<p style="text-align: center"><img src="img/spex_tut101.png" alt="spex bar" width="50px"> <div align="center" style="font-style:italic">Figure 16</div></p>
 				<li>In the node's menu, press button "Particular things".</li>
-				<p><img src="img/spex_tut10.png" alt="spex bar" width="25%"></p>
-				<li>Select a particular thing, such as a particular map creator, from the suggested list and press return. 
-				The node loses its question mark and is labelled by the name of the thing and the query results change accordingly.</li>
-				<p><img src="img/spex_tut11a.png" alt="spex bar" width="30%"> <img src="img/spex_tut11.png" alt="spex bar" width="60%"> </p>
-			</ul>			
+				<p style="text-align: center"><img src="img/spex_tut10.png" alt="spex bar" width="25%"> <div align="center" style="font-style:italic">Figure 17</div></p>
+				<li>Select a particular thing, such as a particular map creator, from the suggested list (see Figure 18)  and press return. 
+				The node loses its question mark and is labelled by the name of the thing and the query results change accordingly, as in Figure 19.</li>
+				<p style="text-align: center"><img src="img/spex_tut11a.png" alt="spex bar" width="30%">  <div align="center" style="font-style:italic">Figure 18</div></p>
+				<p style="text-align: center"><img src="img/spex_tut11.png" alt="spex bar" width="60%">   <div align="center" style="font-style:italic">Figure 19</div></p>
+			</ul>	
+		<h4>3.6 Queries with multiple links and nodes.</h4>
+		<p>You can also pose a query and display additional information on the resulting records. 
+		Figure 20 shows the result of the query: ‘Show all the maps created by Karl Ferdinand Weiland together with their scale. 
+		We make use of ‘a particular thing’  (Karl Ferdinand Weiland) as creator and hasScale as the ‘Relationship to other things’. 
+		The 3 results are shown in the table at the bottom of Figure 20.</p>
+		<p style="text-align: center"><img src="img/finalex1.png" alt="spex bar" width="80%"> <div align="center" style="font-style:italic">Figure 20</div></p>
+		<p>A more complex query is the one mentioned at the start of this tutorial: 
+		Show all the maps which represent Napoleon’s invasion to Russia in 1812 together with all battle parts, their place and their number of participants. 
+		Note that this query makes use of various relationships. 
+		The result is shown in Figure 21.</p>
+		<p style="text-align: center"><img src="img/invasionexample_old.png" alt="spex bar" width="80%"> <div align="center" style="font-style:italic">Figure 21</div></p>
 					
 		<h3>If you want to know more ....</h3>	
 		<p> Every node stands for particular things described in the endpoint. Nodes with question marks are variables that stand for all things that fit into this node. You can add labels of things-of-a-kind to variable nodes in order to restrict things in that node to things of a kind. Furthermore, you can add links to a node in order to filter out things with links to other things. Nodes without question marks stand for one particular thing. Nodes in light green indicate that spatial or temporal information is present, nodes in dark green indicate the contrary.</p>	
 		<p>	The endpoint can be entered in the text field on the right.</p>
-				<p><img src="img/spex_tut0.png" alt="spex bar" width="100%"></p>
+				<p style="text-align: center"><img src="img/spex_tut0.png" alt="spex bar" width="100%"></p>
 		<h3>About</h2>
 		<p>
 		Spex is a spatio-temporal exploration and query tool for SPARQL endpoints. It is part of the development in <a href="http://lodum.de/">LODUM</a> and LIFE. For further information about SPEX development, see us on <a href="https://github.com/lodum/SPEX">Github</a>.
