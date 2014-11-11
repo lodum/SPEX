@@ -461,7 +461,8 @@ function Suggester(){
 			instancesArray = [];
 			instanceIDArray = [];
 			var varname = queryPane.getNodeVarName(queryPane.selected).substr(1);
-			console.log("auto-suggester instance list generated from current results for: "+varname);			
+			console.log("auto-suggester instance list generated from current results for: "+varname);
+			if (spex.rp.currentresults.getAllResults() !="") {
 			$.each(spex.rp.currentresults.getAllResults().results.bindings, function(solutionIndex, solution) {		
 				//console.log(solution);
 				if(solution[varname]&& solution[varname+'__label']&& instanceIDArray.indexOf(solution[varname].value)==-1 && solution[varname+'__label'].value!= "Something"){ //This filters out blank nodes and duplicates
@@ -469,7 +470,8 @@ function Suggester(){
 					instanceIDArray.push(solution[varname].value); //this assures uniqueness of instance ids
 				}			
 				//console.log({id: solution[varname].value, value: solution[varname+'__label'].value});
-			});			
+			});	
+			};				
 			
 			if (instancesArray.length==0 ) {
 			$('#warning').text("No instance suggestions found!").css("color" , "red");

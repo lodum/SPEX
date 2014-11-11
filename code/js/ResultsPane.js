@@ -5,7 +5,9 @@
 *  @property {object} currentresults - holds the current result set
 **/
 function ResultsPane(){
-this.currentresults = new SPEXResultSet(" ");
+this.currentresults = new SPEXResultSet("");
+//this.numberofresults = 0;
+//document.getElementById("resultsnumber").innerHTML = this.numberofresults;
 this.enabled = true; //This disables results highlighting
 };
 ResultsPane.prototype.constructor = ResultsPane;
@@ -21,18 +23,16 @@ return escape(JSON.stringify(res));
 * displays a spex result set in the results pane
 *@function 
 */
-
-
 ResultsPane.prototype.display = function(spexresultset){
 		
 		this.currentresults = spexresultset;
-		
+		var numberofresults = 0;
 		var a = document.getElementById("getresults");
 		a.download = "export.txt";
 		a.href = "data:text/plain," + this.getcurrentresults();
 		a.innerHTML = "download results as JSON";
 		var b = document.getElementById("resultsnumber");
-		var numberofresults = 0;
+		
 		
 		//A function that replaces URIs with HTML links.
 		var buildHTML = function(solution, variableName){
@@ -202,6 +202,9 @@ ResultsPane.prototype.display = function(spexresultset){
 		
 
 		
+};
+ResultsPane.prototype.remove = function () {
+$('#result').empty();
 };
 
 

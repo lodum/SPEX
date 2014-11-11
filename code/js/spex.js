@@ -210,7 +210,17 @@ var spex = new function(){
 			delete spex.q.temporalConstraints[variable];
 		}
 		spex.q.thematicConstraints.splice(0, spex.q.thematicConstraints.length);
-		queryPane.updateQuery();
+		//remove results in table
+		spex.rp.remove();
+		document.getElementById("resultsnumber").innerHTML = 0;
+		document.getElementById("getresults").innerHTML = "";
+		//reset classes in suggester to all classes
+		queryPane.querywasupdatedCL = true;
+		queryPane.querywasupdatedI = true;
+		spex.q = new SPEXQuery();
+		queryPane.parseQuery();
+		//clear query
+		//queryPane.updateQuery();
 		queryPane.resize();
 		
 	};

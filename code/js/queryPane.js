@@ -124,7 +124,7 @@ var queryPane = {
 		queryPane.nodeselectedPRout = queryPane.selected;
 		queryPane.nodeselectedPRin = queryPane.selected;
 		this.update();
-		this.updateQuery();
+		//this.updateQuery();
 	},
 
 
