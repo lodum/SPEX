@@ -221,6 +221,7 @@ var spex = new function(){
 		queryPane.querywasupdatedI = true;
 		spex.q = new SPEXQuery();
 		queryPane.parseQuery();
+		document.getElementById("query").innerHTML = "";
 		//clear query
 		//queryPane.updateQuery();
 		queryPane.resize();
