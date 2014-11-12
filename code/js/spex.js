@@ -56,7 +56,9 @@ var spex = new function(){
 		$("#img_reset").click(this.reset);
 		$("#img_reset").tooltip();
 		$("#map_button").click(this.clearMap);
+		$("#map_button").tooltip();
 		$("#slider_button").click(this.clearSlider);
+		$("#slider_button").tooltip();
 		
 
 		//$("#showquery").click(this.showquery);
@@ -160,7 +162,7 @@ var spex = new function(){
 		}		  
 	};
 	
-	//some general recursive clone method (used for undo method)
+	//some general recursive clone method (may be used for undo method)
 	this.clone = function(obj) {
 			var copy;
 
