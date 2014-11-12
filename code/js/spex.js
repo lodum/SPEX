@@ -55,6 +55,8 @@ var spex = new function(){
 		$("#img_undo").tooltip();
 		$("#img_reset").click(this.reset);
 		$("#img_reset").tooltip();
+		$("#map_button").click(this.clearMap);
+		$("#slider_button").click(this.clearSlider);
 		
 
 		//$("#showquery").click(this.showquery);
@@ -224,7 +226,35 @@ var spex = new function(){
 		queryPane.resize();
 		
 	};
-};
+
+	this.clearMap = function() {
+		map.markerGroup.setStyle({'fill':false, 'opacity':0});
+		$("#map_button").html("Restore Geometries");
+		$("#map_button").unbind("click", spex.clearMap);
+		$("#map_button").click(spex.restoreMapGeometries);
+	}
+
+	this.restoreMapGeometries = function() {
+		map.markerGroup.setStyle({'fill':true, 'opacity':0.5});
+		$("#map_button").html("Clear Map");
+		$("#map_button").unbind("click", spex.restoreMapGeometries);
+		$("#map_button").click(spex.clearMap);
+	}
+
+	this.clearSlider= function() {
+		$("div.timeline-event").css("opacity", 0);
+		$("#slider_button").html("Restore Events");
+		$("#slider_button").unbind("click", spex.clearSlider);
+		$("#slider_button").click("click", spex.restoreSliderItems);
+	}
+
+	this.restoreSliderItems = function() {
+		$("div.timeline-event").css("opacity", 1);
+		$("#slider_button").html("Clear Timeline");
+		$("#slider_button").unbind("click", spex.restoreSliderItems);
+		$("#slider_button").click("click", spex.clearSlider);
+	}
+ };
 
 
 // Page loaded - start the magic

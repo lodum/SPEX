@@ -172,6 +172,14 @@ body, html {
   border-left: 1px solid #ddd;
 }
 
+#map_button, #slider_button {
+  width: 50%;
+  float:left;
+}
+
+#slider {
+  clear:both;
+}
 #debug_query {
   position: absolute;
   bottom: 0;

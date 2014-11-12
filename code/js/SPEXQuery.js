@@ -31,7 +31,6 @@ this.variablelabels = [];
     this._prevSubj = null;
     this._prevProp = null;
     this._storedQuery = "";
-
 }
 
 

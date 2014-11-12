@@ -114,7 +114,7 @@ var queryPane = {
 
 		this.visNode = this.vis.append('svg:g');
 
-		this.resize();
+		this.resize(); 
 
 		queryPane.querywasupdatedCL = false;
 		queryPane.querywasupdatedI = false;
@@ -500,10 +500,7 @@ var queryPane = {
 			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});			
 		
 		this.update();
-		
-
 		this.force.start();
-
 		queryPane.updateQuery();
 	},
 
@@ -516,10 +513,7 @@ var queryPane = {
 			source: this.nodes[queryPane.nodes.length - 1], target: this.nodes.indexOf(queryPane.selected)});
 				
 		this.update();
-		
-
 		this.force.start();
-
 		queryPane.updateQuery();
 	},
 
@@ -607,6 +601,15 @@ var queryPane = {
 		spex.ex.executeQuery(spex.q,document.getElementById("endpoint").value); 
 
 		document.getElementById("query").innerHTML = spex.q.serialiseQuery();
+		
+		//make sure map button gets the default event listener attached
+		$("#map_button").html("Clear Map");
+		$("#map_button").unbind("click", spex.restoreMapGeometries);
+		$("#map_button").click(spex.clearMap);
+		//same for slider button
+		$("#slider_button").html("Clear Timeline");
+		$("#slider_button").unbind("click", spex.restoreSliderItems);
+		$("#slider_button").click("click", spex.clearSlider);
 	},
 
 	parseQuery : function() {
