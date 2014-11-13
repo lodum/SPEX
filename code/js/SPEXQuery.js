@@ -299,6 +299,51 @@ SPEXQuery.prototype.getPrefixedQueryString = function(){
 	
 	queryString+=string;
 	
-	return queryString;
+	//Check for variables which are there in filters but not in the non-optional query pattern
+	var filterVars =[];
+	for(var i=0; i<this.filters.length; i++){
+		var fString = this.filters[i];
+		while(fString.indexOf('?') != -1){
+			var p=fString.indexOf('?'),q=p+1;
+			while(['=',' ','<','>','/','|',')','(','?','$'].indexOf(fString.charAt(q)) == -1) q++;
+			filterVars.push(fString.substring(p,q));
+			fString = fString.substring(q);
+		}
+	}
+	
+	//remove duplicates from filterVars
+	filterVars.sort();
+	for(var i=0; i< filterVars.length;i++){
+		if(filterVars[i]==filterVars[i+1]){
+			filterVars.splice(i+1,1);
+			i--;
+		}
+	}
+	
+	//Look at the triples outside all optional patterns and filters and make a string
+	var dummy = new SPEXQuery;
+	for(var i = 0; i < this.patterns.length; i++) {
+      var pat = this.patterns[i];  	  
+      // remove only optionals
+      if(pat._sort != "optional") {
+		dummy.patterns.push(pat);
+	  }
+	}
+	var unOptional=dummy.serialiseQuery();
+	
+	//Check for each of the Elements of filterVars, if it is in the unOptional string, and if yes, add a triple pattern to a string 'extraTriples'
+	var extraTriples = "\n";
+	for(var i=0; i<filterVars.length;i++){
+		var myVar =filterVars[i];
+		var myVarName = myVar.substring(1);
+		if(unOptional.indexOf(myVar)) extraTriples += "{"+myVar+"?x_"+myVarName+"?y_"+myVarName+".}union{?x_"+myVarName+"?y_"+myVarName+myVar+".}\n";
+	}
+	
+	//Insert extratriples after "Where"-satement, and set LIMIT to 1 (Because "Distinct creates more results because of the ?x_ and ?y_ variables)
+	var index=queryString.indexOf("WHERE {")+7, limitStr = "";
+	if (extraTriples.length > 1) limitStr = "\nLimit 1";
+	var newQueryString = queryString.substring(0,index) + extraTriples + queryString.substring(index)+limitStr;
+	
+	return newQueryString;
 };
 
