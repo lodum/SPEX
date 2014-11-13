@@ -127,12 +127,14 @@ ResultsPane.prototype.display = function(spexresultset){
 				bodyCell.addEventListener("mouseout", dehighl , true); 
 				bodyCell.addEventListener("click", function() {			
 					//console.log("spex.rp.enabled" + spex.rp.enabled);
-					spex.rp.enabled = false;	
+					spex.rp.enabled = !spex.rp.enabled;
+					if(!spex.rp.enabled) bodyCell.title = "Click to release selection!";
+					else bodyCell.removeAttribute("title");	
 				}, true);
-				bodyCell.addEventListener("dblclick", function() {
+				/*bodyCell.addEventListener("dblclick", function() {
 					//console.log("spex.rp.enabled" + spex.rp.enabled);
 					spex.rp.enabled = true;													
-				}, true);
+				}, true);*/
 				
 				if(!solution[variableName + "__label"]) {					
 					//bodyCell.id = "body td";
