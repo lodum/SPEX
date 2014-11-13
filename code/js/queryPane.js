@@ -124,6 +124,7 @@ var queryPane = {
 		queryPane.nodeselectedPRout = queryPane.selected;
 		queryPane.nodeselectedPRin = queryPane.selected;
 		this.update();
+		var tmpBBOX = 0;
 		//this.updateQuery();
 	},
 
@@ -692,6 +693,13 @@ var queryPane = {
 	/** @function */
 	setSpConstraint : function() {
 		queryPane.selected.spConstrSet=true;
+		
+		//Creates a rectangle based on the current BBOX
+		var bounds = [[map.LMap.getBounds().getNorth(), map.LMap.getBounds().getEast()], [map.LMap.getBounds().getSouth(), map.LMap.getBounds().getWest()]];
+		tmpBBOX = L.rectangle(bounds, {color: "#ff7800", weight: 1});
+		tmpBBOX.addTo(map.LMap);
+		
+		
 		var win = new Window();
 		win.setCorners(
 			map.LMap.getBounds()._northEast.lat,
@@ -708,6 +716,9 @@ var queryPane = {
 	},
 	/** @function */
 	removeSpConstraint : function() {
+		
+		map.LMap.removeLayer(tmpBBOX);
+		
 		queryPane.selected.spConstrSet=false;
 		spex.q.setSpatialConstraint(
 			queryPane.getNodeVarName(queryPane.selected)
