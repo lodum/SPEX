@@ -299,8 +299,10 @@ SPEXQuery.prototype.getPrefixedQueryString = function(){
 	
 	queryString+=string;
 	
+	return queryString;
+	//This code is buggy: suggester queries do not work anymore and results seem to be filtered out that shouldnt.
 	//Check for variables which are there in filters but not in the non-optional query pattern
-	var filterVars =[];
+	/*var filterVars =[];
 	for(var i=0; i<this.filters.length; i++){
 		var fString = this.filters[i];
 		while(fString.indexOf('?') != -1){
@@ -344,6 +346,6 @@ SPEXQuery.prototype.getPrefixedQueryString = function(){
 	if (extraTriples.length > 1) limitStr = "\nLimit 1";
 	var newQueryString = queryString.substring(0,index) + extraTriples + queryString.substring(index)+limitStr;
 	
-	return newQueryString;
+	return newQueryString;*/
 };
 
