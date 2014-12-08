@@ -227,6 +227,9 @@ var spex = new function(){
 		//clear query
 		//queryPane.updateQuery();
 		queryPane.resize();
+		//reset map and slider
+		map.markerGroup.clearLayers();
+		slider.init();
 		
 	};
 
