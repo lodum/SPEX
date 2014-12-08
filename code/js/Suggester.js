@@ -295,7 +295,7 @@ function Suggester(){
      };
 	 
 	 
-	var createDropdown=function(idString, dropdownArray){		
+	var createDropdown=function(idString, dropdownArray,focusFunction){		
 	  var closing = false;
 	  var s = '#' + idString;
 	  $(s).autocomplete({	  
@@ -304,6 +304,7 @@ function Suggester(){
 	  if(ui.item.id) {console.log(ui.item.id); queryPane.selected.uri="<"+ui.item.id+">";};
 	  //if (dropdownArray==classesArray) {queryPane.updateSelected();} else if (dropdownArray==predicateArrayout) {queryPane.addOut();} else  {queryPane.addIn();};	  
 	  }  ,
+	  focus: focusFunction,
 	  minLength: 0	  	  
 	  //close: function()
 	 //	{
@@ -324,7 +325,7 @@ function Suggester(){
 	 * creates a class autosuggestion drop down menu
 	 *@function */
 	this.createDropdownC=function(idString){
-		createDropdown(idString,classesArray);
+		createDropdown(idString,classesArray,function(event,ui){queryPane.updateSelected();});
 		//var s = '#' + idString;			
 		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label); queryPane.updateSelected();} );	
 			
@@ -333,7 +334,7 @@ function Suggester(){
 	 * creates a property (out) autosuggestion drop down menu
 	 *@function */
 	this.createDropdownPout=function(idString){
-		createDropdown(idString,predicateArrayout);
+		createDropdown(idString,predicateArrayout,function(event,ui){queryPane.addOut();});
 		$('#numbpr').text('('+predicateArrayout.length+' relations available)');
 		//var s = '#' + idString;			
 		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label);queryPane.addOut();} );
@@ -342,7 +343,7 @@ function Suggester(){
 	 * creates a property (in) autosuggestion drop down menu
 	 *@function */
 	this.createDropdownPin=function(idString){
-		createDropdown(idString,predicateArrayin);
+		createDropdown(idString,predicateArrayin,function(event,ui){queryPane.addIn();});
 		$('#numbpr').text('('+predicateArrayin.length+' relations available)');
 		//var s = '#' + idString;			
 		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label);queryPane.addIn();} );
