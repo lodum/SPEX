@@ -325,7 +325,10 @@ function Suggester(){
 	 * creates a class autosuggestion drop down menu
 	 *@function */
 	this.createDropdownC=function(idString){
-		createDropdown(idString,classesArray,function(event,ui){queryPane.updateSelected();});
+		createDropdown(idString,classesArray,function(event,ui){
+			$('#' + idString).val(ui.item.label);
+			queryPane.updateSelected();
+		});
 		//var s = '#' + idString;			
 		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label); queryPane.updateSelected();} );	
 			
@@ -334,7 +337,10 @@ function Suggester(){
 	 * creates a property (out) autosuggestion drop down menu
 	 *@function */
 	this.createDropdownPout=function(idString){
-		createDropdown(idString,predicateArrayout,function(event,ui){queryPane.addOut();});
+		createDropdown(idString,predicateArrayout,function(event,ui){
+			$('#' + idString).val(ui.item.label);
+			queryPane.addOut();
+		})
 		$('#numbpr').text('('+predicateArrayout.length+' relations available)');
 		//var s = '#' + idString;			
 		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label);queryPane.addOut();} );
@@ -343,7 +349,10 @@ function Suggester(){
 	 * creates a property (in) autosuggestion drop down menu
 	 *@function */
 	this.createDropdownPin=function(idString){
-		createDropdown(idString,predicateArrayin,function(event,ui){queryPane.addIn();});
+		createDropdown(idString,predicateArrayin,function(event,ui){
+			$('#' + idString).val(ui.item.label);
+			queryPane.addIn();
+		});
 		$('#numbpr').text('('+predicateArrayin.length+' relations available)');
 		//var s = '#' + idString;			
 		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label);queryPane.addIn();} );
