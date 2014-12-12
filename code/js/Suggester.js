@@ -317,8 +317,7 @@ function Suggester(){
 	  .focus(function(){            
       //      if (!closing)
 			$(s).autocomplete("search","");
-		})
-		;
+		});
 	
 	};
     /** 
@@ -411,9 +410,15 @@ function Suggester(){
 	// method which modifies predicate and class suggestions taking into account the current query	
 	this.getSelNodeClassesofCurrentQuery= function(){
 			console.log("new auto-suggester class list is being generated!");			 
-			 queryClasses = new LabeledQuery();			 
-			 copyQuery(queryClasses, spex.q);	
-			 var varname = queryPane.getNodeVarName(queryPane.selected);			 
+			 queryClasses = new LabeledQuery();		 	
+			queryPane.selected.label = "";
+			spex.q = new SPEXQuery();
+			queryPane.parseQuery();
+			copyQuery(queryClasses, spex.q);
+			queryPane.selected.label = document.getElementById('queryS').value;
+			spex.q = new SPEXQuery();
+			queryPane.parseQuery();
+			var varname = queryPane.getNodeVarName(queryPane.selected);
 			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname , "rdf:type" , "?aClass").limit(500);
 			 queryClasses.SPEXvariables=["?aClass"];
 			 //console.log("sugpredicatesparql:  "+queryClasses.getSPARQL());			
