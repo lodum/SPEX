@@ -328,11 +328,11 @@ var queryPane = {
 		
 	},
 	
-
 	/** Shows context menu
 	* @function */
 	showContextMenu : function(menu) {
 		
+		var lastNode = queryPane.nodes[queryPane.nodes.length - 1]; if(lastNode.editing){delete(lastNode.editing);}
 		var constraintSpLinks = '';
 		var constraintTeLinks = '';
 
@@ -384,11 +384,11 @@ var queryPane = {
 		//document.getElementById("queryS").focus();	
 	},
 	
-	
 
 	/** shows context menu for links (out) 
 	* @function */
 	showContextMenuAddOut : function() {
+		var lastNode = queryPane.nodes[queryPane.nodes.length - 1]; if(lastNode.editing){delete(lastNode.editing);}
 		var x;
 		var y;
 		if (queryPane.selected.variable) { if ( queryPane.selected.label != ""){x = 'Things that are '; y = 'Things that are maps ';} else {x = 'Something '; y = x;}} else {x = ""; y = 'Something ';};
@@ -423,6 +423,7 @@ var queryPane = {
 	/** shows context menu for links (in) 
 	* @function */
 	showContextMenuAddIn : function() {
+		var lastNode = queryPane.nodes[queryPane.nodes.length - 1]; if(lastNode.editing){delete(lastNode.editing);}
 		var x;
 		if (queryPane.selected.variable) { if ( queryPane.selected.label != ""){x = 'things that are '} else {x = 'something '}} else {x = ""};
 		d3.select("#contextMenu")
@@ -495,11 +496,21 @@ var queryPane = {
 	// 
 	addOut : function(){
 		this.last_qp = spex.clone(this);
+		var lastNode=queryPane.nodes[queryPane.nodes.length -1];
+		if (lastNode.editing == true){
+			lastNode = queryPane.nodes.splice(queryPane.nodes.length -1,1).pop();
+			var lastLink = queryPane.links.splice(queryPane.links.length -1,1).pop();
+			lastLink.label = document.getElementById('queryP').value;
+			this.update();
+			queryPane.nodes.push(lastNode);
+			queryPane.links.push(lastLink);
+		}
+		else{
 		queryPane.nodes.push({id: queryPane.nodes.length, label: "",
-			variable: true, spConstraint: false, teConstraint: false }); //'?'});// variable should be true by default
+			variable: true, spConstraint: false, teConstraint: false, editing:true }); //'?'});// variable should be true by default
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
 			source: this.nodes.indexOf(queryPane.selected), target: this.nodes[queryPane.nodes.length - 1]});			
-		
+		}
 		this.update();
 		this.force.start();
 		queryPane.updateQuery();
@@ -508,11 +519,21 @@ var queryPane = {
 	// 
 	addIn : function(){
 		this.last_qp = spex.clone(this);
+		var lastNode=queryPane.nodes[queryPane.nodes.length -1];
+		if (lastNode.editing == true){
+			lastNode = queryPane.nodes.splice(queryPane.nodes.length -1,1).pop();
+			var lastLink = queryPane.links.splice(queryPane.links.length -1,1).pop();
+			lastLink.label = document.getElementById('queryP').value;
+			this.update();
+			queryPane.nodes.push(lastNode);
+			queryPane.links.push(lastLink);
+		}
+		else{
 		queryPane.nodes.push({id: queryPane.nodes.length, label: "",
-			variable: true, spConstraint: false, teConstraint: false }); //'?'});//
+			variable: true, spConstraint: false, teConstraint: false, editing:true }); //'?'});//
 		queryPane.links.push({id: queryPane.links.length, label: document.getElementById('queryP').value, //'a',//
 			source: this.nodes[queryPane.nodes.length - 1], target: this.nodes.indexOf(queryPane.selected)});
-				
+		}		
 		this.update();
 		this.force.start();
 		queryPane.updateQuery();
