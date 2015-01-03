@@ -295,7 +295,7 @@ function Suggester(){
      };
 	 
 	 
-	var createDropdown=function(idString, dropdownArray){		
+	var createDropdown=function(idString, dropdownArray,focusFunction){		
 	  var closing = false;
 	  var s = '#' + idString;
 	  $(s).autocomplete({	  
@@ -304,6 +304,7 @@ function Suggester(){
 	  if(ui.item.id) {console.log(ui.item.id); queryPane.selected.uri="<"+ui.item.id+">";};
 	  //if (dropdownArray==classesArray) {queryPane.updateSelected();} else if (dropdownArray==predicateArrayout) {queryPane.addOut();} else  {queryPane.addIn();};	  
 	  }  ,
+	  focus: focusFunction,
 	  minLength: 0	  	  
 	  //close: function()
 	 //	{
@@ -316,15 +317,17 @@ function Suggester(){
 	  .focus(function(){            
       //      if (!closing)
 			$(s).autocomplete("search","");
-		})
-		;
+		});
 	
 	};
     /** 
 	 * creates a class autosuggestion drop down menu
 	 *@function */
 	this.createDropdownC=function(idString){
-		createDropdown(idString,classesArray);
+		createDropdown(idString,classesArray,function(event,ui){
+			$('#' + idString).val(ui.item.label);
+			queryPane.updateSelected();
+		});
 		//var s = '#' + idString;			
 		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label); queryPane.updateSelected();} );	
 			
@@ -333,7 +336,10 @@ function Suggester(){
 	 * creates a property (out) autosuggestion drop down menu
 	 *@function */
 	this.createDropdownPout=function(idString){
-		createDropdown(idString,predicateArrayout);
+		createDropdown(idString,predicateArrayout,function(event,ui){
+			$('#' + idString).val(ui.item.label);
+			queryPane.addOut();
+		})
 		$('#numbpr').text('('+predicateArrayout.length+' relations available)');
 		//var s = '#' + idString;			
 		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label);queryPane.addOut();} );
@@ -342,7 +348,10 @@ function Suggester(){
 	 * creates a property (in) autosuggestion drop down menu
 	 *@function */
 	this.createDropdownPin=function(idString){
-		createDropdown(idString,predicateArrayin);
+		createDropdown(idString,predicateArrayin,function(event,ui){
+			$('#' + idString).val(ui.item.label);
+			queryPane.addIn();
+		});
 		$('#numbpr').text('('+predicateArrayin.length+' relations available)');
 		//var s = '#' + idString;			
 		//$(s).on( "autocompleteselect", function( event, ui ) {$(s).val(ui.item.label);queryPane.addIn();} );
@@ -401,9 +410,15 @@ function Suggester(){
 	// method which modifies predicate and class suggestions taking into account the current query	
 	this.getSelNodeClassesofCurrentQuery= function(){
 			console.log("new auto-suggester class list is being generated!");			 
-			 queryClasses = new LabeledQuery();			 
-			 copyQuery(queryClasses, spex.q);	
-			 var varname = queryPane.getNodeVarName(queryPane.selected);			 
+			 queryClasses = new LabeledQuery();		 	
+			queryPane.selected.label = "";
+			spex.q = new SPEXQuery();
+			queryPane.parseQuery();
+			copyQuery(queryClasses, spex.q);
+			queryPane.selected.label = document.getElementById('queryS').value;
+			spex.q = new SPEXQuery();
+			queryPane.parseQuery();
+			var varname = queryPane.getNodeVarName(queryPane.selected);
 			 queryClasses.select(["?aClass","?aClass__label"]).distinct().where(varname , "rdf:type" , "?aClass").limit(500);
 			 queryClasses.SPEXvariables=["?aClass"];
 			 //console.log("sugpredicatesparql:  "+queryClasses.getSPARQL());			
