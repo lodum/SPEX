@@ -15,47 +15,29 @@
 	<!-- Libraries and resources -->
 	<!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">-->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
-	
-	<!-- 
+
+	<!--
 		!!!This Style Sheet is not available anymore!!!
 
 		<link rel="stylesheet" href="http://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css">
 	-->
 
-	<link rel="stylesheet" id="themeCSS" href="lib/jQRangeSlider-master/css/classic.css"> 
+	<link rel="stylesheet" id="themeCSS" href="lib/jQRangeSlider-master/css/classic.css">
 	<link rel="stylesheet" href="lib/jQRangeSlider-master/demo/style.css">
-	
+
 	<link href="lib/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
-	
+
 
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<!--<script src="http://code.jquery.com/jquery-1.10.2.js"></script>-->
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 	<!--<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>-->
-	
+
 	<script src="lib/d3/d3.min.js"></script>
-	
-	<!-- Slider Begin
-	<script src="lib/jQRangeSlider-master/lib/jquery.mousewheel.min.js"></script>
 
-	<script src="lib/jQRangeSlider-master/jQRangeSliderMouseTouch.js"></script>
-	<script src="lib/jQRangeSlider-master/jQRangeSliderDraggable.js"></script>
-	<script src="lib/jQRangeSlider-master/jQRangeSliderHandle.js"></script>
-	<script src="lib/jQRangeSlider-master/jQRangeSliderBar.js"></script>
-	<script src="lib/jQRangeSlider-master/jQRangeSliderLabel.js"></script>
-	<script src="lib/jQRangeSlider-master/jQRangeSlider.js"></script>
-
-	<script src="lib/jQRangeSlider-master/jQDateRangeSliderHandle.js"></script>
-	<script src="lib/jQRangeSlider-master/jQDateRangeSlider.js"></script>
-	
-	<script src="lib/jQRangeSlider-master/jQEditRangeSliderLabel.js"></script>
-	<script src="lib/jQRangeSlider-master/jQEditRangeSlider.js"></script>
-	
-	
-	 Slider End -->
 
 	 <!--timeline-->
-	
+
 	<script type="text/javascript" src="lib/timeline/timeline.js"></script>
 	<link rel="stylesheet" type="text/css" href="lib/timeline/timeline.css">
 
@@ -86,22 +68,24 @@
 	<script src="js/map.js"></script>
 	<script src="js/slider.js"></script>
 	<!--<script src="js/testing.js"></script>-->
-	<script src="js/spex.js">	
+	<script src="js/spex.js">
 </script>
 
-	
-	
 
-<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css' rel='stylesheet' />
-<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
-<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.1.2/leaflet-omnivore.min.js'></script>
+
+<!-- Mapbox Stylesheets and Libraries -->
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.js'></script>
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
 <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.css' rel='stylesheet' />
+<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.css' rel='stylesheet' />
 
 <!--set the color of timeline events -->
 <style>
   div.timeline-event {
-            border-color: blue ! important;            
+            border-color: blue ! important;
  }
  .ui-highlight {
 		border-color: red ! important;
@@ -110,14 +94,14 @@
 	z-index: 1000;
     display:none;
     position:absolute;
-    border:1px solid #000;		
+    border:1px solid #000;
 	padding: 6px 8px;
 	font: 10px/12px Arial, Helvetica, sans-serif;
 	background: white;
 	background: rgba(255,255,255,0.8);
 	box-shadow: 0 0 15px rgba(0,0,0,0.2);
 	border-radius: 5px;
-	color: #777;	
+	color: #777;
 }
 </style>
 
@@ -129,7 +113,7 @@
             overflow-x: hidden;
             /* add padding to account for vertical scrollbar */
             padding-right: 20px;
-        } 
+        }
 </style>
 
 </head>
@@ -142,25 +126,25 @@
 			<img src="img/spex-logo-nav.png"></img>
 			<div id="nav_title">
 				Spatio-temporal content explorer
-			</div>	
-				
+			</div>
+
 			<div id="nav_right">
 				<div id="nav_buttons"  >
-					<div id="nav_undo" >	
+					<div id="nav_undo" >
 							<img id="img_undo" title="Undo last step" src="img/undo.png" ></img>
-					</div>	
-					<div id="nav_reset" >	
+					</div>
+					<div id="nav_reset" >
 							<img id="img_reset" title="Reset" src="img/reset_n.png" ></img>
-					</div>	
-					<div id="nav_help" >						
+					</div>
+					<div id="nav_help" >
 						<img id="img_help" title="Help" src="img/help.png" ></img>
 					</div>
-				</div> 
+				</div>
 				<div id="nav_endpoint">
 					Endpoint:
 					<!--<input type="text" id="endpoint" name="endpoint" value="http://data.uni-muenster.de/sparql"></input>-->
 					<!--<input type="text" id="endpoint" name="endpoint" value="http://data.uni-muenster.de/historicmaps/sparql"></input> -->
-					<input type="text" id="endpoint" name="endpoint" value="http://giv-lodum.uni-muenster.de:8081/parliament/sparql"></input> 
+					<input type="text" id="endpoint" name="endpoint" value="http://giv-lodum.uni-muenster.de:8081/parliament/sparql"></input>
 					<!--<input type="text" id="endpoint" name="endpoint" value=" http://dbpedia.org/sparql"></input> -->
 				</div>
 			</div>
@@ -169,13 +153,13 @@
 
 	<div id="page_container">
 		<div id="page">
-			
+
 			<div id="queryPane">
-				
+
 			</div>
 
 		</div>
-		
+
 	</div>
 
 	<div id="result_container">
@@ -184,20 +168,20 @@
 		</div>
 		<div id="result" style="width : 100%">
 		</div>
-		
+
 	</div>
 
 	<div id="right_panel_container">
-		
-		<div id="right_panel" style="float:center">		
+
+		<div id="right_panel" style="float:center">
 			<!--<br/> Space:<br/>-->
 			<div id="map"></div>
 			<div style="padding:8px" >
-			<div >			
-			<button id="map_button" title="Clean map window from cluttered geometries" type="button">Clear Map</button></div><div>	
+			<div >
+			<button id="map_button" title="Clean map window from cluttered geometries" type="button">Clear Map</button></div><div>
 			<button id="slider_button" title="Clean time line from cluttered events" type="button">Clear Timeline</button></div>
 			</div >
-			
+
 			<div id="slider" style="width: 100%;height: 95px;font-size: 5pt;padding:8px"></div>
 			<!--<div style="padding: 5px">	</div>	-->
 		</div>
@@ -211,14 +195,14 @@
 				<!--<button id="addTime">addTime</button>-->
 				<!--<button id="showresults">show results</button>--><br>
 
-				<textarea id="query" name="query" style="font-size: 8pt; width: 399px; height: 150px;" readonly></textarea> 
+				<textarea id="query" name="query" style="font-size: 8pt; width: 399px; height: 150px;" readonly></textarea>
 	</div>
 
 	<div id="contextMenu">
 
 	</div>
-	
-	
+
+
 
 </body>
 
