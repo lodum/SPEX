@@ -1,13 +1,14 @@
 # SPEX
 
-The Spatial-Temporal Content Explorer (SPEX) is a tool for performing searches/queries on data stored according to the Resource Description Framework (RDF) specifications.
-The tool can be opened in the browser, and enables the user to visually construct a query, add spatial and temporal constraints to the query, and retrieve the data returned by the search / query.
-The idea of the tool is to enable any user to search for data stored in the RDF format. This is usually only possible using the SPARQL Protocol and RDF Query Language (SPARQL), but by using SPEX, the work of formulating the search in the SPARQL syntax is performed using the query visually constructed by the user. This way, the user doesn't require any prior knowledge of the SPARQL syntax for extracting data from the RDF-database.
+The Spatial-Temporal Content Explorer (SPEX) is a tool for exploring data stored according to the Resource Description Framework (RDF) specifications and published on a SPARQL endpoint.
+The tool can be opened in the browser, and enables the user to explore contents, visually construct a query, add spatial and temporal constraints to the query, and retrieve the data returned by the search / query.
+The idea of the tool is to enable any user to search for (spatio-temporal) data stored in the RDF format. This is usually only possible using the SPARQL Protocol and RDF Query Language (SPARQL), but by using SPEX, the work of formulating the search in the SPARQL syntax is simplified through visual feedback mechanisms. This way, the user doesn't require any prior knowledge of the SPARQL syntax for extracting data from the RDF-database or about available vocabularies.
 The code of SPEX is based on HTML, CSS, Javascript, and uses the javascript and css-based libraries jQuery, d3, bootstrap, leaflet and timeline.
 
 See also:
 - <a href="http://www.semantic-web-journal.net/content/exploratory-querying-sparql-endpoints-space-and-time-1">Article that describes SPEX principles</a>
-- <a href="http://giv-lodum.uni-muenster.de/spex/">Running version</a>
+- <a href="http://www.geographicknowledge.de/spex">Running version</a>
+- <a href="http://www.geographicknowledge.de/spex/help.html">Tutorial</a>
 
 
 <b> Basic functionality </b>
