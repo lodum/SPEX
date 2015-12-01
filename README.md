@@ -7,8 +7,8 @@ The code of SPEX is based on HTML, CSS, Javascript, and uses the javascript and 
 
 See also:
 - <a href="http://www.semantic-web-journal.net/content/exploratory-querying-sparql-endpoints-space-and-time-1">Article that describes SPEX principles</a>
-- <a href="http://www.geographicknowledge.de/spex">Running version</a>
-- <a href="http://www.geographicknowledge.de/spex/help.html">Tutorial</a>
+- <a href="http://giv-lodum.uni-muenster.de/spex/">Running version</a>
+- <a href="http://giv-lodum.uni-muenster.de/spex/help.html">Tutorial</a>
 
 
 <b> Basic functionality </b>
