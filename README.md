@@ -1,6 +1,6 @@
 # SPEX
 
-<img src="spex_layout_neu.png" alt="spex" width=600 class="left" border="3" hspace=20 vspace=0 /> 
+<img src="spex_layout_neu.png" alt="spex" width=800 class="left" border="3" hspace=20 vspace=0 /> 
 
 The Spatial-Temporal Content Explorer (SPEX) is a tool for exploring data stored according to the Resource Description Framework (RDF) specifications and published on a SPARQL endpoint.
 The tool can be opened in the browser, and enables the user to explore contents, visually construct a query, add spatial and temporal constraints to the query, and retrieve the data returned by the search / query.
