@@ -6,7 +6,7 @@
   },
   "devDependencies": {
     "jshint": "0.9.1",
-    "connect": "2.1.3",
+    "connect": "2.8.1",
     "grunt-contrib-uglify": "~0.2.2",
     "grunt": "~1.3.0",
     "grunt-contrib-clean": "~0.4.1",
